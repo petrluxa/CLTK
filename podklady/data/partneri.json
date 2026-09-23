@@ -1,0 +1,289 @@
+[
+  {
+    "nazev": "Vivus",
+    "logo_file": "assets/partneri/vivus.jpg",
+    "web_url": "https://vivus.cz/",
+    "logo_zdroj_url": "https://files.cltk.cz/ureh5beblj06/Vivus%202.jpg",
+    "rozmer": "1243x529",
+    "uvedeno_na": "https://cltk.cz/cs/o-nas/partneri/ + https://cltk.cz/cs/ (pás log na homepage)",
+    "poznamka": "převedeno z CMYK do RGB"
+  },
+  {
+    "nazev": "J&T Banka",
+    "logo_file": "assets/partneri/jt-banka.jpg",
+    "web_url": "http://www.jtfg.com/",
+    "logo_zdroj_url": "https://files.cltk.cz/site/JTBanka.jpg",
+    "rozmer": "844x120",
+    "uvedeno_na": "https://cltk.cz/cs/o-nas/partneri/ + https://cltk.cz/cs/ (pás log na homepage)"
+  },
+  {
+    "nazev": "Aston – služby v ekologii",
+    "logo_file": "assets/partneri/aston.jpg",
+    "web_url": "https://www.aston-eco.cz/",
+    "logo_zdroj_url": "https://files.cltk.cz/site/aston-min.jpg",
+    "rozmer": "922x280",
+    "uvedeno_na": "https://cltk.cz/cs/o-nas/partneri/ + https://cltk.cz/cs/ (pás log na homepage)"
+  },
+  {
+    "nazev": "Pankrác a.s.",
+    "logo_file": "assets/partneri/pankrac.jpg",
+    "web_url": "https://www.pankrac-as.cz/",
+    "logo_zdroj_url": "https://files.cltk.cz/site/pankrac.jpg",
+    "rozmer": "475x92",
+    "uvedeno_na": "https://cltk.cz/cs/o-nas/partneri/ + https://cltk.cz/cs/ (pás log na homepage)"
+  },
+  {
+    "nazev": "GreenGas",
+    "logo_file": "assets/partneri/green-gas.jpg",
+    "web_url": "https://www.dpb.cz/",
+    "logo_zdroj_url": "https://files.cltk.cz/site/GGI-201401-logo_with_tagline.jpg",
+    "rozmer": "1772x413",
+    "uvedeno_na": "https://cltk.cz/cs/o-nas/partneri/ + https://cltk.cz/cs/ (pás log na homepage)"
+  },
+  {
+    "nazev": "Hodinářství Bechyně",
+    "logo_file": "assets/partneri/hodinarstvi-bechyne.jpg",
+    "web_url": "https://www.hodinarstvibechyne.cz/cs/",
+    "logo_zdroj_url": "https://files.cltk.cz/site/HB_zakladni_hneda_rgb.jpg",
+    "rozmer": "2000x850",
+    "uvedeno_na": "https://cltk.cz/cs/o-nas/partneri/ + https://cltk.cz/cs/ (pás log na homepage)"
+  },
+  {
+    "nazev": "Hodinářství Bechyně (varianta na tmavém podkladu)",
+    "logo_file": "assets/partneri/hodinarstvi-bechyne-tmave.png",
+    "web_url": "https://www.hodinarstvibechyne.cz/cs/",
+    "logo_zdroj_url": "https://files.cltk.cz/dsncn3g5mzl01/bechyne2025_brandcloud_skin24.png",
+    "rozmer": "4000x2250",
+    "uvedeno_na": "https://cltk.cz/cs/o-nas/partneri/"
+  },
+  {
+    "nazev": "ISO Praha – stavebniny",
+    "logo_file": "assets/partneri/iso-praha.jpg",
+    "web_url": "http://www.iso-praha.cz/",
+    "logo_zdroj_url": "https://files.cltk.cz/site/tn_Logo%20ISO%20Praha-min.jpg",
+    "rozmer": "1366x393",
+    "uvedeno_na": "https://cltk.cz/cs/o-nas/partneri/ + https://cltk.cz/cs/ (pás log na homepage)"
+  },
+  {
+    "nazev": "Noncore",
+    "logo_file": "assets/partneri/noncore.jpg",
+    "web_url": "http://www.noncore.cz/index.html",
+    "logo_zdroj_url": "https://files.cltk.cz/site/Noncore.jpg",
+    "rozmer": "443x158",
+    "uvedeno_na": "https://cltk.cz/cs/o-nas/partneri/ + https://cltk.cz/cs/ (pás log na homepage)"
+  },
+  {
+    "nazev": "TUkas",
+    "logo_file": "assets/partneri/tukas.png",
+    "web_url": "https://www.tukas.cz",
+    "logo_zdroj_url": "https://files.cltk.cz/z4xo83j8m2h01/TUkas.png",
+    "rozmer": "1759x1127",
+    "uvedeno_na": "https://cltk.cz/cs/o-nas/partneri/ + https://cltk.cz/cs/ (pás log na homepage)"
+  },
+  {
+    "nazev": "Smartwings",
+    "logo_file": "assets/partneri/smartwings.jpg",
+    "web_url": "https://www.smartwings.com/",
+    "logo_zdroj_url": "https://files.cltk.cz/site/smartwings.jpg",
+    "rozmer": "345x50",
+    "uvedeno_na": "https://cltk.cz/cs/o-nas/partneri/ + https://cltk.cz/cs/ (pás log na homepage)"
+  },
+  {
+    "nazev": "Messy Play",
+    "logo_file": "assets/partneri/messy-play.jpg",
+    "web_url": "https://www.messyplay.cz/",
+    "logo_zdroj_url": "https://files.cltk.cz/bg8o5wf6exk01/MessyPlay_logotyp_pozitiv_blue_cmyk.jpg",
+    "rozmer": "944x931",
+    "uvedeno_na": "https://cltk.cz/cs/o-nas/partneri/",
+    "poznamka": "převedeno z CMYK do RGB"
+  },
+  {
+    "nazev": "Sport Construction",
+    "logo_file": "assets/partneri/sport-construction.jpg",
+    "web_url": "https://www.ekkl.cz/",
+    "logo_zdroj_url": "https://files.cltk.cz/xxkbjfn7i6i01/Sport%20Construction.jpg",
+    "rozmer": "1241x875",
+    "uvedeno_na": "https://cltk.cz/cs/o-nas/partneri/ + https://cltk.cz/cs/ (pás log na homepage)"
+  },
+  {
+    "nazev": "ČPP – Vienna Insurance Group",
+    "logo_file": "assets/partneri/cpp.jpg",
+    "web_url": "https://www.cpp.cz/",
+    "logo_zdroj_url": "https://files.cltk.cz/site/CPP.jpg",
+    "rozmer": "317x154",
+    "uvedeno_na": "https://cltk.cz/cs/o-nas/partneri/ + https://cltk.cz/cs/ (pás log na homepage)"
+  },
+  {
+    "nazev": "Advantage Cars",
+    "logo_file": "assets/partneri/advantage-cars.jpg",
+    "web_url": "https://www.advantage-cars.cz/",
+    "logo_zdroj_url": "https://files.cltk.cz/site/ADVANTAGE_logo-11.jpg",
+    "rozmer": "970x421",
+    "uvedeno_na": "https://cltk.cz/cs/o-nas/partneri/ + https://cltk.cz/cs/ (pás log na homepage)"
+  },
+  {
+    "nazev": "RPM Facility",
+    "logo_file": "assets/partneri/rpm-facility.jpg",
+    "web_url": "https://rpmfacility.cz/",
+    "logo_zdroj_url": "https://files.cltk.cz/site/logo_RPM_Facility.jpg",
+    "rozmer": "1024x339",
+    "uvedeno_na": "https://cltk.cz/cs/o-nas/partneri/ + https://cltk.cz/cs/ (pás log na homepage)"
+  },
+  {
+    "nazev": "Sporttechnik Bohemia",
+    "logo_file": "assets/partneri/sporttechnik-bohemia.png",
+    "web_url": "https://www.sport-technik.cz/",
+    "logo_zdroj_url": "https://files.cltk.cz/7qzo17a6o1l01/Sporttechnik%20logo%20%2B%20raketa.png",
+    "rozmer": "1754x1241",
+    "uvedeno_na": "https://cltk.cz/cs/o-nas/partneri/"
+  },
+  {
+    "nazev": "Crane Constancy Capital",
+    "logo_file": "assets/partneri/crane-constancy-capital.png",
+    "web_url": "http://cranece.com/",
+    "logo_zdroj_url": "https://files.cltk.cz/49p6caoc8bc01/CCC%202.png",
+    "rozmer": "8000x3090",
+    "uvedeno_na": "https://cltk.cz/cs/o-nas/partneri/ + https://cltk.cz/cs/ (pás log na homepage)"
+  },
+  {
+    "nazev": "Mizuno",
+    "logo_file": "assets/partneri/mizuno.jpg",
+    "web_url": "https://www.levelsportkoncept.cz/znacka/mizuno",
+    "logo_zdroj_url": "https://files.cltk.cz/site/Mi_Logo_CMYK_horizontal_registered_blue.jpg",
+    "rozmer": "3012x697",
+    "uvedeno_na": "https://cltk.cz/cs/o-nas/partneri/ + https://cltk.cz/cs/ (pás log na homepage)"
+  },
+  {
+    "nazev": "Babolat",
+    "logo_file": "assets/partneri/babolat.png",
+    "web_url": "https://matchpoint.cz/",
+    "logo_zdroj_url": "https://files.cltk.cz/54uy357ibi01/Babolat.png",
+    "rozmer": "3012x765",
+    "uvedeno_na": "https://cltk.cz/cs/o-nas/partneri/ + https://cltk.cz/cs/ (pás log na homepage)"
+  },
+  {
+    "nazev": "Národní sportovní agentura",
+    "logo_file": "assets/partneri/narodni-sportovni-agentura.jpg",
+    "web_url": "https://nsa.gov.cz/",
+    "logo_zdroj_url": "https://files.cltk.cz/site/Narodni%20sportovni%20agentura_logo%20cmyk.jpg",
+    "rozmer": "2407x991",
+    "uvedeno_na": "https://cltk.cz/cs/o-nas/partneri/ + https://cltk.cz/cs/ (pás log na homepage)"
+  },
+  {
+    "nazev": "Český tenis (Český tenisový svaz)",
+    "logo_file": "assets/partneri/cesky-tenis.png",
+    "web_url": "http://www.cztenis.cz/",
+    "logo_zdroj_url": "https://files.cltk.cz/site/img__logo-cesky-tenis.png",
+    "rozmer": "3508x1843",
+    "uvedeno_na": "https://cltk.cz/cs/o-nas/partneri/ + https://cltk.cz/cs/ (pás log na homepage)"
+  },
+  {
+    "nazev": "Victoria – Vysokoškolské sportovní centrum MŠMT",
+    "logo_file": "assets/partneri/victoria-vsc.jpg",
+    "web_url": "https://www.vsc.cz/",
+    "logo_zdroj_url": "https://files.cltk.cz/gal6ub76c3l01/logo_horizontal.jpg",
+    "rozmer": "792x164",
+    "uvedeno_na": "https://cltk.cz/cs/o-nas/partneri/ + https://cltk.cz/cs/ (pás log na homepage)",
+    "poznamka": "převedeno z CMYK do RGB"
+  },
+  {
+    "nazev": "Hlavní město Praha",
+    "logo_file": "assets/partneri/praha.png",
+    "web_url": "https://www.praha.eu/jnp/cz/o_meste/magistrat/index.html",
+    "logo_zdroj_url": "https://files.cltk.cz/ewegr2qtk917/Praha.png",
+    "rozmer": "464x438",
+    "uvedeno_na": "https://cltk.cz/cs/o-nas/partneri/ + https://cltk.cz/cs/ (pás log na homepage)"
+  },
+  {
+    "nazev": "Městská část Praha 7",
+    "logo_file": "assets/partneri/praha-7.png",
+    "web_url": "https://www.praha7.cz/",
+    "logo_zdroj_url": "https://files.cltk.cz/site/Praha_7%201.png",
+    "rozmer": "1138x996",
+    "uvedeno_na": "https://cltk.cz/cs/o-nas/partneri/ + https://cltk.cz/cs/ (pás log na homepage)"
+  },
+  {
+    "nazev": "Pražský tenisový svaz (PTS)",
+    "logo_file": "assets/partneri/prazsky-tenisovy-svaz.png",
+    "web_url": "http://www.prazsky.cztenis.cz/?attachment_id=4415",
+    "logo_zdroj_url": "https://files.cltk.cz/site/PTS%201.png",
+    "rozmer": "2016x1216",
+    "uvedeno_na": "https://cltk.cz/cs/o-nas/partneri/ + https://cltk.cz/cs/ (pás log na homepage)"
+  },
+  {
+    "nazev": "Peach Distribution",
+    "logo_file": "assets/partneri/peach.jpg",
+    "web_url": "https://www.peach-distribution.cz/",
+    "logo_zdroj_url": "https://files.cltk.cz/5dards5cr406/Peach.jpg",
+    "rozmer": "288x144",
+    "uvedeno_na": "https://cltk.cz/cs/o-nas/partneri/"
+  },
+  {
+    "nazev": "Glenfiddich",
+    "logo_file": "assets/partneri/glenfiddich.png",
+    "logo_zdroj_url": "https://files.cltk.cz/site/img__glenfiddich.png",
+    "rozmer": "710x413",
+    "uvedeno_na": "https://cltk.cz/cs/o-nas/partneri/ + https://cltk.cz/cs/ (pás log na homepage)"
+  },
+  {
+    "nazev": "Glenfiddich (varianta na tmavém podkladu)",
+    "logo_file": "assets/partneri/glenfiddich-tmave.jpg",
+    "logo_zdroj_url": "https://files.cltk.cz/9qsxgf4jkh601/GF2019_SECONDARY_LOGO_CMYK__jednobarevne.jpg",
+    "rozmer": "3508x2480",
+    "uvedeno_na": "https://cltk.cz/cs/o-nas/partneri/"
+  },
+  {
+    "nazev": "Astron studio",
+    "logo_file": "assets/partneri/astron-studio.jpg",
+    "web_url": "http://astron.cz/",
+    "logo_zdroj_url": "https://files.cltk.cz/site/Astron_studio.jpg",
+    "rozmer": "1589x274",
+    "uvedeno_na": "https://cltk.cz/cs/o-nas/partneri/ + https://cltk.cz/cs/ (pás log na homepage)"
+  },
+  {
+    "nazev": "Pelmi – The logistics company",
+    "logo_file": "assets/partneri/pelmi.jpg",
+    "web_url": "http://www.pelmi.cz/",
+    "logo_zdroj_url": "https://files.cltk.cz/eun87bf6imk01/Pelmi.jpg",
+    "rozmer": "4000x2015",
+    "uvedeno_na": "https://cltk.cz/cs/o-nas/partneri/",
+    "poznamka": "zmenšeno z originálu 11899x5994"
+  },
+  {
+    "nazev": "Resultina",
+    "logo_file": "assets/partneri/resultina.jpg",
+    "web_url": "http://www.resultina.com/",
+    "logo_zdroj_url": "https://files.cltk.cz/kni41pztm417/Resultina.jpg",
+    "rozmer": "800x300",
+    "uvedeno_na": "https://cltk.cz/cs/o-nas/partneri/ + https://cltk.cz/cs/ (pás log na homepage)"
+  },
+  {
+    "nazev": "Protenis",
+    "logo_file": "assets/partneri/protenis.png",
+    "web_url": "http://www.protenis.cz/",
+    "logo_zdroj_url": "https://files.cltk.cz/site/logo_protenis.png",
+    "rozmer": "1299x472",
+    "uvedeno_na": "https://cltk.cz/cs/o-nas/partneri/ + https://cltk.cz/cs/ (pás log na homepage)"
+  },
+  {
+    "nazev": "Moravia Steel",
+    "logo_file": "assets/partneri/moravia-steel.jpg",
+    "logo_zdroj_url": "https://files.cltk.cz/site/Moravia_Steel.jpg",
+    "rozmer": "641x163",
+    "uvedeno_na": "https://cltk.cz/cs/ (pás log na homepage) – na stránce Partneři chybí"
+  },
+  {
+    "nazev": "Kontron (S&T Group)",
+    "logo_file": "assets/partneri/kontron.jpg",
+    "logo_zdroj_url": "https://files.cltk.cz/site/Logo%20-%20Kontron-min.jpg",
+    "rozmer": "1474x411",
+    "uvedeno_na": "https://cltk.cz/cs/ (pás log na homepage) – na stránce Partneři chybí"
+  },
+  {
+    "nazev": "Analytics Data Factory",
+    "logo_file": "assets/partneri/analytics-data-factory.jpg",
+    "logo_zdroj_url": "https://files.cltk.cz/site/adf-final.jpg",
+    "rozmer": "320x115",
+    "uvedeno_na": "https://cltk.cz/cs/ (pás log na homepage) – na stránce Partneři chybí"
+  }
+]
