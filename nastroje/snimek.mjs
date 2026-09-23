@@ -43,6 +43,18 @@ await page.evaluate(() => {
   document.documentElement.classList.add('snimek');
   document.querySelectorAll('[data-reveal], .rv, .reveal').forEach(el => el.classList.add('in', 'is-in', 'visible', 'shown'));
 });
+if (opt.full) {
+  // projet stránku, aby se načetly obrázky s loading="lazy", pak zpět nahoru
+  await page.evaluate(async () => {
+    const krok = Math.round(window.innerHeight * 0.8);
+    for (let y = 0; y < document.documentElement.scrollHeight; y += krok) {
+      window.scrollTo(0, y);
+      await new Promise(r => setTimeout(r, 120));
+    }
+    window.scrollTo(0, 0);
+  });
+  await page.evaluate(() => Promise.all([...document.images].filter(i => !i.complete).map(i => new Promise(r => { i.onload = i.onerror = r; setTimeout(r, 4000); }))));
+}
 if (opt.scroll) { await page.evaluate(y => window.scrollTo(0, +y), opt.scroll); }
 await page.waitForTimeout(+(opt.wait || 900));
 

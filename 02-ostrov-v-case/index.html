@@ -1,0 +1,873 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>I. ČLTK Praha – Ostrov v čase</title>
+<meta name="description" content="I. Český Lawn-Tennis Klub Praha. Od roku 1893, na ostrově Štvanice od roku 1901. Nejstarší tenisový klub v Praze – kurty, členství, kronika, Revue a síň slávy.">
+<meta name="theme-color" content="#f7f8f6">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/logo/favicon-32.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..500;1,6..72,300..400&amp;family=Instrument+Sans:wdth,wght@75..100,400..650&amp;family=Geist+Mono:wght@400;500&amp;display=swap">
+<link rel="stylesheet" href="css/styl.css">
+<link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+<a class="preskocit" href="#obsah">Přeskočit na obsah</a>
+
+<!-- SVG definice: duotón archivu, inkoust razítka, liniový zajíc -->
+<svg class="defs-skryte" aria-hidden="true" focusable="false" width="0" height="0">
+  <defs>
+    <filter id="duotone-vltava" color-interpolation-filters="sRGB">
+      <feColorMatrix type="matrix" values="0.2126 0.7152 0.0722 0 0  0.2126 0.7152 0.0722 0 0  0.2126 0.7152 0.0722 0 0  0 0 0 1 0"/>
+      <feComponentTransfer>
+        <feFuncR type="table" tableValues="0.122 0.969"/>
+        <feFuncG type="table" tableValues="0.204 0.973"/>
+        <feFuncB type="table" tableValues="0.251 0.965"/>
+      </feComponentTransfer>
+    </filter>
+    <filter id="razitko-inkoust" x="-4%" y="-4%" width="108%" height="108%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="11" result="sum"/>
+      <feColorMatrix in="sum" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -2.4 0 0 0 2.25" result="maska"/>
+      <feComposite in="SourceGraphic" in2="maska" operator="in" result="otisk"/>
+      <feDisplacementMap in="otisk" in2="sum" scale="1.4" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </defs>
+  <symbol id="zajic" viewBox="0 0 120 90">
+    <g fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke">
+      <path vector-effect="non-scaling-stroke" d="M38 84c-9-3-12-12-8-21 4-9 14-14 26-15 17-1 32 5 39 15 5 7 5 15 0 19-3 2-8 2-12 2H44"/>
+      <path vector-effect="non-scaling-stroke" d="M40 50c-7-2-12-7-12-13 0-6 5-10 11-10 5 0 9 3 11 7"/>
+      <path vector-effect="non-scaling-stroke" d="M36 28c-4-9-4-19 1-25 4 6 6 15 5 24"/>
+      <path vector-effect="non-scaling-stroke" d="M43 30c1-10 6-19 13-23 1 8-3 17-9 24"/>
+      <path vector-effect="non-scaling-stroke" d="M30 40c-3 1-5 3-5 5"/>
+      <path vector-effect="non-scaling-stroke" d="M50 84c-1-7 0-13 4-17"/>
+      <path vector-effect="non-scaling-stroke" d="M95 66c5-2 9 1 8 5-1 3-5 4-8 2"/>
+      <path vector-effect="non-scaling-stroke" d="M8 86h104" stroke-dasharray="1 5"/>
+    </g>
+    <circle cx="35" cy="36" r="1.5" fill="currentColor"/>
+  </symbol>
+</svg>
+
+<!-- HORNÍ LIŠTA -->
+<div class="lista-horni">
+  <div class="obal">
+    <p class="lista-horni-info">
+      <span>Ostrov Štvanice&nbsp;38, Praha&nbsp;7</span>
+      <span>Venkovní dvorce denně 7:00–22:00</span>
+      <span>Jediný český člen Centenary Tennis Clubs</span>
+    </p>
+    <div class="lista-horni-akce">
+      <span class="lista-horni-datum" data-dnes="den">středa 23.&nbsp;září 2026</span>
+      <div class="jazyk" role="group" aria-label="Jazyk webu">
+        <button type="button" data-jazyk="cs" aria-pressed="true" lang="cs">CS</button>
+        <button type="button" data-jazyk="en" aria-pressed="false" lang="en">EN</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HLAVIČKA -->
+<header class="hlavicka" data-hlavicka>
+  <div class="obal hlavicka-obal">
+    <a class="znacka" href="#obsah" aria-label="I. Český Lawn-Tennis Klub Praha – na začátek stránky">
+      <img src="../assets/logo/cltk-znak-3d.png" alt="" width="402" height="445">
+      <span class="znacka-text">
+        <span class="znacka-nazev">I.&nbsp;Český Lawn-Tennis Klub<span class="dlouhe"> Praha</span></span>
+        <span class="znacka-zalozen">Založen 1893</span>
+      </span>
+    </a>
+    <nav class="navigace" aria-label="Hlavní">
+      <ul>
+        <li><a href="#ostrov">Ostrov</a></li>
+        <li><a href="#kronika">Kronika</a></li>
+        <li><a href="#hraci">Hráli zde</a></li>
+        <li><a href="#revue">Revue</a></li>
+        <li><a href="#klub">Klub dnes</a></li>
+        <li><a href="#navsteva">Návštěva</a></li>
+      </ul>
+    </nav>
+    <div class="hlavicka-akce">
+      <a class="hlavicka-clenstvi" href="#clenstvi">Členství</a>
+      <a class="hlavicka-tel" href="tel:+420608974974"><span>Recepce</span>608&nbsp;974&nbsp;974</a>
+      <a class="tlacitko" href="https://www.rogeronline.cz/v2/index.php?klub=181" target="_blank" rel="noopener">Rezervovat kurt<span class="tlacitko-ustrizek" aria-hidden="true">↗</span></a>
+      <button type="button" class="menu-tlacitko" aria-expanded="false" aria-controls="mobilni-menu"><span class="menu-tlacitko-cary" aria-hidden="true"></span><span class="menu-tlacitko-text">Menu</span></button>
+    </div>
+  </div>
+</header>
+
+<!-- MOBILNÍ MENU -->
+<div class="mobilni-menu" id="mobilni-menu" hidden>
+  <nav aria-label="Hlavní (mobil)">
+    <ol>
+      <li><a href="#ostrov">Ostrov v&nbsp;čase</a></li>
+      <li><a href="#klub">Klub dnes</a></li>
+      <li><a href="#kronika">Kronika</a></li>
+      <li><a href="#tehdy">Tehdy a&nbsp;teď</a></li>
+      <li><a href="#hraci">Hráli na Štvanici</a></li>
+      <li><a href="#sin-slavy">Síň slávy</a></li>
+      <li><a href="#revue">Kiosek Revue</a></li>
+      <li><a href="#vitrina">Vitrína</a></li>
+      <li><a href="#zpravy">Z&nbsp;ostrova</a></li>
+      <li><a href="#navsteva">Návštěva a kontakty</a></li>
+    </ol>
+  </nav>
+  <div class="mobilni-menu-kontakt">
+    <a class="tlacitko" href="https://www.rogeronline.cz/v2/index.php?klub=181" target="_blank" rel="noopener">Rezervovat kurt<span class="tlacitko-ustrizek" aria-hidden="true">↗</span></a>
+    <a href="tel:+420608974974">Recepce <strong class="cislice">608&nbsp;974&nbsp;974</strong></a>
+    <a href="mailto:recepce@cltk.cz">recepce@cltk.cz</a>
+    <a href="#clenstvi">Členství 2026 od 9&nbsp;500&nbsp;Kč</a>
+  </div>
+</div>
+
+<main id="obsah" tabindex="-1">
+
+<!-- I · HERO: OSTROV V ČASE -->
+<section class="hero" id="ostrov" aria-labelledby="hero-titul">
+  <div class="obal hero-mriz">
+    <div class="hero-text">
+      <p class="sal-oznaceni"><span class="sal-cislo">I</span>Expozice · Ostrov v&nbsp;čase</p>
+      <p class="t-mega hero-rok"><span class="sr-only">Od roku </span>1893</p>
+      <h1 id="hero-titul">Na ostrově se hraje od roku <em class="rok">1901</em>.</h1>
+      <p class="perex hero-perex">Nejstarší tenisový klub v&nbsp;Praze. Projděte ostrov Štvanice a&nbsp;sto třicet let klubu jako výstavu – se štítky a&nbsp;prameny. Na konci si zarezervujete kurt.</p>
+      <div class="hero-dnes">
+        <p class="hero-dnes-radek"><span class="mono-stitek">Dnes</span> <span class="cislice">19&nbsp;kurtů</span><span class="tecka" aria-hidden="true">·</span><span class="cislice">13&nbsp;antukových</span><span class="tecka" aria-hidden="true">·</span><span class="cislice">12&nbsp;krytých v&nbsp;zimě</span></p>
+        <p class="hero-dnes-akce">
+          <a class="tlacitko" href="https://www.rogeronline.cz/v2/index.php?klub=181" target="_blank" rel="noopener">Rezervovat kurt<span class="tlacitko-ustrizek" aria-hidden="true">↗</span></a>
+          <a class="odkaz" href="tel:+420608974974">nebo recepce <span class="cislice">608&nbsp;974&nbsp;974</span></a>
+        </p>
+      </div>
+      <p class="hero-navod"><span aria-hidden="true">↳</span> Posuňte letopočet pod mapou – ostrov se promění od štvanic po lávku HolKa.</p>
+    </div>
+    <div class="hero-mapa">
+      <div class="ostrov" data-ostrov data-rok="1901" data-varianta="kompakt">
+        <noscript><p class="perokresba">Mapa ostrova v&nbsp;čase potřebuje JavaScript. Na ostrově Štvanice hraje klub od roku 1901.</p></noscript>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- II · KLUB DNES -->
+<section class="sekce sekce--linka dnes" id="klub" aria-labelledby="klub-titul">
+  <div class="obal">
+    <header class="sal-hlava sal-hlava--2">
+      <p class="sal-oznaceni"><span class="sal-cislo">II</span>Klub dnes</p>
+      <h2 class="sal-titul" id="klub-titul">Muzeum, ve kterém se každý den hraje</h2>
+      <p class="sal-uvod sal-uvod--maly">„Členství v&nbsp;klubu je nabízeno široké veřejnosti … může tedy úplně každý.“ <span class="pramen">Pramen · cltk.cz – O&nbsp;klubu</span></p>
+    </header>
+
+    <div class="dnes-mriz">
+      <ol class="dnes-radky">
+        <li class="dnes-radek" id="kurty">
+          <p class="dnes-cislo cislice">19</p>
+          <div class="dnes-obsah">
+            <h3 class="dnes-titul">tenisových kurtů na ostrově</h3>
+            <p>V&nbsp;létě 13&nbsp;venkovních antukových kurtů (3&nbsp;s&nbsp;osvětlením), 3&nbsp;kurty s&nbsp;tvrdým povrchem, 2&nbsp;kurty v&nbsp;pevné hale a&nbsp;velký centrální dvorec. V&nbsp;zimě 12&nbsp;krytých kurtů.</p>
+            <p class="dnes-sezona"><span class="jistota jistota--overeno">právě teď</span> Haly se staví: pevná hala P1, P2 hraje od 28.&nbsp;9.&nbsp;2026, přetlakové haly od 5.&nbsp;10.&nbsp;2026.</p>
+            <p class="radek dnes-odkazy">
+              <a class="odkaz odkaz--ven" href="https://www.rogeronline.cz/v2/index.php?klub=181" target="_blank" rel="noopener">Rezervovat kurt online</a>
+              <a class="odkaz" href="tel:+420608974974">Recepce <span class="cislice">608&nbsp;974&nbsp;974</span></a>
+            </p>
+          </div>
+        </li>
+        <li class="dnes-radek" id="clenstvi">
+          <p class="dnes-cislo dnes-cislo--cena cislice"><small>od</small>9&nbsp;500<small>&nbsp;Kč</small></p>
+          <div class="dnes-obsah">
+            <h3 class="dnes-titul">roční členství 2026</h3>
+            <p>Členem se může stát úplně každý. Stačí uhradit roční členský poplatek – v&nbsp;ceně jsou venkovní dvorce, bazén, fitness, regenerace, Revue i&nbsp;hra zdarma v&nbsp;klubech Centenary Tennis Clubs.</p>
+            <details class="rozbal dnes-cenik">
+              <summary>Ceník hrajících členů 2026</summary>
+              <div class="rozbal-obsah">
+                <ul class="cenik">
+                  <li><span class="cenik-nazev">1&nbsp;dospělý hrající</span><span class="cenik-vodici" aria-hidden="true"></span><span class="cenik-cena">21&nbsp;000&nbsp;Kč</span></li>
+                  <li><span class="cenik-nazev">1&nbsp;dospělý hrající do 30&nbsp;let</span><span class="cenik-vodici" aria-hidden="true"></span><span class="cenik-cena">15&nbsp;500&nbsp;Kč</span></li>
+                  <li><span class="cenik-nazev">seniorky od 67&nbsp;let / senioři od 72&nbsp;let<small>po–pá hraní jen do 14:00, so–ne bez omezení</small></span><span class="cenik-vodici" aria-hidden="true"></span><span class="cenik-cena">10&nbsp;000&nbsp;Kč</span></li>
+                  <li><span class="cenik-nazev">mládež 4–18&nbsp;let / studující do 26&nbsp;let</span><span class="cenik-vodici" aria-hidden="true"></span><span class="cenik-cena">9&nbsp;500&nbsp;Kč</span></li>
+                </ul>
+                <p class="pramen">Pramen · cltk.cz – Podmínky členství · haly v&nbsp;zimě se platí zvlášť</p>
+              </div>
+            </details>
+            <p class="radek dnes-odkazy">
+              <a class="odkaz odkaz--ven" href="https://cltk.cz/cs/podminky-clenstvi/" target="_blank" rel="noopener">Podmínky a&nbsp;přihláška</a>
+              <a class="odkaz" href="mailto:stefkova@cltk.cz">Kancelář klubu</a>
+            </p>
+          </div>
+        </li>
+        <li class="dnes-radek" id="skola">
+          <p class="dnes-cislo cislice">3–9</p>
+          <div class="dnes-obsah">
+            <h3 class="dnes-titul">let · Tenisová škola</h3>
+            <p>Kolem stovky dětí, nábory na jaře a&nbsp;na podzim. Cena zahrnuje trenéra i&nbsp;pronájem kurtu, za nepříznivého počasí se hraje v&nbsp;hale. Vede ji Mgr.&nbsp;Jan Pecha, Ph.D.</p>
+            <p class="radek dnes-odkazy">
+              <a class="odkaz" href="tel:+420721663118">Zavolat <span class="cislice">721&nbsp;663&nbsp;118</span></a>
+              <a class="odkaz" href="mailto:pecha@cltk.cz">pecha@cltk.cz</a>
+            </p>
+          </div>
+        </li>
+      </ol>
+
+      <figure class="dnes-tvar">
+        <div class="foto foto--4-5">
+          <img src="../assets/foto/clanky/karolina-muchova-ve-finale-wimbledonu.jpg" alt="Karolína Muchová se stříbrným talířem pro finalistku Wimbledonu 2026" width="2400" height="1601" loading="lazy" decoding="async">
+        </div>
+        <blockquote class="dnes-citat">
+          <p>„V&nbsp;nejstarším klubu v&nbsp;Praze. … Je rodinný. Opravdu se tam cítím jako v&nbsp;rodině.“</p>
+        </blockquote>
+        <figcaption>
+          <span class="dnes-tvar-jmeno">Karolína Muchová</span>
+          <span class="dnes-tvar-role">hráčka klubu od 2019 · finále Wimbledonu 2026 · US Open 2026 mix</span>
+          <span class="kredit">Citát Aktuálně.cz, 28.&nbsp;8.&nbsp;2023 · foto Martin Sidorják</span>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- III · KRONIKA -->
+<section class="sekce sekce--panel" id="kronika" aria-labelledby="kronika-titul">
+  <div class="obal">
+    <header class="sal-hlava sal-hlava--2">
+      <p class="sal-oznaceni"><span class="sal-cislo">III</span>Kronika</p>
+      <h2 class="sal-titul" id="kronika-titul">Čtyři jména, jeden ostrov</h2>
+      <p class="sal-uvod sal-uvod--maly">Klub nesl během svých dějin několik jmen. Razítko ukazuje, pod kterým právě listujete. Z&nbsp;38&nbsp;záznamů kroniky vybíráme osm; každý má štítek pramene a&nbsp;míru jistoty.</p>
+    </header>
+
+    <div class="kronika" data-kronika>
+      <aside class="kronika-bok" aria-label="Dobové jméno a kapitoly">
+        <p class="kronika-bok-mobil mono-stitek" aria-hidden="true">Dobové<br>jméno</p>
+        <div class="razitko" data-razitko>
+          <div class="razitko-obsah">
+            <span class="razitko-horni">Dobové jméno klubu</span>
+            <span class="razitko-jmeno" aria-live="polite">I. Český Lawn-Tennis Klub</span>
+            <span class="razitko-roky">1893–1949</span>
+          </div>
+        </div>
+        <p class="kronika-bok-titul mono-stitek">Kapitoly</p>
+        <ol class="kronika-kapitoly">
+          <li><a data-kapitola-odkaz href="#kap-1">I. Český Lawn-Tennis Klub</a></li>
+          <li><a data-kapitola-odkaz href="#kap-2">Motorlet</a></li>
+          <li><a data-kapitola-odkaz href="#kap-3">TJ Dopravní podnik</a></li>
+          <li><a data-kapitola-odkaz href="#kap-4">I.&nbsp;ČLTK Praha</a></li>
+        </ol>
+        <p class="kronika-bok-pozn">Roky změn názvu se v&nbsp;pramenech liší, proto jen přibližně.</p>
+      </aside>
+
+      <div class="kronika-obsah">
+        <!-- Kapitola I -->
+        <section class="kapitola" id="kap-1" data-era data-era-nazev="I. Český Lawn-Tennis Klub" data-era-roky="1893–1949" data-era-cislo="" aria-labelledby="kap-1-t">
+          <header class="kapitola-hlava"><span class="kapitola-cislo">I.</span><h3 class="kapitola-nazev" id="kap-1-t">I. Český Lawn-Tennis Klub</h3><span class="kapitola-roky">1893–1949</span></header>
+          <article class="zaznam">
+            <p class="zaznam-rok">1893</p>
+            <div>
+              <h4 class="zaznam-titul">Založení klubu</h4>
+              <p class="zaznam-text">Josef a&nbsp;Karel Cífkovi a&nbsp;Josef Rössler-Ořovský zakládají I.&nbsp;Český Lawn-Tennis Klub. První dvorce byly podle cs Wikipedie na Židovském ostrově, od 1894 na Střeleckém ostrově.</p>
+              <div class="zaznam-meta"><span class="pramen">Pramen · Národní muzeum (inventář Rössler-Ořovský) · Revue 02/2013, s.&nbsp;8</span><span class="jistota jistota--overeno">ověřeno (rok)</span><span class="jistota jistota--rozpor">místo – rozpor pramenů</span></div>
+            </div>
+            <figure class="archiv zaznam-foto">
+              <div class="archiv-ram duotone"><img src="../assets/historie/hist-1893-josef-cifka-portret.jpg" alt="Portrét Josefa Cífky, jednoho ze zakladatelů klubu" width="556" height="504" loading="lazy" decoding="async"></div>
+              <button type="button" class="archiv-original" data-original aria-pressed="false">Originál</button>
+              <figcaption class="archiv-popisek"><span class="popisek">Josef Cífka, spoluzakladatel</span><span class="pramen">Inv. 1893 · Revue 02/2013</span></figcaption>
+            </figure>
+          </article>
+          <article class="zaznam">
+            <p class="zaznam-rok">1912</p>
+            <div>
+              <h4 class="zaznam-titul">Turnaj pod oblouky viaduktu</h4>
+              <p class="zaznam-text">Turnaj na Štvanici přímo pod oblouky Negrelliho viaduktu. Ladislav Žemla je čtvrtý ve dvouhře na OH ve Stockholmu.</p>
+              <div class="zaznam-meta"><span class="pramen">Pramen · Revue 01/2023 + Bulletin 1893–2023, s.&nbsp;39 · en.wikipedia</span><span class="jistota jistota--overeno">ověřeno</span></div>
+            </div>
+            <figure class="archiv zaznam-foto">
+              <div class="archiv-ram duotone"><img src="../assets/historie/hist-1912-turnaj-pod-negrelliho-viaduktem.jpg" alt="Hra na dvorci přímo pod kamennými oblouky Negrelliho viaduktu, 1912" width="830" height="518" loading="lazy" decoding="async"></div>
+              <button type="button" class="archiv-original" data-original aria-pressed="false">Originál</button>
+              <figcaption class="archiv-popisek"><span class="popisek">„Takhle to vypadalo při turnaji na Štvanici v&nbsp;roce 1912“</span><span class="pramen">Inv. 1912 · Revue 01/2023, s.&nbsp;39</span></figcaption>
+            </figure>
+          </article>
+        </section>
+
+        <!-- Kapitola II -->
+        <section class="kapitola" id="kap-2" data-era data-era-nazev="Motorlet" data-era-roky="od 1949" data-era-cislo="" aria-labelledby="kap-2-t">
+          <header class="kapitola-hlava"><span class="kapitola-cislo">II.</span><h3 class="kapitola-nazev" id="kap-2-t">Motorlet</h3><span class="kapitola-roky">od 1949</span></header>
+          <article class="zaznam">
+            <p class="zaznam-rok">1954</p>
+            <div>
+              <h4 class="zaznam-titul">Drobný vítězem Wimbledonu</h4>
+              <p class="zaznam-text">Ve finále porazil Kena Rosewalla <span class="skore">13-11, 4-6, 6-2, 9-7</span> – jako občan Egypta a&nbsp;jako jediný muž v&nbsp;brýlích v&nbsp;historii Wimbledonu.</p>
+              <div class="zaznam-meta"><span class="pramen">Pramen · tennisfame.com · en.wikipedia</span><span class="jistota jistota--overeno">ověřeno</span><span class="mono-stitek">ve štvanické historii</span></div>
+            </div>
+            <figure class="archiv zaznam-foto">
+              <div class="archiv-ram archiv-ram--pomer duotone" style="--pomer: 4 / 5"><img src="../assets/historie/hist-1954-drobny-na-wimbledonske-trave.jpg" alt="Jaroslav Drobný při hře na wimbledonské trávě, 1954" width="1192" height="1600" loading="lazy" decoding="async"></div>
+              <button type="button" class="archiv-original" data-original aria-pressed="false">Originál</button>
+              <figcaption class="archiv-popisek"><span class="popisek">Jaroslav Drobný na wimbledonské trávě</span><span class="pramen">Inv. 1954 · Revue 02/2013</span></figcaption>
+            </figure>
+          </article>
+          <article class="zaznam">
+            <p class="zaznam-rok">1966<small>1963–1966</small></p>
+            <div>
+              <h4 class="zaznam-titul">Mistři ligy s&nbsp;Kodešem</h4>
+              <p class="zaznam-text">Spartak Praha Motorlet s&nbsp;mladým Janem Kodešem vyhrává ligu smíšených družstev (1966 doloženo, 1963–1965 pravděpodobně). Pod jménem Motorlet klub podle svých pramenů získal 12&nbsp;titulů.</p>
+              <p class="poznamka">Podle klubu 16&nbsp;titulů mistra republiky ve smíšených družstvech: 12× jako Spartak Praha Motorlet, dále 1975, 1990, 2018 a&nbsp;2019.</p>
+              <div class="zaznam-meta"><span class="pramen">Pramen · cs.wikipedia Jan Kodeš · Revue 02/2013, s.&nbsp;11</span><span class="jistota jistota--klub">podle klubu</span></div>
+            </div>
+            <figure class="archiv zaznam-foto">
+              <div class="archiv-ram duotone"><img src="../assets/historie/hist-1966-mistri-ligy.jpg" alt="Mistři ligy 1966 – šestice hráčů drží společně raketu" width="624" height="395" loading="lazy" decoding="async"></div>
+              <button type="button" class="archiv-original" data-original aria-pressed="false">Originál</button>
+              <figcaption class="archiv-popisek"><span class="popisek">Mistr ligy 1966</span><span class="pramen">Inv. 1966 · Revue 02/2013, s.&nbsp;11</span></figcaption>
+            </figure>
+          </article>
+        </section>
+
+        <!-- Kapitola III -->
+        <section class="kapitola" id="kap-3" data-era data-era-nazev="TJ Dopravní podnik" data-era-roky="kolem 1970–1990" data-era-cislo="" aria-labelledby="kap-3-t">
+          <header class="kapitola-hlava"><span class="kapitola-cislo">III.</span><h3 class="kapitola-nazev" id="kap-3-t">TJ Dopravní podnik</h3><span class="kapitola-roky">kolem 1970–1990</span></header>
+          <article class="zaznam">
+            <p class="zaznam-rok">1971<small>1971–1972</small></p>
+            <div>
+              <h4 class="zaznam-titul">Daviscupové bitvy na starém centru</h4>
+              <p class="zaznam-text">ČSSR – Španělsko <span class="skore">3:2</span> (16.–18.&nbsp;7.&nbsp;1971): Kodeš porazil Orantese i&nbsp;Gisberta, Pála Gisberta <span class="skore">6:0, 6:1, 6:1</span>. V&nbsp;květnu 1972 Kodeš na Štvanici porazil mladého Björna Borga <span class="skore">6:2, 6:3, 7:5</span>.</p>
+              <div class="zaznam-meta"><span class="pramen">Pramen · en.wikipedia 1971 a&nbsp;1972 Davis Cup Europe Zone</span><span class="jistota jistota--overeno">ověřeno</span></div>
+            </div>
+            <figure class="archiv zaznam-foto">
+              <div class="archiv-ram duotone"><img src="../assets/historie/hist-1971-kodes-a-pala-oslava-davis-cup.jpg" alt="Jan Kodeš a František Pála slaví daviscupové vítězství nad Španělskem, 1971" width="1259" height="745" loading="lazy" decoding="async"></div>
+              <button type="button" class="archiv-original" data-original aria-pressed="false">Originál</button>
+              <figcaption class="archiv-popisek"><span class="popisek">Kodeš a&nbsp;Pála po vítězství nad Španělskem</span><span class="pramen">Inv. 1971 · Revue 02/2013</span></figcaption>
+            </figure>
+          </article>
+          <article class="zaznam">
+            <p class="zaznam-rok">1986</p>
+            <div>
+              <h4 class="zaznam-titul">Nový štvanický stadion</h4>
+              <p class="zaznam-text">16.&nbsp;6.&nbsp;1986 se otevírá nejmodernější tenisový areál tehdejšího Československa (arch. Kales a&nbsp;Novotná). Premiérou je Pohár federace (20.–27.&nbsp;7.): Martina Navrátilová se poprvé po emigraci vrací a&nbsp;ve finále porazí Mandlíkovou <span class="skore">7:5, 6:1</span>.</p>
+              <p class="poznamka">Centrální dvorec patří Českému tenisovému svazu, ostatní kurty klubu.</p>
+              <div class="zaznam-meta"><span class="pramen">Pramen · ČTK 14.&nbsp;6.&nbsp;2006 · ÚDU AV ČR · en.wikipedia</span><span class="jistota jistota--overeno">ověřeno</span></div>
+            </div>
+            <figure class="archiv zaznam-foto">
+              <div class="archiv-ram duotone"><img src="../assets/historie/hist-1986-novy-centralni-dvorec.jpg" alt="Nový centrální dvorec na Štvanici zaplněný diváky, 1986" width="1030" height="575" loading="lazy" decoding="async"></div>
+              <button type="button" class="archiv-original" data-original aria-pressed="false">Originál</button>
+              <figcaption class="archiv-popisek"><span class="popisek">Nový centrální dvorec, 1986</span><span class="pramen">Inv. 1986 · Revue 01/2023</span></figcaption>
+            </figure>
+          </article>
+        </section>
+
+        <!-- Kapitola IV -->
+        <section class="kapitola" id="kap-4" data-era data-era-nazev="I. ČLTK Praha" data-era-roky="1990–dnes" data-era-cislo="" aria-labelledby="kap-4-t">
+          <header class="kapitola-hlava"><span class="kapitola-cislo">IV.</span><h3 class="kapitola-nazev" id="kap-4-t">I.&nbsp;ČLTK Praha</h3><span class="kapitola-roky">1990–dnes</span></header>
+          <article class="zaznam">
+            <p class="zaznam-rok">2018</p>
+            <div>
+              <h4 class="zaznam-titul">Titul po 28&nbsp;letech</h4>
+              <p class="zaznam-text">10.&nbsp;6.&nbsp;2018 slaví klub 125&nbsp;let. V&nbsp;prosinci vyhrává extraligu – finále v&nbsp;Říčanech s&nbsp;Prostějovem <span class="skore">5:4</span>.</p>
+              <div class="zaznam-meta"><span class="pramen">Pramen · iROZHLAS 20.&nbsp;12.&nbsp;2018 · tenisovaextraliga.cz</span><span class="jistota jistota--overeno">ověřeno</span></div>
+            </div>
+            <figure class="archiv zaznam-foto">
+              <div class="archiv-ram archiv-ram--pomer duotone" style="--pomer: 4 / 4.4"><img src="../assets/historie/hist-2018-extraliga-pohary.jpg" alt="Hráči s pohárem pro mistry extraligy družstev 2018" width="678" height="751" loading="lazy" decoding="async"></div>
+              <button type="button" class="archiv-original" data-original aria-pressed="false">Originál</button>
+              <figcaption class="archiv-popisek"><span class="popisek">Pohár mistrů extraligy, 2018</span><span class="pramen">Inv. 2018 · archiv klubu</span></figcaption>
+            </figure>
+          </article>
+          <article class="zaznam">
+            <p class="zaznam-rok">2026</p>
+            <div>
+              <h4 class="zaznam-titul">Rok Karolíny Muchové</h4>
+              <p class="zaznam-text">Muchová vyhrává WTA 1000 v&nbsp;Dauhá a&nbsp;WTA 500 v&nbsp;Bad Homburgu, 11.&nbsp;7. hraje finále Wimbledonu a&nbsp;v&nbsp;srpnu vyhrává s&nbsp;Jakubem Menšíkem mix na US Open. Nový stadion stojí 40&nbsp;let; podle newsletteru 3/2026 se na Štvanici otevírá Síň slávy českého tenisu.</p>
+              <div class="zaznam-meta"><span class="pramen">Pramen · usopen.org · olympics.com · cltk.cz, článek 385 · newsletter 3/2026</span><span class="jistota jistota--overeno">ověřeno</span><span class="jistota jistota--klub">Síň slávy podle klubu</span></div>
+            </div>
+            <figure class="zaznam-foto">
+              <div class="foto foto--4-3"><img src="../assets/foto/clanky/karolina-muchova-ovladla-smisenou-ctyrhru-na-us-open.jpg" alt="Karolína Muchová a Jakub Menšík s trofejí za smíšenou čtyřhru na US Open 2026" width="2400" height="1600" loading="lazy" decoding="async"></div>
+              <figcaption class="archiv-popisek"><span class="popisek">US Open 2026, smíšená čtyřhra</span><span class="kredit">Foto Getty Images</span></figcaption>
+            </figure>
+          </article>
+        </section>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="kapitoly-pilulka" data-kapitoly-pilulka>
+  <nav class="kapitoly-pilulka-seznam" id="pilulka-seznam" aria-label="Kapitoly kroniky" hidden>
+    <a href="#kap-1"><span>I</span><span>I. Český Lawn-Tennis Klub</span></a>
+    <a href="#kap-2"><span>II</span><span>Motorlet</span></a>
+    <a href="#kap-3"><span>III</span><span>TJ Dopravní podnik</span></a>
+    <a href="#kap-4"><span>IV</span><span>I.&nbsp;ČLTK Praha</span></a>
+  </nav>
+  <button type="button" class="kapitoly-pilulka-tlacitko" aria-expanded="false" aria-controls="pilulka-seznam"><span class="mono-stitek">Kapitoly</span><span data-pilulka-text>I. Český Lawn-Tennis Klub</span></button>
+</div>
+
+<!-- IV · TEHDY A TEĎ -->
+<section class="sekce" id="tehdy" aria-labelledby="tehdy-titul">
+  <div class="obal">
+    <header class="sal-hlava sal-hlava--2">
+      <p class="sal-oznaceni"><span class="sal-cislo">IV</span>Tehdy a&nbsp;teď</p>
+      <h2 class="sal-titul" id="tehdy-titul">Voda odešla, ostrov zůstal</h2>
+      <p class="sal-uvod sal-uvod--maly">Dva letecké pohledy se stadionem a&nbsp;viaduktem. Táhněte dělicí čárou nebo použijte šipky na klávesnici.</p>
+    </header>
+    <div class="tehdy-mriz">
+      <div class="tehdy-hlavni">
+        <div class="porovnani" data-porovnani data-tehdy="povodeň 2002" data-ted="areál dnes">
+          <div class="porovnani-tehdy"><img src="../assets/historie/hist-2002-povoden-zaplaveny-areal.jpg" alt="Povodeň 2002: centrální dvorec a Negrelliho viadukt pod vodou, letecký pohled" width="772" height="445" loading="lazy" decoding="async"></div>
+          <div class="porovnani-ted"><img src="../assets/foto/letecky-zimni-haly-shora.jpg" alt="Areál dnes shora: stadion, přetlakové haly a kurty u Vltavy" width="2000" height="1125" loading="lazy" decoding="async"></div>
+          <span class="porovnani-stitek">Tehdy · 2002</span>
+          <span class="porovnani-stitek porovnani-stitek--ted">Teď · areál shora</span>
+          <div class="porovnani-delic" aria-hidden="true"></div>
+          <label class="sr-only" for="porovnani-rozsah">Poměr snímků tehdy a teď</label>
+          <input class="porovnani-posuvnik" id="porovnani-rozsah" type="range" min="0" max="100" step="1" value="50">
+        </div>
+        <p class="sr-only" aria-live="polite" data-porovnani-vystup></p>
+        <div class="porovnani-popis">
+          <div class="stitek">
+            <span class="stitek-inv">2002</span>
+            <p class="stitek-nazev">Povodeň</p>
+            <p class="stitek-meta">Celý areál je pod vodou, v&nbsp;hale přes čtyři metry vody, škody 100–120&nbsp;milionů korun. Areál se znovu otevřel koncem května 2003.</p>
+            <p class="pramen">Pramen · ČTK 14.&nbsp;6.&nbsp;2006 · Revue 01/2023, s.&nbsp;46</p>
+          </div>
+          <div class="stitek">
+            <span class="stitek-inv">Dnes</span>
+            <p class="stitek-nazev">Areál v&nbsp;zimní podobě</p>
+            <p class="stitek-meta">Přetlakové haly nad antukou a&nbsp;tvrdými kurty, uprostřed štvanický stadion. V&nbsp;zimě 12&nbsp;krytých kurtů.</p>
+            <p class="pramen">Pramen · fotografie ze stávajícího webu klubu</p>
+          </div>
+        </div>
+      </div>
+      <aside class="tehdy-dalsi" aria-label="Další pár snímků">
+        <p class="nadtitul">Připravujeme · pár č.&nbsp;2</p>
+        <figure class="archiv">
+          <div class="archiv-ram duotone"><img src="../assets/historie/hist-1912-turnaj-pod-negrelliho-viaduktem.jpg" alt="Turnaj pod oblouky Negrelliho viaduktu, 1912" width="830" height="518" loading="lazy" decoding="async"></div>
+          <figcaption class="archiv-popisek"><span class="popisek">1912 · pod oblouky viaduktu</span></figcaption>
+        </figure>
+        <div class="perokresba tehdy-prazdne">
+          <svg viewBox="0 0 320 120" aria-hidden="true" focusable="false"><g fill="none" stroke="currentColor" stroke-width="1.2"><path d="M4 30h312M4 38h312"/><path d="M16 110V60a36 36 0 0 1 72 0v50M104 110V60a36 36 0 0 1 72 0v50M192 110V60a36 36 0 0 1 72 0v50M280 110V60a26 26 0 0 1 36-24"/><path d="M4 110h312" stroke-dasharray="2 4"/><path d="M88 38v72M176 38v72M264 38v72"/></g></svg>
+          <p>Dnešní oblouky ze stejného úhlu nafotí klub.</p>
+          <span class="jistota jistota--doplni">doplní klub</span>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- V · HRÁLI NA ŠTVANICI (tmavý blok) -->
+<section class="sekce sekce--tmava hraci" id="hraci" aria-labelledby="hraci-titul">
+  <div class="obal">
+    <header class="sal-hlava hraci-hlava">
+      <p class="sal-oznaceni"><span class="sal-cislo">V</span>Hráli na Štvanici</p>
+      <h2 class="sal-titul" id="hraci-titul">Kdo všechno vyšel na štvanickou antuku</h2>
+      <p class="sal-uvod sal-uvod--maly">Galerie legend z&nbsp;klubových publikací – podle Bulletinu 2023 víc než šedesát jmen. Podtržená jména mají doloženou příležitost: klepněte a&nbsp;uvidíte kdy.</p>
+    </header>
+    <p class="stena" data-stena="stena-karta">
+      <span class="stena-jmeno">René Lacoste</span><span class="stena-tecka" aria-hidden="true">·</span>
+      <span class="stena-jmeno">Henri Cochet</span><span class="stena-tecka" aria-hidden="true">·</span>
+      <span class="stena-jmeno">Donald Budge</span><span class="stena-tecka" aria-hidden="true">·</span>
+      <span class="stena-jmeno">Rod Laver</span><span class="stena-tecka" aria-hidden="true">·</span>
+      <span class="stena-jmeno">Neale Fraser</span><span class="stena-tecka" aria-hidden="true">·</span>
+      <span class="stena-jmeno">József Asbóth</span><span class="stena-tecka" aria-hidden="true">·</span>
+      <span class="stena-jmeno">Ivan Lendl</span><span class="stena-tecka" aria-hidden="true">·</span>
+      <span class="stena-jmeno">Gustavo Kuerten</span><span class="stena-tecka" aria-hidden="true">·</span>
+      <span class="stena-jmeno">Hana Mandlíková</span><span class="stena-tecka" aria-hidden="true">·</span>
+      <span class="stena-jmeno">Jana Novotná</span><span class="stena-tecka" aria-hidden="true">·</span>
+      <span class="stena-jmeno">Chris Evertová-Lloydová</span><span class="stena-tecka" aria-hidden="true">·</span>
+      <button type="button" class="stena-jmeno stena-jmeno--dolozeno" aria-expanded="false" aria-controls="stena-karta" data-prilezitost="Davis Cup ČSSR – Švédsko, Štvanice 19.–21. 5. 1972" data-pramen="en.wikipedia – 1972 Davis Cup Europe Zone" data-jistota="overeno">Björn Borg</button><span class="stena-tecka" aria-hidden="true">·</span>
+      <span class="stena-jmeno stena-jmeno--klub">Věra Pužejová</span><span class="stena-tecka" aria-hidden="true">·</span>
+      <button type="button" class="stena-jmeno stena-jmeno--dolozeno" aria-expanded="false" aria-controls="stena-karta" data-prilezitost="Pohár federace 1986, finále 27. 7. 1986 – první velká akce nového stadionu" data-pramen="en.wikipedia – 1986 Federation Cup" data-jistota="overeno">Martina Navrátilová</button><span class="stena-tecka" aria-hidden="true">·</span>
+      <span class="stena-jmeno">Stan Smith</span><span class="stena-tecka" aria-hidden="true">·</span>
+      <span class="stena-jmeno">Petr Korda</span><span class="stena-tecka" aria-hidden="true">·</span>
+      <span class="stena-jmeno">Mats Wilander</span><span class="stena-tecka" aria-hidden="true">·</span>
+      <span class="stena-jmeno">Marcel Bernard</span><span class="stena-tecka" aria-hidden="true">·</span>
+      <span class="stena-jmeno">Frank Parker</span><span class="stena-tecka" aria-hidden="true">·</span>
+      <span class="stena-jmeno">Budge Patty</span><span class="stena-tecka" aria-hidden="true">·</span>
+      <span class="stena-jmeno">Yvon Petra</span><span class="stena-tecka" aria-hidden="true">·</span>
+      <span class="stena-jmeno">Jean Borotra</span><span class="stena-tecka" aria-hidden="true">·</span>
+      <span class="stena-jmeno">Jack Crawford</span><span class="stena-tecka" aria-hidden="true">·</span>
+      <span class="stena-jmeno">Fred Stolle</span><span class="stena-tecka" aria-hidden="true">·</span>
+      <button type="button" class="stena-jmeno stena-jmeno--dolozeno" aria-expanded="false" aria-controls="stena-karta" data-prilezitost="Semifinále Davis Cupu ČSSR – Austrálie, Štvanice 26.–28. 9. 1975 (Hřebec otočil zápas 3:6, 4:6, 6:1, 6:3, 6:3)" data-pramen="en.wikipedia – 1975 Davis Cup" data-jistota="overeno">Tony Roche</button><span class="stena-tecka" aria-hidden="true">·</span>
+      <span class="stena-jmeno">Lewis Hoad</span><span class="stena-tecka" aria-hidden="true">·</span>
+      <span class="stena-jmeno stena-jmeno--klub">Jaroslav Drobný</span><span class="stena-tecka" aria-hidden="true">·</span>
+      <span class="stena-jmeno">Fred Perry</span><span class="stena-tecka" aria-hidden="true">·</span>
+      <span class="stena-jmeno">Goran Ivaniševič</span><span class="stena-tecka" aria-hidden="true">·</span>
+      <button type="button" class="stena-jmeno stena-jmeno--dolozeno" aria-expanded="false" aria-controls="stena-karta" data-prilezitost="Vítěz Prague Open 2020" data-pramen="en.wikipedia – I.ČLTK Prague Open" data-jistota="overeno">Stan Wawrinka</button><span class="stena-tecka" aria-hidden="true">·</span>
+      <span class="stena-jmeno">Artur Larsen</span><span class="stena-tecka" aria-hidden="true">·</span>
+      <button type="button" class="stena-jmeno stena-jmeno--dolozeno" aria-expanded="false" aria-controls="stena-karta" data-prilezitost="Davis Cup ČSSR – Švédsko, Praha 3.–5. 10. 1986 (Šrejber – Edberg); nový centr na Štvanici jen podle klubu" data-pramen="en.wikipedia – 1986 Davis Cup World Group" data-jistota="klub">Stefan Edberg</button><span class="stena-tecka" aria-hidden="true">·</span>
+      <span class="stena-jmeno">Steffi Grafová</span><span class="stena-tecka" aria-hidden="true">·</span>
+      <button type="button" class="stena-jmeno stena-jmeno--dolozeno" aria-expanded="false" aria-controls="stena-karta" data-prilezitost="Vítěz Czech Open 1988" data-pramen="en.wikipedia – Prague Open (1987–1999)" data-jistota="overeno">Thomas Muster</button><span class="stena-tecka" aria-hidden="true">·</span>
+      <span class="stena-jmeno">Manuel Santana</span><span class="stena-tecka" aria-hidden="true">·</span>
+      <span class="stena-jmeno">Pat Cash</span><span class="stena-tecka" aria-hidden="true">·</span>
+      <span class="stena-jmeno">Manuel Orantes</span><span class="stena-tecka" aria-hidden="true">·</span>
+      <button type="button" class="stena-jmeno stena-jmeno--dolozeno" aria-expanded="false" aria-controls="stena-karta" data-prilezitost="Vítěz Czech Open 1993 a 1994" data-pramen="en.wikipedia – Prague Open (1987–1999)" data-jistota="overeno">Sergi Bruguera</button><span class="stena-tecka" aria-hidden="true">·</span>
+      <span class="stena-jmeno">Andrés Gimeno</span><span class="stena-tecka" aria-hidden="true">·</span>
+      <span class="stena-jmeno">Richard Krajicek</span><span class="stena-tecka" aria-hidden="true">·</span>
+      <span class="stena-jmeno">Marcelo Ríos</span><span class="stena-tecka" aria-hidden="true">·</span>
+      <span class="stena-jmeno">Viktoria Azarenková</span><span class="stena-tecka" aria-hidden="true">·</span>
+      <span class="stena-jmeno">Marion Bartoliová</span><span class="stena-tecka" aria-hidden="true">·</span>
+      <span class="stena-jmeno">Samantha Stosurová</span><span class="stena-tecka" aria-hidden="true">·</span>
+      <span class="stena-jmeno">Gabriela Sabatiniová</span><span class="stena-tecka" aria-hidden="true">·</span>
+      <span class="stena-jmeno">Petra Kvitová</span><span class="stena-tecka" aria-hidden="true">·</span>
+      <button type="button" class="stena-jmeno stena-jmeno--dolozeno" aria-expanded="false" aria-controls="stena-karta" data-prilezitost="Vítězka WTA ECM Prague Open 2005" data-pramen="podklady – ověření titulů E22" data-jistota="overeno">Dinara Safinová</button><span class="stena-tecka" aria-hidden="true">·</span>
+      <span class="stena-jmeno">Francesca Schiavoneová</span><span class="stena-tecka" aria-hidden="true">·</span>
+      <span class="stena-jmeno">Mary Pierceová</span><span class="stena-tecka" aria-hidden="true">·</span>
+      <span class="stena-jmeno">Miloslav Mečíř</span><span class="stena-tecka" aria-hidden="true">·</span>
+      <span class="stena-jmeno">A.&nbsp;Sánchezová-Vicariová</span><span class="stena-tecka" aria-hidden="true">·</span>
+      <button type="button" class="stena-jmeno stena-jmeno--dolozeno" aria-expanded="false" aria-controls="stena-karta" data-prilezitost="Vítěz Czech Open 1996" data-pramen="en.wikipedia – Prague Open (1987–1999)" data-jistota="overeno">Jevgenij Kafelnikov</button><span class="stena-tecka" aria-hidden="true">·</span>
+      <span class="stena-jmeno">Gottfried von Cramm</span><span class="stena-tecka" aria-hidden="true">·</span>
+      <span class="stena-jmeno">Guillermo Vilas</span><span class="stena-tecka" aria-hidden="true">·</span>
+      <span class="stena-jmeno">Martina Hingisová</span><span class="stena-tecka" aria-hidden="true">·</span>
+      <span class="stena-jmeno">Marat Safin</span><span class="stena-tecka" aria-hidden="true">·</span>
+      <span class="stena-jmeno">Nicola Pietrangeli</span>
+    </p>
+    <p class="stena-legenda"><span class="l-dolozeno">doložená příležitost</span><span class="l-klub">hráli za klub</span><span>ostatní podle klubu – galerie „Legendy na Štvanici“</span></p>
+    <div class="stena-karta" id="stena-karta" hidden></div>
+    <p class="stena-poznamka">Členy klubu nebyli: Martina Navrátilová, Ivan Lendl, Helena Suková, Hana Mandlíková, Petr Korda a&nbsp;Menzel – členství v&nbsp;I.&nbsp;ČLTK prameny neuvádějí. <span class="pramen">Pramen · Revue 02/2013, s.&nbsp;17–18 · Revue 01/2023, s.&nbsp;66–67</span></p>
+  </div>
+</section>
+
+<!-- VI · SÍŇ SLÁVY -->
+<section class="sekce" id="sin-slavy" aria-labelledby="sin-titul">
+  <div class="obal">
+    <header class="sal-hlava sal-hlava--2">
+      <p class="sal-oznaceni"><span class="sal-cislo">VI</span>Síň slávy</p>
+      <h2 class="sal-titul" id="sin-titul">Od Žemly po Muchovou</h2>
+      <p class="sal-uvod sal-uvod--maly">Jen osobnosti s&nbsp;doloženou vazbou na klub. Podle registru ČTS získali hráči v&nbsp;barvách klubu v&nbsp;den triumfu 10&nbsp;grandslamových titulů; tituly Drobného a&nbsp;Kodeše patří do štvanické historie.</p>
+    </header>
+    <ol class="medailony">
+      <li class="medailon">
+        <div class="medailon-portret duotone" style="--pozice: 50% 8%"><img src="../assets/historie/hist-1910s-ladislav-zemla.jpg" alt="Ladislav Žemla" width="302" height="512" loading="lazy" decoding="async"></div>
+        <p class="medailon-kategorie">Legenda klubu</p>
+        <h3 class="medailon-jmeno">Ladislav Žemla</h3>
+        <p class="medailon-roky">1887–1955</p>
+        <p class="medailon-cin">Bronz OH Antverpy 1920 – mix se Skrbkovou; první mistr ČSR ve dvouhře 1920.</p>
+        <p class="pramen">Pramen · en.wikipedia – Ladislav Žemla</p>
+        <span class="jistota jistota--overeno">ověřeno</span>
+      </li>
+      <li class="medailon">
+        <div class="medailon-portret duotone" style="--pozice: 50% 6%"><img src="../assets/historie/hist-1954-drobny-s-wimbledonskym-poharem.jpg" alt="Jaroslav Drobný s wimbledonským pohárem" width="793" height="1373" loading="lazy" decoding="async"></div>
+        <p class="medailon-kategorie">Čestný člen</p>
+        <h3 class="medailon-jmeno">Jaroslav Drobný</h3>
+        <p class="medailon-roky">1921–2001</p>
+        <p class="medailon-cin">Wimbledon 1954 – finále s&nbsp;Rosewallem <span class="skore">13-11, 4-6, 6-2, 9-7</span>. Mistr světa v&nbsp;ledním hokeji 1947.</p>
+        <p class="pramen">Pramen · tennisfame.com · en.wikipedia · ve štvanické historii</p>
+        <span class="jistota jistota--overeno">ověřeno</span>
+      </li>
+      <li class="medailon">
+        <div class="medailon-portret duotone" style="--pozice: 50% 6%"><img src="../assets/historie/hist-1950s-vera-sukova-puzejova.jpg" alt="Věra Suková-Pužejová" width="907" height="1457" loading="lazy" decoding="async"></div>
+        <p class="medailon-kategorie">Legenda klubu</p>
+        <h3 class="medailon-jmeno">Věra Suková-Pužejová</h3>
+        <p class="medailon-roky">1931–1982</p>
+        <p class="medailon-cin">Finále Wimbledonu 1962 – první čs. finalistka. Roland Garros 1957 – mix s&nbsp;Javorským.</p>
+        <p class="pramen">Pramen · en.wikipedia – Věra Suková</p>
+        <span class="jistota jistota--overeno">ověřeno</span>
+      </li>
+      <li class="medailon">
+        <div class="medailon-portret duotone" style="--pozice: 44% 18%"><img src="../assets/historie/hist-1960s-pavel-korda-forhend.jpg" alt="Pavel Korda při forhendu" width="624" height="475" loading="lazy" decoding="async"></div>
+        <p class="medailon-kategorie">Zasloužilý člen</p>
+        <h3 class="medailon-jmeno">Pavel Korda</h3>
+        <p class="medailon-roky">1935–2019</p>
+        <p class="medailon-cin">Trenér daviscupového týmu ČSSR 1970–1981 (Davis Cup 1980) a&nbsp;trenér Jana Kodeše.</p>
+        <p class="pramen">Pramen · iROZHLAS/ČTK 5.&nbsp;5.&nbsp;2019</p>
+        <span class="jistota jistota--klub">vazba podle klubu</span>
+      </li>
+      <li class="medailon">
+        <div class="medailon-portret duotone" style="--pozice: 42% 14%"><img src="../assets/historie/hist-1970s-jan-kodes-na-stvanici.jpg" alt="Jan Kodeš na Štvanici" width="1258" height="1007" loading="lazy" decoding="async"></div>
+        <p class="medailon-kategorie">Čestný člen</p>
+        <h3 class="medailon-jmeno">Ing. Jan Kodeš</h3>
+        <p class="medailon-roky">nar. 1946</p>
+        <p class="medailon-cin">Wimbledon 1973 – finále s&nbsp;Metrevelim <span class="skore">6-1, 9-8 (7-5), 6-3</span>. Prezident klubu 1987–1990.</p>
+        <p class="pramen">Pramen · tennisfame.com · ve štvanické historii</p>
+        <span class="jistota jistota--overeno">ověřeno</span>
+      </li>
+      <li class="medailon">
+        <div class="medailon-portret duotone" style="--pozice: 62% 22%"><img src="../assets/historie/hist-2011-hradecka-pohar-roland-garros.jpg" alt="Lucie Hradecká s pohárem z Roland Garros" width="504" height="439" loading="lazy" decoding="async"></div>
+        <p class="medailon-kategorie">Zasloužilá členka</p>
+        <h3 class="medailon-jmeno">Lucie Hradecká</h3>
+        <p class="medailon-roky">za I.&nbsp;ČLTK 2003–2023</p>
+        <p class="medailon-cin">Roland Garros 2011 a&nbsp;US Open 2013 – čtyřhra s&nbsp;Hlaváčkovou; stříbro OH 2012.</p>
+        <p class="pramen">Pramen · registr ČTS · en.wikipedia</p>
+        <span class="jistota jistota--overeno">ověřeno</span>
+      </li>
+      <li class="medailon">
+        <div class="medailon-portret medailon-portret--typo">
+          <span class="medailon-typo"><b>2023</b><span>WIMBLEDON</span><small class="cislice">6:4 · 6:4</small></span>
+        </div>
+        <p class="medailon-kategorie">Čestná členka</p>
+        <h3 class="medailon-jmeno">Markéta Vondroušová</h3>
+        <p class="medailon-roky">za I.&nbsp;ČLTK od 2011</p>
+        <p class="medailon-cin">Wimbledon 2023 – první nenasazená šampionka v&nbsp;historii (finále s&nbsp;Jabeurovou <span class="skore">6:4, 6:4</span>).</p>
+        <p class="pramen">Pramen · registr ČTS · en.wikipedia · newsletter 130 let</p>
+        <span class="jistota jistota--overeno">ověřeno</span>
+      </li>
+      <li class="medailon">
+        <div class="medailon-portret duotone" style="--pozice: 48% 14%"><img src="../assets/foto/clanky/karolina-muchova-ve-finale-wimbledonu.jpg" alt="Karolína Muchová" width="2400" height="1601" loading="lazy" decoding="async"></div>
+        <p class="medailon-kategorie">Hráčka klubu</p>
+        <h3 class="medailon-jmeno">Karolína Muchová</h3>
+        <p class="medailon-roky">za I.&nbsp;ČLTK od 2019</p>
+        <p class="medailon-cin">US Open 2026 – mix s&nbsp;Menšíkem <span class="skore">6:3, 1:6, [10:6]</span>; finále Wimbledonu 2026.</p>
+        <p class="pramen">Pramen · registr ČTS · usopen.org · wtatennis.com</p>
+        <span class="jistota jistota--overeno">ověřeno</span>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- VII · KIOSEK REVUE -->
+<section class="sekce sekce--panel" id="revue" aria-labelledby="revue-titul">
+  <div class="obal">
+    <header class="sal-hlava sal-hlava--2">
+      <p class="sal-oznaceni"><span class="sal-cislo">VII</span>Kiosek · I.ČLTK Revue</p>
+      <h2 class="sal-titul" id="revue-titul">Dvacet let Revue v&nbsp;jedné poličce</h2>
+      <p class="sal-uvod sal-uvod--maly">41&nbsp;čísel klubového časopisu od roku 2006, dvakrát ročně. „I.ČLTK REVUE je tu s&nbsp;námi už dvacet let.“ Hledejte v&nbsp;titulcích a&nbsp;obsazích, nebo sledujte příběh v&nbsp;obálkách.</p>
+    </header>
+
+    <div class="kiosek" data-kiosek="dialog">
+      <div class="kiosek-hlava">
+        <div class="prave-vyslo">
+          <button type="button" class="prave-vyslo-obalka" data-kiosek-cislo="01/2026" aria-label="Otevřít detail I.ČLTK Revue 01/2026"><img src="../assets/revue/revue-2026-1.jpg" alt="" width="672" height="900" loading="lazy" decoding="async"></button>
+          <div>
+            <p class="nadtitul">Právě vyšlo · 01/2026 · 44&nbsp;stran</p>
+            <h3>Velký titul pro Karolínu</h3>
+            <ol>
+              <li><span>03</span>Terasa, která láká</li>
+              <li><span>06</span>Velký titul pro Karolínu</li>
+              <li><span>08</span>Největší turnajový triumf přišel doma</li>
+              <li><span>14</span>Z&nbsp;Itálie na Štvanici (Denisa Žoldáková)</li>
+              <li><span>28</span>Všechno nejlepší, legendo</li>
+              <li><span>32</span>Revue nás baví. Už 20&nbsp;let!</li>
+            </ol>
+            <p class="prave-vyslo-pdf"><a class="odkaz odkaz--ven" href="https://files.cltk.cz/2so4wzo52sl01/REVUE_2026_1_web.pdf" target="_blank" rel="noopener">Číst PDF <span class="cislice">(13,3&nbsp;MB)</span></a></p>
+          </div>
+        </div>
+        <form class="kiosek-hledani" role="search" action="#revue" onsubmit="return false">
+          <label class="nadtitul" for="revue-hledat">Hledat ve 20&nbsp;letech Revue</label>
+          <div class="hledat"><input type="search" id="revue-hledat" data-kiosek-hledat placeholder="Drobný, Hernych, terasa, Wimbledon…" autocomplete="off" enterkeyhint="search"></div>
+          <p class="kiosek-stav" data-kiosek-stav aria-live="polite"></p>
+          <ol class="kiosek-vysledky" data-kiosek-vysledky></ol>
+          <p class="kiosek-pozn">V&nbsp;návrhu se hledá v&nbsp;titulcích obálek a&nbsp;obsazích čísel. Ostrá verze prohledá plné texty všech PDF a&nbsp;otevře přímo stranu.</p>
+          <div class="kiosek-pribeh">
+            <p class="nadtitul">Příběh v&nbsp;obálkách</p>
+            <div class="cipy">
+              <button type="button" class="cip" data-kiosek-pribeh="muchova" aria-pressed="false">Karolína Muchová</button>
+              <button type="button" class="cip" data-kiosek-pribeh="hradecka" aria-pressed="false">Lucie Hradecká</button>
+              <button type="button" class="cip" data-kiosek-pribeh="kodes" aria-pressed="false">Jan Kodeš</button>
+              <button type="button" class="cip" data-kiosek-pribeh="bartunkova" aria-pressed="false">Nikola Bartůňková</button>
+              <button type="button" class="cip" data-kiosek-pribeh="vondrousova" aria-disabled="true">Markéta Vondroušová <small>po souhlasu klubu</small></button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <ol class="policka" data-kiosek-policka aria-label="Polička 41 čísel I.ČLTK Revue, od roku 2006"></ol>
+      <p class="policka-pozn"><span class="pramen">Čísla 01/2016 a&nbsp;02/2016 v&nbsp;archivu PDF chybí · obálka 02/2013 připomíná Drobného 1954</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- VIII · VITRÍNA -->
+<section class="sekce" id="vitrina" aria-labelledby="vitrina-titul">
+  <div class="obal">
+    <header class="sal-hlava sal-hlava--2">
+      <p class="sal-oznaceni"><span class="sal-cislo">VIII</span>Vitrína</p>
+      <h2 class="sal-titul" id="vitrina-titul">Předměty ze sbírky</h2>
+      <p class="sal-uvod sal-uvod--maly">Muzejní karty ve formátu název · rok · technika · pramen. Klepnutím předmět otevřete, dalším klepnutím přiblížíte detail.</p>
+    </header>
+    <ul class="vitrina">
+      <li>
+        <button type="button" class="predmet" data-dialog-otevrit="dialog" data-dialog-sablona="tpl-odznak" data-dialog-nadpis="Vitrína · Inv. 2023/1">
+          <span class="predmet-foto"><span class="predmet-lupa">Otevřít</span><img src="../assets/historie/hist-2023-zlaty-odznak-a-pametni-mince.jpg" alt="" width="638" height="447" loading="lazy" decoding="async"></span>
+          <span class="stitek"><span class="stitek-inv">Inv. 2023/1</span><span class="stitek-nazev">Zlatý odznak a&nbsp;stříbrná pamětní mince</span><span class="stitek-meta">2023 · kov, se znakem I.&nbsp;ČLTK · ke 130.&nbsp;výročí</span><span class="pramen">Pramen · Revue 02/2023, s.&nbsp;10</span></span>
+        </button>
+      </li>
+      <li>
+        <button type="button" class="predmet" data-dialog-otevrit="dialog" data-dialog-sablona="tpl-obraz" data-dialog-nadpis="Vitrína · Inv. 2023/2">
+          <span class="predmet-foto"><span class="predmet-lupa">Otevřít</span><img src="../assets/historie/hist-2023-obraz-tomas-bim-130-let.jpg" alt="" width="1254" height="1600" loading="lazy" decoding="async"></span>
+          <span class="stitek"><span class="stitek-inv">Inv. 2023/2</span><span class="stitek-nazev">Tomáš Bím: 130 let I.ČLTK Praha</span><span class="stitek-meta">2023 · obraz, technika doplní klub · © Tomáš Bím</span><span class="pramen">Pramen · Revue 02/2023, s.&nbsp;5</span></span>
+        </button>
+      </li>
+      <li>
+        <button type="button" class="predmet" data-dialog-otevrit="dialog" data-dialog-sablona="tpl-listek" data-dialog-nadpis="Vitrína · Inv. 1902">
+          <span class="predmet-foto"><span class="predmet-lupa">Otevřít</span><img class="duotone" src="../assets/historie/hist-1902-pohlednice-micovy-turnaj.jpg" alt="" width="1028" height="568" loading="lazy" decoding="async"></span>
+          <span class="stitek"><span class="stitek-inv">Inv. 1902</span><span class="stitek-nazev">Korespondenční lístek z&nbsp;Míčového turnaje</span><span class="stitek-meta">16.&nbsp;7.&nbsp;1902 · fotografie s&nbsp;ručně psaným textem</span><span class="pramen">Pramen · Revue 01/2023, s.&nbsp;40</span></span>
+        </button>
+      </li>
+      <li>
+        <button type="button" class="predmet" data-dialog-otevrit="dialog" data-dialog-sablona="tpl-inzerat" data-dialog-nadpis="Vitrína · Inv. 19. st.">
+          <span class="predmet-foto"><span class="predmet-lupa">Otevřít</span><img class="duotone" src="../assets/historie/hist-1800s-inzerat-velke-benatky-amazonky.jpg" alt="" width="528" height="361" loading="lazy" decoding="async"></span>
+          <span class="stitek"><span class="stitek-inv">Inv. 19. st.</span><span class="stitek-nazev">Inzerát Ostrova Velké Benátky</span><span class="stitek-meta">2. polovina 19.&nbsp;století · tisk · „33 divých žen, Amazonek“</span><span class="pramen">Pramen · Revue 02/2023, s.&nbsp;44</span></span>
+        </button>
+      </li>
+      <li>
+        <button type="button" class="predmet" data-dialog-otevrit="dialog" data-dialog-sablona="tpl-revue" data-dialog-nadpis="Vitrína · Inv. 2006">
+          <span class="predmet-foto"><span class="predmet-lupa">Otevřít</span><img src="../assets/revue/revue-2006-1.jpg" alt="" width="672" height="900" loading="lazy" decoding="async"></span>
+          <span class="stitek"><span class="stitek-inv">Inv. 2006</span><span class="stitek-nazev">První číslo I.ČLTK Revue</span><span class="stitek-meta">01/2006 · časopis, 44&nbsp;stran · náklad 500 výtisků</span><span class="pramen">Pramen · archiv Revue na cltk.cz</span></span>
+        </button>
+      </li>
+      <li>
+        <article class="predmet predmet--prazdny" aria-labelledby="deska-t">
+          <span class="predmet-foto">
+            <span class="perokresba">
+              <svg viewBox="0 0 200 130" aria-hidden="true" focusable="false"><g fill="none" stroke="currentColor" stroke-width="1.1"><rect x="40" y="12" width="120" height="100" rx="2"/><rect x="47" y="19" width="106" height="86" rx="1"/><path d="M70 44h60M62 58h76M76 72h48M84 86h32"/><circle cx="100" cy="32" r="5"/></g></svg>
+              <span class="jistota jistota--doplni">foto doplní klub</span>
+            </span>
+          </span>
+          <span class="stitek"><span class="stitek-inv">Inv. 2012</span><span class="stitek-nazev" id="deska-t">Pamětní deska Jaroslava Drobného</span><span class="stitek-meta">odhalena 14.&nbsp;6.&nbsp;2012 · foyer klubu</span><span class="pramen">Pramen · cs.wikipedia Drobný · Revue 02/2013, s.&nbsp;13</span></span>
+        </article>
+      </li>
+    </ul>
+
+    <template id="tpl-odznak"><div class="predmet-dialog"><button type="button" class="predmet-dialog-foto" data-zoom aria-pressed="false" aria-label="Přiblížit detail"><img src="../assets/historie/hist-2023-zlaty-odznak-a-pametni-mince.jpg" alt="Zlatý odznak s klubovým logem a stříbrná pamětní mince se znakem I. ČLTK" width="638" height="447"></button><div class="tok"><p class="nadtitul">Inv. 2023/1</p><h3 class="t-d3">Zlatý odznak a&nbsp;stříbrná pamětní mince</h3><p>Zlatý odznak s&nbsp;klubovým logem pro zasloužilé členy – totožný s&nbsp;odznaky předávanými poprvé při 100.&nbsp;výročí – a&nbsp;stříbrná pamětní mince se znakem I.&nbsp;ČLTK ke 130.&nbsp;výročí.</p><p class="citat" style="font-size:1.25rem">„Zlato za věrnost, práci a&nbsp;úspěchy“</p><div class="listek"><dl><dt>Rok</dt><dd>2023</dd><dt>Technika</dt><dd>kov · doplní klub</dd><dt>Pramen</dt><dd>Revue 02/2023, s.&nbsp;10</dd></dl></div></div></div></template>
+    <template id="tpl-obraz"><div class="predmet-dialog"><button type="button" class="predmet-dialog-foto" data-zoom aria-pressed="false" aria-label="Přiblížit detail"><img src="../assets/historie/hist-2023-obraz-tomas-bim-130-let.jpg" alt="Obraz Tomáše Bíma: antukový centrkurt se stoličkou rozhodčího, nápis 130 let I.ČLTK Praha a štíhlé topoly" width="1254" height="1600"></button><div class="tok"><p class="nadtitul">Inv. 2023/2</p><h3 class="t-d3">Tomáš Bím: 130 let I.ČLTK Praha</h3><p>Antukový centrkurt se stoličkou rozhodčího, nad tribunou nápis se znakem klubu a&nbsp;štíhlé stromy. Podle Revue jde o&nbsp;„vylepšený originál“ obrazu, který zval už k&nbsp;jubileu před deseti lety; každý člen dostal k&nbsp;oslavám plakát.</p><div class="listek"><dl><dt>Rok</dt><dd>2023 (originál 2013)</dd><dt>Technika</dt><dd>doplní klub</dd><dt>Autor</dt><dd>© Tomáš Bím</dd><dt>Pramen</dt><dd>Revue 02/2023, s.&nbsp;5</dd></dl></div></div></div></template>
+    <template id="tpl-listek"><div class="predmet-dialog"><button type="button" class="predmet-dialog-foto" data-zoom aria-pressed="false" aria-label="Přiblížit detail"><img src="../assets/historie/hist-1902-pohlednice-micovy-turnaj.jpg" alt="Korespondenční lístek: skupinová fotografie z Míčového turnaje I. Č. L. T. K. Praha, dámy v dlouhých šatech a pánové ve slamácích" width="1028" height="568"></button><div class="tok"><p class="nadtitul">Inv. 1902</p><h3 class="t-d3">Míčový turnaj I.&nbsp;Č.&nbsp;L.&nbsp;T.&nbsp;K. Praha</h3><p>„Půvabná fotografie s&nbsp;ještě půvabnějším textem na korespondenčním lístku odeslaném z&nbsp;Prahy 16.&nbsp;července 1902.“</p><div class="listek"><dl><dt>Rok</dt><dd>1902</dd><dt>Technika</dt><dd>korespondenční lístek, fotografie, rukopis</dd><dt>Pramen</dt><dd>Revue 01/2023, s.&nbsp;40 · Revue 02/2013, s.&nbsp;8</dd></dl></div><span class="jistota jistota--klub">podle klubu</span></div></div></template>
+    <template id="tpl-inzerat"><div class="predmet-dialog"><button type="button" class="predmet-dialog-foto" data-zoom aria-pressed="false" aria-label="Přiblížit detail"><img src="../assets/historie/hist-1800s-inzerat-velke-benatky-amazonky.jpg" alt="Dobový inzerát: Ostrov Velké Benátky – 33 divých žen, Amazonek krále Dahomejského" width="528" height="361"></button><div class="tok"><p class="nadtitul">Inv. 19. st.</p><h3 class="t-d3">Ostrov Velké Benátky</h3><p>Doklad zábav na ostrově v&nbsp;19.&nbsp;století: amfiteátr, restaurace s&nbsp;tanečními sály, plovárna a&nbsp;dobové atrakce („33 divých žen, Amazonek krále Dahomejského“).</p><div class="listek"><dl><dt>Rok</dt><dd>konec 19. století <span class="jistota jistota--doplni">neověřeno</span></dd><dt>Technika</dt><dd>tisk</dd><dt>Pramen</dt><dd>Revue 02/2023, s.&nbsp;44 – Kapitoly z&nbsp;historie Štvanice</dd></dl></div></div></div></template>
+    <template id="tpl-revue"><div class="predmet-dialog"><button type="button" class="predmet-dialog-foto" data-zoom aria-pressed="false" aria-label="Přiblížit detail"><img src="../assets/revue/revue-2006-1.jpg" alt="Obálka prvního čísla I.ČLTK Revue 01/2006 s Janem Hernychem a trofejí" width="672" height="900"></button><div class="tok"><p class="nadtitul">Inv. 2006</p><h3 class="t-d3">I.ČLTK Revue 01/2006</h3><p>Na obálce Jan Hernych s&nbsp;trofejí za vítězství v&nbsp;ECM Prague Open 2005. Uvnitř: „»Herňa« na Štvanici neprohrává“, interview s&nbsp;Františkem Stejskalem a&nbsp;„Školička je plná talentů!“.</p><div class="listek"><dl><dt>Rok</dt><dd>2006</dd><dt>Rozsah</dt><dd>44 stran · 500 výtisků</dd><dt>PDF</dt><dd><a class="odkaz odkaz--ven" href="https://files.cltk.cz/d25srl3hp502/2006_1.pdf" target="_blank" rel="noopener">Otevřít (21,8&nbsp;MB)</a></dd></dl></div></div></div></template>
+  </div>
+</section>
+
+<!-- IX · Z OSTROVA: DEPEŠE -->
+<section class="sekce sekce--linka" id="zpravy" aria-labelledby="zpravy-titul">
+  <div class="obal">
+    <header class="sal-hlava sal-hlava--2">
+      <p class="sal-oznaceni"><span class="sal-cislo">IX</span>Z&nbsp;ostrova</p>
+      <h2 class="sal-titul" id="zpravy-titul">Depeše z&nbsp;posledních týdnů</h2>
+      <p class="sal-uvod sal-uvod--maly"><a class="odkaz odkaz--ven" href="https://cltk.cz/cs/clanky/" target="_blank" rel="noopener">Všech 238&nbsp;článků na cltk.cz</a></p>
+    </header>
+    <ol class="depese">
+      <li class="depese-polozka">
+        <p class="depese-datum"><time datetime="2026-08-31">31.&nbsp;8.&nbsp;2026</time> <span>· družstva</span></p>
+        <h3 class="depese-titul"><a href="https://cltk.cz/cs/clanky/starsi-zaci-vezou-z-mcr-druzstev-bronz/" target="_blank" rel="noopener">Starší žáci vezou z&nbsp;MČR družstev bronz</a></h3>
+        <p class="depese-perex">Třetí místo z&nbsp;Mistrovství ČR smíšených družstev starších žáků v&nbsp;Ostravě veze tým I.ČLTK Praha. V&nbsp;souboji o&nbsp;bronz porazil tým Modřan.</p>
+      </li>
+      <li class="depese-polozka">
+        <p class="depese-datum"><time datetime="2026-08-31">31.&nbsp;8.&nbsp;2026</time> <span>· výsledky</span></p>
+        <h3 class="depese-titul"><a href="https://cltk.cz/cs/clanky/denisa-zoldakova-ve-finale-turnaje-itf-w75-v-polsku:386/" target="_blank" rel="noopener">Denisa Žoldáková ve finále turnaje ITF W75 v&nbsp;Polsku</a></h3>
+        <p class="depese-perex">Denisa Žoldáková se probojovala do finále turnaje ITF žen W75 v&nbsp;Polsku. Ve finále podlehla ve třech setech Barboře Palicové.</p>
+      </li>
+      <li class="depese-polozka">
+        <p class="depese-datum"><time datetime="2026-08-27">27.&nbsp;8.&nbsp;2026</time> <span>· výsledky</span></p>
+        <h3 class="depese-titul"><a href="https://cltk.cz/cs/clanky/karolina-muchova-ovladla-smisenou-ctyrhru-na-us-open:385/" target="_blank" rel="noopener">Karolína Muchová ovládla smíšenou čtyřhru na US Open</a></h3>
+        <p class="depese-perex">Muchová s&nbsp;Menšíkem ovládli US Open. Česká dvojice získala senzační grandslamový titul, když ve finále porazila švýcarsko-italský pár Bencic, Cobolli.</p>
+      </li>
+      <li class="depese-polozka">
+        <p class="depese-datum"><time datetime="2026-08-16">16.&nbsp;8.&nbsp;2026</time> <span>· turnaje v&nbsp;klubu</span></p>
+        <h3 class="depese-titul"><a href="https://cltk.cz/cs/clanky/sekyra-group-prague-open-2026-by-advantage-cars:384/" target="_blank" rel="noopener">Sekyra Group Prague Open 2026 by Advantage Cars</a></h3>
+        <p class="depese-perex">V&nbsp;termínu 16.–22.&nbsp;srpna 2026 probíhá v&nbsp;I.ČLTK Praha mezinárodní turnaj mužů ATP Challenger 75 a&nbsp;žen ITF W50. <a class="odkaz-text" href="https://www.pragueopen.net/" target="_blank" rel="noopener">pragueopen.net</a></p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- X · NÁVŠTĚVA -->
+<section class="sekce sekce--panel" id="navsteva" aria-labelledby="navsteva-titul">
+  <div class="obal">
+    <header class="sal-hlava sal-hlava--2">
+      <p class="sal-oznaceni"><span class="sal-cislo">X</span>Návštěva</p>
+      <h2 class="sal-titul" id="navsteva-titul">Jak se dostat na ostrov</h2>
+      <p class="sal-uvod sal-uvod--maly">Štvanice&nbsp;38, 170&nbsp;00 Praha&nbsp;7. Z&nbsp;Hlávkova mostu, nebo z&nbsp;Karlína i&nbsp;Holešovic po lávce HolKa.</p>
+    </header>
+    <div class="navsteva">
+      <figure class="navsteva-plan archiv">
+        <div class="archiv-ram"><img src="../assets/foto/plan-arealu.jpg" alt="Plán areálu: zleva kurty Slavoj 10–16, Negrelliho viadukt s parkovištěm, hlavní budova s kurtem 1 a stadionem, bazén, kurty 5–9 a trojkurt 2–4" width="3600" height="2121" loading="lazy" decoding="async"></div>
+        <figcaption class="archiv-popisek"><span class="popisek">Plán areálu, verze 09-2025 – zleva Slavoj (10–16), viadukt s&nbsp;parkovištěm, hlavní budova se stadionem, bazén a&nbsp;kurty 2–9.</span><span class="pramen">Pramen · cltk.cz – Plán areálu</span></figcaption>
+      </figure>
+      <div class="navsteva-bloky">
+        <div class="navsteva-blok">
+          <h3>Pěšky, tramvají, metrem</h3>
+          <p>Na Hlávkově mostě je zastávka tramvaje č.&nbsp;14 a&nbsp;stanice metra B i&nbsp;C jsou vzdálené jen několik minut chůze. Brána pro pěší vstup se nachází přímo u&nbsp;příchodu z&nbsp;mostu. Z&nbsp;Karlína a&nbsp;Holešovic vede lávka HolKa – asi 300&nbsp;m, bronzové zábradlí se sochami zajíců, býků a&nbsp;koní.</p>
+        </div>
+        <div class="navsteva-blok">
+          <h3>Autem</h3>
+          <p>Po sjezdu z&nbsp;magistrály je lepší areál zprava objet, zaparkovat na vyhrazeném parkovišti a&nbsp;do areálu vejít zadním vchodem. Parkuje se pod oblouky Negrelliho viaduktu a&nbsp;u&nbsp;malého centru. <span class="jistota jistota--doplni">kapacita doplní klub</span></p>
+        </div>
+        <div class="navsteva-blok">
+          <h3>Kdy je otevřeno</h3>
+          <ul class="cenik navsteva-hodiny">
+            <li><span class="cenik-nazev">Venkovní dvorce pro veřejnost</span><span class="cenik-vodici" aria-hidden="true"></span><span class="cenik-cena">denně 7:00–22:00</span></li>
+            <li><span class="cenik-nazev">Kancelář klubu</span><span class="cenik-vodici" aria-hidden="true"></span><span class="cenik-cena">všední dny 9:00–17:00</span></li>
+            <li><span class="cenik-nazev">Wellness (členové)</span><span class="cenik-vodici" aria-hidden="true"></span><span class="cenik-cena">všední dny 16:00–20:00</span></li>
+            <li><span class="cenik-nazev">Areál, recepce, restaurace Tiebreak</span><span class="cenik-vodici" aria-hidden="true"></span><span class="cenik-cena"><span class="jistota jistota--doplni">doplní klub</span></span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="kontakt-blok" id="kontakt">
+      <p class="nadtitul">Kontakty</p>
+      <ul class="kontakty">
+        <li class="kontakt"><span class="kontakt-role">Recepce – rezervace kurtů</span><span class="kontakt-jmeno">Recepce na ostrově</span><a href="tel:+420608974974">+420&nbsp;608&nbsp;974&nbsp;974</a><a href="mailto:recepce@cltk.cz">recepce@cltk.cz</a></li>
+        <li class="kontakt"><span class="kontakt-role">Stálé rezervace, platba členství</span><span class="kontakt-jmeno">Eva Štefková</span><a href="tel:+420737215012">+420&nbsp;737&nbsp;215&nbsp;012</a><a href="mailto:stefkova@cltk.cz">stefkova@cltk.cz</a></li>
+        <li class="kontakt"><span class="kontakt-role">Generální manažer klubu</span><span class="kontakt-jmeno">Vladislav Šavrda</span><a href="tel:+420603409475">+420&nbsp;603&nbsp;409&nbsp;475</a><a href="mailto:savrda@cltk.cz">savrda@cltk.cz</a></li>
+        <li class="kontakt"><span class="kontakt-role">Provozní manažer</span><span class="kontakt-jmeno">Mgr. Martin Šustr</span><a href="tel:+420724432073">+420&nbsp;724&nbsp;432&nbsp;073</a><a href="mailto:sustr@cltk.cz">sustr@cltk.cz</a></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- PATIČKA -->
+<footer class="paticka">
+  <div class="obal">
+    <figure class="paticka-citat">
+      <div>
+        <blockquote><p>„Postavena byla nová klubovna, zřízeno bylo pět courtů, vše v&nbsp;krásné staré zahradě uprostřed Prahy.“</p></blockquote>
+        <figcaption><span class="citat-autor">Tennis Golf Revue 4/1929 · převzato v&nbsp;Revue 02/2013, s.&nbsp;8–9</span></figcaption>
+      </div>
+      <svg class="zajic" viewBox="0 0 120 90" role="img" aria-label="Liniový zajíc – tichý symbol ostrova Štvanice"><use href="#zajic"/></svg>
+    </figure>
+
+    <div class="paticka-mriz">
+      <div>
+        <div class="pecet"><img class="pecet-znak" src="../assets/logo/cltk-znak-mono-plny.svg" alt="" width="72" height="83"><span class="pecet-text">Založen 1893</span></div>
+        <address>I.&nbsp;Český Lawn-Tennis Klub Praha<br>Ostrov Štvanice&nbsp;38<br>170&nbsp;00 Praha&nbsp;7</address>
+      </div>
+      <div>
+        <h2>Recepce</h2>
+        <div class="paticka-kontakt"><strong>Rezervace kurtů</strong><a href="tel:+420608974974">+420&nbsp;608&nbsp;974&nbsp;974</a><a href="mailto:recepce@cltk.cz">recepce@cltk.cz</a></div>
+        <div class="paticka-kontakt"><strong>Online</strong><a href="https://www.rogeronline.cz/v2/index.php?klub=181" target="_blank" rel="noopener">Rezervační systém ↗</a></div>
+      </div>
+      <div>
+        <h2>Na této stránce</h2>
+        <ul>
+          <li><a href="#ostrov">Ostrov v&nbsp;čase</a></li>
+          <li><a href="#klub">Klub dnes</a></li>
+          <li><a href="#clenstvi">Členství</a></li>
+          <li><a href="#kronika">Kronika</a></li>
+          <li><a href="#hraci">Hráli na Štvanici</a></li>
+          <li><a href="#revue">Kiosek Revue</a></li>
+          <li><a href="#navsteva">Návštěva</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Klub</h2>
+        <ul>
+          <li>Od roku 1893, na Štvanici od roku 1901</li>
+          <li>Jediný český člen Centenary Tennis Clubs</li>
+          <li>Klub č.&nbsp;52 Českého tenisového svazu</li>
+          <li><a href="https://www.facebook.com/cltk.fb" target="_blank" rel="noopener">Facebook ↗</a> · <a href="https://www.instagram.com/cltk.insta/" target="_blank" rel="noopener">Instagram ↗</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="paticka-partneri">
+      <p><strong>Partneři</strong>Vivus · J&amp;T Banka · Aston · Pankrác · GreenGas · Hodinářství Bechyně · ISO Praha · Noncore · TUkas · Smartwings · Messy Play · Sport Construction · ČPP · Advantage Cars · RPM Facility · Sporttechnik Bohemia · Crane Constancy Capital · Mizuno · Babolat · Peach Distribution · Glenfiddich · Astron studio · Pelmi · Resultina · Protenis · Moravia Steel · Kontron · Analytics Data Factory · s&nbsp;podporou NSA, hl.&nbsp;m. Prahy, MČ Praha&nbsp;7, ČTS, PTS a&nbsp;Victoria VSC</p>
+    </div>
+
+    <div class="paticka-spodek">
+      <span>© 2026 I.&nbsp;ČLTK Praha · návrh B „Ostrov v&nbsp;čase“ · pracovní fotografie ze stávajícího webu</span>
+      <div class="pristupnost" role="group" aria-label="Přístupnost">
+        <button type="button" class="prepinac" data-prepinac="pohyb" aria-pressed="false"><span class="prepinac-kolejnice" aria-hidden="true"></span>Omezit pohyb</button>
+        <button type="button" class="prepinac" data-prepinac="kontrast" aria-pressed="false"><span class="prepinac-kolejnice" aria-hidden="true"></span>Vyšší kontrast</button>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- MOBILNÍ LIŠTA -->
+<nav class="lista-rezervace" aria-label="Rychlé akce">
+  <a class="lista-rezervace-hlavni" href="https://www.rogeronline.cz/v2/index.php?klub=181" target="_blank" rel="noopener">Rezervovat</a>
+  <a href="tel:+420608974974">608&nbsp;974&nbsp;974</a>
+  <a href="#clenstvi">Členství</a>
+</nav>
+
+<dialog class="dialog" id="dialog" aria-labelledby="dialog-titul">
+  <div class="dialog-hlava"><p class="nadtitul" id="dialog-titul" data-dialog-titul>Detail</p><button type="button" class="dialog-zavrit" data-dialog-zavrit>Zavřít</button></div>
+  <div class="dialog-obsah" data-dialog-obsah></div>
+</dialog>
+
+<script src="js/data-revue.js"></script>
+<script src="js/ostrov.js"></script>
+<script src="js/app.js"></script>
+<script src="js/index.js"></script>
+</body>
+</html>

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Návrhy webu I. ČLTK Praha</title>
+<link rel="icon" href="assets/logo/favicon-32.png" sizes="32x32">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500&display=swap">
+<style>
+:root{
+  --paper:#fbfaf6;
+  --paper-2:#f3f0e9;
+  --card:#fffefb;
+  --ink:#1a2233;
+  --ink-soft:#3d4557;
+  --muted:#6b6f7e;
+  --navy:#152744;
+  --gold:#b3935a;
+  --gold-text:#8a6d3b;
+  --line:#e4e0d6;
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'Jost',system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;font-weight:300;line-height:1.65;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit}
+.wrap{width:100%;max-width:1120px;margin:0 auto;padding-inline:20px}
+
+/* hlavička */
+.head{padding-block:64px 44px;border-bottom:1px solid var(--line);display:grid;grid-template-columns:auto 1fr;gap:34px;align-items:center}
+.head img{width:104px;height:auto}
+.kicker{font-size:11px;font-weight:500;letter-spacing:.24em;text-transform:uppercase;color:var(--gold-text);margin:0}
+h1{font-family:var(--serif);font-weight:500;font-size:clamp(34px,5vw,58px);line-height:1.02;letter-spacing:-.01em;margin:12px 0 0;color:var(--navy);text-wrap:balance}
+h1 em{font-style:italic;color:var(--gold-text);font-weight:400}
+.lede{grid-column:1/-1;font-size:clamp(16px,1.5vw,18px);color:var(--ink-soft);max-width:66ch;margin:4px 0 0}
+
+/* varianty */
+.varianty{display:flex;flex-direction:column;gap:22px;padding-block:44px 8px}
+.var{display:grid;grid-template-columns:1.35fr 1fr;background:var(--card);border:1px solid var(--line);overflow:hidden}
+.var-nahled{position:relative;background:var(--paper-2);border-right:1px solid var(--line);min-height:320px}
+.var-nahled img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:left top}
+.var-cislo{position:absolute;left:16px;top:16px;font-size:10.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;background:var(--paper);color:var(--navy);padding:6px 12px;border:1px solid var(--line)}
+.var-telo{padding:34px 34px 30px;display:flex;flex-direction:column}
+.var-telo h2{font-family:var(--serif);font-weight:500;font-size:clamp(28px,3vw,36px);line-height:1.05;margin:0;color:var(--navy)}
+.var-podtitul{font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin:10px 0 18px}
+.var-telo p{margin:0;font-size:15.5px;color:var(--ink-soft)}
+.paleta{display:flex;gap:6px;margin:18px 0 0}
+.paleta span{width:26px;height:26px;border:1px solid rgba(26,34,51,.12)}
+.pismo{font-size:13px;color:var(--muted);margin:8px 0 0}
+.znaky{list-style:none;margin:18px 0 0;padding:0;display:flex;flex-direction:column;gap:8px;font-size:14.5px;color:var(--ink-soft)}
+.znaky li{display:grid;grid-template-columns:14px 1fr;gap:8px}
+.znaky li::before{content:"";width:9px;height:1px;background:var(--gold);transform:translateY(12px)}
+.otevrit{margin-top:auto;padding-top:26px}
+.otevrit a{display:inline-flex;align-items:center;gap:12px;font-size:12px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;background:var(--navy);color:var(--paper);text-decoration:none;padding:15px 24px;transition:background .25s}
+.otevrit a:hover{background:#0e1b30}
+.otevrit a:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+
+/* společné a poznámky */
+.sekce{padding-block:60px 8px}
+h3{font-family:var(--serif);font-weight:500;font-size:clamp(26px,3vw,34px);line-height:1.1;margin:0;color:var(--navy)}
+.pod{font-size:15.5px;color:var(--muted);margin:10px 0 28px;max-width:64ch}
+.obsah{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+.obsah div{background:var(--card);padding:22px 20px}
+.obsah b{display:block;font-family:var(--serif);font-weight:600;font-size:19px;color:var(--navy);margin-bottom:6px;line-height:1.2}
+.obsah span{display:block;font-size:14px;color:var(--muted);line-height:1.6}
+.pozn{border-left:1px solid var(--gold);padding:2px 0 2px 24px;display:flex;flex-direction:column;gap:16px}
+.pozn p{margin:0;font-size:15.5px;color:var(--ink-soft);max-width:70ch}
+.pozn strong{font-weight:500;color:var(--ink)}
+footer{margin-top:64px;border-top:1px solid var(--line);padding-block:26px 34px;font-size:13px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 24px;justify-content:space-between}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media (max-width:880px){
+  .var{grid-template-columns:1fr}
+  .var-nahled{border-right:0;border-bottom:1px solid var(--line);min-height:0;aspect-ratio:16/10}
+  .obsah{grid-template-columns:1fr 1fr}
+}
+@media (max-width:540px){
+  .head{grid-template-columns:1fr;gap:18px;padding-block:44px 32px}
+  .head img{width:78px}
+  .var-telo{padding:26px 22px 26px}
+  .obsah{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="head">
+    <img src="assets/logo/cltk-znak-3d-256.png" width="231" height="256" alt="Znak I. ČLTK Praha">
+    <div>
+      <p class="kicker">Návrhy k výběru &middot; září 2026</p>
+      <h1>Tři návrhy webu pro&nbsp;I.&nbsp;ČLTK Praha. <em>Od roku 1893.</em></h1>
+    </div>
+    <p class="lede">
+      Každý návrh je hotová úvodní stránka, kterou si můžete proklikat, ne obrázek.
+      Všechny tři jsou světlé a stojí na skutečném obsahu klubu: na historii od roku 1893, archivu Revue, výsledcích hráčů a areálu na&nbsp;Štvanici.
+      Liší se tím, co klub staví do popředí. Vyberte si směr, který klubu sedí, a doladíme ho.
+    </p>
+  </header>
+
+  <main class="varianty">
+
+    <article class="var">
+      <div class="var-nahled">
+        <span class="var-cislo">Návrh 1</span>
+        <img src="nahled-01.jpg" alt="Náhled návrhu Zlatá deska" loading="lazy">
+      </div>
+      <div class="var-telo">
+        <h2>Zlatá deska</h2>
+        <p class="var-podtitul">Klubový dům &middot; noblesní &middot; tradiční</p>
+        <p>
+          Web jako vstupní hala soukromého klubu: teplý papír, zlaté písmo, čestné desky a&nbsp;rytiny.
+          Barvy navazují na návrh Prague Open, takže klub a turnaj budou vypadat jako jedna rodina.
+        </p>
+        <div class="paleta" aria-label="Paleta">
+          <span style="background:#fbfaf6"></span><span style="background:#f3f0e9"></span><span style="background:#152744"></span><span style="background:#b3935a"></span><span style="background:#1a2233"></span>
+        </div>
+        <p class="pismo">Písmo Cormorant Garamond a&nbsp;Jost</p>
+        <ul class="znaky">
+          <li>tři wimbledonští vítězové ve štvanické historii jako triptych</li>
+          <li>zlatá čestná deska: čestní a zasloužilí členové, mistři republiky</li>
+          <li>kalkulačka ceny členství přímo na úvodní stránce</li>
+        </ul>
+        <div class="otevrit"><a href="01-zlata-deska/index.html" target="_blank" rel="noopener">Otevřít návrh 1</a></div>
+      </div>
+    </article>
+
+    <article class="var">
+      <div class="var-nahled">
+        <span class="var-cislo">Návrh 2</span>
+        <img src="nahled-02.jpg" alt="Náhled návrhu Ostrov v čase" loading="lazy">
+      </div>
+      <div class="var-telo">
+        <h2>Ostrov v&nbsp;čase</h2>
+        <p class="var-podtitul">Muzeum &middot; neobvyklý &middot; příběhový</p>
+        <p>
+          První digitální muzeum tenisového klubu. Návštěvník projde ostrov a&nbsp;130&nbsp;let klubu jako výstavu,
+          s muzejními štítky a prameny, a na konci si zarezervuje kurt.
+        </p>
+        <div class="paleta" aria-label="Paleta">
+          <span style="background:#f7f8f6"></span><span style="background:#eef0ec"></span><span style="background:#1f3440"></span><span style="background:#4e6b72"></span><span style="background:#a3242b"></span>
+        </div>
+        <p class="pismo">Písmo Newsreader, Instrument Sans a&nbsp;Geist Mono</p>
+        <ul class="znaky">
+          <li>mapa Štvanice s posuvníkem let od štvanic po dnešek</li>
+          <li>kronika, ve které se mění dobové jméno klubu</li>
+          <li>kiosek 41 čísel Revue od roku 2006 s vyhledáváním</li>
+        </ul>
+        <div class="otevrit"><a href="02-ostrov-v-case/index.html" target="_blank" rel="noopener">Otevřít návrh 2</a></div>
+      </div>
+    </article>
+
+    <article class="var">
+      <div class="var-nahled">
+        <span class="var-cislo">Návrh 3</span>
+        <img src="nahled-03.jpg" alt="Náhled návrhu Živá Štvanice" loading="lazy">
+      </div>
+      <div class="var-telo">
+        <h2>Živá Štvanice</h2>
+        <p class="var-podtitul">Antuka &middot; servis &middot; současný</p>
+        <p>
+          Luxus jako servis velkého hotelu. Web ví, jaký je dnes stav areálu, kolik stojí hodina v&nbsp;hale,
+          kde štvaničtí hráči právě hrají a co klub čeká. Všechno podává klidně, bez sportovního křiku.
+        </p>
+        <div class="paleta" aria-label="Paleta">
+          <span style="background:#f6f1ea"></span><span style="background:#efe7dc"></span><span style="background:#9b4a2a"></span><span style="background:#5e6b4e"></span><span style="background:#23201c"></span>
+        </div>
+        <p class="pismo">Písmo Fraunces a&nbsp;Figtree</p>
+        <ul class="znaky">
+          <li>„Dnes na Štvanici“: stav areálu, počasí a západ slunce</li>
+          <li>mapa areálu s přepínačem léto / zima</li>
+          <li>ceník jako kalkulačka s úsporou pro členy</li>
+        </ul>
+        <div class="otevrit"><a href="03-ziva-stvanice/index.html" target="_blank" rel="noopener">Otevřít návrh 3</a></div>
+      </div>
+    </article>
+
+  </main>
+
+  <section class="sekce">
+    <h3>Co mají všechny tři společné</h3>
+    <p class="pod">Obsah je převzatý ze současného webu a z&nbsp;archivu Revue a&nbsp;fakta jsme ověřili v&nbsp;nezávislých zdrojích. Nic si nevymýšlíme; kde údaj chybí, stojí „doplní klub“.</p>
+    <div class="obsah">
+      <div><b>Historie</b><span>Od založení v roce 1893 a příchodu na Štvanici v roce 1901 po dnešek, se snímky z výročních čísel Revue</span></div>
+      <div><b>Hráči</b><span>Karolína Muchová a další štvaničtí hráči, extraliga, 26 reprezentantů v roce 2026</span></div>
+      <div><b>Revue</b><span>Všech 41 čísel klubového časopisu od roku 2006 a newslettery</span></div>
+      <div><b>Areál</b><span>13 antukových a 3 tvrdé kurty venku, 2 v hale, v zimě 12 krytých; bazén, wellness, restaurace</span></div>
+      <div><b>Členství</b><span>Ceny, co je v ceně, jak probíhá přijetí a reciprocita v klubech Centenary Tennis Clubs</span></div>
+      <div><b>Rezervace</b><span>Tlačítko online rezervace a telefon recepce jsou vždy na jedno kliknutí, na mobilu v liště</span></div>
+      <div><b>Znak</b><span>Váš 3D znak jako hlavní, originální vektorový znak z Revue na drobné použití</span></div>
+      <div><b>Mobil</b><span>Všechny tři návrhy jsou vyzkoušené na telefonu i v Safari</span></div>
+    </div>
+  </section>
+
+  <section class="sekce">
+    <h3>Než se rozhodnete</h3>
+    <p class="pod">Pár věcí, které stojí za zmínku, ať víte, co je hotové a co ne.</p>
+    <div class="pozn">
+      <p><strong>Fotky.</strong> Zatím používáme snímky ze současného webu, z Prague Open a z&nbsp;archivu Revue. Většina má jen kolem 2&nbsp;000&nbsp;px. Až dodáte nové fotografie, vyměníme je jedna za druhou; rozvržení je na to připravené.</p>
+      <p><strong>Markéta Vondroušová.</strong> Wimbledon 2023 patří do historie klubu, proto v návrzích je, ale nikde není tváří webu. Jak ji prezentovat (portrét, citát), je rozhodnutí klubu. Tváří dneška je Karolína Muchová.</p>
+      <p><strong>Opravy starých textů.</strong> Při ověřování jsme našli několik chyb v dosavadních textech klubu, například v letopočtech Jaroslava Drobného a v prvním daviscupovém zápase Jana Kodeše. V návrzích už jsou správně; seznam je v podkladech.</p>
+      <p><strong>Živé prvky.</strong> Údaje jako stav areálu nebo aktuální výsledky jsou v návrzích k datu 23.&nbsp;9.&nbsp;2026. V ostrém provozu je bude potřeba napojit, nebo je bude aktualizovat recepce.</p>
+    </div>
+  </section>
+
+  <footer>
+    <span>Návrhy webu pro I. Český Lawn-Tennis Klub Praha &middot; Štvanice 38, Praha 7</span>
+    <span>Pracovní verze k připomínkám</span>
+  </footer>
+
+</div>
+</body>
+</html>

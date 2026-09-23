@@ -1,0 +1,811 @@
+<!doctype html>
+<html lang="cs" data-sezona="leto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>I. ČLTK Praha – Antuka uprostřed Prahy · Štvanice od roku 1901</title>
+<meta name="description" content="I. Český Lawn-Tennis Klub Praha na ostrově Štvanice. 19 kurtů, v zimě 12 krytých, rezervace na 608 974 974. Členství, Tenisová škola, závodní tenis. Od roku 1893.">
+<meta name="theme-color" content="#f6f1ea">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/logo/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="../assets/logo/favicon-64.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..500,0,0;1,9..144,300..500,0,0&amp;family=Figtree:ital,wght@0,300..700;1,400..500&amp;display=swap">
+<link rel="stylesheet" href="css/styl.css">
+<link rel="stylesheet" href="css/index.css">
+<script src="js/app.js" defer></script>
+</head>
+<body>
+<!-- HLAVICKA -->
+<a class="preskocit" href="#obsah">Přeskočit na obsah</a>
+<aside class="dnes" data-dnes aria-label="Dnes na Štvanici">
+  <div class="obal dnes__radek">
+    <p class="dnes__nadpis"><span class="stitek">Dnes na Štvanici</span><time class="dnes__datum" data-dnes-datum datetime="2026-09-23">středa 23.&nbsp;září 2026</time></p>
+    <ul class="dnes__polozky" data-dnes-polozky>
+      <li class="dnes__polozka dnes__polozka--hlavni"><span class="stav stav--zmena" aria-hidden="true"></span><span>Stavba zimních hal (21.–28.&nbsp;9.)</span></li>
+      <li class="dnes__polozka"><span class="stav stav--zavreno" aria-hidden="true"></span><span>Tenisová škola nehraje</span></li>
+      <li class="dnes__polozka"><span class="stav stav--hala" aria-hidden="true"></span><span>Pevná hala od 28.&nbsp;9., přetlakové haly od 5.&nbsp;10.</span></li>
+      <li class="dnes__polozka"><span class="stav" aria-hidden="true"></span><span>Wellness dnes 16:00–20:00</span></li>
+      <li class="dnes__polozka"><span>Západ slunce 19:02 · světla jen na kurtech 2, 3, 4</span></li>
+    </ul>
+    <button class="dnes__vice" type="button" data-dnes-vice aria-expanded="false" aria-controls="dnes-panel"><span class="dnes__vice-text">Celý den</span><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.5l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></button>
+    <div class="dnes__utility">
+      <a href="#kontakt">Kontakt</a>
+      <span class="jazyk" role="group" aria-label="Jazyk"><span aria-current="true" lang="cs">CS</span><span class="jazyk__oddelovac" aria-hidden="true">/</span><button type="button" data-jazyk-en lang="en">EN</button></span>
+    </div>
+  </div>
+  <div class="dnes__panel" id="dnes-panel" hidden>
+    <div class="obal dnes__panel-obsah">
+      <div class="dnes__uvod">
+        <p class="stitek stitek--akcent">Concierge · stav areálu</p>
+        <p class="nadpis-3">Co je dnes na Štvanici otevřené</p>
+        <p class="drobne sede">Stav k&nbsp;23.&nbsp;9.&nbsp;2026 podle webu klubu. V&nbsp;ostré verzi ho bude měnit recepce.</p>
+        <p class="drobne"><a data-nahled-zimy href="index.html?den=2026-10-12">Ukázka: jak web vypadá v&nbsp;zimě</a> <span class="sede" data-dnes-nahled-info hidden></span></p>
+      </div>
+      <dl class="concierge" data-dnes-panel-seznam>
+        <div class="concierge__polozka"><dt class="concierge__co">Kurty</dt><dd class="concierge__stav">Stavba zimních hal (21.–28.&nbsp;9.)</dd></div>
+        <div class="concierge__polozka"><dt class="concierge__co">Haly</dt><dd class="concierge__stav">Pevná hala P1, P2 od 28.&nbsp;9., přetlakové haly od 5.&nbsp;10.</dd></div>
+        <div class="concierge__polozka"><dt class="concierge__co">Wellness</dt><dd class="concierge__stav">Ve všední dny 16:00–20:00</dd></div>
+        <div class="concierge__polozka"><dt class="concierge__co">Recepce</dt><dd class="concierge__stav">+420 608 974 974</dd></div>
+      </dl>
+    </div>
+  </div>
+</aside>
+<header class="hlavicka" data-hlavicka>
+  <div class="obal hlavicka__radek">
+    <a class="znacka" href="index.html" aria-current="page">
+      <img class="znacka__znak" src="../assets/logo/cltk-znak-3d-128.png" srcset="../assets/logo/cltk-znak-3d-128.png 1x, ../assets/logo/cltk-znak-3d-256.png 2x" width="116" height="128" alt="">
+      <span class="znacka__text"><span class="znacka__nazev"><span class="znacka__nazev-dlouhy">I. Český Lawn-Tennis Klub Praha</span><span class="znacka__nazev-kratky">I. ČLTK Praha</span></span><span class="znacka__zalozen">Založen 1893</span></span>
+    </a>
+    <nav class="navigace" aria-label="Hlavní navigace">
+      <ul>
+        <li><a href="#areal">Areál</a></li>
+        <li><a href="#vysledky">Výsledky</a></li>
+        <li><a href="#cenik">Ceník a&nbsp;členství</a></li>
+        <li><a href="#cesta">Závodní tenis</a></li>
+        <li><a href="#skola">Škola</a></li>
+        <li><a href="#klub">Klub</a></li>
+      </ul>
+    </nav>
+    <div class="hlavicka__akce">
+      <a class="telefon hlavicka__telefon" href="tel:+420608974974">608&nbsp;974&nbsp;974</a>
+      <a class="tlacitko tlacitko--akcent hlavicka__cta" href="https://www.rogeronline.cz/v2/index.php?klub=181" rel="noopener">Rezervovat kurt</a>
+      <button class="menu-tlacitko" type="button" aria-expanded="false" aria-controls="mobilni-menu"><span class="menu-tlacitko__text">Menu</span><span class="menu-tlacitko__ikona" aria-hidden="true"></span></button>
+    </div>
+  </div>
+</header>
+<div class="mobilni-menu" id="mobilni-menu">
+  <div class="obal mobilni-menu__obsah">
+    <nav aria-label="Hlavní navigace – mobil">
+      <ul class="mobilni-menu__seznam">
+        <li><a href="#areal"><span class="kurt-cislo" aria-hidden="true">02</span>Areál léto i&nbsp;zima</a></li>
+        <li><a href="#vysledky"><span class="kurt-cislo" aria-hidden="true">03</span>Výsledky</a></li>
+        <li><a href="#cesta"><span class="kurt-cislo" aria-hidden="true">04</span>Závodní tenis</a></li>
+        <li><a href="#cenik"><span class="kurt-cislo" aria-hidden="true">05</span>Ceník a&nbsp;členství</a></li>
+        <li><a href="#kalendar"><span class="kurt-cislo" aria-hidden="true">06</span>Kalendář</a></li>
+        <li><a href="#skola"><span class="kurt-cislo" aria-hidden="true">07</span>Tenisová škola</a></li>
+        <li><a href="#klub"><span class="kurt-cislo" aria-hidden="true">08</span>Klub a&nbsp;CTC</a></li>
+        <li><a href="#zpravy"><span class="kurt-cislo" aria-hidden="true">09</span>Zprávy a&nbsp;Revue</a></li>
+        <li><a href="#kontakt"><span class="kurt-cislo" aria-hidden="true">10</span>Kontakt</a></li>
+      </ul>
+    </nav>
+    <div class="mobilni-menu__dole">
+      <a class="tlacitko tlacitko--akcent tlacitko--velke" href="https://www.rogeronline.cz/v2/index.php?klub=181" rel="noopener">Rezervovat kurt</a>
+      <a class="tlacitko" href="tel:+420608974974">Recepce 608&nbsp;974&nbsp;974</a>
+      <p class="drobne sede">Ostrov Štvanice 38, 170&nbsp;00 Praha&nbsp;7 · <span class="jazyk" role="group" aria-label="Jazyk"><span aria-current="true" lang="cs">CS</span><span class="jazyk__oddelovac" aria-hidden="true"> / </span><button type="button" class="tlacitko-text" data-jazyk-en lang="en">EN</button></span></p>
+    </div>
+  </div>
+</div>
+<!-- /HLAVICKA -->
+
+<main id="obsah">
+
+  <!-- HERO -->
+  <section class="hero" data-stopa aria-labelledby="hero-nadpis">
+    <div class="hero__foto">
+      <img src="../assets/foto/prague-open-2026-stin-hrace-antuka.jpg" width="2400" height="1600" alt="Stín hráče při úderu na antukovém kurtu, pohled shora, bílé lajny" fetchpriority="high" data-zima-src="../assets/foto/letecky-stadion-kolmo-shora.jpg" data-zima-alt="Štvanický stadion shora, nad centrálním dvorcem bílá přetlaková hala">
+    </div>
+    <div class="hero__rozvrzeni">
+      <div class="obal hero__obsah">
+        <p class="stitek stitek--svetly hero__stitek">I. Český Lawn-Tennis Klub Praha · od roku 1893</p>
+        <h1 class="nadpis-display hero__nadpis" id="hero-nadpis">Antuka <em>uprostřed</em> Prahy.</h1>
+        <p class="hero__napoveda">Ťukněte do antuky – stopa míčku zmizí jako na kurtu.</p>
+      </div>
+      <div class="hero__karta" data-bez-stopy>
+        <p class="stitek">Na Štvanici od roku 1901</p>
+        <p class="hero__podtitul">13 antukových kurtů v&nbsp;létě, 12 krytých v&nbsp;zimě. Venkovní dvorce pro veřejnost denně 7:00–22:00.</p>
+        <div class="hero__cta">
+          <a class="tlacitko tlacitko--akcent tlacitko--velke" href="https://www.rogeronline.cz/v2/index.php?klub=181" rel="noopener">Rezervovat kurt</a>
+          <a class="hero__telefon" href="tel:+420608974974"><strong>608&nbsp;974&nbsp;974</strong><span>recepce</span></a>
+        </div>
+      </div>
+    </div>
+    <p class="hero__kredit" data-zima-text="Foto: web klubu">Foto © Sekyra Group Prague Open 2026, Martin Sidorják a&nbsp;Jan Pecha</p>
+  </section>
+
+  <!-- RYCHLÁ VOLBA -->
+  <nav class="rychla-volba" aria-label="Rychlá volba">
+    <ul class="obal rychla-volba__seznam">
+      <li><a class="rychla" href="https://www.rogeronline.cz/v2/index.php?klub=181" rel="noopener"><span class="kurt-cislo" aria-hidden="true">1</span><span class="rychla__nazev">Rezervace</span><span class="rychla__sipka" aria-hidden="true">→</span><span class="rychla__popis">Online v&nbsp;systému RogerOnline, nebo na recepci 608&nbsp;974&nbsp;974. Členská rezervace nejvýš týden dopředu.</span></a></li>
+      <li><a class="rychla" href="#cenik"><span class="kurt-cislo" aria-hidden="true">2</span><span class="rychla__nazev">Ceník</span><span class="rychla__sipka" aria-hidden="true">→</span><span class="rychla__popis">Zima 2026/27: pevná hala od 28.&nbsp;9., přetlakové haly od 5.&nbsp;10. Kalkulačka s&nbsp;členskou cenou.</span></a></li>
+      <li><a class="rychla" href="#clenstvi"><span class="kurt-cislo" aria-hidden="true">3</span><span class="rychla__nazev">Členství</span><span class="rychla__sipka" aria-hidden="true">→</span><span class="rychla__popis">Od 9&nbsp;500&nbsp;Kč ročně. Venkovní kurty v&nbsp;létě, bazén, fitness a&nbsp;regenerace v&nbsp;ceně.</span></a></li>
+    </ul>
+  </nav>
+
+  <!-- MAPA AREÁLU -->
+  <section class="sekce sekce--panel" id="areal" aria-labelledby="areal-nadpis">
+    <div class="obal">
+      <div class="hlava-sekce">
+        <p class="stitek hlava-sekce__stitek"><span class="kurt-cislo" aria-hidden="true">02</span>Areál v&nbsp;létě i&nbsp;v&nbsp;zimě</p>
+        <div class="hlava-sekce__nadpis">
+          <h2 class="nadpis-2" id="areal-nadpis">Devatenáct kurtů na jednom <em>ostrově</em>.</h2>
+          <p class="perex areal__perex">V&nbsp;létě 13 venkovních antukových kurtů, 3 tvrdé a&nbsp;2 v&nbsp;pevné hale, k&nbsp;tomu centrální dvorec. Od podzimu se kurty 1–9 a&nbsp;centrální dvorec „zabalí“ do hal: v&nbsp;zimě hrajete na 12 krytých kurtech. Ťukněte na kurt – povrch, cena a&nbsp;rezervace.</p>
+          <dl class="fakta areal__fakta">
+            <div><dt>Venkovní dvorce</dt><dd>pro veřejnost denně 7:00–22:00</dd></div>
+            <div><dt>Zimní haly</dt><dd>pevná hala od 28.&nbsp;9., přetlakové od 5.&nbsp;10. – do 4.&nbsp;4.&nbsp;2027</dd></div>
+            <div><dt>Večerní svícení</dt><dd>kurty 2, 3, 4 · <span class="tnum">150&nbsp;Kč/h</span></dd></div>
+          </dl>
+        </div>
+        <figure class="hlava-sekce__perex letecky obr" id="letecky-snimek" data-rezim="leto">
+          <div class="letecky__ramec">
+            <img class="letecky__leto foto" src="../assets/foto/letecky-kurty-leto-shora.jpg" width="1920" height="1210" alt="Letecký pohled na letní antukové kurty, bazén a stadion s modrými tribunami" loading="lazy">
+            <img class="letecky__zima foto" src="../assets/foto/letecky-zimni-haly-shora.jpg" width="2000" height="1125" alt="Letecký pohled na areál v zimě: bílé přetlakové haly nad kurty a stadionem" loading="lazy">
+          </div>
+          <figcaption><span><span class="letecky__popis-leto">Léto shora: antuka, bazén a&nbsp;stadion</span><span class="letecky__popis-zima">Zima shora: nafouknuté haly nad kurty</span></span><span class="radek" style="gap:.8rem"><button type="button" class="tlacitko-text" data-mapa-prepni="leto">Léto</button><button type="button" class="tlacitko-text" data-mapa-prepni="zima">Zima</button></span></figcaption>
+        </figure>
+      </div>
+
+      <div class="mapa" data-mapa data-mapa-cenik="#cenik" data-mapa-foto="#letecky-snimek" data-mapa-rezim="leto">
+        <figure class="mapa__zaloha obr">
+          <img src="../assets/foto/plan-arealu.jpg" width="3600" height="2121" alt="Plán areálu I. ČLTK Praha: Slavoj s kurty 10–16, Negrelliho viadukt, hlavní budova s kurtem 1 a stadionem, bazén, kurty 2–9" loading="lazy">
+          <figcaption>Plán areálu, verze 09-2025</figcaption>
+        </figure>
+      </div>
+
+      <div class="areal__pod">
+        <div class="areal__odkazy">
+          <p class="mensi">Bazén, wellness, fitness, fyzioterapie, restaurace Tiebreak s&nbsp;terasou, tenis shop, beach volejbal i&nbsp;firemní akce – všechno na jednom ostrově, pár minut od centra.</p>
+          <p class="radek"><a class="odkaz-sipka" href="https://onlinehq.cz/r/courtst.php?klub=181" rel="noopener">Obsazenost kurtů právě teď</a><a class="odkaz-sipka" href="#doplnky-ceny">Ceny služeb</a><a class="odkaz-sipka" href="#kontakt">Jak se k&nbsp;nám dostanete</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ŠTVANICE PRÁVĚ HRAJE -->
+  <section class="sekce" id="vysledky" aria-labelledby="vysledky-nadpis">
+    <div class="obal">
+      <div class="hlava-sekce">
+        <p class="stitek hlava-sekce__stitek"><span class="kurt-cislo" aria-hidden="true">03</span>Štvanice právě hraje</p>
+        <h2 class="nadpis-2 hlava-sekce__nadpis" id="vysledky-nadpis">Z&nbsp;Dauhá do New Yorku, <em>v&nbsp;barvách</em> klubu.</h2>
+        <div class="hlava-sekce__perex">
+          <p class="perex">Karolína Muchová, Darja Viďmanová a&nbsp;další štvaničtí hráči v&nbsp;sezóně 2026. Výsledková tabule je vysázená jako program koncertu: klidně, přehledně, se sety pod sebou.</p>
+        </div>
+      </div>
+
+      <div class="vysledky__mriz">
+        <div class="tabule" data-reveal>
+          <header class="tabule__hlava">
+            <p class="stitek">I. ČLTK Praha · sezóna 2026</p>
+            <h3 class="tabule__nadpis">Poslední výsledky</h3>
+            <p class="tabule__stav">Výběr z&nbsp;klubových zpráv, stav k&nbsp;23.&nbsp;9.&nbsp;2026</p>
+          </header>
+          <ol class="tabule__seznam">
+            <li class="zapas">
+              <a class="zapas__odkaz" href="https://cltk.cz/cs/clanky/karolina-muchova-ovladla-smisenou-ctyrhru-na-us-open:385/" rel="external">
+                <span class="sr-only">27. 8. 2026, New York, US Open, finále smíšené čtyřhry: Karolína Muchová a Jakub Menšík porazili Belindu Bencicovou a Flavia Cobolliho 6:3, 1:6, 10:6. Titul.</span>
+                <span class="zapas__mrizka" aria-hidden="true">
+                  <span class="zapas__datum">27.&nbsp;8.</span>
+                  <span class="zapas__mesto">New York</span>
+                  <span class="zapas__turnaj">US Open · finále mixu</span>
+                  <span class="zapas__hrac">Karolína Muchová / Jakub Menšík</span>
+                  <span class="zapas__souper">Belinda Bencicová / Flavio Cobolli</span>
+                  <span class="zapas__set zapas__set--vyhra" data-s="1">6</span><span class="zapas__set" data-s="2">1</span><span class="zapas__set zapas__set--vyhra" data-s="3">10</span>
+                  <span class="zapas__set" data-t="1">3</span><span class="zapas__set zapas__set--vyhra" data-t="2">6</span><span class="zapas__set" data-t="3">6</span>
+                  <span class="zapas__vysledek"><span class="vysledek-stitek vysledek-stitek--titul">Titul</span></span>
+                </span>
+              </a>
+            </li>
+            <li class="zapas">
+              <a class="zapas__odkaz" href="https://cltk.cz/cs/clanky/darja-vidmanova-ve-finale-turnaje-wta-250-v-memphisu:383/" rel="external">
+                <span class="sr-only">2. 8. 2026, Memphis, WTA 250, finále: Darja Viďmanová prohrála s Kristinou Liutovou 6:1, 1:6, 3:6.</span>
+                <span class="zapas__mrizka" aria-hidden="true">
+                  <span class="zapas__datum">2.&nbsp;8.</span>
+                  <span class="zapas__mesto">Memphis</span>
+                  <span class="zapas__turnaj">WTA 250 · finále</span>
+                  <span class="zapas__hrac">Darja Viďmanová</span>
+                  <span class="zapas__souper">Kristina Liutová</span>
+                  <span class="zapas__set zapas__set--vyhra" data-s="1">6</span><span class="zapas__set" data-s="2">1</span><span class="zapas__set" data-s="3">3</span>
+                  <span class="zapas__set" data-t="1">1</span><span class="zapas__set zapas__set--vyhra" data-t="2">6</span><span class="zapas__set zapas__set--vyhra" data-t="3">6</span>
+                  <span class="zapas__vysledek"><span class="vysledek-stitek">Finále</span></span>
+                </span>
+              </a>
+            </li>
+            <li class="zapas">
+              <a class="zapas__odkaz" href="https://cltk.cz/cs/clanky/karolina-muchova-ve-finale-wimbledonu:381/" rel="external">
+                <span class="sr-only">11. 7. 2026, Londýn, Wimbledon, finále dvouhry žen: Karolína Muchová prohrála s Lindou Noskovou 2:6, 7:5, 3:6. První ryze české finále ženské dvouhry.</span>
+                <span class="zapas__mrizka" aria-hidden="true">
+                  <span class="zapas__datum">11.&nbsp;7.</span>
+                  <span class="zapas__mesto">Londýn</span>
+                  <span class="zapas__turnaj">Wimbledon · finále</span>
+                  <span class="zapas__hrac">Karolína Muchová</span>
+                  <span class="zapas__souper">Linda Nosková</span>
+                  <span class="zapas__set" data-s="1">2</span><span class="zapas__set zapas__set--vyhra" data-s="2">7</span><span class="zapas__set" data-s="3">3</span>
+                  <span class="zapas__set zapas__set--vyhra" data-t="1">6</span><span class="zapas__set" data-t="2">5</span><span class="zapas__set zapas__set--vyhra" data-t="3">6</span>
+                  <span class="zapas__vysledek"><span class="vysledek-stitek">Finále</span></span>
+                </span>
+              </a>
+            </li>
+            <li class="zapas">
+              <a class="zapas__odkaz" href="https://cltk.cz/cs/clanky/karolina-muchova-ziskala-titul-na-wta-premier-500-v-bad-homburgu:377/" rel="external">
+                <span class="sr-only">27. 6. 2026, Bad Homburg, WTA 500 na trávě, finále: Karolína Muchová vedla nad Naomi Osakou 6:1, 1:0, soupeřka skrečovala. Titul.</span>
+                <span class="zapas__mrizka" data-set3="ne" aria-hidden="true">
+                  <span class="zapas__datum">27.&nbsp;6.</span>
+                  <span class="zapas__mesto">Bad Homburg</span>
+                  <span class="zapas__turnaj">WTA 500 · finále, skreč soupeřky</span>
+                  <span class="zapas__hrac">Karolína Muchová</span>
+                  <span class="zapas__souper">Naomi Osaka</span>
+                  <span class="zapas__set zapas__set--vyhra" data-s="1">6</span><span class="zapas__set zapas__set--vyhra" data-s="2">1</span><span class="zapas__set zapas__set--prazdny" data-s="3">–</span>
+                  <span class="zapas__set" data-t="1">1</span><span class="zapas__set" data-t="2">0</span><span class="zapas__set zapas__set--prazdny" data-t="3">–</span>
+                  <span class="zapas__vysledek"><span class="vysledek-stitek vysledek-stitek--titul">Titul</span></span>
+                </span>
+              </a>
+            </li>
+            <li class="zapas">
+              <a class="zapas__odkaz" href="https://cltk.cz/cs/clanky/darja-vidmanova-ma-prvni-titul-z-wta:375/" rel="external">
+                <span class="sr-only">25. 6. 2026, Figueira da Foz, WTA 125, finále: Darja Viďmanová porazila Aylu Aksuovou 6:2, 6:3. První titul WTA.</span>
+                <span class="zapas__mrizka" data-set3="ne" aria-hidden="true">
+                  <span class="zapas__datum">25.&nbsp;6.</span>
+                  <span class="zapas__mesto">Figueira da Foz</span>
+                  <span class="zapas__turnaj">WTA 125 · finále</span>
+                  <span class="zapas__hrac">Darja Viďmanová</span>
+                  <span class="zapas__souper">Ayla Aksuová</span>
+                  <span class="zapas__set zapas__set--vyhra" data-s="1">6</span><span class="zapas__set zapas__set--vyhra" data-s="2">6</span><span class="zapas__set zapas__set--prazdny" data-s="3">–</span>
+                  <span class="zapas__set" data-t="1">2</span><span class="zapas__set" data-t="2">3</span><span class="zapas__set zapas__set--prazdny" data-t="3">–</span>
+                  <span class="zapas__vysledek"><span class="vysledek-stitek vysledek-stitek--titul">Titul</span></span>
+                </span>
+              </a>
+            </li>
+            <li class="zapas">
+              <a class="zapas__odkaz" href="https://cltk.cz/cs/clanky/karolina-muchova-vyhrala-tisicovku-v-dauha:364/" rel="external">
+                <span class="sr-only">16. 2. 2026, Dauhá, WTA 1000, finále: Karolína Muchová porazila Victorii Mboko 6:4, 7:5. Největší titul kariéry.</span>
+                <span class="zapas__mrizka" data-set3="ne" aria-hidden="true">
+                  <span class="zapas__datum">16.&nbsp;2.</span>
+                  <span class="zapas__mesto">Dauhá</span>
+                  <span class="zapas__turnaj">WTA 1000 · finále</span>
+                  <span class="zapas__hrac">Karolína Muchová</span>
+                  <span class="zapas__souper">Victoria Mboko</span>
+                  <span class="zapas__set zapas__set--vyhra" data-s="1">6</span><span class="zapas__set zapas__set--vyhra" data-s="2">7</span><span class="zapas__set zapas__set--prazdny" data-s="3">–</span>
+                  <span class="zapas__set" data-t="1">4</span><span class="zapas__set" data-t="2">5</span><span class="zapas__set zapas__set--prazdny" data-t="3">–</span>
+                  <span class="zapas__vysledek"><span class="vysledek-stitek vysledek-stitek--titul">Titul</span></span>
+                </span>
+              </a>
+            </li>
+            <li class="zapas">
+              <a class="zapas__odkaz" href="https://cltk.cz/cs/clanky/tereza-martincova-ovladla-conseq-prague-open-26:363/" rel="external">
+                <span class="sr-only">16. 2. 2026, Praha, Conseq Prague Open, ITF W75 v pevné hale na Štvanici, finále: Tereza Martincová porazila Sinju Krausovou 6:3, 6:4. Titul z kvalifikace.</span>
+                <span class="zapas__mrizka" data-set3="ne" aria-hidden="true">
+                  <span class="zapas__datum">16.&nbsp;2.</span>
+                  <span class="zapas__mesto">Praha · Štvanice</span>
+                  <span class="zapas__turnaj">ITF W75, pevná hala · finále</span>
+                  <span class="zapas__hrac">Tereza Martincová</span>
+                  <span class="zapas__souper">Sinja Krausová</span>
+                  <span class="zapas__set zapas__set--vyhra" data-s="1">6</span><span class="zapas__set zapas__set--vyhra" data-s="2">6</span><span class="zapas__set zapas__set--prazdny" data-s="3">–</span>
+                  <span class="zapas__set" data-t="1">3</span><span class="zapas__set" data-t="2">4</span><span class="zapas__set zapas__set--prazdny" data-t="3">–</span>
+                  <span class="zapas__vysledek"><span class="vysledek-stitek vysledek-stitek--titul">Titul</span></span>
+                </span>
+              </a>
+            </li>
+          </ol>
+          <footer class="tabule__pata">
+            <span>Data podle zpráv klubu (datum zprávy, u&nbsp;Wimbledonu a&nbsp;Memphisu den finále). Živé napojení výsledků ověří klub.</span>
+            <a class="odkaz-sipka" href="#zpravy">Zprávy z&nbsp;kurtů</a>
+          </footer>
+        </div>
+
+        <aside class="vysledky__bok" aria-label="Kde štvaničtí hráči hráli">
+          <figure class="obr">
+            <svg class="mapa-sveta" viewBox="0 0 480 300" role="img" aria-labelledby="ms-titulek">
+              <title id="ms-titulek">Mapa míst, kde hráči klubu v sezóně 2026 hráli finále: New York, Memphis, Londýn, Bad Homburg, Figueira da Foz, Dauhá a Praha</title>
+              <g aria-hidden="true">
+                <path class="ms-sit" d="M0 0V300M60 0V300M120 0V300M180 0V300M240 0V300M300 0V300M360 0V300M420 0V300M480 0V300"/>
+                <path class="ms-sit" d="M0 14.3H480M0 85.7H480M0 157.1H480M0 228.6H480M0 300H480"/>
+                <path class="ms-sit ms-sit--hlavni" d="M0 275.4H480"/>
+                <text class="ms-popis ms-popis--male" x="4" y="270">obratník Raka</text>
+                <text class="ms-ocean" x="150" y="118">Atlantský oceán</text>
+                <path class="ms-oblouk" d="M343.3 85.1 Q 210 40 78 152"/>
+                <path class="ms-oblouk" d="M343.3 85.1 Q 180 50 29.9 191.7"/>
+                <path class="ms-oblouk" d="M343.3 85.1 Q 322 62 299.6 74.9"/>
+                <path class="ms-oblouk" d="M343.3 85.1 Q 336 72 325.9 84.1"/>
+                <path class="ms-oblouk" d="M343.3 85.1 Q 305 104 273.4 156"/>
+                <path class="ms-oblouk" d="M343.3 85.1 Q 420 150 454.6 262.1"/>
+                <circle class="ms-kruh" cx="78" cy="152" r="7"/><circle class="ms-bod" cx="78" cy="152" r="3"/>
+                <circle class="ms-bod" cx="29.9" cy="191.7" r="3"/>
+                <circle class="ms-kruh" cx="299.6" cy="74.9" r="7"/><circle class="ms-bod" cx="299.6" cy="74.9" r="3"/>
+                <circle class="ms-bod" cx="325.9" cy="84.1" r="3"/>
+                <circle class="ms-bod" cx="273.4" cy="156" r="3"/>
+                <circle class="ms-bod" cx="454.6" cy="262.1" r="3"/>
+                <circle class="ms-domov" cx="343.3" cy="85.1" r="4.2"/><circle class="ms-kruh" cx="343.3" cy="85.1" r="9" style="stroke:var(--inkoust)"/>
+                <text class="ms-popis" x="84" y="170" style="font-size:10px">New York</text>
+                <text class="ms-popis" x="36" y="208" style="font-size:10px">Memphis</text>
+                <text class="ms-popis" x="262" y="62" style="font-size:10px">Londýn</text>
+                <text class="ms-popis" x="296" y="104" style="font-size:9px">Bad Homburg</text>
+                <text class="ms-popis" x="232" y="174" style="font-size:10px">Figueira da Foz</text>
+                <text class="ms-popis" x="408" y="282" style="font-size:10px">Dauhá</text>
+                <text class="ms-popis" x="356" y="80" style="font-size:11px">Praha</text>
+              </g>
+            </svg>
+            <figcaption>Finále a&nbsp;tituly hráčů klubu v&nbsp;roce 2026 · kruh = grandslam</figcaption>
+          </figure>
+          <dl class="fakta vysledky__fakta">
+            <div><dt>Muchová</dt><dd>kariérní maximum WTA č.&nbsp;6 (13.&nbsp;7.&nbsp;2026)</dd></div>
+            <div><dt>Bartůňková</dt><dd>3.&nbsp;kolo Australian Open 2026 z&nbsp;kvalifikace, maximum č.&nbsp;34</dd></div>
+            <div><dt>Viďmanová</dt><dd>první titul WTA, maximum č.&nbsp;75 (31.&nbsp;8.&nbsp;2026)</dd></div>
+            <div><dt>Žebříček ČTS</dt><dd>4 z&nbsp;TOP 10 žen hrají za Štvanici (léto 2026)</dd></div>
+          </dl>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- CESTA ŠTVANICÍ -->
+  <section class="sekce sekce--bez-horni" id="cesta" aria-labelledby="cesta-nadpis">
+    <div class="obal">
+      <span class="lajna lajna--t cesta__predel" aria-hidden="true"></span>
+      <div class="rozdeleni rozdeleni--4-8 cesta__rozvrzeni">
+        <div class="rozdeleni__lepkavy">
+          <p class="stitek hlava-sekce__stitek cesta__stitek"><span class="kurt-cislo" aria-hidden="true">04</span>Závodní tenis</p>
+          <h2 class="nadpis-2" id="cesta-nadpis">Cesta <em>Štvanicí</em></h2>
+          <p class="perex cesta__perex">Od prvního míčku ve třech letech po extraligu. I.&nbsp;ČLTK je jeden ze tří klubů v&nbsp;Česku s&nbsp;celou pyramidou TSM → SVT → SCM, vedle Sparty a&nbsp;Prostějova.</p>
+          <div class="cisla cesta__cisla">
+            <div class="cislo-blok"><p class="cislo-velke">26</p><p class="cislo-popis">reprezentantů České republiky z&nbsp;klubu v&nbsp;roce 2026 (ze 146)</p></div>
+            <div class="cislo-blok"><p class="cislo-velke">4 <small>z&nbsp;TOP 10</small></p><p class="cislo-popis">českého žebříčku žen hraje za Štvanici (léto 2026)</p></div>
+            <div class="cislo-blok"><p class="cislo-velke">121</p><p class="cislo-popis">hráčů klubu v&nbsp;žebříčcích ČTS (léto 2026)</p></div>
+          </div>
+          <p class="cesta__odkaz"><a class="odkaz-sipka" href="https://cltk.cz/cs/zavodni-tenis/treneri/" rel="external">Všichni trenéři klubu</a></p>
+        </div>
+
+        <ol class="cesta">
+          <li class="cesta__krok" data-reveal>
+            <div class="cesta__znacka"><span class="kurt-cislo">1</span></div>
+            <div class="cesta__telo">
+              <div>
+                <p class="cesta__vek">3–9 let</p>
+                <h3 class="cesta__nazev">Tenisová škola</h3>
+                <p class="cesta__text">Minitenis, střední kurt a&nbsp;babytenis. Škola je přímou součástí klubu už víc než 15 let; nábory na jaře a&nbsp;na podzim.</p>
+                <dl class="cesta__fakta"><div><dt>Dětí</dt><dd>kolem stovky <span class="pozn">podle klubu</span></dd></div><div><dt>Turnaje</dt><dd>do 7, 8 a&nbsp;9 let</dd></div></dl>
+              </div>
+              <figure class="cesta__trener">
+                <img src="../assets/foto/treneri/jan-pecha.jpg" width="750" height="1000" alt="Mgr. Jan Pecha, Ph.D." loading="lazy">
+                <figcaption><strong>Mgr. Jan Pecha, Ph.D.</strong>vedoucí trenér Tenisové školy</figcaption>
+              </figure>
+            </div>
+          </li>
+          <li class="cesta__krok" data-reveal>
+            <div class="cesta__znacka"><span class="kurt-cislo">2</span></div>
+            <div class="cesta__telo">
+              <div>
+                <p class="cesta__vek">10–14 let</p>
+                <h3 class="cesta__nazev">TSM</h3>
+                <p class="cesta__plny">Tréninkové středisko mládeže ČTS</p>
+                <dl class="cesta__fakta"><div><dt>Hráčů</dt><dd>14 + 2</dd></div><div><dt>Trenéři</dt><dd>Jaroslav Jandus, Magdalena Zemanová</dd></div></dl>
+              </div>
+              <figure class="cesta__trener">
+                <img src="../assets/foto/treneri/antonin-stepanek.jpg" width="750" height="1000" alt="Bc. Antonín Štěpánek" loading="lazy">
+                <figcaption><strong>Bc. Antonín Štěpánek</strong>hlavní trenér TSM</figcaption>
+              </figure>
+            </div>
+          </li>
+          <li class="cesta__krok" data-reveal>
+            <div class="cesta__znacka"><span class="kurt-cislo">3</span></div>
+            <div class="cesta__telo">
+              <div>
+                <p class="cesta__vek">15–18 let</p>
+                <h3 class="cesta__nazev">SVT</h3>
+                <p class="cesta__plny">Středisko vrcholového tenisu ČTS, jedno ze šesti v&nbsp;Česku</p>
+                <dl class="cesta__fakta"><div><dt>Hráčů</dt><dd>16 + 2</dd></div><div><dt>Trenéři</dt><dd>Jan Vacek, Milan Trněný</dd></div></dl>
+              </div>
+              <figure class="cesta__trener">
+                <img src="../assets/foto/treneri/daniel-vanek.jpg" width="750" height="1000" alt="Daniel Vaněk" loading="lazy">
+                <figcaption><strong>Daniel Vaněk</strong>hlavní trenér SVT</figcaption>
+              </figure>
+            </div>
+          </li>
+          <li class="cesta__krok" data-reveal>
+            <div class="cesta__znacka"><span class="kurt-cislo">4</span></div>
+            <div class="cesta__telo">
+              <div>
+                <p class="cesta__vek">15–21 let</p>
+                <h3 class="cesta__nazev">SCM</h3>
+                <p class="cesta__plny">Sportovní centrum mládeže ČTS – v&nbsp;Česku jsou jen tři</p>
+                <p class="cesta__text">Hlavním trenérem SCM je podle ČTS Zdeněk Kubík, vedoucím SCM podle webu klubu sportovní ředitel Petr Vaníček.</p>
+                <dl class="cesta__fakta"><div><dt>Hráčů</dt><dd>9 + 2</dd></div><div><dt>Trenéři</dt><dd>Jan Vacek, Milan Trněný</dd></div></dl>
+              </div>
+              <figure class="cesta__trener">
+                <img src="../assets/foto/treneri/petr-vanicek.jpg" width="750" height="1000" alt="Petr Vaníček" loading="lazy">
+                <figcaption><strong>Petr Vaníček</strong>sportovní ředitel a&nbsp;vedoucí SCM</figcaption>
+              </figure>
+            </div>
+          </li>
+          <li class="cesta__krok cesta__krok--vrchol" data-reveal>
+            <div class="cesta__znacka"><span class="kurt-cislo">5</span></div>
+            <div class="cesta__telo">
+              <div>
+                <p class="cesta__vek">Dospělí</p>
+                <h3 class="cesta__nazev">Extraliga, WTA a&nbsp;ATP</h3>
+                <p class="cesta__text">Mistr republiky v&nbsp;extralize smíšených družstev 2018 a&nbsp;2019. Na soupisce 2025 mimo jiné Karolína Muchová, Nikola Bartůňková, Darja Viďmanová, Tereza Martincová, Jonáš Forejtek, Andrew Paulson, Jakub Nicod a&nbsp;Matěj Vocel.</p>
+                <dl class="cesta__fakta"><div><dt>Kapitáni</dt><dd>Petr Vaníček a&nbsp;Ivo Minář</dd></div></dl>
+              </div>
+              <figure class="cesta__trener">
+                <img src="../assets/foto/clanky/karolina-muchova-ve-finale-wimbledonu.jpg" width="2400" height="1601" alt="Karolína Muchová s talířem pro finalistku Wimbledonu 2026" loading="lazy" style="object-position:52% 22%">
+                <figcaption><strong>Karolína Muchová</strong>finalistka Wimbledonu 2026 · foto Martin Sidorják</figcaption>
+              </figure>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- CENÍK – KALKULAČKA -->
+  <section class="sekce sekce--panel" id="cenik" aria-labelledby="cenik-nadpis">
+    <div class="obal">
+      <div class="hlava-sekce">
+        <p class="stitek hlava-sekce__stitek"><span class="kurt-cislo" aria-hidden="true">05</span>Ceník a&nbsp;členství</p>
+        <h2 class="nadpis-2 hlava-sekce__nadpis" id="cenik-nadpis">Kolik stojí hodina <em>v&nbsp;hale</em>.</h2>
+        <div class="hlava-sekce__perex">
+          <p class="perex">Zimní sezóna 2026/27 ve třech halách. Vyberte halu, čas a&nbsp;formu. Přepínač „Jsem člen“ ukáže členskou cenu a&nbsp;kolik ušetříte – třeba na antuce ve všední den odpoledne 140&nbsp;Kč za každou hodinu.</p>
+        </div>
+      </div>
+
+      <div data-kalkulacka id="kalkulacka" aria-label="Kalkulačka ceníku">
+        <noscript><p>Kalkulačka potřebuje JavaScript. Celý ceník najdete na stránce <a href="https://cltk.cz/cs/cenik/">cltk.cz/cs/cenik</a>.</p></noscript>
+      </div>
+
+      <div class="sloupce-3 cenik__pod">
+        <section id="clenstvi" aria-labelledby="clenstvi-ceny">
+          <h3 class="nadpis-4" id="clenstvi-ceny">Členství 2026</h3>
+          <p class="drobne sede cenik__uvod">Roční příspěvek. Venkovní kurty v&nbsp;létě, bazén, fitness a&nbsp;regenerace v&nbsp;ceně.</p>
+          <div class="cenik">
+            <p class="cenik__radek"><span class="cenik__polozka">Dospělý hrající</span><span class="cenik__vodici" aria-hidden="true"></span><span class="cenik__cena">21&nbsp;000&nbsp;Kč</span></p>
+            <p class="cenik__radek"><span class="cenik__polozka">Dospělý do 30 let</span><span class="cenik__vodici" aria-hidden="true"></span><span class="cenik__cena">15&nbsp;500&nbsp;Kč</span></p>
+            <p class="cenik__radek"><span class="cenik__polozka">Senioři<span class="cenik__pozn">ženy od 67, muži od 72 let; ve všední dny hrají do 14:00</span></span><span class="cenik__vodici" aria-hidden="true"></span><span class="cenik__cena">10&nbsp;000&nbsp;Kč</span></p>
+            <p class="cenik__radek"><span class="cenik__polozka">Mládež 4–18 let, studenti do 26 let</span><span class="cenik__vodici" aria-hidden="true"></span><span class="cenik__cena">9&nbsp;500&nbsp;Kč</span></p>
+            <p class="cenik__radek"><span class="cenik__polozka">Rodinné<span class="cenik__pozn">1 hrající + 1 dítě</span></span><span class="cenik__vodici" aria-hidden="true"></span><span class="cenik__cena">od 27&nbsp;000&nbsp;Kč</span></p>
+            <p class="cenik__radek"><span class="cenik__polozka">Firemní<span class="cenik__pozn">nejméně 2 přenosné karty</span></span><span class="cenik__vodici" aria-hidden="true"></span><span class="cenik__cena">40&nbsp;000&nbsp;Kč</span></p>
+          </div>
+          <p class="cenik__akce"><a class="odkaz-sipka" href="https://cltk.cz/cs/podminky-clenstvi/" rel="external">Podmínky členství a&nbsp;přihláška</a></p>
+        </section>
+        <section aria-labelledby="leto-ceny">
+          <h3 class="nadpis-4" id="leto-ceny">Léto 2026</h3>
+          <p class="drobne sede cenik__uvod">Cena za hodinu, celý den včetně víkendů. Členové hrají venku zdarma.</p>
+          <div class="cenik">
+            <p class="cenik__radek"><span class="cenik__polozka">Kurty 1–9</span><span class="cenik__vodici" aria-hidden="true"></span><span class="cenik__cena">500&nbsp;Kč</span></p>
+            <p class="cenik__radek"><span class="cenik__polozka">Slavoj, kurty 10–16</span><span class="cenik__vodici" aria-hidden="true"></span><span class="cenik__cena">400&nbsp;Kč</span></p>
+            <p class="cenik__radek"><span class="cenik__polozka">Pevná hala P1, P2<span class="cenik__pozn">člen 500&nbsp;Kč</span></span><span class="cenik__vodici" aria-hidden="true"></span><span class="cenik__cena">600&nbsp;Kč</span></p>
+            <p class="cenik__radek"><span class="cenik__polozka">Večerní svícení, kurty 2, 3, 4</span><span class="cenik__vodici" aria-hidden="true"></span><span class="cenik__cena">150&nbsp;Kč</span></p>
+          </div>
+          <p class="drobne sede cenik__uvod" style="margin-top:.8rem">Letní ceník pro sezónu 2027 <span class="pozn pozn--doplni">doplní klub</span></p>
+        </section>
+        <section aria-labelledby="doplnky-ceny">
+          <h3 class="nadpis-4" id="doplnky-ceny">Doplňkové služby a&nbsp;hosté</h3>
+          <p class="drobne sede cenik__uvod">Beach a&nbsp;multifunkční hřiště mají členové zdarma, s&nbsp;hosty o&nbsp;25&nbsp;% levněji.</p>
+          <div class="cenik">
+            <p class="cenik__radek"><span class="cenik__polozka">Multifunkční hřiště</span><span class="cenik__vodici" aria-hidden="true"></span><span class="cenik__cena">900&nbsp;Kč/h</span></p>
+            <p class="cenik__radek"><span class="cenik__polozka">Beach volejbal</span><span class="cenik__vodici" aria-hidden="true"></span><span class="cenik__cena">400&nbsp;Kč/h</span></p>
+            <p class="cenik__radek"><span class="cenik__polozka">Host člena na venkovním dvorci</span><span class="cenik__vodici" aria-hidden="true"></span><span class="cenik__cena">100&nbsp;Kč/h</span></p>
+            <p class="cenik__radek"><span class="cenik__polozka">Host člena u&nbsp;bazénu</span><span class="cenik__vodici" aria-hidden="true"></span><span class="cenik__cena">400&nbsp;Kč/den</span></p>
+            <p class="cenik__radek"><span class="cenik__polozka">Host člena ve fitness</span><span class="cenik__vodici" aria-hidden="true"></span><span class="cenik__cena">400&nbsp;Kč</span></p>
+          </div>
+          <p class="cenik__akce"><a class="odkaz-sipka" href="https://cltk.cz/cs/cenik/" rel="external">Celý ceník léto i&nbsp;zima</a></p>
+        </section>
+      </div>
+    </div>
+  </section>
+
+  <!-- CIFERNÍK SEZÓNY (tmavý blok) -->
+  <section class="sekce sekce--noc na-noci" id="kalendar" aria-labelledby="kalendar-nadpis">
+    <div class="obal">
+      <div class="hlava-sekce">
+        <p class="stitek hlava-sekce__stitek"><span class="kurt-cislo" aria-hidden="true">06</span>Kalendář</p>
+        <h2 class="nadpis-2 hlava-sekce__nadpis" id="kalendar-nadpis">Rok na <em>Štvanici</em>.</h2>
+        <div class="hlava-sekce__perex">
+          <p class="perex">Ciferník klubového roku: haly od konce září, turnaje, klubové dny i&nbsp;prosincové večery. Ručička ukazuje dnešek. Přerušované oblouky znamenají, že termín na rok 2026 klub teprve oznámí.</p>
+        </div>
+      </div>
+
+      <div class="kalendar__mriz" data-cifernik>
+        <div class="cifernik">
+          <div class="cifernik__stred" aria-live="polite">
+            <p class="stitek">Dnes</p>
+            <p class="cifernik__den" data-dnes-den>23.&nbsp;9.</p>
+            <p class="cifernik__popis" id="cf-nejblizsi"><strong>Za 5 dní</strong>Start zimní sezóny v&nbsp;pevné hale P1, P2</p>
+          </div>
+        </div>
+        <div class="kalendar__seznam">
+          <h3 class="stitek kalendar__nadpis">Klubový rok – vyberte událost</h3>
+          <ol class="cifernik__seznam" data-cifernik-seznam>
+            <li data-od="02-08" data-do="02-15" data-druh="turnaj" data-okruh="3" data-jistota="naposledy"><button type="button" class="cifernik__polozka" aria-pressed="false"><span class="cifernik__znacka cifernik__znacka--turnaj" aria-hidden="true"></span><span class="cifernik__kdy">únor</span><span class="cifernik__nazev">Conseq Prague Open, ITF W75 v&nbsp;hale</span><span class="cifernik__jistota">2026: 8.–15.&nbsp;2.</span></button></li>
+            <li data-od="05-24" data-druh="klub" data-okruh="4" data-jistota="naposledy"><button type="button" class="cifernik__polozka" aria-pressed="false"><span class="cifernik__znacka cifernik__znacka--klub" aria-hidden="true"></span><span class="cifernik__kdy">květen</span><span class="cifernik__nazev">Klubový den – čtyřhry, barbecue, kvíz</span><span class="cifernik__jistota">2026: 24.&nbsp;5.</span></button></li>
+            <li data-od="06-25" data-druh="klub" data-okruh="4" data-jistota="naposledy"><button type="button" class="cifernik__polozka" aria-pressed="false"><span class="cifernik__znacka cifernik__znacka--klub" aria-hidden="true"></span><span class="cifernik__kdy">červen</span><span class="cifernik__nazev">Valná hromada</span><span class="cifernik__jistota">2026: 25.&nbsp;6.</span></button></li>
+            <li data-od="06-29" data-do="08-28" data-druh="skola" data-okruh="2" data-jistota="naposledy"><button type="button" class="cifernik__polozka" aria-pressed="false"><span class="cifernik__znacka cifernik__znacka--skola" aria-hidden="true"></span><span class="cifernik__kdy">červenec–srpen</span><span class="cifernik__nazev">Letní dětské kempy, 6 termínů</span><span class="cifernik__jistota">2026: 29.&nbsp;6. – 28.&nbsp;8.</span></button></li>
+            <li data-od="08-16" data-do="08-22" data-druh="turnaj" data-okruh="3" data-jistota="naposledy"><button type="button" class="cifernik__polozka" aria-pressed="false"><span class="cifernik__znacka cifernik__znacka--turnaj" aria-hidden="true"></span><span class="cifernik__kdy">srpen</span><span class="cifernik__nazev">Sekyra Group Prague Open, 26.&nbsp;ročník</span><span class="cifernik__jistota">2026: 16.–22.&nbsp;8.</span></button></li>
+            <li data-od="09-06" data-druh="klub" data-okruh="4" data-jistota="naposledy"><button type="button" class="cifernik__polozka" aria-pressed="false"><span class="cifernik__znacka cifernik__znacka--klub" aria-hidden="true"></span><span class="cifernik__kdy">září</span><span class="cifernik__nazev">Klubový den</span><span class="cifernik__jistota">2026: 6.&nbsp;9.</span></button></li>
+            <li data-od="09-28" data-do="04-04" data-druh="haly" data-okruh="1" data-jistota="potvrzeno"><button type="button" class="cifernik__polozka" aria-pressed="false"><span class="cifernik__znacka cifernik__znacka--haly" aria-hidden="true"></span><span class="cifernik__kdy">28.&nbsp;9. – 4.&nbsp;4.</span><span class="cifernik__nazev">Zimní sezóna v&nbsp;halách</span><span class="cifernik__jistota">přetlakové haly od 5.&nbsp;10.</span></button></li>
+            <li data-od="09-29" data-do="04-02" data-druh="skola" data-okruh="2" data-jistota="potvrzeno"><button type="button" class="cifernik__polozka" aria-pressed="false"><span class="cifernik__znacka cifernik__znacka--skola" aria-hidden="true"></span><span class="cifernik__kdy">29.&nbsp;9. – 2.&nbsp;4.</span><span class="cifernik__nazev">Tenisová škola podle zimních rozvrhů</span><span class="cifernik__jistota">potvrzeno</span></button></li>
+            <li data-od="11-07" data-do="11-09" data-druh="turnaj" data-okruh="3" data-jistota="doplni"><button type="button" class="cifernik__polozka" aria-pressed="false"><span class="cifernik__znacka cifernik__znacka--turnaj cifernik__znacka--doplni" aria-hidden="true"></span><span class="cifernik__kdy">listopad</span><span class="cifernik__nazev">CTC U14 – I.&nbsp;ČLTK Praha Cup</span><span class="cifernik__jistota">termín doplní klub</span></button></li>
+            <li data-od="12-04" data-druh="klub" data-okruh="4" data-jistota="doplni"><button type="button" class="cifernik__polozka" aria-pressed="false"><span class="cifernik__znacka cifernik__znacka--klub cifernik__znacka--doplni" aria-hidden="true"></span><span class="cifernik__kdy">začátek prosince</span><span class="cifernik__nazev">Mikulášská besídka</span><span class="cifernik__jistota">termín doplní klub</span></button></li>
+            <li data-od="12-11" data-do="12-12" data-druh="klub" data-okruh="4" data-jistota="doplni"><button type="button" class="cifernik__polozka" aria-pressed="false"><span class="cifernik__znacka cifernik__znacka--klub cifernik__znacka--doplni" aria-hidden="true"></span><span class="cifernik__kdy">prosinec</span><span class="cifernik__nazev">Večer talentů a&nbsp;Vánoční večírek v&nbsp;Letenském zámečku</span><span class="cifernik__jistota">termín doplní klub</span></button></li>
+            <li data-od="12-01" data-do="12-20" data-druh="turnaj" data-okruh="3" data-jistota="doplni"><button type="button" class="cifernik__polozka" aria-pressed="false"><span class="cifernik__znacka cifernik__znacka--turnaj cifernik__znacka--doplni" aria-hidden="true"></span><span class="cifernik__kdy">prosinec</span><span class="cifernik__nazev">OSTRA Tenisová extraliga</span><span class="cifernik__jistota">termín doplní klub</span></button></li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="kalendar__nejblizsi">
+        <h3 class="stitek kalendar__nadpis">Nejbližší termíny</h3>
+        <ol class="nejblizsi" data-nejblizsi="#cf-nejblizsi">
+          <li data-datum="2026-09-28"><p class="nejblizsi__datum">28.&nbsp;9.<small data-za-dni="2026-09-28">za 5 dní</small></p><div><p class="nejblizsi__nazev">Start zimní sezóny v&nbsp;pevné hale P1, P2</p><p class="nejblizsi__pozn">hrací období do 4.&nbsp;4.&nbsp;2027, 27 týdnů</p></div></li>
+          <li data-datum="2026-09-29"><p class="nejblizsi__datum">29.&nbsp;9.<small data-za-dni="2026-09-29">za 6 dní</small></p><div><p class="nejblizsi__nazev">Tenisová škola trénuje podle zimních rozvrhů</p><p class="nejblizsi__pozn">do 2.&nbsp;4.&nbsp;2027</p></div></li>
+          <li data-datum="2026-10-05"><p class="nejblizsi__datum">5.&nbsp;10.<small data-za-dni="2026-10-05">za 12 dní</small></p><div><p class="nejblizsi__nazev">Start zimní sezóny v&nbsp;přetlakových halách</p><p class="nejblizsi__pozn">do 4.&nbsp;4.&nbsp;2027, 26 týdnů</p></div></li>
+        </ol>
+        <p class="drobne sede kalendar__pozn">Klubové kalendáře po 23.&nbsp;9.&nbsp;2026 další akce zatím neuvádějí. U&nbsp;pravidelných akcí je uvedeno, kdy se konaly naposledy.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TENISOVÁ ŠKOLA A KEMPY -->
+  <section class="sekce" id="skola" aria-labelledby="skola-nadpis">
+    <div class="obal">
+      <div class="rozdeleni skola__rozvrzeni">
+        <figure class="obr skola__foto" data-reveal>
+          <img class="foto pomer-4-5" src="../assets/foto/kurt-antuka-zivy-plot-tribuny.jpg" width="2000" height="1333" alt="Antukový kurt obklopený vysokými živými ploty, bílé tribunky se slunečníky a rozhodčí na stoličce" loading="lazy">
+          <figcaption>Antukové kurty v&nbsp;zeleni živých plotů</figcaption>
+        </figure>
+        <div class="skola__obsah">
+          <p class="stitek hlava-sekce__stitek"><span class="kurt-cislo" aria-hidden="true">07</span>Tenisová škola a&nbsp;kempy</p>
+          <h2 class="nadpis-2" id="skola-nadpis">Tenis pro děti od tří do <em>devíti</em> let.</h2>
+          <p class="perex">Tenisová škola připravuje děti v&nbsp;minitenisu, na středním kurtu a&nbsp;v&nbsp;babytenisu a&nbsp;pořádá pro ně vlastní turnaje. V&nbsp;ceně je trenér i&nbsp;kurt, za nepříznivého počasí se hraje v&nbsp;hale.</p>
+
+          <div class="skola__dva">
+            <section aria-labelledby="skola-zima">
+              <h3 class="nadpis-4" id="skola-zima">Zima 2026/27</h3>
+              <p class="drobne sede">7.&nbsp;9.&nbsp;2026 – 2.&nbsp;4.&nbsp;2027 · cena na osobu za 60&nbsp;minut</p>
+              <div class="cenik">
+                <p class="cenik__radek"><span class="cenik__polozka">Individuálně, celý kurt</span><span class="cenik__vodici" aria-hidden="true"></span><span class="cenik__cena">1&nbsp;350&nbsp;Kč</span></p>
+                <p class="cenik__radek"><span class="cenik__polozka">Individuálně, půl kurtu</span><span class="cenik__vodici" aria-hidden="true"></span><span class="cenik__cena">900&nbsp;Kč</span></p>
+                <p class="cenik__radek"><span class="cenik__polozka">Ve dvou hráčích</span><span class="cenik__vodici" aria-hidden="true"></span><span class="cenik__cena">675&nbsp;Kč</span></p>
+                <p class="cenik__radek"><span class="cenik__polozka">Ve třech, 2 trenéři</span><span class="cenik__vodici" aria-hidden="true"></span><span class="cenik__cena">625&nbsp;Kč</span></p>
+                <p class="cenik__radek"><span class="cenik__polozka">Ve čtyřech, 2 trenéři</span><span class="cenik__vodici" aria-hidden="true"></span><span class="cenik__cena">475&nbsp;Kč</span></p>
+                <p class="cenik__radek"><span class="cenik__polozka">Skupina začátečníků</span><span class="cenik__vodici" aria-hidden="true"></span><span class="cenik__cena">375&nbsp;Kč</span></p>
+              </div>
+              <p class="drobne sede" style="margin-top:.7rem">Základní členství v&nbsp;Tenisové škole 1&nbsp;000&nbsp;Kč ročně. Volno: 21.–28.&nbsp;9., 26.–30.&nbsp;10., 17.&nbsp;11. a&nbsp;23.&nbsp;12.&nbsp;2026 – 3.&nbsp;1.&nbsp;2027.</p>
+            </section>
+            <section aria-labelledby="skola-kempy">
+              <h3 class="nadpis-4" id="skola-kempy">Letní kempy 2027</h3>
+              <p class="drobne sede">Termíny na léto 2027 <span class="pozn pozn--doplni">doplní klub</span></p>
+              <p class="drobne" style="margin-top:.6rem">Pro představu léto 2026: šest turnusů pro děti zhruba 4–9 let, v&nbsp;ceně oběd a&nbsp;pitný režim.</p>
+              <ol class="kempy">
+                <li><span class="kurt-cislo" aria-hidden="true">1</span>29.&nbsp;6. – 3.&nbsp;7.</li>
+                <li><span class="kurt-cislo" aria-hidden="true">2</span>6.–10.&nbsp;7.</li>
+                <li><span class="kurt-cislo" aria-hidden="true">3</span>27.–31.&nbsp;7.</li>
+                <li><span class="kurt-cislo" aria-hidden="true">4</span>3.–7.&nbsp;8.</li>
+                <li><span class="kurt-cislo" aria-hidden="true">5</span>10.–14.&nbsp;8.</li>
+                <li><span class="kurt-cislo" aria-hidden="true">6</span>24.–28.&nbsp;8.</li>
+              </ol>
+              <div class="tabulka-obal kempy__tabulka">
+                <table class="tabulka tabulka--uzka">
+                  <caption class="sr-only">Ceny letních kempů 2026 (proběhly)</caption>
+                  <thead><tr><th scope="col">Varianta</th><th scope="col" class="cislo">Hráč klubu</th><th scope="col" class="cislo">Ostatní</th></tr></thead>
+                  <tbody>
+                    <tr><th scope="row">A – celodenní<br><span class="drobne sede">8:30–16:30</span></th><td class="cislo">6&nbsp;000&nbsp;Kč</td><td class="cislo">8&nbsp;500&nbsp;Kč</td></tr>
+                    <tr><th scope="row">B – dopolední<br><span class="drobne sede">8:30–13:30</span></th><td class="cislo">5&nbsp;000&nbsp;Kč</td><td class="cislo">7&nbsp;500&nbsp;Kč</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <p class="drobne sede" style="margin-top:.7rem">Termíny a&nbsp;ceny kempů 2026, které už proběhly.</p>
+            </section>
+          </div>
+
+          <div class="skola__kontakt">
+            <p class="mensi"><strong>Přihlášky a&nbsp;dotazy:</strong> Mgr. Jan Pecha, Ph.D., vedoucí trenér · <a href="tel:+420721663118">+420 721 663 118</a> · <a href="mailto:pecha@cltk.cz">pecha@cltk.cz</a></p>
+            <a class="odkaz-sipka" href="https://cltk.cz/cs/tenisova-skolicka/informace/" rel="external">Informace a&nbsp;rozvrhy Tenisové školy</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- KLUBOVÝ ŽIVOT A CTC -->
+  <section class="sekce sekce--panel" id="klub" aria-labelledby="zivot-nadpis">
+    <div class="obal">
+      <div class="hlava-sekce">
+        <p class="stitek hlava-sekce__stitek"><span class="kurt-cislo" aria-hidden="true">08</span>Klubový život</p>
+        <h2 class="nadpis-2 hlava-sekce__nadpis" id="zivot-nadpis">Na Štvanici se <em>potkáváme</em>.</h2>
+        <div class="hlava-sekce__perex"><p class="perex">Klubové dny v&nbsp;květnu a&nbsp;září, Valná hromada v&nbsp;červnu, Mikuláš, Večer talentů a&nbsp;Vánoční večírek v&nbsp;Letenském zámečku. A&nbsp;přátelé ze stoletých klubů Evropy.</p></div>
+      </div>
+
+      <div class="galerie">
+        <figure class="obr" data-reveal>
+          <img class="foto" src="../assets/foto/vyroci-130-let-spolecna-fotografie.jpg" width="2400" height="1500" alt="Společná fotografie asi dvou set členů klubu na tribuně centrálního dvorce při oslavě 130 let" loading="lazy">
+          <figcaption><span>130 let klubu: společná fotografie asi 200 členů, 22.&nbsp;7.&nbsp;2023</span><span class="popisek__kredit">Foto: fotogalerie klubu</span></figcaption>
+        </figure>
+        <figure class="obr" data-reveal>
+          <img class="foto pomer-3-2" src="../assets/foto/vanocni-vecirek-2025-letensky-zamecek.jpg" width="2400" height="1599" alt="Členové klubu u kulatého stolu na Vánočním večírku v Letenském zámečku" loading="lazy">
+          <figcaption><span>Vánoční večírek v&nbsp;Letenském zámečku, prosinec 2025</span></figcaption>
+        </figure>
+        <figure class="obr" data-reveal>
+          <img class="foto pomer-3-2" src="../assets/foto/ctc-senior-2025-centenary-banner.jpg" width="1620" height="1080" alt="Hráčka při bekhendu na antuce před zeleným transparentem Centenary Tennis Clubs" loading="lazy">
+          <figcaption><span>CTC Senior Competition na Štvanici, 30.–31.&nbsp;8.&nbsp;2025</span></figcaption>
+        </figure>
+      </div>
+
+      <figure class="citat citat--velky zivot__citat" data-reveal>
+        <blockquote><p class="citat__text">„V&nbsp;nejstarším klubu v&nbsp;Praze. … Je rodinný. Opravdu se tam cítím jako v&nbsp;rodině.“</p></blockquote>
+        <figcaption class="citat__autor">Karolína Muchová<span class="citat__zdroj">Aktuálně.cz, 28.&nbsp;8.&nbsp;2023</span></figcaption>
+      </figure>
+
+      <div class="pas" id="ctc">
+        <div class="pas__strana pas__strana--vzor">
+          <div class="pas__hlava">
+            <p class="stitek stitek--akcent">Centenary Tennis Clubs · od roku 2000</p>
+            <h3 class="pas__nadpis">Členský průkaz, který platí ve stoletých klubech</h3>
+          </div>
+          <p class="mensi">I.&nbsp;ČLTK Praha je jediným českým členem sdružení Centenary Tennis Clubs. To spojuje 98 klubů starších sta let. Členové klubu mohou po doporučení generálního manažera hrát zdarma v&nbsp;členských klubech po celém světě.</p>
+          <dl class="fakta pas__fakta">
+            <div><dt>Založeno</dt><dd>1996, sídlo Olympijské muzeum Lausanne</dd></div>
+            <div><dt>V&nbsp;klubu</dt><dd>od roku 2000 · jediný člen z&nbsp;ČR</dd></div>
+            <div><dt>Mládež</dt><dd>I.&nbsp;ČLTK Praha Cup (U14) od roku 2008, první listopadový víkend</dd></div>
+          </dl>
+          <p class="pas__odkaz"><a class="odkaz-sipka" href="https://cltk.cz/cs/klub/ctc/" rel="external">Klub v&nbsp;Centenary Tennis Clubs</a></p>
+        </div>
+        <div class="pas__strana">
+          <p class="stitek pas__razitka-nadpis">Razítka · utkání na Štvanici</p>
+          <div class="pas__razitka">
+            <span class="razitko" data-razitko data-horni="Real Club de Tenis" data-dolni="Barcelona" data-stred="1899" data-pod="na Štvanici" data-otoceni="-6"><span class="razitko__zaloha">Real Club de Tenis Barcelona-1899</span></span>
+            <span class="razitko razitko--hard" data-razitko data-horni="Villa Primrose" data-dolni="Bordeaux" data-stred="CTC" data-pod="na Štvanici" data-otoceni="5"><span class="razitko__zaloha">Villa Primrose, Bordeaux</span></span>
+            <span class="razitko razitko--olivova" data-razitko data-horni="Fitzwilliam LTC" data-dolni="Dublin" data-stred="CTC" data-pod="na Štvanici" data-otoceni="-3"><span class="razitko__zaloha">Fitzwilliam LTC, Dublin</span></span>
+            <span class="razitko razitko--obdelnik razitko--inkoust" data-razitko data-tvar="obdelnik" data-horni="All England Lawn Tennis Club" data-stred="6.–8. 6. 2025" data-dolni="na Štvanici" data-otoceni="-7"><span class="razitko__zaloha">All England Lawn Tennis Club na Štvanici, 6.–8. 6. 2025</span></span>
+            <span class="razitko" data-razitko data-horni="Carrickmines Croquet & LTC" data-dolni="Dublin" data-stred="CTC" data-pod="na Štvanici" data-otoceni="7"><span class="razitko__zaloha">Carrickmines Croquet &amp; LTC, Dublin</span></span>
+            <span class="razitko razitko--hard" data-razitko data-horni="H.L.T.C. Leimonias" data-dolni="Haag" data-stred="CTC" data-pod="na Štvanici" data-otoceni="-8"><span class="razitko__zaloha">H.L.T.C. Leimonias, Haag</span></span>
+            <span class="razitko razitko--obdelnik razitko--olivova" data-razitko data-tvar="obdelnik" data-horni="CTC Senior Competition" data-stred="30.–31. 8. 2025" data-dolni="Štvanice" data-pod="Padova · Cumberland" data-otoceni="3"><span class="razitko__zaloha">CTC Senior Competition na Štvanici, 30.–31. 8. 2025, s Padovou a Cumberlandem</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AKTUALITY -->
+  <section class="sekce" id="zpravy" aria-labelledby="zpravy-nadpis">
+    <div class="obal">
+      <div class="hlava-sekce">
+        <p class="stitek hlava-sekce__stitek"><span class="kurt-cislo" aria-hidden="true">09</span>Zprávy z&nbsp;klubu</p>
+        <h2 class="nadpis-2 hlava-sekce__nadpis" id="zpravy-nadpis">Z&nbsp;kurtů a&nbsp;<em>z&nbsp;klubu</em>.</h2>
+        <div class="hlava-sekce__perex"><p class="perex">Gratulujeme našim hráčům. Nejnovější zprávy, výsledky mládeže a&nbsp;dění v&nbsp;klubu; celý archiv článků a&nbsp;dvacet let klubové Revue najdete na cltk.cz.</p></div>
+      </div>
+      <div class="rozdeleni rozdeleni--7-5 zpravy__rozvrzeni">
+        <ol class="zpravy">
+          <li class="zprava"><a class="zprava__odkaz" href="https://cltk.cz/cs/clanky/justyna-reifova-vyhrala-turnaj-itf-j30/" rel="external"><time class="zprava__datum" datetime="2026-09-10">10.&nbsp;9.&nbsp;2026</time><span class="zprava__telo"><span class="zprava__rubrika">Mládež</span><span class="zprava__titulek">Justýna Reifová vyhrála turnaj ITF J30</span><span class="zprava__perex">Juniorka získala na Slovensku „double“ – premiérový titul v&nbsp;této kategorii. <span class="zprava__ven">cltk.cz ↗</span></span></span><img class="zprava__obr" src="../assets/foto/clanky/justyna-reifova-vyhrala-turnaj-itf-j30.jpg" width="1200" height="1600" alt="" loading="lazy"></a></li>
+          <li class="zprava"><a class="zprava__odkaz" href="https://cltk.cz/cs/clanky/starsi-zaci-vezou-z-mcr-druzstev-bronz/" rel="external"><time class="zprava__datum" datetime="2026-08-31">31.&nbsp;8.&nbsp;2026</time><span class="zprava__telo"><span class="zprava__rubrika">Družstva</span><span class="zprava__titulek">Starší žáci vezou z&nbsp;MČR družstev bronz</span><span class="zprava__perex">Třetí místo z&nbsp;mistrovství republiky smíšených družstev v&nbsp;Ostravě; o&nbsp;bronz tým porazil Modřany. <span class="zprava__ven">cltk.cz ↗</span></span></span><img class="zprava__obr" src="../assets/foto/clanky/starsi-zaci-vezou-z-mcr-druzstev-bronz.jpg" width="1127" height="846" alt="" loading="lazy"></a></li>
+          <li class="zprava"><a class="zprava__odkaz" href="https://cltk.cz/cs/clanky/denisa-zoldakova-ve-finale-turnaje-itf-w75-v-polsku:386/" rel="external"><time class="zprava__datum" datetime="2026-08-31">31.&nbsp;8.&nbsp;2026</time><span class="zprava__telo"><span class="zprava__rubrika">Profesionálové</span><span class="zprava__titulek">Denisa Žoldáková ve finále turnaje ITF W75 v&nbsp;Polsku</span><span class="zprava__perex">Z&nbsp;kvalifikace až do finále; podlehla ve třech setech Barboře Palicové. <span class="zprava__ven">cltk.cz ↗</span></span></span><img class="zprava__obr" src="../assets/foto/clanky/denisa-zoldakova-ve-finale-turnaje-itf-w75-v-polsku.jpg" width="1350" height="2400" alt="" loading="lazy"></a></li>
+          <li class="zprava"><a class="zprava__odkaz" href="https://cltk.cz/cs/clanky/karolina-muchova-ovladla-smisenou-ctyrhru-na-us-open:385/" rel="external"><time class="zprava__datum" datetime="2026-08-27">27.&nbsp;8.&nbsp;2026</time><span class="zprava__telo"><span class="zprava__rubrika">Profesionálové</span><span class="zprava__titulek">Karolína Muchová ovládla smíšenou čtyřhru na US&nbsp;Open</span><span class="zprava__perex">S&nbsp;Jakubem Menšíkem porazila ve finále Bencicovou a&nbsp;Cobolliho – první grandslamový titul pro oba. <span class="zprava__ven">cltk.cz ↗</span></span></span><img class="zprava__obr" src="../assets/foto/clanky/karolina-muchova-ovladla-smisenou-ctyrhru-na-us-open.jpg" width="2400" height="1600" alt="" loading="lazy"></a></li>
+          <li class="zprava"><a class="zprava__odkaz" href="https://cltk.cz/cs/clanky/sekyra-group-prague-open-2026-by-advantage-cars:384/" rel="external"><time class="zprava__datum" datetime="2026-08-16">16.&nbsp;8.&nbsp;2026</time><span class="zprava__telo"><span class="zprava__rubrika">Turnaje v&nbsp;klubu</span><span class="zprava__titulek">Sekyra Group Prague Open 2026 by Advantage Cars</span><span class="zprava__perex">ATP Challenger 75 a&nbsp;ITF W50 na štvanické antuce, 16.–22.&nbsp;8., vstup zdarma. <span class="zprava__ven">cltk.cz ↗</span></span></span><img class="zprava__obr" src="../assets/foto/clanky/sekyra-group-prague-open-2026-by-advantage-cars.jpg" width="750" height="1063" alt="" loading="lazy"></a></li>
+          <li class="zprava"><a class="zprava__odkaz" href="https://cltk.cz/cs/clanky/darja-vidmanova-ve-finale-turnaje-wta-250-v-memphisu:383/" rel="external"><time class="zprava__datum" datetime="2026-08-05">5.&nbsp;8.&nbsp;2026</time><span class="zprava__telo"><span class="zprava__rubrika">Profesionálové</span><span class="zprava__titulek">Darja Viďmanová ve finále turnaje WTA 250 v&nbsp;Memphisu</span><span class="zprava__perex">Životní úspěch: finále s&nbsp;Ruskou Liutovou ve třech setech a&nbsp;posun mezi elitní stovku. <span class="zprava__ven">cltk.cz ↗</span></span></span><img class="zprava__obr" src="../assets/foto/clanky/darja-vidmanova-ve-finale-turnaje-wta-250-v-memphisu.jpg" width="960" height="960" alt="" loading="lazy"></a></li>
+        </ol>
+        <aside class="revue-karta" id="revue" aria-labelledby="revue-nadpis">
+          <a class="revue-karta__obalka" href="https://files.cltk.cz/2so4wzo52sl01/REVUE_2026_1_web.pdf" rel="external"><img src="../assets/revue/revue-2026-1.jpg" width="672" height="900" alt="Obálka I.ČLTK Revue 01/2026 s Karolínou Muchovou a trofejí z Dauhá" loading="lazy"></a>
+          <div>
+            <p class="stitek">I.ČLTK Revue · právě vyšlo</p>
+            <h3 class="nadpis-4" id="revue-nadpis">01/2026: Velký titul pro Karolínu</h3>
+            <p class="drobne sede">Interview s&nbsp;Janem Kurzem, Václavem Šafránkem a&nbsp;Karolínou Velebovou. Klubový časopis vychází od roku 2006, zatím 41 čísel.</p>
+            <p class="revue-karta__odkazy"><a class="odkaz-sipka" href="https://files.cltk.cz/2so4wzo52sl01/REVUE_2026_1_web.pdf" rel="external">Číst 01/2026 v&nbsp;PDF</a><a class="odkaz-sipka" href="https://cltk.cz/cs/klub/klubovy-casopis-icltk-revue/" rel="external">Archiv 41 čísel od roku 2006</a></p>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- PARTNEŘI -->
+  <section class="sekce sekce--tesna partneri-sekce" aria-labelledby="partneri-nadpis">
+    <div class="obal">
+      <div class="radek radek--mezi partneri__hlava">
+        <h2 class="stitek" id="partneri-nadpis">Partneři klubu</h2>
+        <p class="drobne sede">Za historií a&nbsp;úspěchy I.ČLTK Praha stojí i&nbsp;naši partneři. Děkujeme za podporu.</p>
+      </div>
+      <ul class="partneri" aria-label="Loga partnerů – posunujte do strany">
+        <li><a href="https://www.advantage-cars.cz/" rel="noopener"><img src="../assets/partneri/advantage-cars.jpg" width="970" height="421" alt="Advantage Cars" loading="lazy"></a></li>
+        <li><a href="https://vivus.cz/" rel="noopener"><img src="../assets/partneri/vivus.jpg" width="1243" height="529" alt="Vivus" loading="lazy"></a></li>
+        <li><a href="http://www.jtfg.com/" rel="noopener"><img src="../assets/partneri/jt-banka.jpg" width="844" height="120" alt="J&amp;T Banka" loading="lazy"></a></li>
+        <li><a href="https://www.tukas.cz" rel="noopener"><img src="../assets/partneri/tukas.png" width="1759" height="1127" alt="TUkas" loading="lazy"></a></li>
+        <li><a href="https://www.aston-eco.cz/" rel="noopener"><img src="../assets/partneri/aston.jpg" width="922" height="280" alt="Aston – služby v ekologii" loading="lazy"></a></li>
+        <li><a href="https://www.pankrac-as.cz/" rel="noopener"><img src="../assets/partneri/pankrac.jpg" width="475" height="92" alt="Pankrác a.s." loading="lazy"></a></li>
+        <li><a href="https://www.smartwings.com/" rel="noopener"><img src="../assets/partneri/smartwings.jpg" width="345" height="50" alt="Smartwings" loading="lazy"></a></li>
+        <li><a href="https://www.cpp.cz/" rel="noopener"><img src="../assets/partneri/cpp.jpg" width="317" height="154" alt="ČPP – Vienna Insurance Group" loading="lazy"></a></li>
+        <li><a href="http://www.iso-praha.cz/" rel="noopener"><img src="../assets/partneri/iso-praha.jpg" width="1366" height="393" alt="ISO Praha – stavebniny" loading="lazy"></a></li>
+        <li><a href="https://www.levelsportkoncept.cz/znacka/mizuno" rel="noopener"><img src="../assets/partneri/mizuno.jpg" width="3012" height="697" alt="Mizuno" loading="lazy"></a></li>
+        <li><a href="https://matchpoint.cz/" rel="noopener"><img src="../assets/partneri/babolat.png" width="3012" height="765" alt="Babolat" loading="lazy"></a></li>
+        <li><a href="https://nsa.gov.cz/" rel="noopener"><img src="../assets/partneri/narodni-sportovni-agentura.jpg" width="2407" height="991" alt="Národní sportovní agentura" loading="lazy"></a></li>
+        <li><a href="https://praha.eu/" rel="noopener"><img src="../assets/partneri/praha.png" width="464" height="438" alt="Hlavní město Praha" loading="lazy"></a></li>
+        <li><a href="https://www.praha7.cz/" rel="noopener"><img src="../assets/partneri/praha-7.png" width="1138" height="996" alt="Městská část Praha 7" loading="lazy"></a></li>
+        <li><a href="http://www.cztenis.cz/" rel="noopener"><img src="../assets/partneri/cesky-tenis.png" width="3508" height="1843" alt="Český tenisový svaz" loading="lazy"></a></li>
+        <li><a href="https://www.sport-technik.cz/" rel="noopener"><img src="../assets/partneri/sporttechnik-bohemia.png" width="1754" height="1241" alt="Sporttechnik Bohemia" loading="lazy"></a></li>
+        <li><a href="http://www.resultina.com/" rel="noopener"><img src="../assets/partneri/resultina.jpg" width="800" height="300" alt="Resultina" loading="lazy"></a></li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<!-- PATICKA -->
+<footer class="paticka" id="kontakt">
+  <span class="lajna paticka__lajna" aria-hidden="true"></span>
+  <div class="obal">
+    <div class="paticka__hlava">
+      <div class="paticka__pecet">
+        <img src="../assets/logo/cltk-znak-3d-256.png" width="231" height="256" alt="Znak I. ČLTK Praha" loading="lazy">
+        <div>
+          <p class="paticka__nazev">I. Český Lawn-Tennis Klub Praha</p>
+          <p class="paticka__heslo">Založen 1893 · na Štvanici od roku 1901</p>
+        </div>
+      </div>
+      <div class="paticka__cta">
+        <a class="telefon" href="tel:+420608974974">608&nbsp;974&nbsp;974 <span class="telefon__popis">recepce</span></a>
+        <a class="tlacitko tlacitko--akcent" href="https://www.rogeronline.cz/v2/index.php?klub=181" rel="noopener">Rezervovat kurt</a>
+      </div>
+    </div>
+    <div class="paticka__mriz">
+      <section aria-labelledby="pat-adresa">
+        <h2 class="stitek paticka__nadpis" id="pat-adresa">Adresa a&nbsp;příjezd</h2>
+        <address class="paticka__adresa">Ostrov Štvanice 38<br>170&nbsp;00 Praha&nbsp;7</address>
+        <p class="drobne" style="margin-top:.8rem">Tramvaj č.&nbsp;14 na Hlávkově mostě, metro B i&nbsp;C několik minut chůze. Pěšky po lávce HolKa z&nbsp;Karlína i&nbsp;Holešovic. Autem k&nbsp;vyhrazenému parkovišti u&nbsp;Negrelliho viaduktu a&nbsp;zadním vchodem.</p>
+      </section>
+      <section aria-labelledby="pat-kontakty">
+        <h2 class="stitek paticka__nadpis" id="pat-kontakty">Kontakty</h2>
+        <ul class="paticka__seznam">
+          <li class="paticka__kontakt"><span class="paticka__role">Recepce – rezervace kurtů</span><a href="tel:+420608974974">+420 608 974 974</a><a href="mailto:recepce@cltk.cz">recepce@cltk.cz</a></li>
+          <li class="paticka__kontakt"><span class="paticka__role">Kancelář – stálé rezervace, platba členství (Po–Pá 9:00–17:00)</span><span>Eva Štefková · <a href="tel:+420737215012">+420 737 215 012</a></span></li>
+          <li class="paticka__kontakt"><span class="paticka__role">Generální manažer</span><span>Vladislav Šavrda · <a href="mailto:savrda@cltk.cz">savrda@cltk.cz</a></span></li>
+          <li class="paticka__kontakt"><span class="paticka__role">Sportovní ředitel</span><span>Petr Vaníček · <a href="mailto:vanicek@cltk.cz">vanicek@cltk.cz</a></span></li>
+        </ul>
+        <p class="drobne" style="margin-top:.8rem"><a href="https://cltk.cz/cs/kontakty/" rel="external">Všechny kontakty na cltk.cz</a></p>
+      </section>
+      <nav aria-labelledby="pat-web">
+        <h2 class="stitek paticka__nadpis" id="pat-web">Na této stránce</h2>
+        <ul class="paticka__seznam">
+          <li><a href="#areal">Areál léto i&nbsp;zima</a></li>
+          <li><a href="#vysledky">Výsledky</a></li>
+          <li><a href="#cesta">Závodní tenis</a></li>
+          <li><a href="#cenik">Ceník a&nbsp;členství</a></li>
+          <li><a href="#kalendar">Kalendář</a></li>
+          <li><a href="#skola">Tenisová škola</a></li>
+          <li><a href="#klub">Klub a&nbsp;CTC</a></li>
+          <li><a href="#zpravy">Zprávy a&nbsp;Revue</a></li>
+        </ul>
+      </nav>
+      <section aria-labelledby="pat-klub">
+        <h2 class="stitek paticka__nadpis" id="pat-klub">Dokumenty a&nbsp;odkazy</h2>
+        <ul class="paticka__seznam">
+          <li><a href="https://files.cltk.cz/szt6azj7muh01/Stanovy%20I.%C4%8CLTK%20Praha.pdf" rel="noopener">Stanovy klubu (PDF)</a></li>
+          <li><a href="https://files.cltk.cz/7km6d916kbl01/Pravidla%20pro%20rezervace%20kurt%C5%AF%202026.pdf" rel="noopener">Pravidla hraní 2026 (PDF)</a></li>
+          <li><a href="https://cltk.cz/cs/gdpr/" rel="noopener">Zpracování osobních údajů členů</a></li>
+          <li><a href="https://www.pragueopen.net/" rel="noopener">Prague Open</a></li>
+          <li><a href="https://www.facebook.com/cltk.fb" rel="noopener">Facebook</a> · <a href="https://www.instagram.com/cltk.insta/" rel="noopener">Instagram</a></li>
+        </ul>
+        <p class="drobne sede" style="margin-top:1rem">Jediný český člen Centenary Tennis Clubs · klub č.&nbsp;52 v&nbsp;adresáři ČTS</p>
+      </section>
+    </div>
+    <div class="paticka__spodek">
+      <p>© I. Český Lawn-Tennis Klub Praha · IČO 45243077 · od roku 1893</p>
+      <div class="paticka__pristupnost" role="group" aria-label="Přístupnost">
+        <button type="button" class="prepinac" data-prepinac-pohyb aria-pressed="false"><span class="prepinac__kolej" aria-hidden="true"></span>Omezit pohyb</button>
+        <button type="button" class="prepinac" data-prepinac-kontrast aria-pressed="false"><span class="prepinac__kolej" aria-hidden="true"></span>Vyšší kontrast</button>
+      </div>
+    </div>
+  </div>
+  <img class="paticka__znak-velky" src="../assets/logo/cltk-znak-mono-plny.svg" width="544" height="623" alt="" loading="lazy">
+</footer>
+<nav class="lista-rezervace" aria-label="Rychlá rezervace">
+  <a class="tlacitko" href="tel:+420608974974">608&nbsp;974&nbsp;974</a>
+  <a class="tlacitko tlacitko--akcent" href="https://www.rogeronline.cz/v2/index.php?klub=181" rel="noopener">Rezervovat kurt</a>
+</nav>
+<!-- /PATICKA -->
+</body>
+</html>

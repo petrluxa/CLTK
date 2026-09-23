@@ -1,0 +1,90 @@
+/* Úvodní stránka – kompozice specifické pro index.html (systém je v styl.css) */
+
+/* Rychlá volba pod herem – nechává místo kartě, která přesahuje hero */
+@media (min-width: 1000px) { .rychla-volba { padding-top: 64px; } }
+
+/* Areál */
+.areal__perex { margin-top: var(--m-5); }
+.letecky figcaption { align-items: center; }
+.letecky .tlacitko-text { font-size: var(--t-drobny); padding: 0; }
+.areal__pod { margin-top: clamp(2rem, 1.5rem + 1.5vw, 3rem); padding-top: clamp(1.5rem, 1rem + 1vw, 2rem); border-top: 1px solid var(--linka-2); }
+.areal__odkazy { display: grid; gap: 1rem 3rem; }
+.areal__odkazy .mensi { max-width: 36em; }
+@media (min-width: 1000px) { .areal__odkazy { grid-template-columns: minmax(0, 5fr) auto; align-items: center; } }
+
+/* Výsledky */
+.vysledky__mriz { display: grid; gap: var(--m-7) var(--mezera-sloupcu); align-items: start; }
+@media (min-width: 1100px) { .vysledky__mriz { grid-template-columns: minmax(0, 8.4fr) minmax(0, 3.6fr); } }
+.vysledky__bok { display: grid; gap: var(--m-6); }
+@media (min-width: 1100px) { .vysledky__bok { position: sticky; top: calc(var(--hlavicka-v) + 32px); padding-top: 2rem; } }
+@media (min-width: 700px) and (max-width: 1099px) { .vysledky__bok { grid-template-columns: 1.2fr 1fr; align-items: start; } }
+.vysledky__fakta > div { grid-template-columns: 7.4rem 1fr; }
+
+/* Cesta Štvanicí */
+.cesta__predel { margin-bottom: var(--sekce-y); }
+.cesta__rozvrzeni { align-items: start; }
+.cesta__stitek { margin-bottom: var(--m-5); }
+.cesta__perex { margin-top: var(--m-5); }
+.cesta__cisla { margin-top: var(--m-7); grid-template-columns: 1fr; gap: var(--m-5); }
+.cesta__cisla .cislo-velke { font-size: clamp(2.6rem, 2rem + 2vw, 3.8rem); }
+@media (min-width: 600px) and (max-width: 899px) { .cesta__cisla { grid-template-columns: repeat(3, 1fr); } }
+.cesta__odkaz { margin-top: var(--m-6); }
+@media (min-width: 900px) { .cesta { padding-top: .4rem; } }
+
+/* Ceník */
+.cenik__pod { margin-top: clamp(3rem, 2rem + 3vw, 5.5rem); padding-top: clamp(2rem, 1.5rem + 2vw, 3rem); border-top: 1px solid var(--linka-2); }
+.cenik__uvod { margin: .4rem 0 .8rem; max-width: 30em; }
+.cenik__akce { margin-top: 1rem; }
+
+/* Kalendář – tmavý blok */
+.kalendar__mriz { display: grid; gap: var(--m-7) clamp(2rem, 5vw, 5rem); align-items: center; }
+@media (min-width: 1000px) { .kalendar__mriz { grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); } }
+.kalendar__nadpis { display: block; margin-bottom: .8rem; }
+.kalendar__nejblizsi { margin-top: clamp(3rem, 2rem + 3vw, 5rem); display: grid; gap: 0 var(--mezera-sloupcu); }
+@media (min-width: 900px) {
+  .kalendar__nejblizsi { grid-template-columns: minmax(0, 3fr) minmax(0, 9fr); }
+  .kalendar__nejblizsi .nejblizsi { grid-template-columns: repeat(3, 1fr); column-gap: var(--mezera-sloupcu); }
+  .kalendar__nejblizsi .kalendar__pozn { grid-column: 2; }
+  .kalendar__nejblizsi .kalendar__nadpis { padding-top: 1.1rem; }
+}
+.kalendar__pozn { margin-top: 1rem; }
+
+/* Tenisová škola */
+.skola__rozvrzeni { align-items: start; }
+@media (min-width: 900px) { .skola__foto { position: sticky; top: calc(var(--hlavicka-v) + 32px); } }
+.skola__obsah > .nadpis-2 { margin-top: var(--m-5); }
+.skola__obsah > .perex { margin-top: var(--m-5); }
+.skola__dva { display: grid; gap: var(--m-7) var(--mezera-sloupcu); margin-top: var(--m-7); }
+@media (min-width: 700px) { .skola__dva { grid-template-columns: 1fr 1fr; } }
+.skola__dva .nadpis-4 { margin-bottom: .3rem; }
+.skola__dva .cenik { margin-top: .8rem; }
+.kempy { display: grid; grid-template-columns: 1fr 1fr; gap: .55rem 1rem; margin: 1rem 0 1.2rem; font-variant-numeric: lining-nums tabular-nums; font-size: var(--t-mensi); }
+.kempy li { display: flex; align-items: center; gap: .6rem; }
+.kempy .kurt-cislo { color: var(--seda); }
+.kempy__tabulka { margin-top: .4rem; }
+.skola__kontakt { margin-top: var(--m-7); padding-top: var(--m-5); border-top: 1px solid var(--linka); display: grid; gap: .8rem; }
+
+/* Klubový život */
+.zivot__citat { margin: clamp(3.5rem, 2.5rem + 4vw, 6.5rem) auto; text-align: center; justify-items: center; max-width: 34em; }
+.pas__fakta { margin-top: 1.4rem; }
+.pas__odkaz { margin-top: 1.4rem; }
+.pas__razitka-nadpis { display: block; margin-bottom: 1rem; }
+
+/* Zprávy a Revue */
+.zpravy__rozvrzeni { align-items: start; }
+.revue-karta { display: grid; gap: 1.2rem; align-content: start; padding: clamp(1.4rem, 1rem + 1.4vw, 2.2rem); background: var(--len-2); }
+@media (min-width: 700px) and (max-width: 899px) { .revue-karta { grid-template-columns: 200px 1fr; } }
+@media (min-width: 900px) { .revue-karta { position: sticky; top: calc(var(--hlavicka-v) + 32px); } }
+.revue-karta__obalka { display: block; width: min(100%, 260px); box-shadow: var(--stin-2); transition: transform .4s var(--easing); }
+.revue-karta__obalka:hover { transform: translateY(-4px) rotate(-.6deg); }
+.revue-karta__obalka img { width: 100%; }
+.revue-karta .nadpis-4 { margin: .4rem 0 .5rem; }
+.revue-karta__odkazy { margin-top: 1rem; display: grid; gap: .6rem; justify-items: start; }
+
+/* Partneři */
+.partneri__hlava { margin-bottom: 1rem; }
+.areal__fakta { margin-top: var(--m-6); max-width: 40rem; }
+.areal__fakta > div { grid-template-columns: 10rem 1fr; }
+@media (max-width: 520px) { .areal__fakta > div { grid-template-columns: 1fr; gap: .15rem; } }
+
+.zprava__ven { white-space: nowrap; }

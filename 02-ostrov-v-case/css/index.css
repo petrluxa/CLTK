@@ -1,0 +1,237 @@
+/* ==========================================================================
+   I. ČLTK Praha – koncept B „Ostrov v čase“ · úvodní stránka
+   Rozvržení sekcí nad sdíleným systémem css/styl.css
+   ========================================================================== */
+
+/* ── hlavička: doplňky ──────────────────────────────────────────────────── */
+.lista-horni-datum { white-space: nowrap; }
+.hlavicka-clenstvi {
+  font: 500 var(--t-ui)/1 var(--f-sans); color: var(--vltava); text-decoration: underline;
+  text-decoration-thickness: 1px; text-underline-offset: .34em; text-decoration-color: var(--rici-mlha);
+}
+.hlavicka-clenstvi:hover { text-decoration-color: var(--zlato-linka); }
+.navigace a[aria-current="true"]::after { transform: scaleX(1); background: var(--zlato-linka); }
+.hlavicka-akce { gap: var(--s-5); }
+@media (max-width: 1320px) { .hlavicka-clenstvi { display: none; } }
+@media (max-width: 1140px) { .hlavicka-akce .tlacitko { display: none; } }
+@media (max-width: 760px) { .lista-horni-datum { display: none; } }
+
+/* ── I · HERO ───────────────────────────────────────────────────────────── */
+.hero { padding-block: clamp(2.5rem, 5vw, 4.5rem) clamp(4rem, 7vw, 6.5rem); position: relative; }
+.hero-mriz {
+  display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  column-gap: clamp(28px, 4vw, 72px); align-items: start;
+}
+.hero-text { padding-top: clamp(.5rem, 2vw, 2rem); position: sticky; top: calc(var(--vyska-hlavicky) + 24px); }
+.hero-text .sal-oznaceni { margin-bottom: clamp(1.5rem, 3vw, 2.5rem); }
+.hero-rok {
+  font-size: clamp(6.5rem, 13.2vw, 13.5rem); line-height: .8; margin-left: -.06em;
+  padding-top: .06em;
+}
+.hero h1 {
+  margin-top: clamp(1.2rem, 2.2vw, 2rem);
+  font-size: clamp(2.35rem, 3.9vw, 3.75rem); line-height: 1.06; max-width: 13ch;
+}
+.hero h1 em { white-space: nowrap; }
+.hero-perex { margin-top: var(--s-5); max-width: 38ch; font-size: clamp(1.1rem, 1.35vw, 1.28rem); color: var(--vltava); }
+.hero-dnes {
+  margin-top: clamp(1.8rem, 3vw, 2.6rem); padding-top: var(--s-4);
+  border-top: 1px solid var(--vltava); max-width: 30rem;
+}
+.hero-dnes-radek {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px;
+  font: 400 1.14rem/1.4 var(--f-serif);
+}
+.hero-dnes-radek .mono-stitek { margin-right: 6px; color: var(--zlato-tmave); }
+.hero-dnes-radek .tecka { color: var(--rici-mlha); }
+.hero-dnes-akce { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-4) var(--s-5); margin-top: var(--s-5); }
+.hero-navod { margin-top: var(--s-6); font: italic 400 var(--t-maly)/1.5 var(--f-serif); color: var(--rici); max-width: 36ch; }
+.hero-navod span { font-style: normal; color: var(--zlato-linka); margin-right: 4px; }
+.hero-mapa { min-width: 0; }
+.hero-mapa .ostrov-popisek { min-height: 12.5rem; }
+@media (max-width: 1100px) {
+  .hero-mriz { grid-template-columns: 1fr; row-gap: var(--s-7); }
+  .hero-text { position: static; padding-top: 0; }
+  .hero h1 { max-width: 16ch; }
+  .hero-navod { display: none; }
+}
+
+/* ── II · KLUB DNES ─────────────────────────────────────────────────────── */
+.dnes-mriz { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); gap: var(--s-7) clamp(28px, 5vw, 88px); align-items: start; }
+.dnes-radky { list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--vltava); }
+.dnes-radek {
+  display: grid; grid-template-columns: minmax(8.5rem, 3fr) minmax(0, 7fr); gap: var(--s-4) var(--mezera-sl);
+  padding-block: var(--s-6) var(--s-6); border-bottom: 1px solid var(--linka-2);
+}
+.dnes-cislo {
+  font: 300 clamp(3.4rem, 5.6vw, 5.2rem)/.86 var(--f-serif); letter-spacing: -.035em; color: var(--zlato-tmave);
+  white-space: nowrap;
+}
+.dnes-cislo small { font-size: .38em; letter-spacing: 0; font-style: italic; color: var(--rici); vertical-align: .9em; }
+.dnes-cislo small:last-child { vertical-align: baseline; font-style: normal; }
+.dnes-titul { font: 400 var(--t-d4)/1.2 var(--f-serif); margin-bottom: var(--s-3); }
+.dnes-obsah > p:not([class]) { font-size: 1.04rem; line-height: 1.6; max-width: 54ch; }
+.dnes-sezona { margin-top: var(--s-4); font: var(--t-maly)/1.5 var(--f-sans); color: var(--rici); max-width: 54ch; }
+.dnes-sezona .jistota { margin-right: 6px; }
+.dnes-odkazy { margin-top: var(--s-4); }
+.dnes-cenik { margin-top: var(--s-4); border-bottom: 1px solid var(--linka); max-width: 34rem; }
+.dnes-cenik summary { font: 500 var(--t-maly)/1.3 var(--f-sans); padding: 12px 0; }
+.dnes-cenik .cenik { border-top: 0; }
+.dnes-cenik .cenik li { padding: 9px 0; }
+.dnes-cenik .cenik-nazev { font-size: .98rem; }
+.dnes-cenik .pramen { margin-top: 10px; }
+.dnes-tvar { position: sticky; top: calc(var(--vyska-hlavicky) + 28px); }
+.dnes-tvar .foto { background: var(--porcelan-2); }
+.dnes-tvar .foto img { object-position: 46% 30%; }
+.dnes-citat { margin-top: var(--s-5); }
+.dnes-citat p { font: italic 300 clamp(1.35rem, 2vw, 1.75rem)/1.3 var(--f-serif); letter-spacing: -.01em; text-wrap: balance; }
+.dnes-tvar figcaption { display: grid; gap: 4px; margin-top: var(--s-4); padding-top: var(--s-3); border-top: 1px solid var(--linka-2); }
+.dnes-tvar-jmeno { font: 400 1.1rem/1.3 var(--f-serif); }
+.dnes-tvar-role { font: var(--t-ui)/1.45 var(--f-sans); color: var(--rici); }
+@media (max-width: 1000px) {
+  .dnes-mriz { grid-template-columns: 1fr; }
+  .dnes-tvar { position: static; max-width: 520px; }
+}
+@media (max-width: 560px) {
+  .dnes-radek { grid-template-columns: 1fr; gap: var(--s-3); }
+}
+
+/* ── skóre a čísla ──────────────────────────────────────────────────────── */
+.skore { font-variant-numeric: lining-nums tabular-nums; white-space: nowrap; }
+
+/* ── III · KRONIKA ──────────────────────────────────────────────────────── */
+.kronika-bok .razitko { margin-top: 6px; }
+.kronika-bok-pozn { margin-top: var(--s-5); font: italic 400 var(--t-ui)/1.5 var(--f-serif); color: var(--rici); max-width: 24ch; }
+.sekce--panel .razitko { mix-blend-mode: multiply; }
+.zaznam .archiv-ram { background: var(--papir); }
+.zaznam-meta .mono-stitek { color: var(--zlato-tmave); }
+.kapitoly-pilulka:not(.je-videt) { visibility: hidden; transition: opacity var(--prechod), transform var(--prechod), visibility 0s linear .3s; }
+.kapitoly-pilulka.je-videt { visibility: visible; }
+@media (max-width: 900px) {
+  .kronika-bok-pozn { display: none; }
+  .kronika-bok { min-height: 64px; }
+}
+@media (max-width: 1140px) { .kapitoly-pilulka { display: none; } }
+
+/* ── IV · TEHDY A TEĎ ───────────────────────────────────────────────────── */
+.tehdy-mriz { display: grid; grid-template-columns: minmax(0, 8.4fr) minmax(0, 3.6fr); gap: var(--s-7) clamp(28px, 4vw, 64px); align-items: start; }
+.porovnani-popis .stitek { max-width: none; }
+.porovnani-popis .stitek-meta { font-size: var(--t-maly); }
+.tehdy-dalsi { display: grid; gap: var(--s-4); padding-top: 4px; }
+.tehdy-dalsi .nadtitul { margin: 0; }
+.tehdy-prazdne { min-height: 0; padding: var(--s-5); }
+.tehdy-prazdne svg { width: min(100%, 220px); }
+@media (max-width: 1000px) {
+  .tehdy-mriz { grid-template-columns: 1fr; }
+  .tehdy-dalsi { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
+  .tehdy-dalsi .nadtitul { grid-column: 1 / -1; }
+}
+@media (max-width: 560px) { .tehdy-dalsi { grid-template-columns: 1fr; } }
+
+/* ── V · HRÁLI NA ŠTVANICI ──────────────────────────────────────────────── */
+.hraci-hlava { text-align: center; justify-items: center; max-width: 900px; margin-inline: auto; }
+.hraci-hlava .sal-oznaceni { width: 100%; max-width: 520px; }
+.hraci-hlava .sal-oznaceni::before { content: ""; flex: 1; height: 1px; background: rgba(238,241,238,.18); }
+.hraci-hlava .sal-titul { max-width: 22ch; }
+.hraci-hlava .sal-uvod--maly { color: var(--na-tmave-2); max-width: 58ch; }
+.hraci .stena { margin-top: var(--s-7); }
+.hraci .stena-karta .pramen { color: var(--na-tmave-2); }
+
+/* ── VI · SÍŇ SLÁVY ─────────────────────────────────────────────────────── */
+.medailon .jistota { margin-top: 6px; }
+.medailon-cin .skore { font-family: var(--f-sans); }
+
+/* ── VII · KIOSEK ───────────────────────────────────────────────────────── */
+.prave-vyslo-pdf { margin-top: var(--s-4); }
+.kiosek-hledani { display: grid; align-content: start; }
+.kiosek-hledani > .nadtitul { margin-bottom: var(--s-3); }
+.kiosek-pozn { margin-top: var(--s-3); font: italic 400 var(--t-ui)/1.5 var(--f-serif); color: var(--rici); max-width: 56ch; }
+.kiosek-pribeh .nadtitul { margin-bottom: var(--s-3); }
+.cip[aria-disabled="true"] small { margin-left: 2px; }
+.policka { list-style: none; padding: 0; margin: 0; padding-top: 18px; row-gap: calc(var(--s-7) + 8px); }
+.policka-pozn { margin-top: calc(var(--s-7) + 6px); }
+.sekce--panel .policka-rok::after { background: linear-gradient(rgba(31,52,64,.1), transparent); }
+
+/* ── VIII · VITRÍNA ─────────────────────────────────────────────────────── */
+.vitrina { list-style: none; padding: 0; margin: 0; }
+.vitrina > li { display: grid; }
+.predmet { width: 100%; cursor: zoom-in; font: inherit; }
+.predmet > span { display: block; }
+.predmet-foto > img { display: block; }
+.predmet .stitek { display: block; }
+.predmet .stitek > span { display: block; }
+.predmet .stitek .pramen { margin-top: 9px; }
+.predmet:focus-visible { outline-offset: 6px; }
+.predmet--prazdny { cursor: default; }
+.predmet--prazdny .predmet-foto { display: grid; }
+.predmet--prazdny .perokresba { display: grid; justify-items: center; gap: 12px; }
+.predmet--prazdny .perokresba svg { width: 150px; }
+.predmet-dialog .tok > * + * { margin-top: var(--s-4); }
+.predmet-dialog-foto { border: 0; width: 100%; }
+.predmet-dialog-foto img { max-width: 100%; height: auto; }
+
+/* ── IX · DEPEŠE ────────────────────────────────────────────────────────── */
+.depese { list-style: none; padding: 0; margin: 0; }
+.depese-perex .odkaz-text { font-size: inherit; }
+
+/* ── X · NÁVŠTĚVA ───────────────────────────────────────────────────────── */
+.navsteva-plan .archiv-ram img { aspect-ratio: 3600 / 2121; }
+.navsteva-hodiny { margin-top: 4px; }
+.navsteva-hodiny .cenik-nazev { font: var(--t-maly)/1.4 var(--f-sans); }
+.navsteva-hodiny .cenik-cena { font-weight: 400; }
+.kontakt-blok { margin-top: clamp(3rem, 6vw, 5rem); }
+.kontakty { list-style: none; padding: 0; margin: 0; }
+
+/* ── PATIČKA ────────────────────────────────────────────────────────────── */
+.paticka-citat blockquote p { font: inherit; }
+.paticka-citat .zajic { color: var(--rici); }
+.pecet-znak {
+  display: block; width: 72px; height: auto; opacity: .2;
+  filter: drop-shadow(0 1px 0 rgba(252,252,250,1)) drop-shadow(0 -1px 0 rgba(31,52,64,.5));
+}
+.paticka-mriz address { margin-top: var(--s-2); }
+.paticka-mriz ul li { color: var(--vltava); }
+
+/* ── mobil: celkové doladění ────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .sal-titul { font-size: clamp(2rem, 8.4vw, 2.5rem); }
+  .hero { padding-top: var(--s-6); }
+  .hero-rok { font-size: clamp(6rem, 30vw, 8.5rem); }
+  .hero h1 { font-size: clamp(2.1rem, 9vw, 2.6rem); }
+  .dnes-cislo { font-size: 3.4rem; }
+  .medailon-cin { font-size: .9rem; }
+  .paticka-spodek { flex-direction: column; align-items: flex-start; }
+}
+
+/* ── seznamy bez třídy uvnitř komponent ─────────────────────────────────── */
+.navigace ul, .mobilni-menu ol, .prave-vyslo ol, .paticka-mriz ul { list-style: none; padding: 0; margin: 0; }
+.hero .ostrov-hlavicka { display: none; }
+.dnes-cislo--cena { font-size: clamp(2.7rem, 3.9vw, 3.7rem); }
+.dnes-cislo--cena small:first-child { display: block; font-size: .36em; margin-bottom: .35em; vertical-align: baseline; }
+.dnes-cislo--cena small:last-child { font-size: .42em; }
+.hero { padding-bottom: clamp(3rem, 5vw, 4.5rem); }
+.zaznam { padding-block: var(--s-6); }
+.kapitola + .kapitola { margin-top: var(--s-8); }
+.navsteva-plan .archiv-ram img { filter: saturate(.3) sepia(.14) contrast(.94) brightness(1.04); }
+html[data-kontrast="vyssi"] .navsteva-plan .archiv-ram img { filter: none; }
+/* mapa v úzkém okně: menší popisky, aby se nevešly přes okraj výřezu */
+@media (max-width: 700px) {
+  .ostrov-svg .m-text--reka { font-size: calc(15px * var(--m-u)); letter-spacing: .22em; }
+  .ostrov-svg .m-text--stitek { font-size: calc(7.5px * var(--m-u)); letter-spacing: .1em; }
+  .ostrov-svg .m-text--breh { font-size: calc(8.5px * var(--m-u)); letter-spacing: .3em; }
+}
+.kronika-bok-mobil { display: none; }
+@media (max-width: 900px) {
+  .kronika-bok { min-height: 0; padding-block: 8px; gap: 14px; }
+  .kronika-bok-mobil { display: block; margin: 0; font-size: 9.5px; line-height: 1.35; letter-spacing: .18em; }
+  .kronika-bok .razitko { transform: rotate(-2deg); margin: 2px 0 0; }
+  .kronika-bok .razitko-obsah { padding: 5px 10px 5px; gap: 3px; border-width: 1.5px; border-radius: 5px; outline-offset: 2px; }
+  .kronika-bok .razitko-horni { display: none; }
+  .kronika-bok .razitko-jmeno { font-size: .86rem; max-width: none; white-space: nowrap; }
+  .kronika-bok .razitko-roky { font-size: 9px; padding-top: 3px; }
+}
+/* razítko: čitelnější řez ve WebKitu, neprůhledná lišta na mobilu */
+.razitko-jmeno { font-weight: 600; font-stretch: 86%; letter-spacing: .06em; }
+@media (max-width: 900px) {
+  .kronika-bok { background: var(--porcelan-2); -webkit-backdrop-filter: none; backdrop-filter: none; }
+}
