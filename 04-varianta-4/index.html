@@ -17,6 +17,8 @@
 <script>(function(h){try{var p=localStorage.getItem('cltk-a:pohyb'),k=localStorage.getItem('cltk-a:kontrast');if(p)h.setAttribute('data-pohyb',p);if(k)h.setAttribute('data-kontrast',k);}catch(e){}})(document.documentElement);</script>
 <script src="js/app.js" defer></script>
 <script src="js/galerie.js" defer></script>
+<script src="js/data-revue.js" defer></script>
+<script src="js/kiosek.js" defer></script>
 </head>
 <body>
 <!-- HLAVICKA -->
@@ -599,52 +601,54 @@
     </div>
   </section>
 
-  <!-- 8 · Revue (tmavý blok) -->
-  <section class="sekce sekce--navy revue-salon" id="revue" aria-labelledby="revue-nadpis">
+  <!-- 8 · Kiosek I.ČLTK Revue (převzato z návrhu 2) -->
+  <section class="sekce sekce--papir2 v2 kiosek-sekce" id="revue" aria-labelledby="revue-nadpis">
     <div class="wrap">
-      <div class="mrizka revue-salon__hlavni">
-        <div class="sl-5 revue-salon__obalka">
-          <a class="obalka" href="https://files.cltk.cz/2so4wzo52sl01/REVUE_2026_1_web.pdf" target="_blank" rel="noopener">
-            <span class="obalka__papir"><img src="../assets/revue/revue-2026-1.jpg" width="672" height="900" alt="Obálka I.ČLTK Revue 01/2026: Karolína Muchová s trofejí z WTA 1000 v Dauhá" loading="lazy"></span>
-            <span class="vh">Otevřít číslo 01/2026 v PDF (13,3 MB)</span>
-          </a>
+      <header class="hlava hlava--radek kiosek-sekce__hlava">
+        <div>
+          <p class="hlava__znacka"><span class="hlava__cislo">VI</span><span class="stitek">Kiosek · I.ČLTK Revue</span></p>
+          <h2 class="h2" id="revue-nadpis">Dvacet let Revue v&nbsp;jedné <em>poličce</em>.</h2>
         </div>
-        <div class="sl-6 od-7 revue-salon__text">
-          <p class="hlava__znacka"><span class="hlava__cislo">VI</span><span class="stitek">I.ČLTK Revue</span></p>
-          <h2 class="h2" id="revue-nadpis">Klubový časopis, který vychází <em>dvacet let</em>.</h2>
-          <p class="perex">Od roku 2006 dvakrát ročně, dosud 41&nbsp;čísel. Texty Jiljí Kubec, grafika Kateřina Kuželová, hlavní fotograf Martin Sidorják.</p>
-
-          <div class="revue-salon__vyslo">
-            <p class="stitek">Právě vyšlo · 01/2026</p>
-            <h3 class="h3">Velký titul pro Karolínu</h3>
-            <p class="revue-salon__interview">Interview: Jan Kurz, Václav Šafránek, Karolína Velebová</p>
-            <ol class="revue-obsah" aria-label="Z obsahu čísla 01/2026">
-              <li><span class="revue-obsah__strana">06</span><span>Velký titul pro Karolínu</span></li>
-              <li><span class="revue-obsah__strana">22</span><span>Nikdo není boss, říká Petr Vaníček</span></li>
-              <li><span class="revue-obsah__strana">32</span><span>Revue nás baví. Už 20 let!</span></li>
-            </ol>
-            <p class="drobne">44 stran · náklad 400&nbsp;kusů · uzávěrka 24.&nbsp;dubna 2026</p>
-            <div class="akce">
-              <a class="odkaz" href="https://files.cltk.cz/2so4wzo52sl01/REVUE_2026_1_web.pdf" target="_blank" rel="noopener">Číst číslo · PDF 13,3&nbsp;MB <span class="sipka sipka--ven" aria-hidden="true"></span></a>
-              <a class="odkaz" href="https://cltk.cz/cs/klub/klubovy-casopis-icltk-revue/" target="_blank" rel="noopener">Archiv 41 čísel <span class="sipka sipka--ven" aria-hidden="true"></span></a>
+        <p class="perex kiosek-sekce__uvod">41&nbsp;čísel klubového časopisu od roku 2006, dvakrát ročně. „I.ČLTK REVUE je tu s&nbsp;námi už dvacet let.“ Hledejte v&nbsp;titulcích a&nbsp;obsazích, nebo sledujte příběh v&nbsp;obálkách.</p>
+      </header>
+      <div class="kiosek" data-kiosek="revue-dialog">
+        <div class="kiosek-hlava">
+          <div class="prave-vyslo">
+            <button type="button" class="prave-vyslo-obalka" data-kiosek-cislo="01/2026" aria-label="Otevřít detail I.ČLTK Revue 01/2026"><img src="../assets/revue/revue-2026-1.jpg" alt="" width="672" height="900" loading="lazy" decoding="async"></button>
+            <div>
+              <p class="nadtitul">Právě vyšlo · 01/2026 · 44&nbsp;stran</p>
+              <h3>Velký titul pro Karolínu</h3>
+              <ol>
+                <li><span>03</span>Terasa, která láká</li>
+                <li><span>06</span>Velký titul pro Karolínu</li>
+                <li><span>08</span>Největší turnajový triumf přišel doma</li>
+                <li><span>14</span>Z&nbsp;Itálie na Štvanici (Denisa Žoldáková)</li>
+                <li><span>28</span>Všechno nejlepší, legendo</li>
+                <li><span>32</span>Revue nás baví. Už 20&nbsp;let!</li>
+              </ol>
+              <p class="prave-vyslo-pdf"><a class="odkaz odkaz--ven" href="https://files.cltk.cz/2so4wzo52sl01/REVUE_2026_1_web.pdf" target="_blank" rel="noopener">Číst PDF <span class="cislice">(13,3&nbsp;MB)</span></a></p>
             </div>
           </div>
+          <form class="kiosek-hledani" role="search" action="#revue" onsubmit="return false">
+            <label class="nadtitul" for="revue-hledat">Hledat ve 20&nbsp;letech Revue</label>
+            <div class="hledat"><input type="search" id="revue-hledat" data-kiosek-hledat placeholder="Drobný, Hernych, terasa, Wimbledon…" autocomplete="off" enterkeyhint="search"></div>
+            <p class="kiosek-stav" data-kiosek-stav aria-live="polite"></p>
+            <ol class="kiosek-vysledky" data-kiosek-vysledky></ol>
+            <p class="kiosek-pozn">V&nbsp;návrhu se hledá v&nbsp;titulcích obálek a&nbsp;obsazích čísel. Ostrá verze prohledá plné texty všech PDF a&nbsp;otevře přímo stranu.</p>
+            <div class="kiosek-pribeh">
+              <p class="nadtitul">Příběh v&nbsp;obálkách</p>
+              <div class="cipy">
+                <button type="button" class="cip" data-kiosek-pribeh="muchova" aria-pressed="false">Karolína Muchová</button>
+                <button type="button" class="cip" data-kiosek-pribeh="hradecka" aria-pressed="false">Lucie Hradecká</button>
+                <button type="button" class="cip" data-kiosek-pribeh="kodes" aria-pressed="false">Jan Kodeš</button>
+                <button type="button" class="cip" data-kiosek-pribeh="bartunkova" aria-pressed="false">Nikola Bartůňková</button>
+                <button type="button" class="cip" data-kiosek-pribeh="vondrousova" aria-pressed="false">Markéta Vondroušová</button>
+              </div>
+            </div>
+          </form>
         </div>
-      </div>
-
-      <div class="revue-salon__police">
-        <div class="revue-salon__police-hlava">
-          <p class="stitek">Dvacet let obálek</p>
-          <p class="drobne">Newsletter 3/2026: <a href="https://files.cltk.cz/ob3upw1581n01/Newsletter%203%3A2026.pdf?download" target="_blank" rel="noopener">česky</a> · <a href="https://files.cltk.cz/gltel1y4u2n01/EN%20Newsletter%203%3A2026.pdf?download" target="_blank" rel="noopener" hreflang="en">English</a></p>
-        </div>
-        <ul class="police">
-          <li><a class="obalka" href="https://files.cltk.cz/n8asxxd98fg01/I.%C4%8CLTK%20Revue%2001_2025.pdf" target="_blank" rel="noopener"><span class="obalka__papir"><img src="../assets/revue/revue-2025-1.jpg" width="672" height="900" alt="Obálka Revue 01/2025: vizualizace vstupu do areálu s novým welcome boardem" loading="lazy"></span><span class="obalka__cislo">01/2025<small>Tradice zůstává, kulisy se mění</small></span></a></li>
-          <li><a class="obalka" href="https://files.cltk.cz/fa4cnmbc2qc01/REVUE_2024_2_web.pdf" target="_blank" rel="noopener"><span class="obalka__papir"><img src="../assets/revue/revue-2024-2.jpg" width="672" height="900" alt="Obálka Revue 02/2024: Karolína Muchová při podání" loading="lazy"></span><span class="obalka__cislo">02/2024<small>Výjimečná Karolína</small></span></a></li>
-          <li><a class="obalka" href="https://files.cltk.cz/zmtia6qkem301/2023_1_web%20%28kopie%29.pdf" target="_blank" rel="noopener"><span class="obalka__papir"><img src="../assets/revue/revue-2023-1.jpg" width="674" height="900" alt="Obálka Revue 01/2023: Lucie Hradecká s trofejemi" loading="lazy"></span><span class="obalka__cislo">01/2023<small>130 let klubu</small></span></a></li>
-          <li><a class="obalka" href="https://files.cltk.cz/rk3mxshusn16/1_2019_web.pdf" target="_blank" rel="noopener"><span class="obalka__papir"><img src="../assets/revue/revue-2019-1.jpg" width="674" height="900" alt="Obálka Revue 01/2019: Díky partě – extraligový titul" loading="lazy"></span><span class="obalka__cislo">01/2019<small>Díky partě</small></span></a></li>
-          <li><a class="obalka" href="https://files.cltk.cz/k2f8xh6h3402/2_13_web.pdf" target="_blank" rel="noopener"><span class="obalka__papir"><img src="../assets/revue/revue-2013-2.jpg" width="676" height="900" alt="Obálka Revue 02/2013: 120 let I. Český Lawn-Tennis Klub Praha, historická fotografie" loading="lazy"></span><span class="obalka__cislo">02/2013<small>120 let klubu</small></span></a></li>
-          <li><a class="obalka" href="https://files.cltk.cz/d25srl3hp502/2006_1.pdf" target="_blank" rel="noopener"><span class="obalka__papir"><img src="../assets/revue/revue-2006-1.jpg" width="672" height="900" alt="Obálka Revue 01/2006, první číslo: Jan Hernych s trofejí" loading="lazy"></span><span class="obalka__cislo">01/2006<small>První číslo</small></span></a></li>
-        </ul>
+        <ol class="policka" data-kiosek-policka aria-label="Polička 41 čísel I.ČLTK Revue, od roku 2006"></ol>
+        <p class="policka-pozn"><span class="m-pramen">Čísla 01/2016 a&nbsp;02/2016 v&nbsp;archivu PDF chybí · obálka 02/2013 připomíná Drobného 1954</span></p>
       </div>
     </div>
   </section>
@@ -781,6 +785,95 @@
     </div>
   </section>
 
+  <!-- 9b · Od Žemly po Muchovou (převzato z návrhu 2) -->
+  <section class="sekce v2 osobnosti" id="osobnosti" aria-labelledby="osobnosti-nadpis">
+    <div class="wrap">
+      <header class="hlava hlava--radek osobnosti__hlava">
+        <div>
+          <p class="hlava__znacka"><span class="hlava__cislo">VIII</span><span class="stitek">Osobnosti klubu</span></p>
+          <h2 class="h2" id="osobnosti-nadpis">Od Žemly po <em>Muchovou</em>.</h2>
+        </div>
+        <p class="perex osobnosti__uvod">Jen osobnosti s&nbsp;doloženou vazbou na klub. Podle registru ČTS získali hráči v&nbsp;barvách klubu v&nbsp;den triumfu 10&nbsp;grandslamových titulů; tituly Drobného a&nbsp;Kodeše patří do štvanické historie.</p>
+      </header>
+      <ol class="medailony">
+        <li class="medailon">
+          <div class="medailon-portret duotone" style="--pozice: 50% 8%"><img src="../assets/historie/hist-1910s-ladislav-zemla.jpg" alt="Ladislav Žemla" width="302" height="512" loading="lazy" decoding="async"></div>
+          <p class="medailon-kategorie">Legenda klubu</p>
+          <h3 class="medailon-jmeno">Ladislav Žemla</h3>
+          <p class="medailon-roky">1887–1955</p>
+          <p class="medailon-cin">Bronz OH Antverpy 1920 – mix se Skrbkovou; první mistr ČSR ve dvouhře 1920.</p>
+          <p class="m-pramen">Pramen · en.wikipedia – Ladislav Žemla</p>
+          <span class="jistota jistota--overeno">ověřeno</span>
+        </li>
+        <li class="medailon">
+          <div class="medailon-portret duotone" style="--pozice: 50% 6%"><img src="../assets/historie/hist-1954-drobny-s-wimbledonskym-poharem.jpg" alt="Jaroslav Drobný s wimbledonským pohárem" width="793" height="1373" loading="lazy" decoding="async"></div>
+          <p class="medailon-kategorie">Čestný člen</p>
+          <h3 class="medailon-jmeno">Jaroslav Drobný</h3>
+          <p class="medailon-roky">1921–2001</p>
+          <p class="medailon-cin">Wimbledon 1954 – finále s&nbsp;Rosewallem <span class="skore">13-11, 4-6, 6-2, 9-7</span>. Mistr světa v&nbsp;ledním hokeji 1947.</p>
+          <p class="m-pramen">Pramen · tennisfame.com · en.wikipedia · ve štvanické historii</p>
+          <span class="jistota jistota--overeno">ověřeno</span>
+        </li>
+        <li class="medailon">
+          <div class="medailon-portret duotone" style="--pozice: 50% 6%"><img src="../assets/historie/hist-1950s-vera-sukova-puzejova.jpg" alt="Věra Suková-Pužejová" width="907" height="1457" loading="lazy" decoding="async"></div>
+          <p class="medailon-kategorie">Legenda klubu</p>
+          <h3 class="medailon-jmeno">Věra Suková-Pužejová</h3>
+          <p class="medailon-roky">1931–1982</p>
+          <p class="medailon-cin">Finále Wimbledonu 1962 – první čs. finalistka. Roland Garros 1957 – mix s&nbsp;Javorským.</p>
+          <p class="m-pramen">Pramen · en.wikipedia – Věra Suková</p>
+          <span class="jistota jistota--overeno">ověřeno</span>
+        </li>
+        <li class="medailon">
+          <div class="medailon-portret duotone" style="--pozice: 44% 18%"><img src="../assets/historie/hist-1960s-pavel-korda-forhend.jpg" alt="Pavel Korda při forhendu" width="624" height="475" loading="lazy" decoding="async"></div>
+          <p class="medailon-kategorie">Zasloužilý člen</p>
+          <h3 class="medailon-jmeno">Pavel Korda</h3>
+          <p class="medailon-roky">1935–2019</p>
+          <p class="medailon-cin">Trenér daviscupového týmu ČSSR 1970–1981 (Davis Cup 1980) a&nbsp;trenér Jana Kodeše.</p>
+          <p class="m-pramen">Pramen · iROZHLAS/ČTK 5.&nbsp;5.&nbsp;2019</p>
+          <span class="jistota jistota--klub">vazba podle klubu</span>
+        </li>
+        <li class="medailon">
+          <div class="medailon-portret duotone" style="--pozice: 42% 14%"><img src="../assets/historie/hist-1970s-jan-kodes-na-stvanici.jpg" alt="Jan Kodeš na Štvanici" width="1258" height="1007" loading="lazy" decoding="async"></div>
+          <p class="medailon-kategorie">Čestný člen</p>
+          <h3 class="medailon-jmeno">Ing. Jan Kodeš</h3>
+          <p class="medailon-roky">nar. 1946</p>
+          <p class="medailon-cin">Wimbledon 1973 – finále s&nbsp;Metrevelim <span class="skore">6-1, 9-8 (7-5), 6-3</span>. Prezident klubu 1987–1990.</p>
+          <p class="m-pramen">Pramen · tennisfame.com · ve štvanické historii</p>
+          <span class="jistota jistota--overeno">ověřeno</span>
+        </li>
+        <li class="medailon">
+          <div class="medailon-portret duotone" style="--pozice: 62% 22%"><img src="../assets/historie/hist-2011-hradecka-pohar-roland-garros.jpg" alt="Lucie Hradecká s pohárem z Roland Garros" width="504" height="439" loading="lazy" decoding="async"></div>
+          <p class="medailon-kategorie">Zasloužilá členka</p>
+          <h3 class="medailon-jmeno">Lucie Hradecká</h3>
+          <p class="medailon-roky">za I.&nbsp;ČLTK 2003–2023</p>
+          <p class="medailon-cin">Roland Garros 2011 a&nbsp;US Open 2013 – čtyřhra s&nbsp;Hlaváčkovou; stříbro OH 2012.</p>
+          <p class="m-pramen">Pramen · registr ČTS · en.wikipedia</p>
+          <span class="jistota jistota--overeno">ověřeno</span>
+        </li>
+        <li class="medailon">
+          <div class="medailon-portret medailon-portret--typo">
+            <span class="medailon-typo"><b>2023</b><span>WIMBLEDON</span><small class="cislice">6:4 · 6:4</small></span>
+          </div>
+          <p class="medailon-kategorie">Čestná členka</p>
+          <h3 class="medailon-jmeno">Markéta Vondroušová</h3>
+          <p class="medailon-roky">za I.&nbsp;ČLTK od 2011</p>
+          <p class="medailon-cin">Wimbledon 2023 – první nenasazená šampionka v&nbsp;historii (finále s&nbsp;Jabeurovou <span class="skore">6:4, 6:4</span>).</p>
+          <p class="m-pramen">Pramen · registr ČTS · en.wikipedia · newsletter 130 let</p>
+          <span class="jistota jistota--overeno">ověřeno</span>
+        </li>
+        <li class="medailon">
+          <div class="medailon-portret duotone" style="--pozice: 48% 14%"><img src="../assets/foto/clanky/karolina-muchova-ve-finale-wimbledonu.jpg" alt="Karolína Muchová" width="2400" height="1601" loading="lazy" decoding="async"></div>
+          <p class="medailon-kategorie">Hráčka klubu</p>
+          <h3 class="medailon-jmeno">Karolína Muchová</h3>
+          <p class="medailon-roky">za I.&nbsp;ČLTK od 2019</p>
+          <p class="medailon-cin">US Open 2026 – mix s&nbsp;Menšíkem <span class="skore">6:3, 1:6, [10:6]</span>; finále Wimbledonu 2026.</p>
+          <p class="m-pramen">Pramen · registr ČTS · usopen.org · wtatennis.com</p>
+          <span class="jistota jistota--overeno">ověřeno</span>
+        </li>
+      </ol>
+    </div>
+  </section>
+
   <!-- 10 · Prague Open 2026 -->
   <section class="sekce sekce--papir2 prague-open" id="prague-open" aria-labelledby="po-nadpis">
     <div class="wrap">
@@ -790,7 +883,7 @@
           <figcaption class="popisek"><span>Antuka Prague Open 2026</span><span class="kredit">© Sekyra Group Prague Open 2026, foto Martin Sidorják a&nbsp;Jan Pecha</span></figcaption>
         </figure>
         <div class="sl-5 od-8">
-          <p class="hlava__znacka"><span class="hlava__cislo">VIII</span><span class="stitek">Turnaj klubu</span></p>
+          <p class="hlava__znacka"><span class="hlava__cislo">IX</span><span class="stitek">Turnaj klubu</span></p>
           <h2 class="h2" id="po-nadpis">Prague Open, <em>26.</em> ročník.</h2>
           <div class="karta-turnaje">
             <p class="karta-turnaje__nazev">Sekyra Group Prague Open 2026 by&nbsp;Advantage Cars</p>
@@ -898,5 +991,21 @@
   <a class="lista-mobil__telefon" href="tel:+420608974974">Zavolat recepci<small>608&nbsp;974&nbsp;974</small></a>
 </nav>
 <!-- /PATICKA -->
+<dialog class="dialog v2" id="revue-dialog" aria-labelledby="revue-dialog-titul">
+  <div class="dialog-hlava"><p class="nadtitul" id="revue-dialog-titul" data-dialog-titul>Detail</p><button type="button" class="dialog-zavrit" data-dialog-zavrit>Zavřít</button></div>
+  <div class="dialog-obsah" data-dialog-obsah></div>
+</dialog>
+<svg class="defs-skryte" aria-hidden="true" focusable="false" width="0" height="0" style="position:absolute">
+  <defs>
+    <filter id="duotone-navy" color-interpolation-filters="sRGB">
+      <feColorMatrix type="matrix" values="0.2126 0.7152 0.0722 0 0  0.2126 0.7152 0.0722 0 0  0.2126 0.7152 0.0722 0 0  0 0 0 1 0"/>
+      <feComponentTransfer>
+        <feFuncR type="table" tableValues="0.082 0.984"/>
+        <feFuncG type="table" tableValues="0.153 0.980"/>
+        <feFuncB type="table" tableValues="0.267 0.965"/>
+      </feComponentTransfer>
+    </filter>
+  </defs>
+</svg>
 </body>
 </html>
