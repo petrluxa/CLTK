@@ -41,9 +41,12 @@ h1 em{font-style:italic;color:var(--gold-text);font-weight:400}
 /* varianty */
 .varianty{display:flex;flex-direction:column;gap:22px;padding-block:44px 8px}
 .var{display:grid;grid-template-columns:1.35fr 1fr;background:var(--card);border:1px solid var(--line);overflow:hidden}
+.var--vybrana{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold),0 24px 50px -34px rgba(21,39,68,.45)}
+.var--vybrana .var-cislo{background:var(--navy);color:var(--paper);border-color:var(--navy)}
+.varianty .nadpis-puvodni{margin:34px 0 -4px;font-size:11px;font-weight:500;letter-spacing:.24em;text-transform:uppercase;color:var(--muted)}
 .var-nahled{position:relative;background:var(--paper-2);border-right:1px solid var(--line);min-height:320px}
 .var-nahled img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:left top}
-.var-cislo{position:absolute;left:16px;top:16px;font-size:10.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;background:var(--paper);color:var(--navy);padding:6px 12px;border:1px solid var(--line)}
+.var-cislo{position:absolute;z-index:1;left:16px;top:16px;font-size:10.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;background:var(--paper);color:var(--navy);padding:6px 12px;border:1px solid var(--line)}
 .var-telo{padding:34px 34px 30px;display:flex;flex-direction:column}
 .var-telo h2{font-family:var(--serif);font-weight:500;font-size:clamp(28px,3vw,36px);line-height:1.05;margin:0;color:var(--navy)}
 .var-podtitul{font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin:10px 0 18px}
@@ -92,7 +95,7 @@ footer{margin-top:64px;border-top:1px solid var(--line);padding-block:26px 34px;
   <header class="head">
     <img src="assets/logo/cltk-znak-3d-256.png" width="231" height="256" alt="Znak I. ČLTK Praha">
     <div>
-      <p class="kicker">Návrhy k výběru &middot; září 2026</p>
+      <p class="kicker">Návrhy &middot; září 2026 &middot; vybrán návrh 1</p>
       <h1>Tři návrhy webu pro&nbsp;I.&nbsp;ČLTK Praha. <em>Od roku 1893.</em></h1>
     </div>
     <p class="lede">
@@ -103,6 +106,33 @@ footer{margin-top:64px;border-top:1px solid var(--line);padding-block:26px 34px;
   </header>
 
   <main class="varianty">
+
+    <article class="var var--vybrana">
+      <div class="var-nahled">
+        <span class="var-cislo">Varianta 4 · vybraná</span>
+        <img src="nahled-04.jpg" alt="Náhled Varianty 4 – úvodní stránka se střídajícími se fotkami hráček" loading="lazy">
+      </div>
+      <div class="var-telo">
+        <h2>Varianta 4</h2>
+        <p class="var-podtitul">Zlatá deska &middot; dál rozpracovaná</p>
+        <p>
+          Klub si vybral návrh 1. Varianta 4 z&nbsp;něj vychází a postupně do ní přibývají prvky z&nbsp;návrhů 2 a&nbsp;3.
+          V&nbsp;úvodu se střídají čtyři snímky: Vondroušová, Muchová, Muchová s&nbsp;Menšíkem a finále Billie Jean King Cupu 2026.
+        </p>
+        <div class="paleta" aria-label="Paleta">
+          <span style="background:#fbfaf6"></span><span style="background:#f3f0e9"></span><span style="background:#152744"></span><span style="background:#b3935a"></span><span style="background:#1a2233"></span>
+        </div>
+        <p class="pismo">Písmo Cormorant Garamond a&nbsp;Jost</p>
+        <ul class="znaky">
+          <li>další fotka se otevře tvarem klubového štítu se zlatou linkou</li>
+          <li>výsledky doplněné o titul v&nbsp;Billie Jean King Cupu 2026</li>
+          <li>portrét Markéty Vondroušové v&nbsp;triptychu odkrytý</li>
+        </ul>
+        <div class="otevrit"><a href="04-varianta-4/index.html" target="_blank" rel="noopener">Otevřít variantu 4</a></div>
+      </div>
+    </article>
+
+    <p class="nadpis-puvodni">Původní tři návrhy</p>
 
     <article class="var">
       <div class="var-nahled">
