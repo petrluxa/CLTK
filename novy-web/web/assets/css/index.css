@@ -1,0 +1,307 @@
+/* ==========================================================================
+   I. ČLTK Praha – úvodní stránka (index.php) podle PDF klienta
+   (podklady/klient-pdf/stranka-00 … 06). Komponenty jsou ve styl.css.
+   Pořadí: 1 úvod s galerií · 2 aktuality · 3 výsledky · 4 kalendář
+           5 členství a video · 6 služby v areálu · 7 naše historie · 8 partneři
+   ========================================================================== */
+
+/* 1 · Úvod: fotka ve sloupcích 5–12, deska s nadpisem ve sloupcích 1–6 přes ni */
+.uvod { padding-top: clamp(1.25rem, .2rem + 3.2vw, 4.75rem); padding-bottom: clamp(3rem, 2rem + 4vw, 6rem); }
+.uvod__plocha { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--mezera); }
+.uvod__misto { grid-column: 1 / 5; grid-row: 1; align-self: start; padding-top: 1.1rem; }
+.uvod__obraz { grid-column: 5 / -1; grid-row: 1; }
+.uvod__obraz .ramec__obraz { height: clamp(28rem, calc(100vh - var(--hlavicka-v) - 9rem), 41rem); }
+.uvod__deska {
+  grid-column: 1 / 7; grid-row: 1; align-self: end; z-index: 2; position: relative;
+  margin-bottom: clamp(3.4rem, 2.4rem + 2.6vw, 5.4rem);
+  padding: clamp(2.4rem, 1rem + 4.2vw, 6.4rem) clamp(1.5rem, .8rem + 2.6vw, 3.6rem) clamp(1.4rem, .4rem + 2.6vw, 3.6rem) 0;
+  background: var(--paper);
+  border-top: 1px solid var(--gold);
+}
+.uvod__deska::before { content: ''; position: absolute; left: 0; top: -4px; width: 4.5rem; height: 3px; background: linear-gradient(90deg, var(--gold) 0 50%, var(--navy) 50% 100%); }
+.uvod__deska::after { content: ''; position: absolute; top: 0; bottom: -1.2rem; right: 0; width: 1px; background: var(--line); }
+.uvod__nadpis { margin: 0; font-size: clamp(2.55rem, 1.2rem + 3.75vw, 4.7rem); line-height: 1.04; max-width: 11.2em; }
+.uvod__nadpis em { font-weight: 400; }
+.uvod__deska .akce { margin-top: clamp(2rem, 1rem + 3vw, 4.6rem); gap: var(--s-5) clamp(1.5rem, 1rem + 1.6vw, 3rem); }
+.uvod__deska .btn { min-height: 3.9rem; padding-inline: clamp(1.6rem, 1rem + 1.6vw, 2.75rem); font-size: .82rem; letter-spacing: .2em; }
+.uvod__deska .odkaz { font-size: .82rem; letter-spacing: .2em; }
+@media (max-width: 899.98px) {
+  .uvod { padding-top: 0; }
+  .uvod__plocha { display: block; padding-inline: 0; }
+  .uvod__misto { display: none; }
+  .uvod__obraz .ramec__obraz { height: min(56vh, 30rem); }
+  .uvod__obraz.ramec--linka .ramec__obraz::after { inset: 10px; }
+  .uvod__deska { margin: -4.5rem var(--okraj) 0; padding: 1.6rem 1.3rem 1.7rem; border-top: 0; box-shadow: 0 -1px 0 var(--gold); }
+  .uvod__deska::after { display: none; }
+  .uvod__deska::before { left: 1.3rem; }
+  .uvod__deska .akce { margin-top: 1.6rem; }
+}
+@media (max-width: 599.98px) { .uvod__deska .btn { width: 100%; } }
+
+/* Galerie „Znak se otevírá“ (galerie.js) – maska ve tvaru klubového štítu */
+.galerie { --galerie-krivka: cubic-bezier(.62, 0, .28, 1); --stit: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20110.7%22%3E%3Cpath%20d%3D%22M85.6%200.2%20L69.9%203.7%20L57.2%205.0%20L37.8%204.7%20L25.9%203.2%20L14.7%200.5%20L13.4%200.7%20L1.2%2027.6%20L2.5%2029.4%20L5.7%2031.8%20L9.7%2035.8%20L10.9%2038.6%20L10.9%2042.8%20L10.2%2046.3%20L2.2%2070.9%20L0.5%2077.6%20L0.5%2083.3%20L1.0%2085.6%20L2.2%2088.3%20L4.5%2091.0%20L8.0%2093.5%20L16.7%2097.3%20L27.4%20100.0%20L35.8%20101.5%20L40.5%20103.0%20L45.5%20106.0%20L49.5%20110.0%20L53.5%20105.7%20L57.2%20103.5%20L63.4%20101.5%20L75.6%2099.3%20L84.6%2096.8%20L91.5%2093.5%20L96.3%2089.8%20L98.5%2086.1%20L99.3%2083.6%20L99.3%2077.4%20L97.5%2070.6%20L89.3%2046.0%20L88.3%2042.0%20L88.3%2038.3%20L89.6%2035.6%20L97.8%2028.4%20L97.8%2027.4Z%22%2F%3E%3C%2Fsvg%3E"); }
+.galerie__okno { isolation: isolate; }
+.galerie__okno::after { z-index: 5; }
+.galerie__snimek { position: absolute; inset: 0; visibility: hidden; z-index: 0; }
+.galerie__snimek.je-aktivni { visibility: visible; z-index: 1; }
+.galerie__snimek img { width: 100%; height: 100%; object-fit: cover; object-position: var(--fokus, 50% 40%); transform-origin: var(--fokus, 50% 40%); transform: scale(1.03); }
+.js-pohyb .galerie__snimek.je-aktivni img, .js-pohyb .galerie__snimek.je-prichozi img { animation: galerie-dech 10s cubic-bezier(.2, .6, .3, 1) both; }
+@keyframes galerie-dech { from { transform: scale(1.09); } to { transform: scale(1.02); } }
+/* Bez JavaScriptu je vidět první snímek */
+html:not(.js) .galerie__snimek:first-child { visibility: visible; z-index: 1; }
+
+/* Příchozí snímek: maska ve tvaru štítu roste ze středu */
+.galerie__snimek.je-prichozi {
+  visibility: visible; z-index: 2;
+  -webkit-mask-image: var(--stit); mask-image: var(--stit);
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  -webkit-mask-position: 50% 46%; mask-position: 50% 46%;
+  -webkit-mask-size: auto 0%; mask-size: auto 0%;
+  transition: -webkit-mask-size var(--prechod, 2400ms) var(--galerie-krivka), mask-size var(--prechod, 2400ms) var(--galerie-krivka);
+}
+.galerie__snimek.je-prichozi.je-otevirani { -webkit-mask-size: auto 245%; mask-size: auto 245%; }
+
+/* Zlatá linka štítu, která běží po okraji masky */
+.galerie__linka {
+  position: absolute; left: 50%; top: 0; z-index: 4; height: 100%; width: auto; aspect-ratio: 100 / 110.7;
+  transform-origin: 50% 46%; transform: translateX(-50%) scale(0); opacity: 0; pointer-events: none;
+  fill: none; stroke: var(--gold-soft, #caac79); stroke-width: 1.5px; overflow: visible;
+}
+.galerie.je-prechod .galerie__linka { animation: galerie-linka var(--prechod, 2400ms) var(--galerie-krivka) forwards, galerie-linka-svit var(--prechod, 2400ms) linear forwards; }
+@keyframes galerie-linka { from { transform: translateX(-50%) scale(0); } to { transform: translateX(-50%) scale(2.45); } }
+@keyframes galerie-linka-svit { 0% { opacity: 0; } 8% { opacity: 1; } 78% { opacity: .9; } 100% { opacity: 0; } }
+
+/* Snímek typu „deska“ – navy deska s výsledkem, dokud klub nedodá fotku */
+.galerie__snimek--deska { background: var(--navy); }
+.bjk {
+  position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: clamp(.7rem, .4rem + .8vw, 1.15rem);
+  padding: 3rem 2rem; text-align: center; color: var(--paper);
+  background: radial-gradient(120% 85% at 50% 18%, #213a60 0%, var(--navy) 52%, var(--navy-deep) 100%);
+}
+.bjk::before, .bjk::after { content: ''; position: absolute; pointer-events: none; border: 1px solid rgba(202, 172, 121, .55); }
+.bjk::before { inset: clamp(22px, 2.4vw, 34px); }
+.bjk::after { inset: calc(clamp(22px, 2.4vw, 34px) + 6px); border-color: rgba(202, 172, 121, .25); }
+.bjk p { margin: 0; position: relative; }
+.bjk__stitek { font: 500 .7rem/1 var(--sans); letter-spacing: .34em; text-transform: uppercase; color: var(--gold-soft, #caac79); }
+.bjk__titul { font: 300 clamp(2.6rem, 1.4rem + 3.6vw, 4.6rem)/.98 var(--serif); letter-spacing: -.005em; color: var(--paper); padding-top: .12em; }
+.bjk__titul em { font-style: italic; font-weight: 400; color: var(--gold-soft, #caac79); }
+.bjk__zapas { display: flex; align-items: baseline; gap: 1.1rem; font: 500 .74rem/1 var(--sans); letter-spacing: .26em; text-transform: uppercase; color: rgba(251, 250, 246, .82); }
+.bjk__skore { font: 400 clamp(1.7rem, 1.2rem + 1.2vw, 2.3rem)/1 var(--serif); letter-spacing: .06em; color: var(--gold-soft, #caac79); font-variant-numeric: lining-nums tabular-nums; }
+.bjk__detail { font: 400 clamp(.95rem, .85rem + .3vw, 1.08rem)/1.45 var(--serif); font-style: italic; color: rgba(251, 250, 246, .88); max-width: 30rem; }
+.bjk__detail .sc { font-style: normal; letter-spacing: .06em; color: var(--paper); }
+.bjk__sety { font-style: normal; font-family: var(--sans); font-size: .82em; letter-spacing: .12em; color: var(--gold-soft, #caac79); font-variant-numeric: lining-nums tabular-nums; margin-left: .35rem; white-space: nowrap; }
+.bjk__misto { font: 400 .68rem/1.4 var(--sans); letter-spacing: .22em; text-transform: uppercase; color: rgba(202, 172, 121, .8); }
+
+/* Rejstřík snímků, odpočet a pauza pod fotografií */
+.galerie__pata { display: flex; flex-direction: column; align-items: flex-end; gap: .55rem; margin-top: .9rem; }
+.galerie__ovladani { display: flex; align-items: center; gap: clamp(1rem, .5rem + 1vw, 1.6rem); }
+.galerie__rejstrik { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: .3rem clamp(.9rem, .4rem + 1vw, 1.5rem); margin: 0; padding: 0; list-style: none; }
+.galerie__rejstrik button {
+  position: relative; display: inline-flex; align-items: baseline; gap: .45rem; padding: .35rem 0 .5rem; border: 0; background: none; cursor: pointer;
+  font: 500 .66rem/1 var(--sans); letter-spacing: .18em; text-transform: uppercase; color: var(--muted);
+  transition: color var(--pohyb-rychly);
+}
+.galerie__rejstrik button:hover, .galerie__rejstrik button[aria-current] { color: var(--navy); }
+.galerie__rim { font: italic 400 1rem/1 var(--serif); letter-spacing: 0; text-transform: none; color: var(--gold-text); }
+.galerie__cas { position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--line); overflow: hidden; }
+.galerie__cas::after { content: ''; position: absolute; inset: 0; background: var(--gold); transform: scaleX(0); transform-origin: left center; }
+.galerie__rejstrik button[aria-current] .galerie__cas::after { transform: scaleX(1); }
+.galerie.je-odpocet .galerie__rejstrik button[aria-current] .galerie__cas::after { animation: galerie-cas var(--interval, 7000ms) linear both; }
+@keyframes galerie-cas { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+.galerie__pauza { display: inline-flex; align-items: center; gap: .5rem; padding: .35rem 0 .5rem; border: 0; background: none; cursor: pointer; font: 500 .66rem/1 var(--sans); letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
+.galerie__pauza:hover { color: var(--navy); }
+.galerie__pauza-ikona { position: relative; width: 8px; height: 9px; }
+.galerie__pauza-ikona::before, .galerie__pauza-ikona::after { content: ''; position: absolute; top: 0; bottom: 0; width: 2px; background: currentColor; }
+.galerie__pauza-ikona::before { left: 0; }
+.galerie__pauza-ikona::after { right: 0; }
+.galerie__pauza[aria-pressed="true"] .galerie__pauza-ikona::before { width: 0; height: 0; background: none; border-style: solid; border-width: 4.5px 0 4.5px 8px; border-color: transparent transparent transparent currentColor; }
+.galerie__pauza[aria-pressed="true"] .galerie__pauza-ikona::after { display: none; }
+.galerie__pauza[hidden] { display: none; }
+html:not(.js) .galerie__ovladani { display: none; }
+.galerie__popisek { display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: baseline; gap: .15rem 1rem; margin: 0; text-align: right; font-size: var(--t-drobne); line-height: 1.5; color: var(--muted); }
+.galerie__popisek em, .galerie__popisek .kurziva { font-family: var(--serif); font-size: 1.08rem; color: var(--ink-2); }
+
+@media (max-width: 899.98px) {
+  .galerie__pata { position: absolute; top: 18px; right: 18px; left: 18px; z-index: 6; margin: 0; align-items: flex-end; pointer-events: none; }
+  .galerie__ovladani { pointer-events: auto; gap: .5rem; padding: 0 .55rem; background: rgba(251, 250, 246, .92); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+  .galerie__rejstrik { flex-wrap: nowrap; gap: .2rem; }
+  .galerie__jmeno { display: none; }
+  .galerie__rejstrik button, .galerie__pauza { min-width: 36px; min-height: 40px; justify-content: center; align-items: center; padding: .2rem .35rem .3rem; }
+  .galerie__pauza-text { display: none; }
+  .galerie__popisek { display: none; }
+  .bjk { padding: 4.5rem 1.6rem 5.5rem; }
+  .bjk__zapas { gap: .8rem; letter-spacing: .2em; }
+}
+
+/* 2 · Aktuality z klubu – tři karty, vodoznak znaku vpravo nahoře */
+.aktuality { overflow: hidden; }
+.aktuality__vodoznak { position: absolute; top: clamp(1.5rem, 2.6vw, 2.75rem); right: max(1.2rem, calc((100vw - 82.5rem) / 2 - 1rem)); width: clamp(13rem, 22vw, 20rem); pointer-events: none; user-select: none; }
+.aktuality__vodoznak img { width: 100%; height: auto; filter: grayscale(1) sepia(.3) contrast(.08) brightness(1.88) drop-shadow(0 1px 0 rgba(255, 255, 255, .8)) drop-shadow(0 -1px 0 rgba(26, 34, 51, .05)); opacity: .75; }
+.aktuality .wrap { position: relative; }
+.aktuality__stitek { margin-bottom: clamp(2.5rem, 1.6rem + 3.2vw, 5.4rem); }
+.aktuality__mrizka { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s-7) clamp(1.5rem, .2rem + 6.2vw, 7.4rem); list-style: none; }
+.aktualita { position: relative; display: flex; flex-direction: column; }
+.aktualita__foto { margin-bottom: clamp(1.4rem, 1rem + 1.4vw, 2.6rem); }
+.aktualita__foto .ramec__obraz { aspect-ratio: 4 / 3; box-shadow: 0 26px 26px -24px rgba(14, 27, 48, .7); }
+.aktualita__nadpis { margin: 0; font: 400 clamp(1.7rem, 1.35rem + 1vw, 2.3rem)/1.15 var(--serif); color: var(--navy); }
+.aktualita__nadpis a { color: inherit; text-decoration: none; }
+.aktualita__nadpis a::after { content: ''; position: absolute; inset: 0; z-index: 4; }
+.aktualita__nadpis a:hover { color: var(--gold-text); }
+.aktualita__popis { margin: .55rem 0 0; font-size: clamp(1rem, .95rem + .2vw, 1.12rem); line-height: 1.5; color: var(--ink-2); max-width: 26rem; }
+.aktualita__popis p { margin: 0 0 .5em; }
+.aktualita__popis p:last-child { margin-bottom: 0; }
+.aktualita__odkaz { margin-top: 1rem; }
+@media (max-width: 899.98px) {
+  .aktuality__mrizka { grid-template-columns: minmax(0, 1fr); gap: var(--s-7); max-width: 30rem; }
+  .aktuality__vodoznak { width: 11rem; top: 1rem; right: -2rem; }
+}
+@media (min-width: 600px) and (max-width: 899.98px) {
+  .aktuality__mrizka { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: none; gap: var(--s-7) var(--mezera); }
+}
+
+/* 3 · Aktuální výsledky našich hráčů – vodorovný pás (vysledky.js) */
+.vysledky-sekce .pas__hlava { margin-bottom: clamp(2.4rem, 1.4rem + 3.4vw, 5.5rem); }
+.vysledek-karta { position: relative; display: flex; flex-direction: column; }
+.vysledek-karta__stitek { margin: 0 0 .7rem; min-height: 2.7em; font: 500 .74rem/1.35 var(--sans); letter-spacing: .2em; text-transform: uppercase; color: var(--gold-text); }
+.vysledek-karta__kdo { margin: 0; min-height: 2.3em; font: 400 clamp(1.75rem, 1.4rem + 1vw, 2.35rem)/1.15 var(--serif); color: var(--navy); }
+.vysledek-karta__kdo a { color: inherit; text-decoration: none; }
+.vysledek-karta__kdo a::after { content: ''; position: absolute; inset: 0; z-index: 1; }
+.vysledek-karta__kdo a:hover { color: var(--gold-text); }
+.vysledek-karta__kdo a:focus-visible { outline: none; }
+.vysledek-karta:focus-within { outline: 2px solid var(--navy); outline-offset: 8px; }
+.vysledek-karta__text { flex: 1; margin: 1.6rem 0 0; font-size: clamp(1rem, .95rem + .2vw, 1.12rem); line-height: 1.5; color: var(--ink-2); }
+.vysledek-karta__pata { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; margin-top: 1.6rem; }
+.vysledek-karta__skore { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 clamp(.9rem, .5rem + 1vw, 1.8rem); margin: 0; font: 300 clamp(2.6rem, 2rem + 1.6vw, 3.6rem)/1 var(--serif); color: var(--gold-text); font-variant-numeric: lining-nums tabular-nums; white-space: nowrap; }
+.vysledek-karta__skore sup { font-size: .42em; vertical-align: .95em; margin-left: .05em; }
+.vysledek-karta__skore small { font: 500 .66rem/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; margin-left: .35em; color: var(--muted); }
+.vysledek-karta__verdikt { flex: none; font: 500 .74rem/1 var(--sans); letter-spacing: .22em; text-transform: uppercase; color: var(--ink-2); }
+.vysledek-karta__kdy { margin: 1.1rem 0 0; padding-top: .8rem; border-top: 1px solid var(--line); font-size: var(--t-drobne); color: var(--muted); }
+.vysledek-karta__kdy time { color: var(--ink-2); }
+.vysledky-sekce__stitek { color: var(--navy); }
+
+/* 4 · Klubový kalendář – rok vlevo, okno s detailem vpravo (kalendar.js) */
+.kalendar__nadpis { margin: clamp(1rem, .6rem + 1.4vw, 2rem) 0 clamp(2.4rem, 1.6rem + 2.6vw, 4.2rem); font-size: clamp(2.6rem, 1.2rem + 4.1vw, 5.3rem); line-height: 1.02; }
+.kalendar__plocha { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--s-7) clamp(2rem, .5rem + 4.4vw, 5.6rem); align-items: stretch; }
+.kalendar__seznam-nadpis { margin-bottom: 1.3rem; }
+.kal-seznam { list-style: none; counter-reset: none; }
+.kal-polozka a {
+  position: relative; display: grid; grid-template-columns: 6.6rem minmax(0, 1fr) auto; align-items: baseline; gap: .3rem 1rem;
+  min-height: 44px; padding: .78rem 0 .78rem 2rem; color: inherit; text-decoration: none; border-bottom: 1px solid transparent;
+  transition: background-color var(--pohyb-rychly), border-color var(--pohyb-rychly);
+}
+.kal-polozka a::before { content: ''; position: absolute; left: .6rem; top: 50%; width: 7px; height: 7px; margin-top: -4px; border: 1px solid var(--gold); transform: rotate(45deg); opacity: 0; transition: opacity var(--pohyb-rychly), background-color var(--pohyb-rychly); }
+.kal-polozka__mesic { font-size: .9rem; font-weight: 300; color: var(--ink-2); }
+.kal-polozka__nazev { font-size: clamp(1rem, .97rem + .1vw, 1.06rem); font-weight: 300; line-height: 1.35; color: var(--ink-2); }
+.kal-polozka__termin { justify-self: end; text-align: right; font-size: .8rem; color: var(--ink-2); font-variant-numeric: lining-nums tabular-nums; white-space: nowrap; }
+.kal-polozka__termin--doplni { color: var(--muted); }
+.kal-polozka__prihlaska { display: block; margin-top: .2rem; font: 500 .62rem/1.3 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--gold-text); }
+.kal-polozka a:hover .kal-polozka__nazev { color: var(--navy); text-decoration: underline; text-decoration-color: var(--gold); text-underline-offset: .22em; }
+.kal-polozka a:hover::before { opacity: .6; }
+.kal-polozka a[aria-current="true"] { background: rgba(251, 250, 246, .7); border-bottom-color: var(--line-gold); }
+.kal-polozka a[aria-current="true"]::before { opacity: 1; background: var(--gold); }
+.kal-polozka a[aria-current="true"] .kal-polozka__nazev { color: var(--navy); font-weight: 500; }
+.kal-polozka.je-probehla .kal-polozka__mesic, .kal-polozka.je-probehla .kal-polozka__nazev, .kal-polozka.je-probehla .kal-polozka__termin { opacity: .5; }
+.kal-polozka.je-probehla a[aria-current="true"] .kal-polozka__nazev { opacity: .75; }
+.kalendar__pozn { margin: 1.4rem 0 0 2rem; }
+
+.kalendar__okno { position: relative; display: flex; min-height: 30rem; padding: clamp(.4rem, .3rem + .3vw, .55rem); background: var(--ramecek); scroll-margin-top: calc(var(--hlavicka-kompakt) + 1rem); }
+.kalendar__okno:focus { outline: none; }
+.kalendar__okno:focus-visible { outline: 2px solid var(--navy); outline-offset: 4px; }
+.kal-detail { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0; padding: clamp(2rem, 1.2rem + 3vw, 4.4rem) clamp(1.3rem, .6rem + 3vw, 4.4rem); background: var(--paper); text-align: center; }
+.kal-detail__termin { margin: 0 0 clamp(1.6rem, 1rem + 2.4vw, 3.4rem); font-size: .8rem; letter-spacing: .26em; }
+.kal-detail__nazev { margin: 0; font: 400 clamp(2.2rem, 1.5rem + 2.3vw, 3.9rem)/1.08 var(--serif); color: var(--navy); text-wrap: balance; }
+.kal-detail__meta { margin: 1rem 0 0; font: italic 400 1.12rem/1.4 var(--serif); color: var(--muted); }
+.kal-detail__perex { margin: clamp(1.6rem, 1rem + 2.2vw, 3.2rem) 0 0; max-width: 30rem; font-size: clamp(1rem, .96rem + .2vw, 1.12rem); line-height: 1.5; color: var(--ink-2); }
+.kal-detail__perex p { margin: 0 0 .6em; }
+.kal-detail__perex p:last-child { margin-bottom: 0; }
+.kal-detail__akce { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 1.2rem 2rem; margin-top: clamp(1.8rem, 1.2rem + 2.4vw, 3.6rem); }
+.kal-detail__akce .btn { min-height: 3.9rem; padding-inline: clamp(2rem, 1.4rem + 2vw, 3.6rem); font-size: .82rem; letter-spacing: .2em; }
+.kal-detail__stav { margin: 1.2rem 0 0; }
+.kal-detail__vice { margin-top: 1.4rem; font-size: var(--t-drobne); }
+.kal-detail__vice a { color: var(--muted); text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: .25em; }
+.kal-detail__vice a:hover { color: var(--navy); text-decoration-color: var(--gold); }
+.kal-detail--prazdne .kal-detail__perex { margin-top: 0; }
+
+/* Přihláška přímo v okně kalendáře */
+.kal-formular { width: 100%; max-width: 30rem; margin-top: var(--s-6); text-align: left; }
+.kal-formular .formular__akce { justify-content: center; }
+.kal-formular__zpet { display: block; margin: 1.2rem auto 0; }
+.kal-formular .hlaska { margin-bottom: var(--s-5); }
+.kal-detail .hlaska--ok { text-align: left; max-width: 30rem; margin-top: var(--s-6); }
+@media (max-width: 899.98px) {
+  .kalendar__plocha { grid-template-columns: minmax(0, 1fr); }
+  .kal-polozka a { grid-template-columns: minmax(0, 1fr) auto; padding-left: 1.6rem; gap: .1rem 1rem; }
+  .kal-polozka a::before { left: .25rem; }
+  .kal-polozka__mesic { grid-column: 1 / -1; font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; }
+  .kalendar__pozn { margin-left: 1.6rem; }
+  .kalendar__okno { min-height: 0; }
+}
+@media (max-width: 479.98px) {
+  .kal-polozka a { grid-template-columns: minmax(0, 1fr); }
+  .kal-polozka__termin { justify-self: start; text-align: left; }
+}
+
+/* 5 · Členství: nadpis + tlačítko, video přes celou šířku obsahu */
+.clenstvi-uvod__hlava { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--s-6) var(--s-7); margin-bottom: clamp(2.4rem, 1.4rem + 3vw, 4.8rem); }
+.clenstvi-uvod__nadpis { margin: 0; font-size: clamp(2.6rem, 1.2rem + 4.1vw, 5.3rem); line-height: 1.04; max-width: 13.5em; }
+.clenstvi-uvod__hlava .btn { min-height: 3.9rem; padding-inline: clamp(2rem, 1.4rem + 2vw, 3.6rem); font-size: .82rem; letter-spacing: .2em; }
+.video .ramec__obraz { aspect-ratio: 16 / 9; background: var(--navy-deep); }
+.video video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: var(--foto-filtr); }
+html:not(.js) .video__prehravac { display: none; }
+.video__tlacitko {
+  position: absolute; left: 50%; top: 50%; z-index: 4; display: inline-flex; align-items: center; gap: .9rem;
+  transform: translate(-50%, -50%); min-height: 3.6rem; padding: .7rem 1.6rem .7rem .8rem;
+  border: 1px solid rgba(251, 250, 246, .7); border-radius: 999px; background: rgba(14, 27, 48, .55);
+  -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
+  font: 500 .74rem/1 var(--sans); letter-spacing: .2em; text-transform: uppercase; color: var(--paper);
+  transition: background-color var(--pohyb-rychly), opacity var(--pohyb-rychly);
+}
+.video__tlacitko:hover { background: rgba(14, 27, 48, .8); }
+.video__ikona { position: relative; width: 2.2rem; height: 2.2rem; border-radius: 50%; border: 1px solid var(--gold-soft); }
+.video__ikona::before { content: ''; position: absolute; left: 54%; top: 50%; transform: translate(-50%, -50%); border-style: solid; border-width: 6px 0 6px 10px; border-color: transparent transparent transparent var(--paper); }
+/* při přehrávání se tlačítko přesune do rohu a ukazuje pauzu */
+.video.je-prehrava .video__tlacitko { left: auto; top: auto; right: clamp(14px, 1.6vw, 22px); bottom: clamp(14px, 1.6vw, 22px); transform: none; min-height: 44px; padding: .35rem 1rem .35rem .45rem; gap: .6rem; font-size: .64rem; background: rgba(14, 27, 48, .45); }
+.video.je-prehrava .video__ikona { width: 1.8rem; height: 1.8rem; }
+.video.je-prehrava .video__ikona::before { left: 50%; width: 8px; height: 10px; border: 0; border-left: 2px solid var(--paper); border-right: 2px solid var(--paper); }
+html:not(.js) .video__tlacitko { display: none; }
+.video__popisek { justify-content: flex-start; }
+
+/* 6 · Služby v areálu – štítek a pilulky tečou v jednom řádkovém toku (jako v PDF) */
+.sluzby-uvod { padding-top: clamp(3rem, 2rem + 3vw, 5.5rem); }
+.sluzby-uvod__radek { text-align: center; line-height: 1; }
+.sluzby-uvod__stitek { display: inline-block; vertical-align: middle; margin: .45rem 1rem .45rem 0; font-size: .82rem; letter-spacing: .28em; }
+.sluzby-uvod .pilulky { display: inline; }
+.sluzby-uvod .pilulky > li { display: inline-block; vertical-align: middle; margin: .4rem .35rem; }
+.sluzby-uvod .pilulka { font-size: clamp(.95rem, .92rem + .08vw, 1rem); padding-inline: 1.05rem; }
+@media (max-width: 599.98px) {
+  .sluzby-uvod__radek { text-align: left; }
+  .sluzby-uvod__stitek { display: block; margin: 0 0 .8rem; }
+  .sluzby-uvod .pilulky > li { margin: .25rem .4rem .25rem 0; }
+}
+
+/* 7 · Naše historie – tři černobílé fotky, velký rok */
+.historie-uvod__stitek { margin-bottom: clamp(2rem, 1.4rem + 2vw, 3.4rem); }
+.historie-uvod .wrap--uzky { margin-bottom: 0; }
+.tri-travy { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s-7) clamp(1rem, .4rem + 1.6vw, 2.25rem); list-style: none; }
+.tri-trava { text-align: center; }
+.tri-trava .ramec__obraz { aspect-ratio: 15 / 16; box-shadow: 0 26px 26px -24px rgba(14, 27, 48, .75); }
+.tri-trava .ramec__obraz img { filter: grayscale(1) contrast(1.05) brightness(1.02); object-position: var(--fokus, 50% 25%); }
+.tri-trava__rok { margin: clamp(1.6rem, 1rem + 2vw, 3rem) 0 0; font: 400 clamp(3.6rem, 2.6rem + 3vw, 5.6rem)/.9 var(--serif); color: var(--navy); letter-spacing: -.01em; font-variant-numeric: oldstyle-nums proportional-nums; }
+.tri-trava__jmeno { margin: clamp(.8rem, .5rem + .8vw, 1.4rem) 0 0; font: 400 clamp(1.45rem, 1.2rem + .7vw, 1.95rem)/1.2 var(--serif); color: var(--navy); }
+.tri-trava__disciplina { margin: .6rem 0 0; font-size: clamp(.86rem, .82rem + .15vw, .98rem); letter-spacing: .05em; color: var(--gold-text); }
+.historie-uvod__akce { display: flex; justify-content: center; margin-top: clamp(3rem, 2rem + 3vw, 5.4rem); }
+.historie-uvod__akce .btn { min-height: 3.9rem; padding-inline: clamp(2rem, 1.4rem + 2vw, 3.6rem); font-size: .82rem; letter-spacing: .2em; }
+@media (max-width: 899.98px) {
+  .tri-travy { grid-template-columns: minmax(0, 1fr); max-width: 26rem; margin-inline: auto; gap: var(--s-8); }
+}
+
+/* 8 · Partneři – mřížka 5 × 5 jednobarevných log (logo klienta beze změny) */
+.partneri__stitek { margin-bottom: clamp(2.4rem, 1.6rem + 3vw, 5rem); }
+.partneri__mrizka { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: clamp(.8rem, .4rem + 1.2vw, 1.8rem) clamp(1rem, .4rem + 2vw, 3rem); list-style: none; align-items: center; }
+.partner { display: flex; align-items: center; justify-content: center; min-height: clamp(4rem, 3rem + 2.4vw, 5.6rem); }
+.partner a, .partner > span { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; min-height: 44px; padding: .4rem; border-radius: 2px; transition: opacity var(--pohyb-rychly), transform var(--pohyb-rychly); }
+.partner img { width: auto; height: auto; max-width: min(100%, 13.5rem); max-height: clamp(2.6rem, 1.8rem + 2vw, 4.4rem); object-fit: contain; }
+.partner a:hover { opacity: .78; }
+:root[data-kontrast="vyssi"] .partner img { filter: brightness(.62) contrast(1.2); }
+@media (max-width: 899.98px) { .partneri__mrizka { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 419.98px) { .partneri__mrizka { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

@@ -1,0 +1,3 @@
+# Společné části administrace (přihlášení, rozvržení, pole) se jen vkládají do modulů –
+# přímé volání zvenku nedává smysl.
+Require all denied

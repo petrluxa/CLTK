@@ -1,0 +1,5 @@
+# I. ČLTK Praha
+# V režimu přípravy web navíc posílá hlavičku X-Robots-Tag: noindex.
+User-agent: *
+Disallow: /admin/
+Disallow: /instalace.php

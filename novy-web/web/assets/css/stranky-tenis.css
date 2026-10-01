@@ -1,0 +1,274 @@
+/* ==========================================================================
+   Stránky závodního tenisu a Tenisové školy (zavodni-tenis.php, zavodni-tenis-treneri.php,
+   tenisova-skola*.php, letni-kempy.php). Skládá se z tříd styl.css (Varianta 4) –
+   tady jen to, co je opravdu jen pro tyto stránky. Jen tokeny z styl.css, žádné nové
+   barvy ani písma, jen relativní cesty.
+
+   Obsah: 1 navigace sekce · 2 pyramida ČTS · 3 čísla a desky · 4 hráči a výsledky
+          · 5 extraliga (navy) · 6 družstva · 7 lidé · 8 tenisová škola (kategorie,
+          kontakt, rozcestník) · 9 harmonogram a rozvrh · 10 letní kempy
+   ========================================================================== */
+
+/* 1 ─ NAVIGACE SEKCE (pilulky v hlavě stránky) ────────────────────────────── */
+.tenis-podnav { margin-top: var(--s-6); }
+.tenis-podnav .pilulky { gap: .5rem .55rem; }
+.tenis-podnav .pilulka { min-height: 44px; padding: .5rem 1.05rem; font-size: .92rem; }
+.hlava-stranky .akce + .tenis-podnav, .hlava-stranky .tenis-podnav + .akce { margin-top: var(--s-6); }
+
+/* společné drobnosti */
+.tenis-akce { margin-top: clamp(2.5rem, 1.8rem + 2vw, 3.75rem); }
+.tenis-podtitul { margin: var(--s-7) 0 var(--s-4); }
+.tenis-pozn { margin: var(--s-5) 0 0; max-width: 46rem; font-size: var(--t-male); color: var(--ink-2); }
+.tenis-pozn:empty { display: none; }
+.sekce--navy .popisek { color: rgba(251, 250, 246, .7); }
+.sekce--navy .popisek em, .sekce--navy .popisek b, .sekce--navy .popisek strong { color: var(--paper); }
+
+/* 2 ─ PYRAMIDA ČTS – schody od Tenisové školy po extraligu ─────────────────── */
+.pyramida { --schod: clamp(1.4rem, .2rem + 2.4vw, 3.25rem); position: relative; list-style: none; display: grid; }
+.pyramida__stupen { position: relative; display: flex; flex-direction: column; min-width: 0; }
+.pyramida__cislo { margin: 0; font: italic 400 1.3rem/1 var(--serif); color: var(--gold-text); }
+.pyramida__vek { margin: 0 0 .45rem; font: 500 var(--t-stitek)/1.35 var(--sans); letter-spacing: .2em; text-transform: uppercase; color: var(--gold-text); }
+.pyramida__nazev { margin: 0 0 .75rem; font: 300 clamp(2.1rem, 1.6rem + 1.4vw, 2.9rem)/1.02 var(--serif); color: var(--navy); letter-spacing: -.005em; }
+.pyramida__nazev em { font-weight: 400; }
+.pyramida__popis { font-size: var(--t-male); line-height: 1.55; color: var(--ink-2); }
+.pyramida__popis p { margin: 0 0 .6em; }
+.pyramida__popis p:last-child { margin-bottom: 0; }
+.pyramida__fakta { display: grid; gap: .7rem; margin: auto 0 0; padding-top: 1.1rem; border-top: 1px solid var(--line); font-size: var(--t-drobne); line-height: 1.45; }
+.pyramida__fakta dt { font: 500 .62rem/1.3 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+.pyramida__fakta dd { margin: .2rem 0 0; color: var(--ink); }
+.pyramida__popis + .pyramida__fakta { margin-top: auto; }
+.pyramida__odkaz { margin: auto 0 0; padding-top: 1.1rem; }
+.pyramida__fakta ~ .pyramida__odkaz, .pyramida__fakta ~ .pyramida__foto { margin-top: 0; }
+.pyramida__foto { margin-top: 1.2rem; max-width: 12rem; }
+.pyramida__foto .osoba__foto { margin-bottom: 0; }
+
+@media (min-width: 1100px) {
+  /* stupně jako schody: každý další o krok výš, spodek drží jedna navy linka */
+  .pyramida { grid-template-columns: repeat(var(--stupnu, 5), minmax(0, 1fr)); align-items: stretch; border-bottom: 1px solid var(--navy); }
+  .pyramida__stupen {
+    margin-top: calc((var(--stupnu, 5) - 1 - var(--i, 0)) * var(--schod));
+    padding: 1.4rem clamp(1rem, .2rem + 1.1vw, 1.6rem) 1.8rem;
+    border-top: 1px solid var(--gold); border-left: 1px solid var(--line); background: var(--paper);
+  }
+  .pyramida__stupen::before { content: ''; position: absolute; left: 0; right: 0; top: 3px; height: 1px; background: var(--line-gold); }
+  .pyramida__stupen:last-child { border-right: 1px solid var(--line); }
+  .pyramida__stupen--vrchol { background: var(--zrno), var(--paper-2); }
+  .pyramida__cislo { margin-bottom: 1.6rem; }
+}
+@media (max-width: 1099.98px) {
+  /* pod sebou na svislé zlaté lince s římskými čísly v kroužku (jako .proces) */
+  .pyramida { padding-left: 2.6rem; }
+  .pyramida::before { content: ''; position: absolute; left: .9rem; top: .6rem; bottom: .6rem; width: 1px; background: linear-gradient(var(--line-gold), var(--gold)); }
+  .pyramida__stupen { padding: 0 0 2.2rem; }
+  .pyramida__stupen:last-child { padding-bottom: 0; }
+  .pyramida__cislo { position: absolute; left: -2.6rem; top: -.15rem; width: 1.8rem; height: 1.8rem; display: grid; place-content: center; border: 1px solid var(--gold); border-radius: 50%; background: var(--paper); font-size: .9rem; z-index: 1; }
+  .pyramida__stupen--vrchol .pyramida__cislo { background: var(--gold); color: var(--paper); }
+  .pyramida__fakta { margin-top: 1rem; }
+  .pyramida__odkaz { margin-top: 0; }
+}
+@media (min-width: 700px) and (max-width: 1099.98px) {
+  .pyramida__fakta { grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr)); column-gap: var(--mezera); }
+  .pyramida__popis { max-width: 40rem; }
+}
+
+/* 3 ─ ČÍSLA SEZÓNY A DESKY (žebříček ČTS, reprezentanti) ───────────────────── */
+.tenis-cisla { margin-top: 0; }
+.tenis-cisla__pozn { margin: var(--s-4) 0 0; max-width: 52rem; font-size: var(--t-male); color: var(--ink-2); }
+.tenis-desky { display: grid; gap: var(--s-8) var(--mezera); margin-top: clamp(3.5rem, 2.2rem + 4vw, 6rem); }
+@media (min-width: 1000px) { .tenis-desky--dve { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; } }
+.tenis-deska .deska__hlava { margin-bottom: clamp(1.4rem, 1rem + 1.4vw, 2.2rem); }
+.tenis-deska .deska__mezititulek { margin-top: var(--s-6); }
+.tenis-deska .deska__hlava + .deska__mezititulek, .tenis-deska .tenis-deska__perex + .deska__mezititulek { margin-top: 0; }
+.tenis-deska__radky .deska__radek { grid-template-columns: 3.6rem minmax(0, 1fr); }
+.tenis-deska__radky .deska__rok { font-size: 1.4rem; }
+.tenis-deska__perex { max-width: 34rem; margin: 0 auto var(--s-6); text-align: center; font: italic 400 1.14rem/1.45 var(--serif); color: var(--ink-2); text-wrap: pretty; }
+.tenis-deska__perex p:last-child { margin-bottom: 0; }
+.tenis-deska__pata { justify-content: center; text-align: center; }
+.tenis-deska__pata p { margin: 0; }
+.tenis-deska .deska__jmena { padding-top: .6rem; }
+@media (max-width: 699.98px) {
+  .tenis-deska__radky .deska__radek { grid-template-columns: 3rem minmax(0, 1fr); }
+}
+
+/* 4 ─ HRÁČI A VÝSLEDKY ─────────────────────────────────────────────────────── */
+.tenis-hraci { gap: var(--s-8) var(--mezera); }
+@media (min-width: 600px) { .tenis-hraci { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1000px) { .tenis-hraci { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.tenis-hrac .osoba__jmeno { font-size: clamp(1.6rem, 1.4rem + .6vw, 1.95rem); }
+.tenis-hrac .osoba__text { font-size: var(--t-male); }
+.tenis-hrac .osoba__text p { margin: 0; }
+.tenis-hrac .osoba__fakta { margin-top: .9rem; padding-top: .8rem; border-top: 1px solid var(--line); }
+.tenis-hrac .osoba__fakta em { font-family: var(--serif); font-size: 1.08em; }
+
+.tenis-vysledky { margin-top: clamp(4rem, 2.6rem + 4.5vw, 7rem); }
+.tenis-vysledky__hlava { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 1rem 2rem; margin-bottom: var(--s-5); }
+.tenis-vysledky__hlava .stitek { margin: 0; }
+.tenis-vysledky .vysledek__skore small { margin-left: .12em; font-size: .4em; font-style: italic; color: var(--muted); vertical-align: .9em; }
+
+/* 5 ─ EXTRALIGA (sekce navy) ───────────────────────────────────────────────── */
+.tenis-extraliga { row-gap: var(--s-8); }
+.tenis-rocniky { list-style: none; border-top: 1px solid var(--line); }
+.tenis-rocniky li { display: grid; grid-template-columns: 4.3rem minmax(0, 1fr); gap: 1rem; align-items: baseline; padding: .8rem 0; border-bottom: 1px solid var(--line); }
+.tenis-rocniky__rok { font: 400 1.4rem/1 var(--serif); font-variant-numeric: lining-nums tabular-nums; color: var(--navy); }
+.tenis-rocniky__text { font-size: var(--t-male); line-height: 1.5; color: var(--ink-2); }
+.tenis-rocniky em { font-family: var(--serif); font-size: 1.14em; color: var(--gold-text); }
+.sekce--navy .tenis-rocniky, .sekce--navy .tenis-rocniky li { border-color: var(--line-navy); }
+.sekce--navy .tenis-rocniky__rok { color: var(--gold-soft); }
+.sekce--navy .tenis-rocniky__text { color: var(--paper-na-navy); }
+.sekce--navy .tenis-rocniky em { color: var(--paper); }
+
+.tenis-extraliga__tym .ramec { margin-bottom: var(--s-6); }
+.tenis-soupiska__nadpis { margin: .7rem 0 .6rem; }
+.tenis-soupiska__perex { font-size: var(--t-male); color: var(--ink-2); }
+.tenis-soupiska__perex p { margin: 0; }
+.sekce--navy .tenis-soupiska__perex { color: var(--paper-na-navy); }
+.tenis-soupiska__sloupce { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr)); gap: var(--s-6) var(--mezera); margin: var(--s-6) 0 0; }
+.tenis-soupiska__skupina { margin: 0 0 .5rem; padding-bottom: .55rem; border-bottom: 1px solid var(--line); font: 500 var(--t-stitek)/1.3 var(--sans); letter-spacing: .2em; text-transform: uppercase; color: var(--gold-text); }
+.sekce--navy .tenis-soupiska__skupina { color: var(--gold-soft); border-color: var(--line-navy); }
+.tenis-soupiska__jmena { list-style: none; }
+.tenis-soupiska__jmena li { padding: .3rem 0; font: 500 1.14rem/1.3 var(--sc); letter-spacing: .035em; color: var(--navy); font-synthesis: none; }
+.sekce--navy .tenis-soupiska__jmena li { color: var(--paper); }
+.tenis-soupiska__pata { margin-top: var(--s-5); font-size: var(--t-male); }
+.tenis-soupiska__akce { margin-top: var(--s-6); }
+
+/* 6 ─ DRUŽSTVA MLÁDEŽE ─────────────────────────────────────────────────────── */
+.tenis-druzstva { display: grid; gap: var(--s-7) var(--mezera); }
+@media (min-width: 700px) { .tenis-druzstva { grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); } }
+.tenis-druzstva__nadpis { margin: 0 0 .2rem; padding-bottom: .75rem; border-bottom: 1px solid var(--navy); font: 400 var(--t-h4)/1.2 var(--serif); color: var(--navy); }
+.tenis-druzstva__seznam { list-style: none; }
+.tenis-druzstva__seznam li { padding: .9rem 0; border-bottom: 1px solid var(--line); }
+.tenis-druzstva__kat { display: block; margin-bottom: .25rem; font: 500 .66rem/1.3 var(--sans); letter-spacing: .18em; text-transform: uppercase; color: var(--gold-text); }
+.tenis-druzstva__vysl { display: block; font: 400 1.18rem/1.35 var(--serif); color: var(--navy); text-wrap: pretty; }
+
+/* 7 ─ LIDÉ: náhled trenérů, skupiny týmu ───────────────────────────────────── */
+.tenis-osoby--male { grid-template-columns: repeat(auto-fit, minmax(min(100%, 9.5rem), 1fr)); gap: var(--s-6) var(--mezera); }
+.tenis-osoby--male > * { max-width: 17rem; }
+.tenis-osoby--male .osoba__jmeno { font-size: 1.3rem; }
+.tenis-osoby--male .osoba__foto { margin-bottom: .9rem; }
+.tenis-skupina { scroll-margin-top: calc(var(--hlavicka-kompakt) + 1.5rem); }
+.tenis-skupina .skupina-osob__nazev { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: .3rem 1.5rem; }
+.tenis-skupina__pocet { font: 500 .66rem/1.3 var(--sans); letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
+.osoby--bez-fotek.tenis-osoby { grid-template-columns: repeat(auto-fill, minmax(min(100%, 15.5rem), 1fr)); }
+
+/* 8 ─ TENISOVÁ ŠKOLA: informace, kategorie, přihláška, kontakt, rozcestník ─── */
+.tenis-info .rimsky > li { padding-top: 1.25rem; padding-bottom: 1.25rem; }
+.tenis-info .rimsky p { margin: 0 0 .5em; color: var(--ink-2); }
+.tenis-info .rimsky p:last-child { margin-bottom: 0; }
+.tenis-info__odkaz { margin-top: .6rem; }
+
+.tenis-kategorie { display: grid; gap: var(--mezera); list-style: none; }
+@media (min-width: 800px) { .tenis-kategorie { grid-template-columns: repeat(var(--polozek, 3), minmax(0, 1fr)); } }
+.tenis-kategorie .karta { height: 100%; display: flex; flex-direction: column; }
+.tenis-kategorie__vek { display: block; margin: .3rem 0 .4rem; font: 300 clamp(2.6rem, 2rem + 2vw, 3.8rem)/1 var(--serif); color: var(--navy); font-variant-numeric: lining-nums; letter-spacing: -.01em; }
+.tenis-kategorie__vek small { font-size: .42em; font-style: italic; font-weight: 400; color: var(--gold-text); margin-right: .2em; letter-spacing: 0; }
+.tenis-kategorie__text { margin: 0; font-size: var(--t-male); color: var(--ink-2); }
+.tenis-kategorie .karta__nazev { font: 500 1.2rem/1.25 var(--sc); letter-spacing: .05em; color: var(--navy); font-synthesis: none; margin: 0; }
+
+.tenis-proces { margin-top: var(--s-2); }
+.tenis-proces li { font-size: var(--t-male); }
+
+.tenis-kontakt { display: grid; gap: var(--s-7) var(--mezera); align-items: start; }
+@media (min-width: 900px) { .tenis-kontakt { grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); } }
+.tenis-kontakt .karta .prose { font-size: var(--t-male); }
+.tenis-kontakt .karta .prose p { margin-bottom: .6em; }
+.tenis-kontakt .karta .prose a { white-space: nowrap; }
+.tenis-kontakt__nadpis { margin: 0 0 var(--s-4); }
+.tenis-kontakt .radek__hodnota a { color: var(--navy); text-decoration: none; }
+.tenis-kontakt .radek__hodnota a:hover { text-decoration: underline; text-decoration-color: var(--gold); text-underline-offset: .25em; }
+
+.tenis-rozcestnik { display: grid; gap: var(--mezera); list-style: none; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); }
+.tenis-rozcestnik__karta { display: flex; flex-direction: column; height: 100%; text-decoration: none; color: inherit; transition: border-color var(--pohyb-rychly), box-shadow var(--pohyb); }
+.tenis-rozcestnik__karta:hover { border-color: var(--gold); box-shadow: var(--stin); }
+.tenis-rozcestnik__karta:hover .karta__nazev { color: var(--gold-text); }
+.tenis-rozcestnik__karta .karta__nazev em { font-style: italic; color: var(--gold-text); }
+.tenis-rozcestnik__perex { margin: 0 0 1.2rem; font-size: var(--t-male); color: var(--ink-2); }
+.tenis-rozcestnik__dal { margin-top: auto; }
+
+/* 9 ─ HARMONOGRAM A ROZVRH ─────────────────────────────────────────────────── */
+.tenis-harmonogram { list-style: none; border-top: 1px solid var(--navy); }
+.tenis-harmonogram li { display: grid; grid-template-columns: minmax(10rem, 15rem) minmax(0, 1fr) auto; gap: .3rem clamp(1rem, 2vw, 2.5rem); align-items: baseline; padding: 1.05rem 0; border-bottom: 1px solid var(--line); }
+.tenis-harmonogram__kdy { font: 400 1.18rem/1.3 var(--serif); font-variant-numeric: lining-nums tabular-nums; color: var(--navy); }
+.tenis-harmonogram__kdy small { display: block; margin-top: .15rem; font: 400 var(--t-drobne)/1.4 var(--sans); color: var(--muted); }
+.tenis-harmonogram__co { font-size: var(--t-text); color: var(--ink); }
+.tenis-harmonogram__co small { display: block; margin-top: .15rem; font-size: var(--t-drobne); color: var(--muted); }
+.tenis-harmonogram__stav { justify-self: end; }
+.tenis-harmonogram .je-probehla .tenis-harmonogram__kdy, .tenis-harmonogram .je-probehla .tenis-harmonogram__co { color: var(--muted); }
+.tenis-harmonogram .je-ted { background: linear-gradient(90deg, var(--paper-2), rgba(243, 240, 233, 0)); }
+.tenis-harmonogram .je-ted .tenis-harmonogram__kdy { padding-left: .9rem; border-left: 2px solid var(--gold); }
+.tenis-stav { display: inline-flex; align-items: center; padding: .3em .6em .26em; border: 1px solid var(--line-gold); font: 500 .62rem/1 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--gold-text); white-space: nowrap; }
+.tenis-stav--ted { border-color: var(--navy); background: var(--navy); color: var(--paper); }
+.tenis-stav--probehlo { border-style: dashed; border-color: var(--line-2); color: var(--muted); }
+@media (max-width: 699.98px) {
+  .tenis-harmonogram li { grid-template-columns: minmax(0, 1fr) auto; }
+  .tenis-harmonogram__kdy { grid-column: 1; }
+  .tenis-harmonogram__stav { grid-column: 2; grid-row: 1; }
+  .tenis-harmonogram__co { grid-column: 1 / -1; }
+}
+
+.tenis-rozvrh .tabulka tbody td { font-size: var(--t-male); }
+.tenis-rozvrh .tabulka td.tenis-rozvrh__cas { font: 400 1.12rem/1.3 var(--serif); font-variant-numeric: lining-nums tabular-nums; color: var(--navy); white-space: nowrap; }
+.tenis-rozvrh .tabulka tbody th[colspan] { text-align: left; }
+.tenis-rozvrh__prazdne td { padding-block: 1.6rem; color: var(--muted); }
+.tenis-rozvrh__pozn { margin-top: var(--s-4); font-size: var(--t-drobne); color: var(--muted); }
+
+/* 10 ─ LETNÍ KEMPY ─────────────────────────────────────────────────────────── */
+.tenis-terminy { display: grid; gap: var(--mezera); list-style: none; grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr)); }
+.tenis-termin { position: relative; display: flex; flex-direction: column; height: 100%; padding: 1.4rem 1.4rem 1.5rem; background: var(--paper); border: 1px solid var(--line); border-top: 1px solid var(--gold); }
+.sekce--papir2 .tenis-termin { background: var(--paper); }
+.tenis-termin__hlava { display: flex; justify-content: space-between; align-items: baseline; gap: .8rem; margin-bottom: .9rem; }
+.tenis-termin__nazev { margin: 0; font: italic 400 1.1rem/1.2 var(--serif); color: var(--gold-text); }
+.tenis-termin__kdy { display: block; margin: 0; font: 300 clamp(1.9rem, 1.6rem + .9vw, 2.4rem)/1.05 var(--serif); font-variant-numeric: lining-nums tabular-nums; color: var(--navy); }
+.tenis-termin__rok { display: block; margin-top: .3rem; font: 500 .66rem/1.3 var(--sans); letter-spacing: .2em; color: var(--muted); }
+.tenis-termin__info { margin: .9rem 0 0; padding-top: .8rem; border-top: 1px solid var(--line); font-size: var(--t-drobne); line-height: 1.5; color: var(--ink-2); }
+.tenis-termin__info p { margin: 0; }
+.tenis-termin.je-probehla { background: transparent; border-top-color: var(--line-2); }
+.tenis-termin.je-probehla .tenis-termin__kdy, .tenis-termin.je-probehla .tenis-termin__nazev { color: var(--muted); }
+.tenis-termin--doplni { justify-content: center; align-items: flex-start; border: 1px dashed var(--line-2); background: transparent; }
+.tenis-termin--doplni .tenis-termin__kdy { font-size: clamp(1.5rem, 1.3rem + .6vw, 1.9rem); font-style: italic; color: var(--ink-2); }
+.tenis-terminy-akce { margin-top: var(--s-6); }
+
+.tenis-varianty { display: grid; gap: var(--mezera); list-style: none; }
+@media (min-width: 800px) { .tenis-varianty { grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr)); } }
+.tenis-varianta { display: flex; flex-direction: column; height: 100%; }
+.tenis-varianta__cas { margin: 0 0 .8rem; font: 500 .7rem/1.3 var(--sans); letter-spacing: .18em; text-transform: uppercase; color: var(--gold-text); }
+.tenis-varianta__nazev { margin: 0 0 .6rem; font: 300 clamp(1.8rem, 1.5rem + 1vw, 2.4rem)/1.08 var(--serif); color: var(--navy); }
+.tenis-varianta__popis { margin: 0 0 1.4rem; font-size: var(--t-male); color: var(--ink-2); }
+.tenis-varianta__ceny { display: grid; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); gap: 1rem var(--mezera); margin-top: auto; padding-top: 1.1rem; border-top: 1px solid var(--line-gold); }
+.tenis-varianta__ceny dt { font: 500 .62rem/1.35 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+.tenis-varianta__ceny dd { margin: .35rem 0 0; font: 300 clamp(1.8rem, 1.5rem + 1vw, 2.3rem)/1 var(--serif); font-variant-numeric: lining-nums tabular-nums; color: var(--navy); white-space: nowrap; }
+.tenis-varianta__ceny .clen dd { color: var(--gold-text); }
+.tenis-cenik-pozn { margin-top: var(--s-5); max-width: 46rem; font-size: var(--t-male); color: var(--ink-2); }
+.tenis-cenik-pozn p:last-child { margin-bottom: 0; }
+
+.tenis-prihlaska { position: relative; }
+@media (min-width: 900px) { .tenis-prihlaska { position: sticky; top: calc(var(--hlavicka-kompakt) + 1.5rem); } }
+.tenis-prihlaska .h3 { margin: .4rem 0 .7rem; }
+.tenis-prihlaska__perex { font-size: var(--t-male); color: var(--ink-2); }
+.tenis-prihlaska__perex p:last-child { margin-bottom: 0; }
+.tenis-prihlaska__stav { margin: var(--s-5) 0 0; }
+.tenis-prihlaska .akce { margin-top: var(--s-5); }
+.tenis-prihlaska__kontakt { margin-top: var(--s-5); padding-top: var(--s-5); border-top: 1px solid var(--line-gold); font-size: var(--t-male); }
+.tenis-prihlaska__kontakt .prose { font-size: var(--t-male); }
+.tenis-prihlaska__kontakt .prose a { white-space: nowrap; }
+.tenis-rozcestnik-nadpis { margin: 0 0 var(--s-6); }
+.tenis-karta-text { margin: 0 0 var(--s-5); font-size: var(--t-male); color: var(--ink-2); }
+.tenis-karta-text p { margin: 0 0 .5em; }
+.tenis-karta-text p:last-child { margin-bottom: 0; }
+.tenis-ucet { margin-top: var(--s-4); }
+.tenis-ucet .radek__nazev { font-size: 1.08rem; }
+.tenis-stav-hlavy { margin: var(--s-5) 0 0; }
+.tenis-stav-hlavy + .tenis-podnav { margin-top: var(--s-5); }
+.tenis-rozvrh__kontakt { margin-top: var(--s-6); }
+.tenis-rozvrh__kontakt .prose { font-size: var(--t-male); }
+.tenis-kontakt .karta .tenis-kontakt__text { font: 400 clamp(1.2rem, 1.1rem + .4vw, 1.45rem)/1.5 var(--serif); color: var(--navy); }
+.tenis-kontakt .karta .tenis-kontakt__text a { font-family: var(--sans); font-size: .72em; letter-spacing: .02em; }
+.tenis-ceniky-aside { align-self: start; }
+.tenis-ceniky-aside .tenis-rozcestnik__karta { height: auto; }
+.tenis-cenik .tabulka-box + .tabulka-box { margin-top: var(--s-7); }
+.tenis-cenik .cenik__pozn:first-child { margin-top: 0; margin-bottom: var(--s-6); }
+.tenis-cenik-pozn + .tenis-varianty, .cenik__hlava + .tenis-varianty { margin-top: var(--s-6); }
+.tenis-varianty + .tenis-varianty { margin-top: var(--mezera); }
+
+/* Cíl dotyku ≥ 44 px u textových odkazů (.odkaz) bez změny vzhledu – neviditelná plocha nad i pod */
+.stranka-tenis main .odkaz { position: relative; }
+.stranka-tenis main .odkaz::before { content: ''; position: absolute; left: 0; right: 0; top: 50%; height: 44px; min-height: 100%; transform: translateY(-50%); }

@@ -1,0 +1,173 @@
+/* Doplňky administrace pro moduly úvodní stránky a obecných údajů:
+   Návštěvnost, Informační lišta, Úvodní galerie, Aktuality, Výsledky hráčů,
+   Kalendář akcí, Přihlášky, Partneři, Dokumenty, Texty a údaje.
+   Navazuje na admin.css (stejné proměnné, jazyk „Zlatá deska“).
+   Velikost polí (16 px) ani dotykové cíle (44 px) nepřebíjí. */
+
+/* ---------- drobnosti ---------- */
+.uv-tlumene{color:var(--seda);font-size:13.5px}
+.uv-nowrap{white-space:nowrap}
+.uv-mezera{margin-top:14px}
+.uv-odstavec{max-width:72ch;color:var(--inkoust)}
+.uv-odstavec + .uv-odstavec{margin-top:10px}
+.uv-stitek-zlaty{display:block;font:500 11px/1.45 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--zlato-text)}
+.uv-chyby{list-style:none;margin:0 0 22px;padding:14px 18px;background:var(--err-pozadi);color:var(--err);border:1px solid #ecd0cb;border-left:3px solid var(--err);font-size:15px}
+.uv-chyby li + li{margin-top:4px}
+.uv-chyby b{display:block;margin-bottom:4px}
+.field.je-chyba input,.field.je-chyba select,.field.je-chyba textarea{border-color:#c98b80}
+.field .uv-chyba{color:var(--err);font-size:13px;margin-top:6px}
+.uv-info{background:#eef1f6;border:1px solid #d8dee9;border-left:3px solid var(--navy);color:var(--navy);padding:12px 16px;font-size:14.5px;margin-bottom:22px}
+.uv-info--warn{background:var(--warn-pozadi);border-color:#eedcb8;border-left-color:var(--zlato);color:var(--warn)}
+.uv-info--ok{background:var(--ok-pozadi);border-color:#cfe2d6;border-left-color:var(--ok);color:var(--ok)}
+.uv-info p + p{margin-top:6px}
+.uv-info a{color:inherit}
+.uv-pocitadlo{font-size:12.5px;color:var(--seda);margin-top:4px;text-align:right}
+.uv-pocitadlo.je-dlouhe{color:var(--warn)}
+
+/* filtr nad tabulkou */
+.uv-filtr{display:flex;flex-wrap:wrap;gap:14px 16px;align-items:flex-end}
+.uv-filtr .field{flex:1 1 200px;min-width:0}
+.uv-filtr .btn-row{flex:0 0 auto}
+
+/* řádek tabulky, který je právě na úvodu */
+tr.uv-na-uvodu td:first-child{box-shadow:inset 3px 0 0 var(--zlato)}
+
+/* ---------- informační lišta – náhled zlatého pruhu jako na webu ---------- */
+.uv-lista{
+  /* stejná barva jako lišta na webu (--lista v styl.css): tmavší zlatá než v PDF, aby bílý text měl kontrast 4,6 : 1 */
+  background:#8a6d3b;color:#fff;text-align:center;
+  font:500 12.5px/1.6 var(--sans);letter-spacing:.24em;text-transform:uppercase;
+  padding:11px 16px;overflow-wrap:anywhere;box-shadow:0 8px 16px -12px rgba(21,39,68,.55);
+}
+.uv-lista__odkaz{text-decoration:underline;text-decoration-color:rgba(255,255,255,.6);text-underline-offset:4px}
+.uv-lista--prazdna{background:var(--papir2);color:var(--seda);letter-spacing:.06em;text-transform:none;box-shadow:none;border:1px dashed var(--linka)}
+.uv-lista-tabulka{font:500 12px/1.5 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--navy)}
+
+/* ---------- úvodní galerie – navy deska ---------- */
+.uv-deska{background:var(--navy);color:#e9e6dd;text-align:center;padding:26px 20px 22px;position:relative;font-family:var(--serif);max-width:460px}
+.uv-deska::before{content:"";position:absolute;inset:8px;border:1px solid rgba(202,172,121,.45);pointer-events:none}
+.uv-deska > *{position:relative}
+.uv-deska__stitek{font:500 10.5px/1.4 var(--sans);letter-spacing:.24em;text-transform:uppercase;color:var(--zlato-navy)}
+.uv-deska__titul{font-size:32px;line-height:1.08;color:#fff;margin:10px 0 12px;padding-top:.08em}
+.uv-deska__titul em{color:var(--zlato-navy)}
+.uv-deska__zapas{display:flex;justify-content:center;gap:14px;align-items:baseline;font-size:19px;flex-wrap:wrap}
+.uv-deska__skore{font-size:28px;color:var(--zlato-navy)}
+.uv-deska__detail{font-size:16px;margin-top:6px}
+.uv-deska__detail .uv-deska__sety{color:var(--zlato-navy);margin-left:6px;white-space:nowrap}
+.uv-deska__misto{font:400 12px/1.5 var(--sans);letter-spacing:.06em;color:rgba(233,230,221,.75);margin-top:10px}
+.uv-deska--mini{width:64px;height:46px;padding:3px;display:grid;place-items:center;max-width:none}
+.uv-deska--mini::before{inset:3px}
+.uv-deska--mini span{font:500 7.5px/1.15 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--zlato-navy)}
+.uv-rejstrik{font-family:var(--serif);font-size:15px;color:var(--zlato-text);margin-right:6px}
+.uv-popisek{font-size:13.5px;color:var(--seda);margin-top:2px}
+.uv-popisek em{font-family:var(--serif);font-size:1.12em;color:var(--navy)}
+
+/* části formuláře podle typu snímku (bez JS se ukazují obě) */
+.uv-typ-cast[hidden]{display:none}
+
+/* ---------- výsledky hráčů ---------- */
+.uv-sety{display:inline-flex;gap:12px;font:400 24px/1 var(--serif);color:var(--navy);font-variant-numeric:lining-nums tabular-nums;white-space:nowrap;flex-wrap:wrap}
+.uv-sety .p{color:#a3a5ae}
+.uv-sety small{font-size:.55em;margin-left:2px}
+.uv-sety--velke{font-size:34px;gap:16px}
+.uv-verdikt{display:inline-block;font:500 10.5px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--zlato-text);margin-top:6px}
+.uv-sety-nahled{min-height:40px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:8px}
+.uv-sety-nahled .uv-tlumene{font-size:13px}
+
+/* ---------- kalendář akcí ---------- */
+.uv-interni{background:var(--warn-pozadi);border:1px solid #eedcb8;border-left:3px solid var(--zlato);color:var(--warn);padding:10px 14px;font-size:14px;line-height:1.5}
+.uv-interni b{font-weight:600;letter-spacing:.08em;text-transform:uppercase;font-size:11px;display:block;margin-bottom:2px}
+td .uv-interni{padding:6px 10px;font-size:13px;margin-top:6px}
+.uv-mesic{font-family:var(--serif);font-size:18px;color:var(--navy);text-transform:lowercase}
+tr.uv-probehla td{color:var(--seda)}
+tr.uv-probehla .td-nazev b{color:var(--seda)}
+
+/* vlastní pole formuláře přihlášky */
+.uv-pole-seznam{display:grid;gap:14px}
+.uv-pole{border:1px solid var(--linka);background:var(--papir);padding:14px 16px 16px;display:grid;gap:14px;min-width:0}
+.uv-pole__hlava{display:flex;justify-content:space-between;align-items:center;gap:8px 12px;flex-wrap:wrap}
+.uv-pole__hlava b{font-family:var(--serif);font-size:19px;color:var(--navy);font-weight:500}
+.uv-pole__hlava small{font-size:12px;color:var(--seda);letter-spacing:.06em}
+.uv-pole__moznosti[hidden]{display:none}
+.uv-pole.je-odebrane{opacity:.55;background:var(--papir2)}
+.uv-pole .check{padding-top:0}
+.uv-pole-akce{display:inline-flex;gap:6px}
+
+/* náhled formuláře přihlášky, jak ho uvidí návštěvník */
+.uv-nahled-form{border:1px solid var(--linka);background:var(--papir);padding:18px 20px;display:grid;gap:12px;max-width:520px}
+.uv-nahled-form__pole{display:grid;gap:4px}
+.uv-nahled-form__pole span{font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--navy)}
+.uv-nahled-form__pole i{display:block;height:38px;border:1px solid var(--linka);background:#fff}
+.uv-nahled-form__pole i.vysoke{height:64px}
+.uv-nahled-form__check{display:flex;gap:10px;align-items:flex-start;font-size:14px}
+.uv-nahled-form__check::before{content:"";width:16px;height:16px;border:1px solid var(--zlato);background:#fff;flex:none;margin-top:3px}
+.uv-nahled-form__btn{justify-self:start;background:var(--navy);color:#fff;font:500 12px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;padding:13px 22px}
+.uv-nahled-form__pozn{font-size:13px;color:var(--seda)}
+
+/* ---------- přihlášky – detail ---------- */
+.uv-dl{display:grid;grid-template-columns:minmax(150px,230px) minmax(0,1fr);border-top:1px solid var(--linka2)}
+.uv-dl dt,.uv-dl dd{padding:10px 0;border-bottom:1px solid var(--linka2);min-width:0}
+.uv-dl dt{font-size:11.5px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--seda);padding-right:16px;padding-top:12px}
+.uv-dl dd{overflow-wrap:anywhere;white-space:pre-line}
+.uv-dl dd .uv-dl{margin:4px 0 0}
+.uv-osoba{border:1px solid var(--linka);padding:10px 14px;margin:6px 0;background:var(--papir)}
+.uv-osoba > b{display:block;font-family:var(--serif);font-weight:500;font-size:18px;color:var(--navy);margin-bottom:4px}
+.uv-citlive{background:var(--warn-pozadi);padding:1px 6px;font-variant-numeric:tabular-nums}
+.uv-odpovedi{margin:4px 0 0;padding:0;list-style:none;font-size:13px;color:var(--seda)}
+.uv-odpovedi b{font-weight:500;color:var(--inkoust)}
+@media (max-width:640px){
+  .uv-dl{grid-template-columns:minmax(0,1fr)}
+  .uv-dl dt{border-bottom:0;padding-bottom:0}
+}
+
+/* ---------- partneři ---------- */
+.uv-logo-web{background:var(--papir);border:1px solid var(--linka);padding:16px 20px;display:flex;align-items:center;justify-content:center;min-height:96px;max-width:340px}
+.uv-logo-web img{max-height:72px;max-width:100%;width:auto;height:auto}
+.uv-logo-web--prazdne{color:var(--seda);font-size:13px;text-align:center}
+.uv-loga{display:flex;gap:16px;flex-wrap:wrap;align-items:flex-start}
+.uv-loga figure{display:grid;gap:6px}
+.uv-loga figcaption{font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--seda)}
+.uv-mrizka-log{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:1px;background:var(--linka);border:1px solid var(--linka);max-width:760px}
+.uv-mrizka-log span{background:var(--papir);display:grid;place-items:center;padding:12px 10px;min-height:64px}
+.uv-mrizka-log img{max-height:38px;width:auto;max-width:100%}
+.uv-mrizka-log span.je-skryte{opacity:.35}
+@media (max-width:640px){.uv-mrizka-log{grid-template-columns:repeat(3,minmax(0,1fr))}}
+
+/* ---------- Texty a údaje ---------- */
+.uv-nastaveni-skupina{scroll-margin-top:80px}
+.uv-nastaveni-ulozit{position:sticky;bottom:0;z-index:30;background:rgba(251,250,246,.96);border-top:1px solid var(--linka);padding:12px 0;margin:0 0 24px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.uv-nastaveni-ulozit .hint{margin:0}
+.uv-soubor-nahled{display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap;margin-bottom:10px}
+.uv-soubor-nahled img,.uv-soubor-nahled video{max-width:320px;max-height:200px;border:1px solid var(--linka);background:var(--papir2)}
+.uv-rezim{border:1px solid var(--linka);padding:14px 16px;background:var(--papir);display:grid;gap:6px}
+.uv-rezim--zapnuto{background:var(--warn-pozadi);border-color:#eedcb8}
+.uv-heslo{display:flex;gap:8px;align-items:stretch}
+.uv-heslo input{flex:1;min-width:0}
+.uv-heslo .btn{flex:none}
+
+/* ---------- návštěvnost ---------- */
+.chart.uv-graf{gap:3px}
+.chart.uv-graf .bar{min-width:0}
+.chart.uv-graf--husty{gap:1px}
+/* číslo nad sloupcem jen při najetí (skryté nesmí rozšiřovat stránku do strany) */
+.chart.uv-graf .bar span{display:none;background:var(--karta);padding:1px 4px;border:1px solid var(--linka);z-index:2}
+.chart.uv-graf .bar:hover span{display:block}
+.chart.uv-graf .bar.nula{background:var(--linka)}
+.uv-graf-osa{position:relative;height:20px;margin-top:6px;font-size:11px;color:var(--seda)}
+.uv-graf-osa span{position:absolute;top:0;white-space:nowrap}
+.uv-pruh{display:block;height:6px;background:linear-gradient(90deg,var(--zlato),#d8c49c);min-width:2px}
+.uv-cesta{overflow-wrap:anywhere}
+@media (max-width:760px){
+  .chart.uv-graf{height:150px;gap:2px}
+  .chart.uv-graf--husty{gap:0}
+}
+
+/* ---------- opravy pro pole jádra ----------
+   .obr-prev má v admin.css display:flex, který přebije atribut hidden –
+   bez fotky se pak ukazoval rozbitý náhled (požadavek na jádro). */
+.obr-prev[hidden]{display:none}
+/* formulář, pod kterým následují další panely (akce-edit: náhled, přihlášení) */
+form.form + .panel,form.form + template + .panel{margin-top:34px}
+/* výběr druhu odstavce v editoru má v editor.js natvrdo 14 px – Safari by při klepnutí přiblížil stránku */
+.ed-lista .ed-blok{font-size:16px!important}
+@media (max-width:760px){.uv-nastaveni-ulozit .hint{display:none}.uv-nastaveni-ulozit{padding:10px 0}}

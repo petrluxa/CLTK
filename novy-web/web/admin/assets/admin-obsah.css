@@ -1,0 +1,107 @@
+/* Doplňky vzhledu pro moduly obsahu administrace I. ČLTK Praha
+   (Trenéři, Ceníky, Tenisová škola, Areál a služby, Historie, Revue a newslettery,
+   Vedení, CTC, Stránky). Barvy a písma bere z admin.css (proměnné v :root),
+   pole drží 16 px a dotykové cíle 44 px stejně jako zbytek administrace. */
+
+/* chyba u pole po neúspěšném uložení */
+.pole-chyba{display:block;color:var(--err);font-weight:500}
+
+/* podnadpis skupiny uprostřed tabulky (trenéři podle skupin, deska…) */
+.tr-skupina td{
+  background:var(--papir);font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--zlato-text);padding:10px 16px;border-bottom:1px solid var(--linka2);
+}
+tbody tr.tr-skupina:hover{background:var(--papir)}
+
+/* miniatury navíc */
+.thumb-portret{width:46px;height:58px;object-fit:cover;background:var(--papir2);border:1px solid var(--linka)}
+.thumb-obalka{width:46px;height:64px;object-fit:cover;background:var(--papir2);border:1px solid var(--linka)}
+.thumb-ph--portret{width:46px;height:58px}
+
+/* štítky „Služby v areálu“ – náhled pilulek z úvodní stránky */
+.stitky{display:flex;flex-wrap:wrap;gap:8px}
+.stitky .stitek{
+  display:inline-flex;align-items:center;min-height:38px;padding:6px 16px;border:1px solid var(--zlato);
+  border-radius:999px;font-size:13.5px;letter-spacing:.04em;color:var(--navy);background:#fff;text-decoration:none;
+}
+.stitky .stitek:hover{background:var(--papir)}
+.stitky .stitek.je-skryte{opacity:.5;border-style:dashed}
+
+/* drobné texty v buňkách */
+.td-mala{font-size:13px;color:var(--seda);line-height:1.5}
+.td-mala b{color:var(--inkoust);font-weight:500}
+.td-rok{font-family:var(--serif);font-size:22px;color:var(--navy);white-space:nowrap;line-height:1.1}
+.cislo-poradi{font-family:var(--serif);color:var(--zlato-text);font-size:15px}
+
+/* tabulka s poli (ceny v sekci, obsah čísla Revue) */
+.tbl-pole td{vertical-align:top;padding:8px 10px}
+.tbl-pole th{padding:10px}
+.tbl-pole input[type=text]{min-width:110px}
+.tbl-pole .sirsi input[type=text]{min-width:220px}
+.tbl-pole tr.radek-novy td{background:#fcfbf7}
+.tbl-pole tr.radek-novy td:first-child{box-shadow:inset 2px 0 0 var(--zlato)}
+
+/* rozbalovací blok (přesun a mazání řádků ceníku) */
+details.rozbal{border:1px solid var(--linka);background:#fff;margin-top:18px}
+details.rozbal > summary{
+  cursor:pointer;min-height:44px;display:flex;align-items:center;gap:10px;padding:0 16px;list-style:none;
+  font-size:12px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--navy);
+}
+details.rozbal > summary::-webkit-details-marker{display:none}
+details.rozbal > summary::before{content:"";width:7px;height:7px;border-right:1.5px solid var(--zlato);border-bottom:1.5px solid var(--zlato);transform:rotate(-45deg);transition:transform .15s}
+details.rozbal[open] > summary::before{transform:rotate(45deg)}
+details.rozbal > summary:hover{background:var(--papir)}
+details.rozbal--pole{margin-top:0}
+details.rozbal--pole > summary{text-transform:none;letter-spacing:.02em;font-size:14px;font-weight:400;padding:8px 16px}
+.rozbal__obsah{padding:6px 16px 16px;border-top:1px solid var(--linka2)}
+
+/* interní poznámka, upozornění v panelu */
+.upozorneni{background:var(--warn-pozadi);border-left:3px solid var(--zlato);padding:12px 16px;font-size:14px;color:var(--warn)}
+.upozorneni + .upozorneni{margin-top:10px}
+.panel-body > .upozorneni{margin-bottom:18px}
+
+/* panel s mazáním na konci editační stránky */
+.panel--nebezpeci{border-color:#ecd0cb}
+.panel--nebezpeci .panel-head h2{color:var(--err)}
+
+/* přehled stránek v modulu Stránky */
+.stranky-skupina{font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--zlato-text)}
+.klic{font-family:ui-monospace,Consolas,monospace;font-size:13px;color:var(--seda);background:var(--papir);padding:1px 6px;border:1px solid var(--linka2);white-space:nowrap}
+
+/* stav nahrávání obrázku do textu (lišta editoru) */
+.ed-hlaska{font-size:13px;color:var(--seda);margin-left:8px;line-height:1.3}
+.ed-hlaska.je-chyba{color:var(--err)}
+.ed-hlaska.je-hotovo{color:var(--ok)}
+.ed-plocha img{max-width:100%;height:auto;margin:6px 0;border:1px solid var(--linka2)}
+
+/* tlačítko Přidat řádek pod tabulkou s poli */
+.pridat-radek{margin-top:10px}
+
+@media (max-width:760px){
+  .tbl-karty tr.tr-skupina{border:0;background:none;margin:22px 12px 0;padding:0}
+  .tbl-karty tr.tr-skupina td{padding:0 2px;background:none;border:0}
+  .tbl-pole input[type=text],.tbl-pole .sirsi input[type=text]{min-width:0}
+  .tbl-karty.tbl-pole td{padding:6px 0}
+  /* ceny na telefonu po dvou vedle sebe, název a poznámka přes celou šířku */
+  .tbl-karty.tbl-pole tbody tr{display:grid;grid-template-columns:1fr 1fr;column-gap:12px}
+  .tbl-karty.tbl-pole td.sirsi,.tbl-karty.tbl-pole td.cela{grid-column:1/-1}
+  .td-rok{font-size:20px}
+}
+
+/* editor.js nastavuje výběru „Odstavec / Nadpis“ písmo 14 px – na iPhonu by se po klepnutí
+   přiblížila celá stránka (pole musí mít aspoň 16 px). Inline styl přebije jen !important. */
+.ed-lista select.ed-blok{font-size:16px!important}
+
+/* pole_obrazek() skrývá prázdný náhled atributem hidden, ale admin.css dává .obr-prev
+   display:flex – bez tohohle by se ukázal rozbitý obrázek „Náhled vybraného obrázku“. */
+.obr-prev[hidden]{display:none}
+
+/* na širokém displeji drží tlačítka řádku v jedné řadě (texty v ostatních sloupcích se zalomí) */
+@media (min-width:1200px){
+  td.right > .akce-radku{flex-wrap:nowrap}
+}
+.td-rok--text{white-space:normal;font-size:18px;display:block;max-width:9em}
+.td-nazev .badge,.td-mala .badge{white-space:normal}
+
+@media (prefers-reduced-motion:reduce){details.rozbal > summary::before{transition:none}}
+@media (pointer:coarse){.stitky .stitek{min-height:44px}}

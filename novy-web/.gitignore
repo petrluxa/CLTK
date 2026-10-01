@@ -1,0 +1,16 @@
+# přístupy k FTP a databázi – nikdy do gitu
+deploy/
+cltk-config.php
+web/inc/config.local.php
+# přenosné PHP a lokální data
+_php/
+web/data/*
+!web/data/.htaccess
+*.sqlite
+*.sqlite-journal
+# obsah nahraný klubem / výchozí fotky (na server se nahrávají zvlášť)
+web/uploads/*
+!web/uploads/.htaccess
+podklady/video/
+# pracovní výstupy testů
+podklady/_raw/
