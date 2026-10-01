@@ -90,3 +90,23 @@ s omezeným pohybem (`RM=1`) musí být vidět všechen obsah. Po změně výcho
 `nastroje/novy-seed.sh` a `./_php/php.exe web/sql/export-dat.php --sql` (data.json jde na server s webem).
 Ověřit i stávající funkce, ne jen novou (admin e2e: `podklady/_raw/qa/integrace/e2e-uvod.mjs` s `UV_BASE=…`, `e2e-obsah.mjs` s `BASE=…` –
 kopie jsou napevno nad `web/data/integrace.sqlite`, originály agentů v `admin-uvod/`, `admin-obsah/`).
+
+## Nasazení na test – stav 2. 10. 2026
+
+- Běží na **https://www.tkolymppraha.cz/cltkv2/** (hosting TK Olymp, Forpsi), **režim přípravy zapnutý**
+  (návštěvník vidí přípravnou stránku 503 + noindex, přihlášený správce celý web).
+- FTP účet `www.tkolymppraha.cz` (kořen = složka domény: `config.php` Olympu – NESAHAT, `cltk-config.php`
+  ČLTK, `www/`). Web je v `/www/cltkv2/`. Přístupy v `deploy/` (mimo git).
+- Databáze MySQL `f201572` je **sdílená s webem TK Olymp** – ČLTK má jen tabulky `cltk_` (29 tabulek).
+- Nahrávání: `python nastroje/nahrat.py` (zkušebně) / `--ostra` / `--ostra --uploads` /
+  `--ostra --soubory index.php inc/data.php`. Skript zálohuje přepisované soubory do `deploy/zalohy/`.
+- Proxy Forpsi (aruba-proxy) **drží chvíli staré odpovědi** – po nasazení ověřovat s hlavičkou
+  `Cache-Control: no-cache` a `?t=náhodné`. HTTPS vynucuje proxy sama, vlastní přesměrování
+  v `web/.htaccess` je proto na testu vypnuté (jinak hrozí smyčka).
+- `instalace.php` po instalaci ze serveru smazána, `INSTALL_KEY` z `cltk-config.php` odebrán.
+  Účet správce: petr.luxa@gmail.com (heslo v `deploy/ucet-admin.txt`).
+- Ověření po nasazení: `node podklady/_raw/qa/server/prochazka.mjs` (přihlásí se a projde 45 stránek)
+  a stažení `/www/cltkv2/data/chyby.log` přes FTP – musí být prázdný.
+- GitHub: kód se přenáší do `github.com/petrluxa/CLTK` jako složka `novy-web/`
+  (`cd C:/Users/Asus/cltk-navrhy && git subtree pull --prefix=novy-web C:/Users/Asus/Dokumenty/Code/cltk-web main`
+  a `git push`). Repo je veřejné – před pushem kontrola hesel.
