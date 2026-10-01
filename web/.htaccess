@@ -1,0 +1,78 @@
+# I. ČLTK Praha – nastavení pro Apache (Forpsi)
+# Web běží v podsložce (/cltkv2/), proto tu nejsou žádné absolutní cesty.
+
+AddDefaultCharset UTF-8
+Options -Indexes
+DirectoryIndex index.php
+# /index.php/cokoli nesmí vrátit stránku (PATH_INFO) – jinak by šlo zakládat nekonečně adres
+AcceptPathInfo Off
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteRule ^\.well-known/ - [L]
+
+  # --- celý web jen přes HTTPS ---
+  # Testovací doména TK Olymp HTTPS má. Rewrite pravidla nadřazené složky se sem
+  # NEDĚDÍ (tenhle soubor má vlastní RewriteEngine), proto je přesměrování tady.
+  # Heslo do administrace, náhledové heslo i instalační klíč tak nikdy nejdou
+  # nešifrovaně a cookies dostanou příznak Secure. 302 po dobu testu;
+  # na cltk.cz změnit na R=301 a zapnout HSTS níže.
+  # Po nasazení ověřit:  curl -I http://…/cltkv2/admin/login.php  → 302 na https://
+  # NA TESTU (tkolymppraha.cz) VYPNUTO: HTTPS tam vynucuje proxy Forpsi (aruba-proxy,
+  # ověřeno 2. 10. 2026: http://…/cltkv2/ → 301 na https). Za proxy server nevidí
+  # %{HTTPS} ani X-Forwarded-Proto spolehlivě a vlastní pravidlo by se mohlo zacyklit
+  # (stejná zkušenost jako u webu TK Olymp). Na cltk.cz podle hostingu znovu zapnout.
+  #RewriteCond %{HTTPS} !=on
+  #RewriteCond %{HTTP:X-Forwarded-Proto} !https
+  #RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=302,L]
+
+  # --- neexistující adresa → 404.php (relativně, funguje v podsložce) ---
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^ 404.php [L]
+</IfModule>
+
+# --- citlivé soubory nikdy ven ---
+<FilesMatch "\.(sqlite|sqlite-journal|sqlite-wal|sqlite-shm|sql|md|log|ini|sh|bak|dist|json\.bak)$">
+  Require all denied
+</FilesMatch>
+<FilesMatch "^(config\.local\.php|\.git.*|\.env)$">
+  Require all denied
+</FilesMatch>
+
+# --- komprese ---
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/plain application/javascript application/json image/svg+xml
+</IfModule>
+
+# --- cache statických souborů (CSS a JS mají v adrese otisk času ?v=…) ---
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/jpeg    "access plus 30 days"
+  ExpiresByType image/png     "access plus 30 days"
+  ExpiresByType image/webp    "access plus 30 days"
+  ExpiresByType image/svg+xml "access plus 30 days"
+  ExpiresByType video/mp4     "access plus 30 days"
+  ExpiresByType text/css      "access plus 30 days"
+  ExpiresByType application/javascript "access plus 30 days"
+  ExpiresByType text/html     "access plus 0 seconds"
+</IfModule>
+
+# --- bezpečnostní hlavičky ---
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+  # verze PHP nikomu nic neřekne (PHP ji posílá, když je expose_php zapnuté)
+  Header always unset X-Powered-By
+  Header unset X-Powered-By
+  # HSTS AŽ na cltk.cz (na sdílené doméně TK Olymp by platilo i pro jejich web):
+  #Header always set Strict-Transport-Security "max-age=31536000" env=HTTPS
+</IfModule>
+# Content-Security-Policy posílá PHP (inc/sablona/head.php, admin/inc/auth.php),
+# protože vložený skript v hlavičce stránky potřebuje svůj otisk (hash).
+
+AddType video/mp4 .mp4
+AddType image/webp .webp
+AddType image/svg+xml .svg

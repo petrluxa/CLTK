@@ -1,0 +1,404 @@
+/* ==========================================================================
+   I. ČLTK Praha – styly stránek sekce Areál a služby, Restaurace, Prague Open
+   a Kontakt (areal.php, cenik-kurtu.php, privatni-treneri.php, body-solution.php,
+   sportovni-lekarstvi.php, restaurace.php, prague-open.php, kontakt.php).
+   Jen skladba těchto stránek – komponenty a tokeny jsou ve styl.css (Varianta 4).
+   Nové barvy nejsou kromě kresby plánu areálu (sekce 3): ta potřebuje
+   povrchy kurtů, vodu a zeleň – tlumené tóny laděné k papíru a navy.
+   Obsah: 1 společné · 2 areál – rozcestník, časy, uzávěrky · 3 plán areálu
+          4 služby · 5 příjezd · 6 ceník kurtů a kalkulačka · 7 trenéři a
+          stránky „doplní klub“ · 8 restaurace · 9 Prague Open · 10 kontakt
+   ========================================================================== */
+
+/* 1 ─ SPOLEČNÉ ────────────────────────────────────────────────────────────── */
+/* atribut hidden musí vyhrát nad display:grid/flex komponent (krokovač, karty …) */
+.mapa [hidden], .kalk [hidden], .kalk[hidden], .letecky [hidden], .plan-pod [hidden] { display: none !important; }
+.sekce-hlava-radek { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: var(--s-5) var(--s-7); margin-bottom: clamp(2.5rem, 1.5rem + 3vw, 4.5rem); }
+.sekce-hlava-radek > .hlava { margin-bottom: 0; }
+.mala-hlava { margin-bottom: var(--s-5); }
+.mala-hlava .h4 { margin: 0; }
+.mala-hlava .perex { margin-top: var(--s-3); font-size: clamp(1.1rem, 1rem + .3vw, 1.3rem); }
+.vedle-sebe { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-4) var(--s-6); }
+.odkazy-radek { display: flex; flex-wrap: wrap; gap: var(--s-4) var(--s-6); margin-top: var(--s-5); }
+.blok-sekce .prose + .akce, .blok-sekce .ramec + .prose { margin-top: var(--s-6); }
+.stav-stranky { margin-top: var(--s-5); }
+
+/* 2 ─ AREÁL: ROZCESTNÍK, ČASY, UZÁVĚRKY ──────────────────────────────────── */
+.rozcestnik { padding-block: clamp(1.6rem, 1rem + 2vw, 2.6rem); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.rozcestnik__vnitrek { display: grid; gap: var(--s-4) var(--s-6); align-items: center; }
+@media (min-width: 900px) { .rozcestnik__vnitrek { grid-template-columns: auto minmax(0, 1fr); } }
+.rozcestnik .stitek { white-space: nowrap; }
+
+.provoz { display: grid; gap: var(--s-8) var(--mezera); }
+@media (min-width: 900px) { .provoz { grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); column-gap: clamp(2rem, 1rem + 5vw, 7rem); } }
+.provoz .radek__nazev a { color: inherit; text-decoration: none; }
+.provoz .radek__nazev a:hover { color: var(--gold-text); text-decoration: underline; text-decoration-color: var(--gold); text-underline-offset: .25em; }
+.provoz__dalsi { margin-top: var(--s-4); font-size: var(--t-drobne); color: var(--muted); }
+
+.uzavirky { list-style: none; border-top: 1px solid var(--line); }
+.uzavirka { display: grid; grid-template-columns: minmax(0, 1fr); gap: .25rem; padding: 1.05rem 0; border-bottom: 1px solid var(--line); }
+@media (min-width: 600px) { .uzavirka { grid-template-columns: 11.5rem minmax(0, 1fr); column-gap: 1.5rem; } }
+.uzavirka__kdy { font: 400 1.18rem/1.3 var(--serif); color: var(--navy); font-variant-numeric: lining-nums tabular-nums; }
+.uzavirka__kdy .stitek { display: block; margin-top: .3rem; font-size: .62rem; }
+.uzavirka__co { font-size: var(--t-male); color: var(--ink-2); line-height: 1.55; }
+.uzavirka--ted .uzavirka__kdy { color: var(--gold-text); }
+.uzavirka--probehla .uzavirka__kdy, .uzavirka--probehla .uzavirka__co { color: var(--muted); }
+.uzavirky-probehle { margin-top: var(--s-5); }
+.uzavirky-probehle .rozbal__obsah { padding-bottom: 0; }
+.uzavirky-probehle .uzavirky { border-top: 0; }
+.uzavirky .prose { max-width: none; }
+
+/* 3 ─ PLÁN AREÁLU LÉTO / ZIMA (mapa.js) ───────────────────────────────────── */
+.mapa {
+  position: relative;
+  /* barvy kresby plánu – jen tady */
+  --m-voda: #e2e7e4; --m-vlnka: #ccd5d1; --m-zem: #ece7db; --m-park: #e1dfcd; --m-cesta: #f6f3eb;
+  --m-budova: #e6ded1; --m-budova-linka: #d3c7b4; --m-strom: #c3c7ad; --m-viadukt: #d8cebf; --m-kolej: #baad99;
+  --m-antuka: #c4906e; --m-hard: #91a5b8; --m-trava: #d3d7bf; --m-pisek: #eadcbd; --m-tribuna: #ddd3c4; --m-rada: #c9bca7;
+  --m-bazen: #bdd2d7; --m-hala: #fbfaf6; --m-hala-linka: #d6cec0; --m-hala-antuka: #f5ebe3; --m-prosiv: #e4dbcd;
+}
+.mapa__zaloha { margin: 0; }
+.mapa__zaloha .ramec__obraz { background: var(--paper); }
+.mapa__zaloha img { width: 100%; height: auto; }
+.mapa__listy { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--s-4) var(--s-6); margin-bottom: var(--s-5); }
+.mapa__vrstvy { display: flex; flex-wrap: wrap; align-items: center; gap: .2rem 1.6rem; }
+.mapa__vrstvy .volba { padding-top: 0; align-items: center; min-height: 44px; }
+.mapa__vrstvy .volba input { margin: 0; }
+.mapa__legenda { display: inline-flex; flex-wrap: wrap; align-items: center; gap: .3rem .5rem; font-size: var(--t-drobne); color: var(--muted); }
+.mapa__vzorek { display: inline-block; width: .8rem; height: .8rem; margin-left: .6rem; border: 1px solid rgba(26, 34, 51, .12); }
+.mapa__vzorek:first-child { margin-left: 0; }
+.mapa__vzorek--antuka { background: var(--m-antuka); }
+.mapa__vzorek--hard { background: var(--m-hard); }
+.mapa__vzorek--hala { background: var(--m-hala); border-color: var(--line-2); }
+.mapa__posun { display: none; margin: 0 0 .6rem; font: 500 .66rem/1.3 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+.mapa__posun .sipka { width: 1.2rem; vertical-align: middle; }
+@media (max-width: 899.98px) { .mapa__posun { display: block; } }
+.mapa__okno { position: relative; overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; background: var(--m-voda); border: 1px solid var(--line); scrollbar-width: thin; }
+.mapa__platno { position: relative; min-width: 860px; }
+.mapa__svg { display: block; width: 100%; height: auto; }
+
+/* kresba */
+.m-voda { fill: var(--m-voda); }
+.m-vlnka { fill: none; stroke: var(--m-vlnka); stroke-width: 1.4; stroke-linecap: round; }
+.m-zem { fill: var(--m-zem); }
+.m-park { fill: var(--m-park); }
+.m-cesta { fill: var(--m-cesta); }
+.m-cesta--slaba { opacity: .7; }
+.m-budova { fill: var(--m-budova); stroke: var(--m-budova-linka); stroke-width: 1.5; }
+.m-strom { fill: var(--m-strom); opacity: .75; }
+.m-viadukt { fill: var(--m-viadukt); }
+.m-kolej { stroke: var(--m-kolej); stroke-width: 2; }
+.m-prazec { stroke: var(--m-kolej); stroke-width: 3; opacity: .45; }
+.m-parkovani { stroke: var(--m-budova-linka); stroke-width: 2; }
+.m-antuka { fill: var(--m-antuka); }
+.m-hard { fill: var(--m-hard); }
+.m-trava { fill: var(--m-trava); }
+.m-pisek { fill: var(--m-pisek); }
+.m-tribuna { fill: var(--m-tribuna); }
+.m-rada { stroke: var(--m-rada); stroke-width: 1.4; fill: none; }
+.m-prosiv { stroke: var(--m-prosiv); stroke-width: 1.6; fill: none; }
+.m-bazen-voda { fill: var(--m-bazen); }
+.m-lajny { fill: none; stroke: #fff; stroke-width: 2.2; }
+.m-lajny--tenke { stroke-width: 1.6; }
+.m-popis { font: 500 17px/1 var(--sans); letter-spacing: .16em; text-transform: uppercase; fill: var(--ink-2); }
+.m-popis--male { font-size: 12.5px; letter-spacing: .14em; }
+.m-popis--reka { font: italic 300 31px/1 var(--serif); letter-spacing: .02em; text-transform: none; fill: #8b9893; }
+.m-popis--zima { font-size: 15px; opacity: 0; transition: opacity .6s ease; }
+.m-vstup { fill: var(--gold); }
+.m-povrch { transition: fill .6s ease; }
+.m-slavoj { transition: opacity .6s ease, filter .6s ease; }
+.m-bazen { transition: opacity .6s ease; }
+.m-hala { opacity: 0; transform: scale(.94, .4); transform-box: fill-box; transform-origin: 50% 100%; transition: opacity .7s ease, transform .9s cubic-bezier(.2, .7, .2, 1); }
+.m-hala__plast { fill: var(--m-hala); stroke: var(--m-hala-linka); stroke-width: 1.5; }
+.m-hala__vzor { fill: url(#m-prosiv); opacity: .9; }
+.m-hala--antuka .m-hala__plast { fill: var(--m-hala-antuka); }
+.m-pevna-strecha { fill: none; stroke: #b4c2cf; stroke-width: 1.2; stroke-dasharray: 5 5; }
+.mapa[data-rezim="zima"] .m-hala { opacity: .94; transform: none; }
+.mapa[data-rezim="zima"] .m-zavira-se { opacity: .32; filter: grayscale(1); }
+.mapa[data-rezim="zima"] .m-popis--zima { opacity: 1; }
+.mapa[data-rezim="zima"] .m-povrch.m-zima-hard { fill: var(--m-hard); }
+.mapa[data-rezim="zima"] .m-povrch.m-zima-antuka { fill: var(--m-antuka); }
+.mapa[data-rezim="zima"] .m-bazen { opacity: .45; }
+
+/* body na plánu (HTML tlačítka nad kresbou) */
+.mapa__body { position: absolute; inset: 0; pointer-events: none; }
+.mapa__bod {
+  position: absolute; left: calc(var(--x) * 1%); top: calc(var(--y) * 1%); transform: translate(-50%, -50%);
+  pointer-events: auto; display: grid; place-items: center; width: 32px; height: 32px; padding: 0; border-radius: 50%;
+  background: var(--navy); color: var(--paper); border: 2px solid var(--paper);
+  font: 500 .75rem/1 var(--sans); font-variant-numeric: lining-nums tabular-nums; cursor: pointer;
+  box-shadow: 0 2px 6px rgba(14, 27, 48, .28);
+  transition: background-color var(--pohyb-rychly), transform var(--pohyb-rychly), box-shadow var(--pohyb-rychly), opacity .4s;
+}
+.mapa__bod:hover { transform: translate(-50%, -50%) scale(1.1); }
+.mapa__bod:focus-visible { outline: 2px solid var(--navy); outline-offset: 3px; }
+.mapa__bod[aria-pressed="true"] { background: var(--gold-text); box-shadow: 0 0 0 5px rgba(179, 147, 90, .3), 0 2px 8px rgba(14, 27, 48, .3); }
+.mapa__bod--sluzba { width: 26px; height: 26px; background: var(--paper); color: var(--navy); border: 1.5px solid var(--navy); }
+.mapa__bod--sluzba::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.mapa__bod--sluzba::after { content: ''; position: absolute; inset: -4px; border-radius: 50%; }
+.mapa__bod--sluzba[aria-pressed="true"] { background: var(--gold-text); color: var(--paper); border-color: var(--gold-text); }
+.mapa__bod.je-zavreno { background: var(--muted); opacity: .62; }
+.mapa[data-vrstva-sluzby="ne"] .mapa__bod--sluzba, .mapa[data-vrstva-kurty="ne"] .mapa__bod--kurt { opacity: 0; pointer-events: none; visibility: hidden; }
+
+/* karta pod plánem – „vstupenka“ se zlatou linkou */
+.mapa__karta {
+  position: relative; z-index: 2; margin: -1.6rem clamp(0px, 2vw, 2rem) 0;
+  display: grid; gap: var(--s-5) var(--s-6); align-items: start; min-height: 8.5rem;
+  padding: clamp(1.2rem, 1rem + 1vw, 1.9rem) clamp(1.1rem, .8rem + 1.4vw, 2.2rem);
+  background: var(--paper); border: 1px solid var(--gold); box-shadow: var(--stin);
+}
+.mapa__karta::before { content: ''; position: absolute; inset: 5px; border: 1px solid var(--line-gold); pointer-events: none; }
+@media (min-width: 900px) { .mapa__karta { grid-template-columns: minmax(0, 3.2fr) minmax(0, 2.6fr) minmax(0, 2.6fr) minmax(0, 2.2fr); } }
+.mapa__karta p { margin: 0; }
+.mapa__karta-hlava { display: flex; gap: 1rem; align-items: flex-start; }
+.mapa__karta-cislo { flex: none; display: grid; place-items: center; min-width: 2.6rem; height: 2.6rem; padding: 0 .4rem; border-radius: 1.3rem; background: var(--navy); color: var(--paper); font: 400 1.15rem/1 var(--serif); font-variant-numeric: lining-nums tabular-nums; }
+.mapa__karta-cislo.je-zavreno { background: var(--muted); }
+.mapa__karta-cislo--sluzba { background: var(--paper); border: 1.5px solid var(--navy); }
+.mapa__karta-cislo--sluzba::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--navy); }
+.mapa__karta-nazev { font: 400 clamp(1.35rem, 1.2rem + .5vw, 1.6rem)/1.15 var(--serif); color: var(--navy); }
+.mapa__karta-pod { margin-top: .3rem !important; font-size: var(--t-drobne); color: var(--muted); line-height: 1.45; }
+.mapa__karta-sloupec { display: grid; gap: .3rem; font-size: var(--t-male); line-height: 1.5; color: var(--ink-2); }
+.mapa__karta-sloupec .stitek { color: var(--muted); }
+.mapa__karta-sloupec.je-aktivni .stitek { color: var(--gold-text); }
+.mapa__karta-sloupec .drobne { color: var(--muted); }
+.mapa__karta-akce { display: grid; gap: var(--s-4); justify-items: start; }
+.mapa__sluzby { display: grid; gap: var(--s-4); margin-top: var(--s-7); }
+@media (min-width: 900px) { .mapa__sluzby { grid-template-columns: auto minmax(0, 1fr); align-items: center; column-gap: var(--s-6); } }
+.mapa__sluzby .pilulka { cursor: pointer; }
+
+/* letecké snímky léto / zima vedle plánu */
+.letecky { margin: 0; }
+.letecky .ramec__obraz { aspect-ratio: 16 / 10; }
+.letecky .ramec__obraz img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: opacity 1.1s ease; }
+.letecky__zima { opacity: 0; }
+.letecky[data-rezim="zima"] .letecky__zima { opacity: 1; }
+.letecky[data-rezim="zima"] .letecky__leto { opacity: 0; }
+.letecky__popis-zima, .letecky[data-rezim="zima"] .letecky__popis-leto { display: none; }
+.letecky[data-rezim="zima"] .letecky__popis-zima { display: inline; }
+.letecky .popisek { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: .3rem 1rem; }
+.letecky__prepni { display: inline-flex; gap: 1rem; }
+.letecky__prepni button { min-height: 44px; padding: 0; border: 0; background: none; font: 500 .66rem/1 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--navy); cursor: pointer; text-decoration: underline; text-decoration-color: var(--gold); text-underline-offset: .35em; }
+.plan-pod { margin-top: var(--s-8); }
+.plan-pod .prose { max-width: 44rem; }
+.plan-dialog img { display: block; width: 100%; height: auto; }
+
+/* 4 ─ SLUŽBY ─────────────────────────────────────────────────────────────── */
+.sluzby-mrizka { display: grid; gap: clamp(3rem, 2rem + 2.5vw, 4.5rem) var(--mezera); list-style: none; }
+@media (min-width: 700px) { .sluzby-mrizka { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1100px) { .sluzby-mrizka { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.sluzba { display: flex; flex-direction: column; min-width: 0; position: relative; }
+.sluzba__foto { margin-bottom: var(--s-5); }
+.sluzba__foto--prazdne .ramec__obraz { display: grid; place-items: center; background: var(--zrno), var(--paper-2); border: 1px solid var(--line); }
+.sluzba__foto--prazdne .ramec__obraz::after { border-color: var(--line-gold); }
+.sluzba__monogram { font: italic 300 clamp(2.6rem, 2rem + 2vw, 3.6rem)/1 var(--serif); color: var(--gold); }
+.sluzba__znacka { display: flex; align-items: center; gap: .7rem; margin: 0 0 .55rem; }
+.sluzba__cislo { font: italic 400 1.05rem/1 var(--serif); color: var(--gold-text); }
+.sluzba__nazev { margin: 0; font: 400 var(--t-h4)/1.2 var(--serif); color: var(--navy); }
+.sluzba__perex { margin: .55rem 0 0; font: italic 400 1.14rem/1.4 var(--serif); color: var(--ink-2); }
+.sluzba__text { margin-top: .7rem; font-size: var(--t-male); color: var(--ink-2); line-height: 1.6; }
+.sluzba__text p:last-child { margin-bottom: 0; }
+.sluzba__fakta { margin: .8rem 0 0; list-style: none; font-size: var(--t-drobne); color: var(--ink-2); line-height: 1.5; }
+.sluzba__fakta li { position: relative; padding-left: 1rem; }
+.sluzba__fakta li + li { margin-top: .3rem; }
+.sluzba__fakta li::before { content: ''; position: absolute; left: 0; top: .6em; width: 4px; height: 4px; border: 1px solid var(--gold); transform: rotate(45deg); }
+.sluzba__pata { margin-top: auto; padding-top: var(--s-5); display: grid; gap: var(--s-4); }
+.sluzba__casy { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: .2rem 1rem; align-items: baseline; padding-top: .8rem; border-top: 1px solid var(--line); font-size: var(--t-male); color: var(--ink); }
+.sluzba__casy .stitek { color: var(--muted); }
+.sluzba:target .sluzba__nazev { color: var(--gold-text); }
+.sluzba:target .sluzba__casy { border-top-color: var(--gold); }
+.sluzba:target::before { content: ''; position: absolute; left: -1rem; top: 0; bottom: 0; width: 1px; background: var(--gold); }
+@media (max-width: 699.98px) { .sluzba:target::before { left: -.6rem; } }
+
+/* 5 ─ PŘÍJEZD A DOKUMENTY ─────────────────────────────────────────────────── */
+.prijezd { display: grid; gap: var(--s-7) var(--mezera); }
+@media (min-width: 900px) { .prijezd { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); column-gap: clamp(2rem, 1rem + 5vw, 7rem); } }
+.prijezd__text { font-size: var(--t-text); color: var(--ink); max-width: 40rem; }
+.prijezd__adresa { margin: 0 0 var(--s-5); font-style: normal; font: 400 clamp(1.35rem, 1.2rem + .6vw, 1.75rem)/1.3 var(--serif); color: var(--navy); }
+.prijezd__adresa small { display: block; margin-top: .3rem; font: 500 .7rem/1.3 var(--sans); letter-spacing: .17em; text-transform: uppercase; color: var(--gold-text); }
+.prijezd__plan { display: block; text-decoration: none; color: inherit; }
+.prijezd__plan .ramec__obraz { aspect-ratio: 16 / 10; background: var(--paper); }
+.prijezd__plan img { object-fit: cover; }
+.prijezd__plan:hover .popisek span:first-child { color: var(--gold-text); }
+
+/* 6 ─ CENÍK KURTŮ A KALKULAČKA ────────────────────────────────────────────── */
+.cenik-sezony .zalozky__seznam { margin-bottom: var(--s-7); }
+.cenik-sezony .cenik__hlava { margin-bottom: var(--s-5); }
+.cenik-sezony .tabulka-box + .tabulka-box { margin-top: var(--s-7); }
+.cenik-sezony__hlava { display: flex; flex-wrap: wrap; align-items: baseline; gap: .4rem 2rem; margin-bottom: var(--s-6); padding-bottom: var(--s-4); border-bottom: 1px solid var(--line-gold); }
+.cenik-sezony__hlava .cenik__nazev { margin: 0; }
+.cenik-sezony__hlava .drobne { flex-basis: 100%; margin: 0; }
+.cenik-sezony .zalozky__panel:focus-visible { outline-offset: 6px; }
+.stranka-cenik .cenik .tabulka-box + .tabulka-box { margin-top: var(--s-7); }
+.stranka-cenik .cenik__pozn { margin-top: var(--s-5); }
+.stranka-cenik .cenik > .cenik__pozn:first-child { margin: 0 0 var(--s-6); }
+#ceniky .odkazy-radek { margin-top: var(--s-7); }
+/* pravidla rezervací – položky seznamu z editoru jako římský seznam se zlatou linkou */
+.pravidla ul { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+.pravidla li { position: relative; margin: 0; padding: 1rem 0 1rem 1.6rem; border-bottom: 1px solid var(--line); font-size: var(--t-male); color: var(--ink-2); line-height: 1.55; }
+.pravidla li::before { content: ''; position: absolute; left: .15rem; top: 1.62rem; width: 5px; height: 5px; border: 1px solid var(--gold); transform: rotate(45deg); }
+.pravidla li::marker { content: none; }
+.cenik-kontakty { display: flex; flex-wrap: wrap; gap: .4rem 1.6rem; margin-top: var(--s-5); font-size: var(--t-male); color: var(--ink-2); }
+.cenik-kontakty a { color: var(--navy); text-decoration: underline; text-decoration-color: var(--gold); text-underline-offset: .25em; text-decoration-thickness: 1px; }
+.cenik-dokumenty { margin-top: var(--s-7); max-width: 46rem; }
+
+.kalk { display: grid; gap: var(--s-7) var(--mezera); align-items: start; }
+@media (min-width: 1000px) {
+  .kalk { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); column-gap: clamp(2rem, 1rem + 3.5vw, 5rem); }
+  .kalk__vysledek { position: sticky; top: calc(var(--hlavicka-kompakt) + 1.5rem); }
+}
+.kalk__ovladani { display: grid; gap: var(--s-6); min-width: 0; }
+.kalk__skupina { display: grid; gap: .8rem; min-width: 0; }
+.kalk__skupina > legend { margin-bottom: .8rem; }
+.kalk__segment { max-width: 100%; }
+.kalk__segment span { padding: .85rem 1.1rem; min-height: 44px; display: flex; align-items: center; }
+.kalk__mista { display: grid; gap: .6rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 13.5rem), 1fr)); }
+.kalk__misto { position: relative; display: grid; gap: .3rem; align-content: start; padding: 1rem 1.1rem 1.05rem; border: 1px solid var(--line-2); background: var(--paper); cursor: pointer; transition: border-color var(--pohyb-rychly), box-shadow var(--pohyb-rychly); }
+.kalk__misto input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.kalk__misto-nazev { font: 400 1.18rem/1.2 var(--serif); color: var(--navy); }
+.kalk__misto-pod { font-size: var(--t-drobne); line-height: 1.45; color: var(--muted); }
+.kalk__misto-cena { margin-top: .3rem; font: 500 .7rem/1.3 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--gold-text); font-variant-numeric: lining-nums tabular-nums; }
+.kalk__misto:hover { border-color: var(--gold); }
+.kalk__misto:has(input:checked) { border-color: var(--navy); box-shadow: inset 0 0 0 1px var(--navy); }
+.kalk__misto:has(input:checked)::after { content: ''; position: absolute; top: .8rem; right: .85rem; width: 7px; height: 7px; border: 1px solid var(--gold); background: var(--gold); transform: rotate(45deg); }
+.kalk__misto:has(input:focus-visible) { outline: 2px solid var(--navy); outline-offset: 3px; }
+.kalk__cipy { display: flex; flex-wrap: wrap; gap: .5rem; }
+.kalk__cipy .cip span { min-height: 44px; display: inline-flex; align-items: center; }
+.kalk__hodiny { border-top: 1px solid var(--line); }
+.kalk__clen { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1.2rem; padding-top: var(--s-5); border-top: 1px solid var(--line); }
+.kalk__clen .drobne { color: var(--muted); }
+.kalk__vysledek { position: relative; padding: clamp(1.5rem, 1rem + 1.6vw, 2.4rem); background: var(--paper); border: 1px solid var(--gold); text-align: center; }
+.kalk__vysledek::before { content: ''; position: absolute; inset: 5px; border: 1px solid var(--line-gold); pointer-events: none; }
+.sekce--papir2 .kalk__vysledek { background: var(--paper); }
+.kalk__co { margin: .7rem 0 0; font: 400 clamp(1.3rem, 1.15rem + .5vw, 1.6rem)/1.2 var(--serif); color: var(--navy); }
+.kalk__kdy { margin: .35rem 0 0; font-size: var(--t-drobne); color: var(--muted); }
+.kalk__radky { margin-top: var(--s-5); text-align: left; }
+.kalk__radky .radek { padding: .7rem 0; }
+.kalk__radky .radek__nazev { font-size: 1.05rem; }
+.kalk__radek--pryc .radek__hodnota { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--muted); }
+.kalk__cena { display: grid; justify-items: center; gap: .45rem; margin: var(--s-6) 0 0; }
+.kalk__cena .cena--velka { font-size: clamp(2.8rem, 2.1rem + 2.4vw, 4.2rem); }
+.kalk__cena .cena--velka small { font-size: .4em; font-style: italic; color: var(--gold-text); }
+.kalk__za { font-size: var(--t-drobne); color: var(--muted); max-width: 22rem; }
+.kalk__uspora { display: inline-block; margin: var(--s-4) 0 0; padding: .45rem .95rem; border: 1px solid var(--gold); font: 500 .68rem/1.3 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--gold-text); font-variant-numeric: lining-nums tabular-nums; }
+.kalk__pozn { margin: var(--s-5) auto 0; max-width: 26rem; font-size: var(--t-drobne); line-height: 1.55; color: var(--muted); }
+.kalk__pozn:empty { display: none; }
+.kalk__akce { display: grid; justify-items: center; gap: var(--s-4); margin-top: var(--s-6); }
+.kalk__tel { color: var(--navy); text-decoration: none; font: 400 1.2rem/1 var(--serif); font-variant-numeric: lining-nums tabular-nums; min-height: 44px; display: inline-flex; align-items: center; gap: .5rem; }
+.kalk__tel small { font: 500 .62rem/1 var(--sans); letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
+.kalk-nahrada { max-width: 40rem; }
+
+/* rezervace – jediná navy sekce ceníku */
+.rezervace-pas .wrap { display: grid; gap: var(--s-6) var(--mezera); align-items: end; }
+@media (min-width: 900px) { .rezervace-pas .wrap { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); } }
+.rezervace-pas .hlava { margin-bottom: 0; }
+.rezervace-pas__kontakty { display: grid; gap: var(--s-4); justify-items: start; }
+.rezervace-pas__kontakty a:not(.btn) { color: var(--paper); text-decoration: underline; text-decoration-color: var(--gold-soft); text-underline-offset: .3em; text-decoration-thickness: 1px; min-height: 44px; display: inline-flex; align-items: center; }
+.rezervace-pas__tel { font: 400 clamp(1.5rem, 1.3rem + .8vw, 2rem)/1 var(--serif); font-variant-numeric: lining-nums tabular-nums; }
+
+/* 7 ─ TRENÉŘI A STRÁNKY „DOPLNÍ KLUB“ ────────────────────────────────────── */
+.v-arealu { display: grid; gap: var(--s-6) var(--mezera); }
+@media (min-width: 900px) { .v-arealu { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: start; } }
+.v-arealu__text .sluzba__casy { margin-top: var(--s-5); max-width: 30rem; }
+.dalsi-odkazy { margin-top: var(--s-5); }
+
+/* 8 ─ RESTAURACE ─────────────────────────────────────────────────────────── */
+.prostory { display: grid; gap: var(--s-6) var(--mezera); }
+@media (min-width: 700px) { .prostory { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.prostory figure { margin: 0; }
+.prostory .popisek b { font-weight: 500; color: var(--navy); }
+.restaurace-info { display: grid; gap: var(--s-7) var(--mezera); }
+@media (min-width: 900px) { .restaurace-info { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); column-gap: clamp(2rem, 1rem + 5vw, 7rem); } }
+
+/* 9 ─ PRAGUE OPEN ────────────────────────────────────────────────────────── */
+.po-rocnik { display: grid; gap: var(--s-7) var(--mezera); align-items: start; }
+@media (min-width: 900px) { .po-rocnik { grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); column-gap: clamp(2rem, 1rem + 4vw, 6rem); } }
+.po-karta__nazev { margin: 0; font: 600 clamp(1.1rem, 1rem + .35vw, 1.3rem)/1.3 var(--sc); letter-spacing: .06em; color: var(--navy); }
+.po-karta .stitek { margin-bottom: .7rem; }
+/* seznamy „<strong>Údaj</strong> hodnota“ z editoru jako účetní řádky */
+.udaje ul { list-style: none; margin: var(--s-5) 0 0; padding: 0; border-top: 1px solid var(--line); }
+.udaje li { display: grid; grid-template-columns: minmax(0, 1fr); gap: .15rem; margin: 0; padding: .85rem 0; border-bottom: 1px solid var(--line); font-size: var(--t-male); color: var(--ink-2); line-height: 1.5; }
+@media (min-width: 600px) { .udaje li { grid-template-columns: 9.5rem minmax(0, 1fr); column-gap: 1.2rem; } }
+.udaje li strong { font: 500 .68rem/1.6 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--gold-text); }
+.udaje li::marker { content: none; }
+.udaje p { margin: var(--s-4) 0 0; font-size: var(--t-drobne); color: var(--muted); }
+.udaje.prose { max-width: none; }
+.po-historie { display: grid; gap: var(--s-7) var(--mezera); }
+@media (min-width: 900px) { .po-historie { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); column-gap: clamp(2rem, 1rem + 4vw, 6rem); align-items: start; } }
+.po-historie .udaje li { grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 600px) { .po-historie .udaje li { grid-template-columns: 7.5rem minmax(0, 1fr); } }
+
+/* 10 ─ KONTAKT ───────────────────────────────────────────────────────────── */
+.kontakt-karty { display: grid; gap: var(--mezera); }
+@media (min-width: 800px) { .kontakt-karty { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.kontakt-karta__nazev { margin: 0; font: 400 var(--t-h3)/1.1 var(--serif); color: var(--navy); }
+.kontakt-karta__popis { margin: .5rem 0 0; font-size: var(--t-male); color: var(--muted); }
+.kontakt-karta__spojeni { margin: var(--s-5) 0 0; display: grid; gap: .2rem; }
+.kontakt-karta__spojeni a { width: fit-content; min-height: 44px; display: inline-flex; align-items: center; color: var(--navy); text-decoration: none; }
+.kontakt-karta__spojeni a:hover { text-decoration: underline; text-decoration-color: var(--gold); text-underline-offset: .25em; }
+.kontakt-karta__tel { font: 400 clamp(1.45rem, 1.25rem + .7vw, 1.9rem)/1 var(--serif); font-variant-numeric: lining-nums tabular-nums; }
+.kontakt-karta .akce { margin-top: var(--s-5); }
+.fakturace { display: grid; gap: var(--s-7) var(--mezera); }
+@media (min-width: 900px) { .fakturace { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: clamp(2rem, 1rem + 5vw, 7rem); } }
+.fakturace dl { margin: 0; border-top: 1px solid var(--line); }
+.fakturace dl > div { display: grid; grid-template-columns: minmax(0, 1fr); gap: .15rem; padding: .9rem 0; border-bottom: 1px solid var(--line); }
+@media (min-width: 600px) { .fakturace dl > div { grid-template-columns: 10rem minmax(0, 1fr); column-gap: 1.2rem; align-items: baseline; } }
+.fakturace dt { font: 500 .68rem/1.6 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--gold-text); }
+.fakturace dd { margin: 0; font: 400 1.14rem/1.4 var(--serif); color: var(--navy); font-variant-numeric: lining-nums tabular-nums; }
+.fakturace dd small { display: block; font: 400 var(--t-drobne)/1.4 var(--sans); color: var(--muted); }
+.site-odkazy { margin-top: var(--s-6); }
+.site-odkazy .stitek { margin-bottom: var(--s-4); }
+.kontakt-ctc { margin-top: var(--s-6); max-width: 30rem; }
+
+/* 11 ─ DOPLŇKY STRÁNEK „DOPLNÍ KLUB“, RESTAURACE A PRAGUE OPEN ───────────────── */
+/* karta služby z modulu Areál a služby (privátní trenéři, Body Solution, sportovní lékařství) */
+.sluzba-karta { display: grid; gap: .2rem; }
+.sluzba-karta__foto { margin: 0 0 var(--s-5); }
+.sluzba-karta .male p:last-child { margin-bottom: 0; }
+.sluzba-karta .sluzba__casy { margin-top: var(--s-5); }
+.sluzba-karta .odkazy-radek { margin-top: var(--s-5); }
+.osoby--kontakt { margin-top: var(--s-6); grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr)); }
+.v-arealu__text .radky { margin-top: var(--s-6); max-width: 34rem; }
+.v-arealu__text .radek__hodnota a { color: var(--navy); text-decoration: underline; text-decoration-color: var(--gold); text-underline-offset: .25em; text-decoration-thickness: 1px; }
+/* další bloky, které klub na stránce založí */
+.blok-sekce .hlava { margin-bottom: var(--s-6); }
+.blok-sekce .akce { margin-top: var(--s-6); }
+/* restaurace */
+.restaurace-info .prose { max-width: 36rem; }
+.stranka-restaurace #kontakt .radky { margin-top: .4rem; }
+/* Prague Open */
+.po-karta__titul { margin: 0 0 var(--s-5); color: var(--navy); }
+.udaje--vitezove ul { margin-top: 0; }
+.po-historie .ramec { margin: 0; }
+.po-web__vnitrek { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--s-5) var(--s-7); }
+.po-web__vnitrek .perex { margin: 0; }
+.po-rocnik .hlava { margin-bottom: var(--s-6); }
+.po-rocnik .hlava .h2 { font-size: clamp(1.9rem, 1.35rem + 1.7vw, 3.1rem); line-height: 1.08; }
+.plan-pod .h3 { margin-bottom: var(--s-4); }
+/* privátní trenéři: celý tým v jedné řadě na desktopu, po dvou na mobilu */
+.stranka-treneri #treneri .osoby { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-6) var(--mezera); }
+@media (min-width: 700px) { .stranka-treneri #treneri .osoby { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (min-width: 1100px) { .stranka-treneri #treneri .osoby { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+@media (max-width: 699.98px) { .stranka-treneri #treneri .osoba__jmeno { font-size: 1.3rem; } }
+
+/* 12 ─ CÍLE 44 PX ─────────────────────────────────────────────────────────── */
+/* Body na plánu: kresba 32 / 26 px, plocha pro ťuknutí 44 px (neviditelný ::after).
+   Na úzké a dotykové obrazovce je plán širší (roluje do strany), aby se plochy
+   sousedních kurtů (2, 3, 4) a služeb nepřekrývaly. */
+.mapa__bod::after { content: ''; position: absolute; inset: -6px; border-radius: 50%; }
+.mapa__bod--sluzba::after { inset: -9px; }
+@media (max-width: 899.98px), (pointer: coarse) { .mapa__platno { min-width: 1240px; } }
+/* Textové odkazy (.odkaz) mají výšku řádku 21 px – plocha pro ťuknutí se zvětší
+   neviditelným ::before na 44 px; řádky odkazů mají proto větší svislou mezeru.
+   (Styl platí jen na stránkách, které tenhle soubor načítají.) */
+main .odkaz { position: relative; }
+main .odkaz::before { content: ''; position: absolute; inset: -12px -3px; }
+.odkazy-radek { row-gap: 1.6rem; }
+main .akce { row-gap: 1.6rem; }
+/* služba bez fotky: na mobilu bez prázdného rámečku s monogramem (šetří výšku) */
+@media (max-width: 699.98px) { .sluzba__foto--prazdne { display: none; } }
+/* ceník s předplatným (5 sloupců): na úzké obrazovce roluje tabulka v boxu, popis řádku na jeden řádek */
+.stranka-cenik .tabulka:has(thead th:nth-child(4)) { min-width: 46rem; }
+.stranka-cenik .tabulka:has(thead th:nth-child(4)) tbody th { white-space: nowrap; }
+/* bez JavaScriptu (html bez třídy .js) jsou vidět oba ceníky pod sebou, záložky se skryjí */
+html:not(.js) .cenik-sezony .zalozky__seznam { display: none; }
+html:not(.js) .cenik-sezony .zalozky__panel[hidden] { display: block !important; margin-top: var(--s-8); }

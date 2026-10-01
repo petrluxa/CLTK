@@ -1,0 +1,515 @@
+/* ==========================================================================
+   I. ČLTK Praha – stránky sekce Klub
+   klub.php · clenstvi.php · historie.php · vedeni.php · ctc.php · revue.php
+   Komponenty Varianty 4, které nejsou ve společném styl.css (index.css V4,
+   sekce 3b, 4, 6, 6b, 9b) a skladba podstránek. Jen tokeny ze styl.css,
+   žádné nové barvy ani písma. Načítá se přes $sablona['css'].
+   ========================================================================== */
+
+/* ── Společné ─────────────────────────────────────────────────────────── */
+.kotvy { margin-top: var(--s-6); }
+.kotvy .pilulky { gap: .5rem; }
+.kotvy .pilulka { min-height: 44px; padding: .5rem 1rem; font-size: .9rem; }
+.pozn-zdroje { margin-top: var(--s-5); font-size: var(--t-drobne); color: var(--muted); max-width: 46rem; }
+.pozn-zdroje p { margin: 0; }
+.prelom { overflow-wrap: anywhere; }
+.sekce-hlava-akce { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 2rem; }
+
+/* ==========================================================================
+   KLUB (klub.php)
+   ========================================================================== */
+
+/* Pás čísel s prameny (V4 sekce 3) */
+.klub-cisla .cisla { margin-top: 0; }
+.prameny { margin-top: var(--s-5); border-top: 0; }
+.prameny > summary { justify-content: flex-start; gap: .8rem; padding: .7rem 0; }
+.prameny__seznam { padding-left: 1.2rem; columns: 2 22rem; column-gap: var(--mezera); font-size: var(--t-drobne); color: var(--muted); }
+.prameny__seznam li { break-inside: avoid; margin-bottom: .45rem; }
+.prameny__seznam li::marker { color: var(--gold-text); font-variant-numeric: lining-nums; }
+.prameny__seznam a { color: var(--navy); }
+.prameny__seznam li:target { color: var(--ink); }
+.cisla__popis a { color: inherit; }
+
+/* Klub uprostřed města */
+.klub-mesto .mrizka { align-items: start; }
+.klub-mesto .hlava { margin-bottom: var(--s-5); }
+.klub-mesto__text { padding-top: .4rem; }
+.klub-mesto__text .akce { margin-top: var(--s-6); }
+
+/* Pět jmen, cesta na ostrov, rodokmen stoletých (V4 sekce 3b) */
+.klub-rod { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--s-8) clamp(2rem, 1rem + 4vw, 6rem); }
+.klub-rod .hlava { margin-bottom: var(--s-6); }
+.jmena-klubu { list-style: none; position: relative; margin: 0 0 var(--s-4); padding-left: 1.6rem; }
+.jmena-klubu::before { content: ''; position: absolute; left: 3px; top: .9rem; bottom: 1.2rem; width: 1px; background: linear-gradient(var(--gold), var(--line-gold)); }
+.jmena-klubu li { position: relative; display: grid; grid-template-columns: 5.4rem minmax(0, 1fr); align-items: baseline; gap: 1rem; padding: .8rem 0; border-bottom: 1px solid var(--line); }
+.jmena-klubu li::before { content: ''; position: absolute; left: calc(-1.6rem + .5px); top: 1.25rem; width: 6px; height: 6px; border: 1px solid var(--gold); background: var(--paper); transform: rotate(45deg); }
+.jmena-klubu__rok { font: italic 400 1.3rem/1 var(--serif); color: var(--gold-text); }
+.jmena-klubu__rok small { font: 500 .6rem/1 var(--sans); font-style: normal; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+.jmena-klubu__nazev { font: 500 1.2rem/1.3 var(--sc); letter-spacing: .03em; color: var(--navy); font-synthesis: none; }
+.jmena-klubu__dnes { border-bottom-color: var(--gold) !important; }
+.jmena-klubu__dnes::before { background: var(--gold) !important; }
+.jmena-klubu__dnes .jmena-klubu__nazev { font-size: 1.42rem; }
+.klub-rod__pozn p { margin: 0; }
+.cesta-ostrov { margin-top: var(--s-7); padding-top: var(--s-5); border-top: 1px solid var(--line-2); }
+.cesta-ostrov__trasa { display: flex; flex-wrap: wrap; align-items: baseline; gap: .5rem .2rem; margin: .8rem 0 0; font: 400 1.12rem/1.4 var(--serif); color: var(--ink-2); }
+.cesta-ostrov__trasa > span { white-space: nowrap; }
+.cesta-ostrov__trasa > span:not(:last-child)::after { content: ''; display: inline-block; width: 1.4rem; height: 1px; margin: 0 .55rem .3em; vertical-align: middle; background: var(--gold); }
+.cesta-ostrov__trasa b { font: italic 500 1.05rem/1 var(--serif); color: var(--gold-text); margin-right: .25rem; }
+.cesta-ostrov__cil { color: var(--navy); font-weight: 500; }
+.cesta-ostrov__pozn { margin-top: .8rem; }
+.cesta-ostrov__pozn p { margin: 0; }
+.klub-rod__rodokmen > .stitek { margin-bottom: var(--s-4); }
+.klub-rod__perex { max-width: 34rem; margin: 0 0 var(--s-6); font: italic 400 clamp(1.15rem, 1.05rem + .4vw, 1.4rem)/1.45 var(--serif); color: var(--ink-2); }
+.klub-rod__perex p { margin: 0; }
+.rodokmen { list-style: none; border-top: 1px solid var(--gold); }
+.rodokmen__klub { display: grid; grid-template-columns: 4.6rem minmax(0, 1fr) minmax(0, auto); align-items: baseline; gap: .2rem 1.2rem; padding: .72rem 0; border-bottom: 1px solid var(--line); }
+.rodokmen__rok { font: 300 1.75rem/1 var(--serif); color: var(--muted); }
+.rodokmen__nazev { font: 400 1.14rem/1.3 var(--serif); color: var(--ink); }
+.rodokmen__nazev small { font: 400 var(--t-drobne)/1.3 var(--sans); color: var(--muted); margin-left: .45rem; }
+.rodokmen__pozn { justify-self: end; text-align: right; font-size: var(--t-drobne); color: var(--muted); line-height: 1.4; }
+.rodokmen__klub--my { position: relative; padding-block: 1.05rem; background: var(--paper-2); border-bottom: 1px solid var(--gold); box-shadow: -1rem 0 0 var(--paper-2), 1rem 0 0 var(--paper-2); }
+.rodokmen__klub--my::before { content: ''; position: absolute; left: -1rem; top: 0; bottom: 0; width: 3px; background: var(--trikolora); }
+.rodokmen__klub--my .rodokmen__rok { font-weight: 400; color: var(--navy); font-size: 2rem; }
+.rodokmen__klub--my .rodokmen__nazev b { font-weight: 600; font-size: 1.22rem; letter-spacing: .04em; color: var(--navy); }
+.rodokmen__klub--my .rodokmen__pozn { color: var(--gold-text); }
+.sekce--papir2 .rodokmen__klub--my { background: var(--paper); box-shadow: -1rem 0 0 var(--paper), 1rem 0 0 var(--paper); }
+.klub-rod__rodokmen > .drobne { margin-top: var(--s-5); }
+@media (max-width: 899.98px) { .klub-rod { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 599.98px) {
+  .rodokmen__klub { grid-template-columns: 3.6rem minmax(0, 1fr); }
+  .rodokmen__pozn { grid-column: 2; justify-self: start; text-align: left; }
+  .rodokmen__rok { font-size: 1.5rem; }
+  .rodokmen__nazev small { display: block; margin: .15rem 0 0; }
+  .rodokmen__klub--my { box-shadow: -.6rem 0 0 var(--paper-2), .6rem 0 0 var(--paper-2); }
+  .sekce--papir2 .rodokmen__klub--my { box-shadow: -.6rem 0 0 var(--paper), .6rem 0 0 var(--paper); }
+  .rodokmen__klub--my::before { left: -.6rem; }
+  .jmena-klubu li { grid-template-columns: 4.4rem minmax(0, 1fr); }
+  .cesta-ostrov__trasa > span { white-space: normal; }
+}
+
+/* Rozcestník podstránek: obsah klubu jako rejstřík s římskými číslicemi */
+.rozcestnik { list-style: none; border-top: 1px solid var(--gold); }
+.rozcestnik > li { border-bottom: 1px solid var(--line); }
+.rozcestnik__polozka { display: grid; grid-template-columns: 3.4rem minmax(0, 1fr) auto; align-items: center; gap: .4rem clamp(1rem, 2vw, 2.5rem); padding: clamp(1.3rem, 1rem + 1vw, 2rem) 0; text-decoration: none; color: inherit; }
+.rozcestnik__cislo { align-self: start; padding-top: .35rem; font: italic 400 1.35rem/1 var(--serif); color: var(--gold-text); }
+.rozcestnik__text { display: grid; gap: .45rem; min-width: 0; }
+.rozcestnik__nadpis { font: 400 clamp(1.45rem, 1.2rem + .9vw, 2.1rem)/1.15 var(--serif); color: var(--navy); }
+.rozcestnik__perex { max-width: 46rem; font-size: var(--t-male); color: var(--ink-2); line-height: 1.55; }
+.rozcestnik__polozka .sipka { color: var(--gold-text); transition: transform var(--pohyb-rychly); }
+.rozcestnik__polozka:hover .rozcestnik__nadpis { color: var(--gold-text); }
+.rozcestnik__polozka:hover .sipka { transform: translateX(4px); }
+.rozcestnik__polozka:focus-visible { outline-offset: 4px; }
+@media (max-width: 599.98px) {
+  .rozcestnik__polozka { grid-template-columns: 2.2rem minmax(0, 1fr); }
+  .rozcestnik__polozka .sipka { display: none; }
+}
+.klub-dokumenty { margin-top: clamp(3rem, 2rem + 3vw, 4.5rem); max-width: 46rem; }
+.klub-dokumenty .h4 { margin-bottom: var(--s-4); }
+
+/* ==========================================================================
+   HISTORIE (historie.php)
+   ========================================================================== */
+
+/* <picture> z obr() musí vyplnit rámeček (triptych, medailony) */
+.trava__obraz picture, .medailon-portret picture { display: block; width: 100%; height: 100%; }
+.medailon-portret picture img { width: 100%; height: 100%; }
+
+/* Tři wimbledonské trávy (V4 sekce 4) */
+.travy .hlava--radek { align-items: flex-end; }
+.travy .hlava--radek .perex { max-width: 26rem; margin: 0; font-size: clamp(1.15rem, 1.05rem + .35vw, 1.35rem); }
+.travy .hlava--radek .perex p { margin: 0; }
+.trava__detail p { margin: 0; }
+.wimbledonska-linka { margin-top: clamp(3.5rem, 2.5rem + 3vw, 5.5rem); padding-top: var(--s-6); border-top: 1px solid var(--line-2); }
+.wimbledonska-linka .linka-let { margin-top: var(--s-4); }
+.wimbledonska-linka__legenda { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; margin: 0; }
+.tecka { display: inline-block; width: 9px; height: 9px; border-radius: 50%; border: 1px solid var(--gold); background: var(--paper); margin-left: .6rem; }
+.tecka:first-child { margin-left: 0; }
+.tecka--plna { background: var(--gold); }
+.travy .linka-let__bod::before { background: var(--paper-2); }
+.travy .linka-let__bod--plny::before { background: var(--gold); }
+@media (max-width: 599.98px) {
+  .wimbledonska-linka__legenda { display: block; }
+  .wimbledonska-linka__legenda .tecka { vertical-align: -.05em; margin-right: .3rem; }
+}
+
+/* Kronika po epochách: boční lišta s razítkem dobového jména (návrh 2) */
+.kronika-sekce .hlava--radek .perex { max-width: 30rem; margin: 0; }
+.kronika-sekce .hlava--radek .perex p { margin: 0; }
+.kronika { display: grid; grid-template-columns: minmax(14rem, 3fr) minmax(0, 9fr); gap: 0 var(--mezera); }
+.kronika__bok { position: sticky; top: calc(var(--hlavicka-kompakt) + 2rem); align-self: start; padding-right: var(--s-5); }
+html.s-pruhem .kronika__bok { top: calc(var(--hlavicka-kompakt) + 4.5rem); }
+.kronika__razitko {
+  display: inline-grid; justify-items: center; gap: .4rem; max-width: 100%; margin: .4rem 0 0 .3rem;
+  padding: .85rem 1.1rem .8rem; border: 2px solid var(--navy); border-radius: 6px; outline: 1px solid var(--navy); outline-offset: 3px;
+  color: var(--navy); text-align: center; text-transform: uppercase; transform: rotate(-3deg); transform-origin: 30% 60%;
+  background: rgba(251, 250, 246, .55);
+}
+.kronika__razitko-horni { font: 500 .56rem/1 var(--sans); letter-spacing: .26em; color: var(--gold-text); }
+.kronika__razitko-jmeno { max-width: 13ch; font: 600 1.12rem/1.1 var(--sc); letter-spacing: .06em; text-wrap: balance; font-synthesis: none; }
+.kronika__razitko-roky { padding-top: .35rem; border-top: 1px solid currentColor; font: 500 .66rem/1 var(--sans); letter-spacing: .18em; font-variant-numeric: lining-nums; }
+.kronika__razitko-roky:empty { display: none; }
+@media (prefers-reduced-motion: no-preference) {
+  html:not([data-pohyb="omezit"]) .kronika__razitko.je-zmena { animation: razitko-otisk .5s cubic-bezier(.3, .7, .2, 1); }
+}
+@keyframes razitko-otisk {
+  0% { opacity: 1; transform: rotate(-3deg) scale(1); }
+  40% { opacity: .1; transform: rotate(-3deg) scale(1.06); }
+  100% { opacity: 1; transform: rotate(-3deg) scale(1); }
+}
+.kronika__bok-titul { margin: var(--s-7) 0 var(--s-3); }
+.kronika__kapitoly { list-style: none; display: grid; gap: 2px; }
+.kronika__kapitoly a { display: grid; grid-template-columns: 2rem minmax(0, 1fr); gap: .25rem; min-height: 44px; align-items: center; padding: .3rem 0; text-decoration: none; font-size: var(--t-male); line-height: 1.3; color: var(--muted); }
+.kronika__kapitoly-cislo { font: italic 400 1rem/1 var(--serif); color: var(--line-2); }
+.kronika__kapitoly a:hover, .kronika__kapitoly a[aria-current="true"] { color: var(--navy); }
+.kronika__kapitoly a[aria-current="true"] .kronika__kapitoly-cislo { color: var(--gold-text); }
+.kapitola + .kapitola { margin-top: clamp(3rem, 2rem + 3vw, 5rem); }
+.kapitola { scroll-margin-top: calc(var(--hlavicka-kompakt) + 1.5rem); }
+.kapitola__hlava { display: flex; flex-wrap: wrap; align-items: baseline; gap: .3rem 1rem; margin-bottom: var(--s-6); padding-bottom: var(--s-4); border-bottom: 1px solid var(--gold); }
+.kapitola__cislo { font: italic 400 1.5rem/1 var(--serif); color: var(--gold-text); }
+.kapitola__nazev { margin: 0; font: 500 clamp(1.45rem, 1.2rem + 1vw, 2.1rem)/1.15 var(--sc); letter-spacing: .04em; color: var(--navy); font-synthesis: none; }
+.kapitola__roky { margin-left: auto; font: 500 .7rem/1.3 var(--sans); letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
+.kronika .osa__titulek { font: 400 var(--t-h4)/1.2 var(--serif); color: var(--navy); }
+.kronika .osa__text { max-width: 38rem; }
+.kronika .osa__foto { max-width: min(100%, 22rem); margin-top: 1.1rem; }
+.kronika .osa__foto picture { display: block; }
+.kronika .osa__foto .ramec__obraz img { display: block; width: 100%; height: auto; max-height: 26rem; object-fit: cover; }
+@media (min-width: 900px) {
+  .kronika .osa__bod--s-fotkou { display: grid; grid-template-columns: minmax(0, 1fr) minmax(9rem, 15rem); gap: 0 clamp(1.5rem, 1rem + 1.5vw, 2.5rem); align-items: start; }
+  .kronika .osa__bod--s-fotkou .osa__foto { margin-top: .2rem; max-width: none; }
+  .kronika .osa__bod--s-fotkou .osa__foto .ramec__obraz img { max-height: 21rem; }
+}
+.osa__pramen-text a { color: var(--ink-2); text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: .2em; }
+.osa__pramen-text a:hover { color: var(--navy); text-decoration-color: var(--gold); }
+.osa__pramen .overeno, .osa__pramen .pramen { margin-left: .2rem; }
+.osa__jistota { display: block; margin-top: .25rem; font-style: italic; }
+@media (max-width: 1099.98px) {
+  .kronika { grid-template-columns: minmax(0, 1fr); }
+  .kronika__bok { display: none; }
+  .kapitola__hlava { border: 2px solid var(--navy); outline: 1px solid var(--navy); outline-offset: 3px; border-radius: 6px; padding: .9rem 1.1rem; margin-inline: 4px; justify-content: center; text-align: center; }
+  .kapitola__roky { margin-left: 0; flex-basis: 100%; }
+}
+
+/* Zlatá deska (V4 sekce 9) */
+.deska-sekce .deska { max-width: 66rem; margin: clamp(1rem, 2vw, 2rem) auto 0; }
+.deska-sekce .hlava .perex { margin-inline: auto; }
+.deska__pozn { margin: var(--s-5) auto 0; max-width: 40rem; }
+.deska .zalozky__panel { min-height: 12rem; }
+@media (min-width: 700px) { .deska-sekce .deska .zalozky__seznam--stred { column-gap: clamp(1rem, 1.5vw, 2rem); } }
+
+/* Medailony (V4 sekce 9b) */
+.osobnosti .hlava--radek .perex { max-width: 34rem; margin: 0; }
+.osobnosti .hlava--radek .perex p { margin: 0; }
+.v2 .medailon-portret--typo .medailon-typo b { font-size: 3.6rem; }
+
+/* ==========================================================================
+   ČLENSTVÍ (clenstvi.php)
+   ========================================================================== */
+
+/* I · V ceně členství, výhody v zimě */
+.clen-vcene .mrizka { align-items: start; }
+.clen-vcene .hlava { margin-bottom: var(--s-6); }
+.clen-vcene__seznam > li { font-size: var(--t-male); color: var(--ink-2); line-height: 1.5; }
+.clen-vcene__seznam b { font-size: 1.22rem; }
+.clen-zima { margin-top: var(--s-6); }
+.clen-zima__nadpis { margin-bottom: var(--s-3); }
+.clen-zima .radky { margin: 0; }
+.clen-zima .radek { padding-block: .6rem; }
+.clen-zima .radek__nazev { font-size: var(--t-male); color: var(--ink-2); }
+@media (max-width: 899.98px) { .clen-vcene__seznam { margin-top: var(--s-4); } }
+
+/* II · Konfigurátor a Členský list (V4 sekce 6 a 6b) */
+.clen-cenik .hlava--radek .perex { max-width: 30rem; margin: 0; }
+.clen-cenik .hlava--radek .perex p { margin: 0; }
+.clenstvi-sestava { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); gap: clamp(2rem, 1rem + 4vw, 6rem); align-items: center; }
+.clen-cenik .konfigurator { background: var(--paper); }
+.clen-cenik .konfigurator__hlava .h3 { margin: 0; }
+.clenstvi-list__pozn { margin: 1.4rem auto 0; max-width: 24rem; text-align: center; }
+.clenstvi-list__pozn p { margin: 0; }
+.clensky-list__jmeno { overflow-wrap: anywhere; }
+.cenik-clenstvi { margin-top: var(--s-7); }
+.cenik-clenstvi > summary .tlumene { font-size: .95rem; font-style: italic; }
+.cenik-clenstvi__mrizka { columns: 2 22rem; column-gap: var(--s-8); padding-top: var(--s-4); }
+.cenik-clenstvi__sekce { break-inside: avoid; padding-bottom: var(--s-4); }
+.cenik-clenstvi .h5 { margin: var(--s-4) 0 var(--s-3); color: var(--gold-text); }
+.cenik-clenstvi .radky { margin: 0; }
+.cenik-clenstvi .radek__nazev { font-size: 1.04rem; }
+.cenik-clenstvi .radek__hodnota { white-space: nowrap; }
+.cenik-clenstvi__pozn { max-width: 46rem; margin-top: var(--s-5); color: var(--muted); }
+.cenik-clenstvi__pozn p { margin: 0 0 .6rem; }
+.cenik-clenstvi--otevreny { border-top: 1px solid var(--gold); }
+@media (max-width: 1099.98px) {
+  .clenstvi-sestava { grid-template-columns: minmax(0, 1fr); }
+  .clenstvi-list { max-width: 24rem; margin-inline: auto; width: 100%; }
+}
+
+/* III · Postup přijetí a druhy členství */
+.clen-postup__proces { margin-top: var(--s-6); }
+.clen-druhy { margin-top: clamp(3.5rem, 2.5rem + 3vw, 5.5rem); padding-top: var(--s-6); border-top: 1px solid var(--line-2); }
+.clen-druhy__nadpis { margin-bottom: var(--s-5); }
+.clen-druhy__seznam { list-style: none; }
+.clen-druh { padding: var(--s-5) 0 0; border-top: 1px solid var(--gold); }
+.clen-druh__nazev { margin: 0 0 .5rem; font: 500 1.35rem/1.2 var(--sc); letter-spacing: .04em; color: var(--navy); font-synthesis: none; }
+.clen-druh__text { margin: 0; font-size: var(--t-male); line-height: 1.55; color: var(--ink-2); }
+.clen-druhy__pramen { margin-top: var(--s-6); }
+
+/* IV · Přihláška: formulář vlevo, kancelář a dokumenty vpravo */
+.clen-prihlaska__mrizka { display: grid; grid-template-columns: minmax(0, 8fr) minmax(0, 3.4fr); gap: var(--s-7) clamp(2rem, 1rem + 3vw, 5rem); align-items: start; }
+.clen-prihlaska__hlavni > .hlava { margin-bottom: var(--s-6); }
+.clen-prihlaska__bok { position: sticky; top: calc(var(--hlavicka-kompakt) + 2rem); display: grid; gap: var(--s-6); padding-top: .4rem; }
+html.s-pruhem .clen-prihlaska__bok { top: calc(var(--hlavicka-kompakt) + 4.5rem); }
+.clen-bok__blok > .stitek { margin-bottom: var(--s-3); }
+.clen-bok__jmeno { margin: 0; font: 400 1.45rem/1.2 var(--serif); color: var(--navy); }
+.clen-bok__blok .drobne { margin: .3rem 0 0; color: var(--muted); }
+.clen-bok__kontakty { margin-top: var(--s-4); }
+.clen-bok__kontakty .radek { padding-block: .55rem; }
+.clen-bok__kontakty .radek__hodnota { color: var(--navy); overflow-wrap: anywhere; }
+.clen-bok__blok .dokumenty { margin: 0; }
+@media (max-width: 1099.98px) {
+  .clen-prihlaska__mrizka { grid-template-columns: minmax(0, 1fr); }
+  .clen-prihlaska__bok { position: static; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); }
+}
+
+.clen-chyby { margin-bottom: var(--s-6); }
+.clen-chyby__seznam { margin: .6rem 0 0; padding-left: 1.1rem; }
+.clen-chyby__seznam li { margin: .25rem 0; }
+.clen-chyby__seznam a { color: var(--chyba); }
+
+.prihlaska { position: relative; background: var(--paper); border: 1px solid var(--line); padding: clamp(1.2rem, .8rem + 2.2vw, 3rem); }
+.prihlaska .pole { align-content: start; }
+.krok + .krok { margin-top: var(--s-8); padding-top: var(--s-7); border-top: 1px solid var(--line-2); }
+.prihlaska--kroky .krok + .krok { margin-top: 0; padding-top: 0; border-top: 0; }
+.krok__nadpis { display: flex; align-items: baseline; gap: .7rem; margin: 0 0 var(--s-6); font: 400 var(--t-h3)/1.15 var(--serif); color: var(--navy); }
+.krok__nadpis:focus { outline: none; }
+.krok__nadpis:focus-visible { outline: 2px solid var(--navy); outline-offset: 4px; }
+.krok__cislo { font: italic 400 .7em/1 var(--serif); color: var(--gold-text); }
+.krok__navigace { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem 2rem; margin-top: var(--s-7); padding-top: var(--s-5); border-top: 1px solid var(--line); }
+.krok__navigace .krok__dalsi { margin-left: auto; }
+.krok__navigace .odkaz, .clen-shrnuti .odkaz--text, .clen-osoba__akce .odkaz { min-height: 44px; padding-bottom: 0; background-position: 0 calc(100% - 10px); }
+.prihlaska--kroky .clen-odeslat { margin-top: var(--s-6); }
+.prihlaska--kroky [data-krok="4"] .krok__navigace { justify-content: flex-start; }
+
+/* ukazatel kroků */
+.kroky { list-style: none; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 0 0 var(--s-7); padding: 0; }
+.kroky__krok { position: relative; }
+.kroky__krok::after { content: ''; position: absolute; left: 2.3rem; right: .6rem; top: 1.12rem; height: 1px; background: var(--line-2); }
+.kroky__krok:last-child::after { display: none; }
+.kroky__krok.je-hotovo::after { background: var(--gold); }
+.kroky__tl { position: relative; z-index: 1; display: flex; align-items: center; gap: .6rem; max-width: 100%; min-height: 44px; padding: 0 .6rem 0 0; border: 0; background: var(--paper); color: var(--muted); text-align: left; cursor: pointer; font: inherit; }
+.kroky__cislo { flex: none; display: grid; place-content: center; width: 2.25rem; height: 2.25rem; border: 1px solid var(--line-2); border-radius: 50%; background: var(--paper); font: italic 400 1rem/1 var(--serif); color: var(--muted); }
+.kroky__nazev { font: 500 .66rem/1.25 var(--sans); letter-spacing: .15em; text-transform: uppercase; }
+.kroky__krok.je-hotovo .kroky__cislo { border-color: var(--gold); color: var(--gold-text); }
+.kroky__krok.je-hotovo .kroky__tl { color: var(--ink-2); }
+.kroky__krok.je-aktualni .kroky__cislo { border-color: var(--navy); background: var(--navy); color: var(--paper); }
+.kroky__krok.je-aktualni .kroky__tl { color: var(--navy); }
+.kroky__tl:hover .kroky__nazev { color: var(--navy); }
+.kroky__tl:focus-visible { outline: 2px solid var(--navy); outline-offset: 3px; }
+@media (max-width: 599.98px) {
+  .kroky__nazev { display: none; }
+  .kroky__krok.je-aktualni .kroky__nazev { display: block; position: absolute; left: 0; top: 2.9rem; white-space: nowrap; }
+  .kroky { margin-bottom: calc(var(--s-7) + .6rem); }
+  .kroky__krok::after { left: 2.25rem; right: 0; }
+}
+
+/* osoby, firma, zákonný zástupce */
+.clen-osoba { margin-top: var(--s-6); }
+.clen-osoba__nadpis { margin: 0 0 var(--s-4); padding: 0; font: 400 1.4rem/1.2 var(--serif); color: var(--navy); }
+.clen-firma { margin-top: var(--s-5); padding: var(--s-4) var(--s-5) var(--s-5); background: var(--paper-2); border-left: 2px solid var(--gold); }
+.clen-firma__pozn { margin: 0 0 var(--s-3); }
+.pole--volby { gap: .2rem; }
+.volby-radek { display: flex; flex-wrap: wrap; gap: .2rem 1.6rem; }
+.volby-radek .volba + .volba { margin-top: 0; }
+.formular-radek > .pole--volby + .pole { margin-top: 0; }
+.clen-dalsi { margin-top: var(--s-7); }
+.clen-dalsi__nadpis { margin: 0 0 var(--s-3); font: 400 1.4rem/1.2 var(--serif); color: var(--navy); }
+.clen-dalsi__nadpis .tlumene { font: 400 var(--t-drobne)/1.4 var(--sans); color: var(--muted); }
+.clen-osoba--dalsi { margin-top: 0; }
+.clen-osoba--dalsi > summary { font-size: 1.15rem; }
+.clen-osoba__souhrn { font: italic 400 1.05rem/1.3 var(--serif); }
+.clen-osoba--dalsi .rozbal__obsah { padding-top: .3rem; font-size: inherit; color: inherit; }
+.clen-osoba__akce { margin: var(--s-4) 0 0; }
+.clen-dalsi__akce { margin: var(--s-4) 0 0; }
+.clen-zastupce { margin-top: var(--s-7); padding: var(--s-5); border: 1px solid var(--line-2); border-left: 2px solid var(--gold); background: var(--paper); }
+.clen-zastupce > legend { float: left; width: 100%; }
+.clen-zastupce > legend + * { clear: both; }
+.clen-zastupce > .pole__napoveda { margin: 0 0 var(--s-4); }
+.clen-zastupce .pole + .pole, .clen-zastupce .formular-radek + .pole { margin-top: var(--s-5); }
+.clen-adresa { grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 700px) { .clen-adresa { grid-template-columns: minmax(0, 9rem) minmax(0, 1fr) minmax(0, 1fr); } }
+.clen-poznamka { margin-top: var(--s-6); }
+.prihlaska .formular-radek + .formular-radek { margin-top: var(--s-5); }
+
+/* shrnutí */
+.clen-shrnuti { display: grid; gap: var(--s-5); margin-top: var(--s-5); }
+.clen-shrnuti__blok { padding-top: var(--s-4); border-top: 1px solid var(--line); }
+.clen-shrnuti__hlava { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: .4rem 1rem; }
+.clen-shrnuti__nadpis { margin: 0; font: 400 1.25rem/1.2 var(--serif); color: var(--navy); }
+.clen-shrnuti__udaje { display: grid; grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr)); gap: .7rem var(--mezera); margin: .6rem 0 0; }
+.clen-shrnuti__udaje dt { font: 500 .62rem/1.3 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+.clen-shrnuti__udaje dd { margin: .2rem 0 0; font-size: var(--t-male); color: var(--ink); overflow-wrap: anywhere; }
+.clen-shrnuti__souhlasy { margin: .6rem 0 0; padding-left: 1.1rem; font-size: var(--t-drobne); color: var(--ink-2); }
+.clen-shrnuti__souhlasy li { margin: .3rem 0; }
+
+/* poděkování a tisk Členského listu */
+.clen-dekujeme { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); gap: clamp(2rem, 1rem + 4vw, 6rem); align-items: center; }
+.clen-dekujeme .hlaska { margin-top: var(--s-5); }
+.clen-dekujeme__kontakt { margin-top: var(--s-5); color: var(--muted); }
+.clen-dekujeme .akce { margin-top: var(--s-6); }
+@media (max-width: 1099.98px) { .clen-dekujeme { grid-template-columns: minmax(0, 1fr); } }
+/* tisk jen listu: clenstvi.js vloží kopii listu (.clensky-list--tisk, tisková podoba
+   ve styl.css) do .tisk-obal na konec <body>; zbytek stránky se netiskne vůbec,
+   takže vyjde právě jedna strana */
+.tisk-obal { display: none; }
+@media print {
+  html.tisk-listu body > *:not(.tisk-obal) { display: none !important; }
+  html.tisk-listu, html.tisk-listu body { background: #fff !important; }
+  html.tisk-listu .tisk-obal { display: block; }
+  html.tisk-listu .tisk-obal .clensky-list { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+
+/* ==========================================================================
+   VEDENÍ (vedeni.php)
+   ========================================================================== */
+.vedeni-prezident { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: var(--s-5) clamp(1.5rem, 1rem + 2vw, 3rem);
+  margin-bottom: clamp(3.5rem, 2.5rem + 3vw, 5.5rem); padding: clamp(1.6rem, 1rem + 2vw, 2.8rem) clamp(1.4rem, 1rem + 2.5vw, 3.2rem);
+  background: var(--zrno), var(--paper-2); border-top: 1px solid var(--gold); border-bottom: 1px solid var(--gold); }
+.vedeni-prezident__erb { width: clamp(3.4rem, 2.6rem + 2.4vw, 5.2rem); }
+.vedeni-prezident__erb img { display: block; width: 100%; height: auto; }
+.vedeni-prezident__text .stitek { margin-bottom: .5rem; }
+.vedeni-prezident__jmeno { margin: 0; font: 300 clamp(2rem, 1.4rem + 2.2vw, 3.3rem)/1.08 var(--serif); color: var(--navy); }
+.vedeni-prezident__od { margin: .5rem 0 0; font: italic 400 1.2rem/1.3 var(--serif); color: var(--gold-text); }
+.vedeni-prezident__pozn { max-width: 40rem; margin-top: .6rem; font-size: var(--t-male); color: var(--ink-2); }
+.vedeni-prezident__pozn p { margin: 0; }
+@media (max-width: 599.98px) { .vedeni-prezident { grid-template-columns: minmax(0, 1fr); } }
+.vedeni-osoby { margin-top: var(--s-6); gap: var(--s-6) var(--mezera); }
+.vedeni-osoby .osoba__jmeno { font-size: 1.45rem; }
+.vedeni-osoby .osoba__kontakt { font-size: var(--t-male); }
+.vedeni-osoby .osoba__kontakt a { overflow-wrap: anywhere; }
+.vedeni-vybor .hlava--radek .perex, .vedeni-kancelar .hlava--radek .perex, .vedeni-prezidenti .hlava--radek .perex { max-width: 30rem; margin: 0; }
+.vedeni-vybor .hlava--radek .perex p, .vedeni-kancelar .hlava--radek .perex p, .vedeni-prezidenti .hlava--radek .perex p { margin: 0; }
+.vedeni-kontakty { margin-top: clamp(3.5rem, 2.5rem + 3vw, 5rem); max-width: 60rem; }
+.vedeni-kontakty__nadpis { margin-bottom: var(--s-4); }
+.vedeni-kontakt { align-items: baseline; padding-block: .85rem; }
+.vedeni-kontakt .radek__nazev b { display: block; font: 400 1.2rem/1.3 var(--serif); color: var(--navy); }
+.vedeni-kontakt .radek__nazev small { display: block; margin-top: .2rem; font: 400 var(--t-drobne)/1.45 var(--sans); color: var(--muted); }
+.vedeni-kontakt__spojeni { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: .2rem 1.4rem; text-align: right; }
+.vedeni-kontakt__spojeni a { color: var(--navy); text-decoration: none; overflow-wrap: anywhere; }
+.vedeni-kontakt__spojeni a:hover { text-decoration: underline; text-decoration-color: var(--gold); text-underline-offset: .25em; }
+@media (max-width: 599.98px) {
+  .vedeni-kontakt { display: block; }
+  .vedeni-kontakt__spojeni { justify-content: flex-start; text-align: left; margin-top: .3rem; }
+}
+
+/* Prezidenti od roku 1893 – svislý rejstřík */
+.prezidenti { list-style: none; margin-top: var(--s-6); border-top: 1px solid var(--gold); }
+.prezidenti__radek { display: grid; grid-template-columns: 9.5rem minmax(0, 1fr) minmax(0, auto); align-items: baseline; gap: .2rem clamp(1rem, 2vw, 2.5rem); padding: .9rem 0; border-bottom: 1px solid var(--line); }
+.prezidenti__roky { font: italic 400 1.2rem/1.2 var(--serif); font-variant-numeric: lining-nums; color: var(--gold-text); white-space: nowrap; }
+.prezidenti__jmeno { font: 400 1.32rem/1.25 var(--serif); color: var(--navy); }
+.prezidenti__pozn { justify-self: end; text-align: right; font-size: var(--t-drobne); color: var(--muted); }
+.prezidenti__jmena { display: flex; flex-wrap: wrap; gap: .25rem 0; font: 400 1.12rem/1.4 var(--serif); color: var(--ink-2); }
+.prezidenti__jmena span:not(:last-child)::after { content: '·'; margin: 0 .55rem; color: var(--gold); }
+.prezidenti__radek--prvni { grid-template-columns: 9.5rem minmax(0, 1fr); }
+.prezidenti__radek--prvni .prezidenti__pozn { grid-column: 2; justify-self: start; text-align: left; }
+.prezidenti__radek--dnes { position: relative; background: var(--paper-2); box-shadow: -1rem 0 0 var(--paper-2), 1rem 0 0 var(--paper-2); border-bottom-color: var(--gold); }
+.prezidenti__radek--dnes::before { content: ''; position: absolute; left: -1rem; top: 0; bottom: 0; width: 3px; background: var(--trikolora); }
+.prezidenti__radek--dnes .prezidenti__jmeno { font-weight: 500; }
+.vedeni-prezidenti__pata { margin-top: var(--s-6); }
+@media (max-width: 699.98px) {
+  .prezidenti__radek, .prezidenti__radek--prvni { grid-template-columns: minmax(0, 1fr); }
+  .prezidenti__pozn, .prezidenti__radek--prvni .prezidenti__pozn { grid-column: auto; justify-self: start; text-align: left; }
+  .prezidenti__radek--dnes { box-shadow: -.6rem 0 0 var(--paper-2), .6rem 0 0 var(--paper-2); }
+  .prezidenti__radek--dnes::before { left: -.6rem; }
+}
+.vedeni-dokumenty .mrizka { align-items: start; }
+
+/* ==========================================================================
+   CTC (ctc.php)
+   ========================================================================== */
+.ctc-clenstvi .mrizka, .ctc-rodokmen .mrizka { align-items: start; }
+.ctc-cisla { margin-top: var(--s-6); }
+.ctc-fakty__text { display: block; }
+.ctc-fakty__pramen { display: block; margin-top: .45rem; font-size: var(--t-drobne); color: var(--muted); overflow-wrap: anywhere; }
+.ctc-fakty__pramen a, .m-pramen a { color: var(--ink-2); text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: .2em; }
+.ctc-fakty > li { font-size: var(--t-male); color: var(--ink-2); line-height: 1.55; }
+.ctc-utkani .hlava--radek .perex, .ctc-souteze .hlava--radek .perex { max-width: 30rem; margin: 0; }
+.ctc-utkani .hlava--radek .perex p, .ctc-souteze .hlava--radek .perex p { margin: 0; }
+.ctc-utkani__mrizka { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--s-7) clamp(2rem, 1rem + 4vw, 6rem); }
+.ctc-utkani__titul { margin: 0 0 var(--s-4); color: var(--gold-text); }
+.ctc-utkani__seznam { list-style: none; border-top: 1px solid var(--gold); }
+.ctc-utkani__radek { display: grid; grid-template-columns: 4.6rem minmax(0, 1fr); gap: .2rem 1.2rem; padding: 1rem 0; border-bottom: 1px solid var(--line); }
+.ctc-utkani__rok { grid-row: span 2; font: 300 1.75rem/1 var(--serif); color: var(--gold-text); }
+.ctc-utkani__nazev { font: 400 1.3rem/1.25 var(--serif); color: var(--navy); }
+.ctc-utkani__nazev small { margin-left: .5rem; font: 400 var(--t-drobne)/1.3 var(--sans); color: var(--muted); }
+.ctc-utkani__kdy { font-size: var(--t-drobne); color: var(--ink-2); }
+.ctc-kluby { list-style: none; border-top: 1px solid var(--gold); }
+.ctc-klub { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: .2rem 1rem; padding: .8rem 0; border-bottom: 1px solid var(--line); }
+.ctc-klub__nazev { font: 400 1.15rem/1.3 var(--serif); color: var(--ink); }
+.ctc-klub__misto { font: 500 .66rem/1.3 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+.ctc-kluby__pramen { margin-top: var(--s-4); font-size: var(--t-drobne); color: var(--muted); overflow-wrap: anywhere; }
+@media (max-width: 899.98px) { .ctc-utkani__mrizka { grid-template-columns: minmax(0, 1fr); } }
+
+.ctc-souteze__mrizka { display: grid; gap: var(--s-7) var(--mezera); }
+.ctc-souteze__mrizka--s-fotkou { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); align-items: start; }
+.ctc-pohary { list-style: none; display: grid; gap: var(--s-6); }
+.ctc-pohar { padding-top: var(--s-4); border-top: 1px solid var(--gold); }
+.ctc-pohar__rok { margin: 0 0 .4rem; font: 500 .68rem/1.3 var(--sans); letter-spacing: .17em; text-transform: uppercase; color: var(--gold-text); }
+.ctc-pohar__rok .onum { letter-spacing: .08em; }
+.ctc-pohar__nazev { margin: 0; font: 400 var(--t-h4)/1.2 var(--serif); color: var(--navy); }
+.ctc-pohar__text { max-width: 40rem; margin: .5rem 0 0; font-size: var(--t-male); color: var(--ink-2); line-height: 1.55; }
+.ctc-pohar__pramen { margin: .45rem 0 0; font-size: var(--t-drobne); color: var(--muted); }
+.ctc-pohar__odkaz { margin: var(--s-4) 0 0; }
+.ctc-souteze__foto { margin: 0; }
+@media (max-width: 899.98px) { .ctc-souteze__mrizka--s-fotkou { grid-template-columns: minmax(0, 1fr); } }
+.ctc-rodokmen .hlava .perex { max-width: 30rem; }
+
+/* ==========================================================================
+   REVUE (revue.php) – kiosek je ve v2.css (Varianta 4 / návrh 2)
+   ========================================================================== */
+.v2 .r-obalka picture, .v2 .prave-vyslo-obalka picture { display: block; }
+.v2 .prave-vyslo-obalka { text-decoration: none; }
+.v2 .prave-vyslo-pdf { margin-top: var(--s-5); }
+.kiosek-sekce .hlava--radek .perex { max-width: 30rem; margin: 0; }
+.kiosek-sekce .hlava--radek .perex p { margin: 0; }
+.kiosek-sekce .kiosek-pozn p { margin: 0; }
+.v2 .r-obalka-bez { display: grid; place-items: center; aspect-ratio: 210 / 297; background: var(--paper-3); font: 400 .8rem/1 var(--sans); color: var(--muted); }
+.v2 .policka:focus-visible { outline: 2px solid var(--navy); outline-offset: 4px; }
+.revue-archiv__rozbal > summary .tlumene { font-size: .95rem; font-style: italic; }
+.revue-archiv__seznam { list-style: none; columns: 2 30rem; column-gap: var(--s-8); }
+.revue-archiv__cislo { break-inside: avoid; display: grid; grid-template-columns: 4.6rem minmax(0, 1fr) auto; align-items: baseline; gap: .2rem 1rem; padding: .7rem 0; border-bottom: 1px solid var(--line); scroll-margin-top: calc(var(--hlavicka-kompakt) + 2rem); }
+.revue-archiv__cislo:target { background: var(--paper-2); }
+.revue-archiv__oznaceni { font: 400 1.15rem/1.2 var(--serif); color: var(--navy); }
+.revue-archiv__titulky { font-size: var(--t-drobne); color: var(--ink-2); line-height: 1.45; }
+/* Titulek z obálky ve verzálkách (bez shody s obsahem čísla) – drobně a prostrkaně, ne „malými“ */
+.titulek-obalky { font-size: .8em; letter-spacing: .07em; }
+.v2 .prave-vyslo h3 .titulek-obalky { font-size: .72em; letter-spacing: .06em; line-height: 1.35; display: inline-block; }
+.revue-archiv__pdf { white-space: nowrap; font-size: var(--t-drobne); }
+.revue-archiv__pdf a { display: inline-flex; align-items: center; min-height: 44px; color: var(--navy); text-decoration: underline; text-decoration-color: var(--gold); text-underline-offset: .25em; }
+@media (max-width: 599.98px) {
+  .revue-archiv__cislo { grid-template-columns: 4rem minmax(0, 1fr); }
+  .revue-archiv__pdf { grid-column: 2; }
+}
+.revue-newsletter .hlava--radek .perex { max-width: 30rem; margin: 0; }
+.revue-newsletter .hlava--radek .perex p { margin: 0; }
+.newslettery { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr)); gap: var(--s-7) var(--mezera); }
+.newslettery__rok { border-top: 1px solid var(--gold); padding-top: var(--s-3); }
+.newslettery__rocnik { margin: 0 0 var(--s-2); font: italic 300 2.4rem/1 var(--serif); color: var(--gold-text); }
+.newslettery__seznam { list-style: none; }
+.newsletter { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: .1rem 1rem; padding: .25rem 0; border-bottom: 1px solid var(--line); }
+.newsletter__cislo { font: 400 1.12rem/1.3 var(--serif); color: var(--navy); font-variant-numeric: lining-nums; }
+.newsletter__cislo small { margin-left: .4rem; font: 400 var(--t-drobne)/1.3 var(--sans); color: var(--muted); }
+.newsletter__jazyky { display: flex; gap: 1rem; }
+.newsletter__jazyky a { display: inline-flex; align-items: center; min-height: 44px; font: 500 .68rem/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--navy); text-decoration: none; }
+.newsletter__jazyky a:hover { color: var(--gold-text); }
+
+/* Pod 900 px jde text sekce hned pod hlavu (mřížka má jinak velkou řádkovou mezeru) */
+@media (max-width: 899.98px) {
+  .klub-mesto .mrizka, .clen-vcene .mrizka, .ctc-clenstvi .mrizka, .ctc-rodokmen .mrizka, .vedeni-dokumenty .mrizka { row-gap: var(--s-4); }
+  .klub-mesto__text { padding-top: 0; }
+}
+
+/* Cíle aspoň 44 px (WCAG 2.5.8) – podtržené odkazy, čipy a volby na stránkách sekce Klub */
+:is(.stranka-klub, .stranka-clenstvi, .stranka-historie, .stranka-vedeni, .stranka-ctc, .stranka-revue) main .odkaz { min-height: 44px; padding-bottom: 0; background-position: 0 calc(100% - 11px); }
+.zvyhodneni .cip span { display: inline-flex; align-items: center; min-height: 44px; }
+.v2 .cip { min-height: 44px; }
+.clen-cenik .segment span { display: flex; align-items: center; min-height: 44px; padding-block: 0; }
+.prihlaska .volby-radek .volba { align-items: center; min-height: 44px; padding-top: 0; }
+.prihlaska .volby-radek .volba input { margin-top: 0; }

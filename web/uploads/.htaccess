@@ -1,0 +1,35 @@
+# Soubory nahrané přes administraci (fotky, PDF, video).
+# Nesmí se z nich nikdy stát spustitelný skript – i kdyby někdo
+# propašoval PHP soubor, Apache ho nespustí ani nevydá.
+
+RemoveHandler .php .phtml .php3 .php4 .php5 .php7 .php8 .phar .pht .phps .cgi .pl .py
+RemoveType .php .phtml .php3 .php4 .php5 .php7 .php8 .phar .pht .phps
+AddType text/plain .php .phtml .phar .pht
+
+<FilesMatch "\.(php|phtml|php\d|phar|pht|phps|cgi|pl|py|sh|htaccess|html?|svg|js)$">
+  Require all denied
+</FilesMatch>
+
+# php_flag zná jen mod_php – bez podmínky by FastCGI/PHP-FPM vrátil chybu 500
+<IfModule mod_php.c>
+  php_flag engine off
+</IfModule>
+<IfModule mod_php7.c>
+  php_flag engine off
+</IfModule>
+<IfModule mod_php8.c>
+  php_flag engine off
+</IfModule>
+
+Options -Indexes -ExecCGI
+
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options "nosniff"
+  # obrázek ani video nesmí nic spustit, i kdyby ho prohlížeč otevřel samostatně
+  Header set Content-Security-Policy "default-src 'none'; img-src 'self'; media-src 'self'; style-src 'unsafe-inline'; sandbox"
+  # PDF bez CSP – vestavěný prohlížeč PDF v Chrome a Firefoxu by se se „sandbox“ neotevřel;
+  # PDF chrání kontrola obsahu při nahrání (upload_document) a nosniff
+  <FilesMatch "\.pdf$">
+    Header unset Content-Security-Policy
+  </FilesMatch>
+</IfModule>
