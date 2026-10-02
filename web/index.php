@@ -304,3 +304,4 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
   <?php endif; ?>
 
 <?php require __DIR__ . '/inc/sablona/paticka.php'; ?>
+

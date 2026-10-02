@@ -152,7 +152,7 @@ function rezim_zobrazit_pripravu(string $chyba = ''): never {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title><?= e($nadpis) ?> – <?= e(setting('klub_zkratka', 'I. ČLTK Praha')) ?></title>
+<title><?= e(html_text($nadpis)) ?> – <?= e(setting('klub_zkratka', 'I. ČLTK Praha')) ?></title>
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#fbfaf6">
 <link rel="icon" href="<?= e(logo_url('favicon')) ?>" type="image/png">

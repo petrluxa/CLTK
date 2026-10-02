@@ -702,3 +702,4 @@ function mapa_data(?array $cenikLeto = null, ?array $cenikZima = null, ?array $s
         'sluzby_url' => $sluzbyUrl,
     ];
 }
+

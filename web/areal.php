@@ -286,3 +286,4 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
 </section>
 
 <?php require __DIR__ . '/inc/sablona/paticka.php'; ?>
+
