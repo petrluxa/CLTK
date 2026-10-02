@@ -12,7 +12,7 @@
 
 /* 1 ─ SPOLEČNÉ ────────────────────────────────────────────────────────────── */
 /* atribut hidden musí vyhrát nad display:grid/flex komponent (krokovač, karty …) */
-.mapa [hidden], .kalk [hidden], .kalk[hidden], .letecky [hidden], .plan-pod [hidden] { display: none !important; }
+.kalk [hidden], .kalk[hidden], .letecky [hidden], .plan-pod [hidden] { display: none !important; }
 .sekce-hlava-radek { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: var(--s-5) var(--s-7); margin-bottom: clamp(2.5rem, 1.5rem + 3vw, 4.5rem); }
 .sekce-hlava-radek > .hlava { margin-bottom: 0; }
 .mala-hlava { margin-bottom: var(--s-5); }
@@ -47,140 +47,6 @@
 .uzavirky-probehle .rozbal__obsah { padding-bottom: 0; }
 .uzavirky-probehle .uzavirky { border-top: 0; }
 .uzavirky .prose { max-width: none; }
-
-/* 3 ─ PLÁN AREÁLU LÉTO / ZIMA (mapa.js) ───────────────────────────────────── */
-.mapa {
-  position: relative;
-  /* barvy kresby plánu – jen tady */
-  --m-voda: #e2e7e4; --m-vlnka: #ccd5d1; --m-zem: #ece7db; --m-park: #e1dfcd; --m-cesta: #f6f3eb;
-  --m-budova: #e6ded1; --m-budova-linka: #d3c7b4; --m-strom: #c3c7ad; --m-viadukt: #d8cebf; --m-kolej: #baad99;
-  --m-antuka: #c4906e; --m-hard: #91a5b8; --m-trava: #d3d7bf; --m-pisek: #eadcbd; --m-tribuna: #ddd3c4; --m-rada: #c9bca7;
-  --m-bazen: #bdd2d7; --m-hala: #fbfaf6; --m-hala-linka: #d6cec0; --m-hala-antuka: #f5ebe3; --m-prosiv: #e4dbcd;
-}
-.mapa__zaloha { margin: 0; }
-.mapa__zaloha .ramec__obraz { background: var(--paper); }
-.mapa__zaloha img { width: 100%; height: auto; }
-.mapa__listy { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--s-4) var(--s-6); margin-bottom: var(--s-5); }
-.mapa__vrstvy { display: flex; flex-wrap: wrap; align-items: center; gap: .2rem 1.6rem; }
-.mapa__vrstvy .volba { padding-top: 0; align-items: center; min-height: 44px; }
-.mapa__vrstvy .volba input { margin: 0; }
-.mapa__legenda { display: inline-flex; flex-wrap: wrap; align-items: center; gap: .3rem .5rem; font-size: var(--t-drobne); color: var(--muted); }
-.mapa__vzorek { display: inline-block; width: .8rem; height: .8rem; margin-left: .6rem; border: 1px solid rgba(26, 34, 51, .12); }
-.mapa__vzorek:first-child { margin-left: 0; }
-.mapa__vzorek--antuka { background: var(--m-antuka); }
-.mapa__vzorek--hard { background: var(--m-hard); }
-.mapa__vzorek--hala { background: var(--m-hala); border-color: var(--line-2); }
-.mapa__posun { display: none; margin: 0 0 .6rem; font: 500 .66rem/1.3 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
-.mapa__posun .sipka { width: 1.2rem; vertical-align: middle; }
-@media (max-width: 899.98px) { .mapa__posun { display: block; } }
-.mapa__okno { position: relative; overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; background: var(--m-voda); border: 1px solid var(--line); scrollbar-width: thin; }
-.mapa__platno { position: relative; min-width: 860px; }
-.mapa__svg { display: block; width: 100%; height: auto; }
-
-/* kresba */
-.m-voda { fill: var(--m-voda); }
-.m-vlnka { fill: none; stroke: var(--m-vlnka); stroke-width: 1.4; stroke-linecap: round; }
-.m-zem { fill: var(--m-zem); }
-.m-park { fill: var(--m-park); }
-.m-cesta { fill: var(--m-cesta); }
-.m-cesta--slaba { opacity: .7; }
-.m-budova { fill: var(--m-budova); stroke: var(--m-budova-linka); stroke-width: 1.5; }
-.m-strom { fill: var(--m-strom); opacity: .75; }
-.m-viadukt { fill: var(--m-viadukt); }
-.m-kolej { stroke: var(--m-kolej); stroke-width: 2; }
-.m-prazec { stroke: var(--m-kolej); stroke-width: 3; opacity: .45; }
-.m-parkovani { stroke: var(--m-budova-linka); stroke-width: 2; }
-.m-antuka { fill: var(--m-antuka); }
-.m-hard { fill: var(--m-hard); }
-.m-trava { fill: var(--m-trava); }
-.m-pisek { fill: var(--m-pisek); }
-.m-tribuna { fill: var(--m-tribuna); }
-.m-rada { stroke: var(--m-rada); stroke-width: 1.4; fill: none; }
-.m-prosiv { stroke: var(--m-prosiv); stroke-width: 1.6; fill: none; }
-.m-bazen-voda { fill: var(--m-bazen); }
-.m-lajny { fill: none; stroke: #fff; stroke-width: 2.2; }
-.m-lajny--tenke { stroke-width: 1.6; }
-.m-popis { font: 500 17px/1 var(--sans); letter-spacing: .16em; text-transform: uppercase; fill: var(--ink-2); }
-.m-popis--male { font-size: 12.5px; letter-spacing: .14em; }
-.m-popis--reka { font: italic 300 31px/1 var(--serif); letter-spacing: .02em; text-transform: none; fill: #8b9893; }
-.m-popis--zima { font-size: 15px; opacity: 0; transition: opacity .6s ease; }
-.m-vstup { fill: var(--gold); }
-.m-povrch { transition: fill .6s ease; }
-.m-slavoj { transition: opacity .6s ease, filter .6s ease; }
-.m-bazen { transition: opacity .6s ease; }
-.m-hala { opacity: 0; transform: scale(.94, .4); transform-box: fill-box; transform-origin: 50% 100%; transition: opacity .7s ease, transform .9s cubic-bezier(.2, .7, .2, 1); }
-.m-hala__plast { fill: var(--m-hala); stroke: var(--m-hala-linka); stroke-width: 1.5; }
-.m-hala__vzor { fill: url(#m-prosiv); opacity: .9; }
-.m-hala--antuka .m-hala__plast { fill: var(--m-hala-antuka); }
-.m-pevna-strecha { fill: none; stroke: #b4c2cf; stroke-width: 1.2; stroke-dasharray: 5 5; }
-.mapa[data-rezim="zima"] .m-hala { opacity: .94; transform: none; }
-.mapa[data-rezim="zima"] .m-zavira-se { opacity: .32; filter: grayscale(1); }
-.mapa[data-rezim="zima"] .m-popis--zima { opacity: 1; }
-.mapa[data-rezim="zima"] .m-povrch.m-zima-hard { fill: var(--m-hard); }
-.mapa[data-rezim="zima"] .m-povrch.m-zima-antuka { fill: var(--m-antuka); }
-.mapa[data-rezim="zima"] .m-bazen { opacity: .45; }
-
-/* body na plánu (HTML tlačítka nad kresbou) */
-.mapa__body { position: absolute; inset: 0; pointer-events: none; }
-.mapa__bod {
-  position: absolute; left: calc(var(--x) * 1%); top: calc(var(--y) * 1%); transform: translate(-50%, -50%);
-  pointer-events: auto; display: grid; place-items: center; width: 32px; height: 32px; padding: 0; border-radius: 50%;
-  background: var(--navy); color: var(--paper); border: 2px solid var(--paper);
-  font: 500 .75rem/1 var(--sans); font-variant-numeric: lining-nums tabular-nums; cursor: pointer;
-  box-shadow: 0 2px 6px rgba(14, 27, 48, .28);
-  transition: background-color var(--pohyb-rychly), transform var(--pohyb-rychly), box-shadow var(--pohyb-rychly), opacity .4s;
-}
-.mapa__bod:hover { transform: translate(-50%, -50%) scale(1.1); }
-.mapa__bod:focus-visible { outline: 2px solid var(--navy); outline-offset: 3px; }
-.mapa__bod[aria-pressed="true"] { background: var(--gold-text); box-shadow: 0 0 0 5px rgba(179, 147, 90, .3), 0 2px 8px rgba(14, 27, 48, .3); }
-.mapa__bod--sluzba { width: 26px; height: 26px; background: var(--paper); color: var(--navy); border: 1.5px solid var(--navy); }
-.mapa__bod--sluzba::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
-.mapa__bod--sluzba::after { content: ''; position: absolute; inset: -4px; border-radius: 50%; }
-.mapa__bod--sluzba[aria-pressed="true"] { background: var(--gold-text); color: var(--paper); border-color: var(--gold-text); }
-.mapa__bod.je-zavreno { background: var(--muted); opacity: .62; }
-.mapa[data-vrstva-sluzby="ne"] .mapa__bod--sluzba, .mapa[data-vrstva-kurty="ne"] .mapa__bod--kurt { opacity: 0; pointer-events: none; visibility: hidden; }
-
-/* karta pod plánem – „vstupenka“ se zlatou linkou */
-.mapa__karta {
-  position: relative; z-index: 2; margin: -1.6rem clamp(0px, 2vw, 2rem) 0;
-  display: grid; gap: var(--s-5) var(--s-6); align-items: start; min-height: 8.5rem;
-  padding: clamp(1.2rem, 1rem + 1vw, 1.9rem) clamp(1.1rem, .8rem + 1.4vw, 2.2rem);
-  background: var(--paper); border: 1px solid var(--gold); box-shadow: var(--stin);
-}
-.mapa__karta::before { content: ''; position: absolute; inset: 5px; border: 1px solid var(--line-gold); pointer-events: none; }
-@media (min-width: 900px) { .mapa__karta { grid-template-columns: minmax(0, 3.2fr) minmax(0, 2.6fr) minmax(0, 2.6fr) minmax(0, 2.2fr); } }
-.mapa__karta p { margin: 0; }
-.mapa__karta-hlava { display: flex; gap: 1rem; align-items: flex-start; }
-.mapa__karta-cislo { flex: none; display: grid; place-items: center; min-width: 2.6rem; height: 2.6rem; padding: 0 .4rem; border-radius: 1.3rem; background: var(--navy); color: var(--paper); font: 400 1.15rem/1 var(--serif); font-variant-numeric: lining-nums tabular-nums; }
-.mapa__karta-cislo.je-zavreno { background: var(--muted); }
-.mapa__karta-cislo--sluzba { background: var(--paper); border: 1.5px solid var(--navy); }
-.mapa__karta-cislo--sluzba::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--navy); }
-.mapa__karta-nazev { font: 400 clamp(1.35rem, 1.2rem + .5vw, 1.6rem)/1.15 var(--serif); color: var(--navy); }
-.mapa__karta-pod { margin-top: .3rem !important; font-size: var(--t-drobne); color: var(--muted); line-height: 1.45; }
-.mapa__karta-sloupec { display: grid; gap: .3rem; font-size: var(--t-male); line-height: 1.5; color: var(--ink-2); }
-.mapa__karta-sloupec .stitek { color: var(--muted); }
-.mapa__karta-sloupec.je-aktivni .stitek { color: var(--gold-text); }
-.mapa__karta-sloupec .drobne { color: var(--muted); }
-.mapa__karta-akce { display: grid; gap: var(--s-4); justify-items: start; }
-.mapa__sluzby { display: grid; gap: var(--s-4); margin-top: var(--s-7); }
-@media (min-width: 900px) { .mapa__sluzby { grid-template-columns: auto minmax(0, 1fr); align-items: center; column-gap: var(--s-6); } }
-.mapa__sluzby .pilulka { cursor: pointer; }
-
-/* letecké snímky léto / zima vedle plánu */
-.letecky { margin: 0; }
-.letecky .ramec__obraz { aspect-ratio: 16 / 10; }
-.letecky .ramec__obraz img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: opacity 1.1s ease; }
-.letecky__zima { opacity: 0; }
-.letecky[data-rezim="zima"] .letecky__zima { opacity: 1; }
-.letecky[data-rezim="zima"] .letecky__leto { opacity: 0; }
-.letecky__popis-zima, .letecky[data-rezim="zima"] .letecky__popis-leto { display: none; }
-.letecky[data-rezim="zima"] .letecky__popis-zima { display: inline; }
-.letecky .popisek { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: .3rem 1rem; }
-.letecky__prepni { display: inline-flex; gap: 1rem; }
-.letecky__prepni button { min-height: 44px; padding: 0; border: 0; background: none; font: 500 .66rem/1 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--navy); cursor: pointer; text-decoration: underline; text-decoration-color: var(--gold); text-underline-offset: .35em; }
-.plan-pod { margin-top: var(--s-8); }
-.plan-pod .prose { max-width: 44rem; }
-.plan-dialog img { display: block; width: 100%; height: auto; }
 
 /* 4 ─ SLUŽBY ─────────────────────────────────────────────────────────────── */
 .sluzby-mrizka { display: grid; gap: clamp(3rem, 2rem + 2.5vw, 4.5rem) var(--mezera); list-style: none; }
@@ -381,12 +247,6 @@
 @media (max-width: 699.98px) { .stranka-treneri #treneri .osoba__jmeno { font-size: 1.3rem; } }
 
 /* 12 ─ CÍLE 44 PX ─────────────────────────────────────────────────────────── */
-/* Body na plánu: kresba 32 / 26 px, plocha pro ťuknutí 44 px (neviditelný ::after).
-   Na úzké a dotykové obrazovce je plán širší (roluje do strany), aby se plochy
-   sousedních kurtů (2, 3, 4) a služeb nepřekrývaly. */
-.mapa__bod::after { content: ''; position: absolute; inset: -6px; border-radius: 50%; }
-.mapa__bod--sluzba::after { inset: -9px; }
-@media (max-width: 899.98px), (pointer: coarse) { .mapa__platno { min-width: 1240px; } }
 /* Textové odkazy (.odkaz) mají výšku řádku 21 px – plocha pro ťuknutí se zvětší
    neviditelným ::before na 44 px; řádky odkazů mají proto větší svislou mezeru.
    (Styl platí jen na stránkách, které tenhle soubor načítají.) */

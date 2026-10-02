@@ -22,6 +22,8 @@ $galerie   = uvodni_galerie();
 $aktuality = aktuality(3);
 $vysledky  = posledni_vysledky(8);
 $sluzbyUvod = sluzby(true);
+/* Plán areálu pod videem (mapa.js, kompaktní rozložení); „Podrobnosti“ u služby vedou na areal.php#kotva */
+$mapaUvod = mapa_data(null, null, null, url('areal.php'));
 $triptych  = triptych();
 $partneri  = partneri();
 
@@ -59,8 +61,8 @@ $sablona = [
     'titulek' => '',
     'popis'   => 'I. Český Lawn-Tennis Klub Praha – tenis na ostrově Štvanice uprostřed Prahy od roku ' . setting('zalozeno', '1893')
                . '. Členství, ceník kurtů, tenisová škola, závodní tenis, klubový kalendář a historie klubu.',
-    'css'     => ['index.css'],
-    'js'      => ['galerie.js', 'vysledky.js', 'kalendar.js', 'video.js'],
+    'css'     => ['index.css', 'mapa.css'],
+    'js'      => ['galerie.js', 'vysledky.js', 'kalendar.js', 'video.js', 'cenik.js', 'mapa.js'],
     'trida'   => 'stranka-uvod',
     'obrazek' => $galerie && $galerie[0]['typ'] === 'foto' ? $galerie[0]['foto'] : '',
     'predpripojit' => $predpripojit,
@@ -239,11 +241,18 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
   </section>
 
   <?php if ($sluzbyUvod): ?>
-  <!-- 6 · Služby v areálu – pilulky vedou na části stránky Areál a služby -->
+  <!-- 6 · Služby v areálu – interaktivní plán areálu (mapa.js). Klik na službu ukáže místo
+       na plánu, který zůstává vedle seznamu (na mobilu se k němu stránka vrátí).
+       Bez JavaScriptu zůstanou pilulky s odkazy na části stránky Areál a služby. -->
   <section class="sekce sluzby-uvod" id="sluzby" aria-labelledby="sluzby-nadpis">
-    <div class="wrap wrap--uzky sluzby-uvod__radek">
-      <h2 class="stitek sluzby-uvod__stitek" id="sluzby-nadpis"><?= typo(trim((string)$bSluzby['stitek']) ?: 'Služby v areálu') ?></h2>
-      <?= pilulky_html(array_map(fn($s) => [$s['nazev'], 'areal.php' . (trim((string)$s['kotva']) !== '' ? '#' . rawurlencode((string)$s['kotva']) : '')], $sluzbyUvod)) ?>
+    <div class="wrap">
+      <h2 class="stitek sluzby-uvod__stitek sluzby-uvod__stitek--mapa" id="sluzby-nadpis"><?= typo(trim((string)$bSluzby['stitek']) ?: 'Služby v areálu') ?></h2>
+      <div class="mapa mapa--kompakt" data-mapa>
+        <div class="mapa__zaloha sluzby-uvod__radek">
+          <?= pilulky_html(array_map(fn($s) => [$s['nazev'], 'areal.php' . (trim((string)$s['kotva']) !== '' ? '#' . rawurlencode((string)$s['kotva']) : '')], $sluzbyUvod)) ?>
+        </div>
+      </div>
+      <?= json_skript('mapa-data', $mapaUvod) ?>
     </div>
   </section>
   <?php endif; ?>
