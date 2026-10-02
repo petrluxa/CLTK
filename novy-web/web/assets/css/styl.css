@@ -1166,7 +1166,7 @@ html.js-pohyb [data-reveal].in { opacity: 1; transform: none; }
   transition: border-color var(--pohyb-rychly), color var(--pohyb-rychly), background-color var(--pohyb-rychly);
 }
 a.pilulka:hover, button.pilulka:hover { border-color: var(--gold); color: var(--navy); }
-.pilulka[aria-current], .pilulka[aria-pressed="true"] { background: var(--navy); border-color: var(--navy); color: var(--paper); }
+.pilulka[aria-current], .pilulka[aria-pressed="true"], a.pilulka[aria-current]:hover, button.pilulka[aria-pressed="true"]:hover { background: var(--navy); border-color: var(--navy); color: var(--paper); }
 .sekce--papir2 .pilulka { background: var(--paper); }
 
 /* Svislá časová osa – kronika (osa > osa__bod) */

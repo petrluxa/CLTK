@@ -270,13 +270,14 @@ html:not(.js) .video__tlacitko { display: none; }
 .sluzby-uvod { padding-top: clamp(3rem, 2rem + 3vw, 5.5rem); }
 .sluzby-uvod__radek { text-align: center; line-height: 1; }
 .sluzby-uvod__stitek { display: inline-block; vertical-align: middle; margin: .45rem 1rem .45rem 0; font-size: .82rem; letter-spacing: .28em; }
-.sluzby-uvod .pilulky { display: inline; }
-.sluzby-uvod .pilulky > li { display: inline-block; vertical-align: middle; margin: .4rem .35rem; }
-.sluzby-uvod .pilulka { font-size: clamp(.95rem, .92rem + .08vw, 1rem); padding-inline: 1.05rem; }
+.sluzby-uvod__radek .pilulky { display: inline; }
+.sluzby-uvod__radek .pilulky > li { display: inline-block; vertical-align: middle; margin: .4rem .35rem; }
+.sluzby-uvod__radek .pilulka { font-size: clamp(.95rem, .92rem + .08vw, 1rem); padding-inline: 1.05rem; }
+.sluzby-uvod__stitek--mapa { display: block; margin: 0 0 var(--s-5); }
 @media (max-width: 599.98px) {
   .sluzby-uvod__radek { text-align: left; }
   .sluzby-uvod__stitek { display: block; margin: 0 0 .8rem; }
-  .sluzby-uvod .pilulky > li { margin: .25rem .4rem .25rem 0; }
+  .sluzby-uvod__radek .pilulky > li { margin: .25rem .4rem .25rem 0; }
 }
 
 /* 7 · Naše historie – tři černobílé fotky, velký rok */

@@ -34,30 +34,6 @@ $provozDoky = dokumenty('provoz');
 $cenikLeto  = cenik('kurty-leto');
 $cenikZima  = cenik('kurty-zima');
 
-/** Datum z textu „d. m. rrrr“ → RRRR-MM-DD (nebo null). */
-function areal_ymd(int $r, int $m, int $d): ?string {
-    return checkdate($m, $d, $r) ? sprintf('%04d-%02d-%02d', $r, $m, $d) : null;
-}
-
-/** Období z textu: „16.–22. 8. 2026“, „28. 9. – 4. 10. 2026“, „28. 9. 2026 – 4. 4. 2027“, „5. 10. 2026“ → [od, do]. */
-function areal_obdobi(string $t): array {
-    $t = str_replace(["\u{00A0}", '&nbsp;'], ' ', $t);
-    $p = '\s*[–-]\s*';
-    if (preg_match('/(\d{1,2})\.\s*(\d{1,2})\.\s*(\d{4})' . $p . '(\d{1,2})\.\s*(\d{1,2})\.\s*(\d{4})/u', $t, $m)) {
-        return [areal_ymd((int)$m[3], (int)$m[2], (int)$m[1]), areal_ymd((int)$m[6], (int)$m[5], (int)$m[4])];
-    }
-    if (preg_match('/(\d{1,2})\.\s*(\d{1,2})\.' . $p . '(\d{1,2})\.\s*(\d{1,2})\.\s*(\d{4})/u', $t, $m)) {
-        return [areal_ymd((int)$m[5], (int)$m[2], (int)$m[1]), areal_ymd((int)$m[5], (int)$m[4], (int)$m[3])];
-    }
-    if (preg_match('/(\d{1,2})\.' . $p . '(\d{1,2})\.\s*(\d{1,2})\.\s*(\d{4})/u', $t, $m)) {
-        return [areal_ymd((int)$m[4], (int)$m[3], (int)$m[1]), areal_ymd((int)$m[4], (int)$m[3], (int)$m[2])];
-    }
-    if (preg_match('/(\d{1,2})\.\s*(\d{1,2})\.\s*(\d{4})/u', $t, $m)) {
-        $x = areal_ymd((int)$m[3], (int)$m[2], (int)$m[1]);
-        return [$x, $x];
-    }
-    return [null, null];
-}
 
 /**
  * Uzávěrky z bloku areal/uzavirky: co položka seznamu, to uzávěrka
@@ -95,30 +71,6 @@ function areal_uzavirky(string $html): array {
     return $vysledek;
 }
 
-/** Sezóna podle zimního ceníku (období „28. 9. 2026 – 4. 4. 2027“): 'zima' / 'leto'. Stejné pravidlo počítá cenik.js. */
-function areal_sezona(?array $zima): string {
-    if (!$zima || !$zima['sekce']) return 'leto';
-    [$od, $do] = areal_obdobi((string)$zima['list']['obdobi']);
-    if ($od === null || $do === null || $od === $do) return 'leto';
-    return dnes() >= $od && dnes() <= $do ? 'zima' : 'leto';
-}
-
-/** Ceník pro JavaScript – jen veřejné sloupce. */
-function areal_cenik_js(?array $c): ?array {
-    if (!$c) return null;
-    $l = $c['list'];
-    return [
-        'list'  => ['nazev' => (string)$l['nazev'], 'obdobi' => (string)$l['obdobi'], 'poznamka_dole' => (string)$l['poznamka_dole']],
-        'sekce' => array_map(fn($s) => [
-            'id' => (int)$s['id'], 'nazev' => (string)$s['nazev'], 'popis' => (string)$s['popis'],
-            'radky' => array_map(fn($r) => [
-                'id' => (int)$r['id'], 'nazev' => (string)$r['nazev'], 'poznamka' => (string)$r['poznamka'],
-                'cena' => (string)$r['cena'], 'cena_clen' => (string)$r['cena_clen'],
-                'cena_sezona' => (string)$r['cena_sezona'], 'cena_sezona_clen' => (string)$r['cena_sezona_clen'],
-            ], $s['radky']),
-        ], $c['sekce']),
-    ];
-}
 
 /* Uzávěrky: platné a nadcházející nahoře, proběhlé schované v rozbalovacím bloku */
 $uzavirky = areal_uzavirky((string)$bUzav['text']);
@@ -150,12 +102,7 @@ $fotoZima = (string)$bZimaF['foto'];
 $maLetecky = $fotoLeto !== '' && is_file(UPLOAD_DIR . '/' . $fotoLeto);
 $maLeteckyZima = $maLetecky && $fotoZima !== '' && is_file(UPLOAD_DIR . '/' . $fotoZima);
 
-$mapaData = [
-    'ceniky'    => ['leto' => areal_cenik_js($cenikLeto), 'zima' => areal_cenik_js($cenikZima), 'dnes' => dnes(), 'ladeni' => sablona_ladeni_dnes() !== ''],
-    'sluzby'    => array_map(fn($s) => ['kotva' => (string)$s['kotva'], 'nazev' => (string)$s['nazev'], 'perex' => (string)$s['perex'], 'casy' => (string)$s['casy']], $sluzby),
-    'rezervace' => rezervace_url(),
-    'cenik_url' => url('cenik-kurtu.php'),
-];
+$mapaData = mapa_data($cenikLeto, $cenikZima, $sluzby);
 
 $mapaUrl = bezpecny_odkaz(setting('mapa_url'));
 $planPdf = bezpecny_odkaz((string)$bPlan['odkaz']);
@@ -163,7 +110,7 @@ $planPdf = bezpecny_odkaz((string)$bPlan['odkaz']);
 $sablona = [
     'titulek' => html_text((string)$uvod['stitek']) ?: 'Areál a služby',
     'popis'   => html_text((string)$uvod['perex']) . ' ' . implode(', ', array_map(fn($s) => (string)$s['nazev'], array_slice($sluzby, 0, 8))) . '.',
-    'css'     => ['stranky-areal.css'],
+    'css'     => ['stranky-areal.css', 'mapa.css'],
     'js'      => ['cenik.js', 'mapa.js'],
     'trida'   => 'stranka-areal',
     'obrazek' => $maLetecky ? $fotoLeto : '',
@@ -339,3 +286,4 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
 </section>
 
 <?php require __DIR__ . '/inc/sablona/paticka.php'; ?>
+

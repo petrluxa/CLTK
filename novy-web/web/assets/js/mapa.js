@@ -32,7 +32,7 @@
   var KURTY = [
     ['1', 50.7, 37, 'antuka'], ['2', 71.6, 53, 'antuka'], ['3', 75.4, 53, 'antuka'], ['4', 79.3, 53, 'antuka'],
     ['5', 68.3, 35, 'antuka'], ['6', 72.5, 35, 'antuka'], ['7', 77.4, 35, 'hard'], ['8', 81.4, 35, 'hard'], ['9', 86.4, 35, 'hard'],
-    ['C', 55.1, 73.3, 'hard'], ['P1', 47.6, 68.7, 'pevna'], ['P2', 47.6, 74.5, 'pevna'],
+    ['C', 55.1, 73.3, 'hard'], ['P1', 44.65, 71.73, 'pevna'], ['P2', 48.6, 71.73, 'pevna'],
     ['10', 31.8, 34, 'antuka'], ['11', 26.8, 34, 'antuka'], ['12', 22.5, 34, 'antuka'], ['13', 17.4, 34, 'antuka'],
     ['14', 13.1, 34, 'antuka'], ['15', 8.1, 34, 'antuka'], ['16', 3.6, 34, 'antuka']
   ].map(function (k) { return { id: k[0], x: k[1], y: k[2], leto: k[3] }; });
@@ -120,7 +120,7 @@
     s += '<rect class="m-trava" x="1449" y="716" width="96" height="54"/><path class="m-lajny m-lajny--tenke" d="M1456 722h82v42h-82zM1497 722v42"/>';
     s += '<text class="m-popis m-popis--male" x="1416" y="838" text-anchor="middle">Odrazová stěna</text>';
     /* pevná hala P1, P2 */
-    s += '<rect class="m-hard" x="843" y="740" width="179" height="200"/>' + lajny(952, 809, 56, 122, true) + lajny(952, 878, 56, 122, true);
+    s += '<rect class="m-hard" x="843" y="740" width="179" height="200"/>' + lajny(893, 845, 56, 122) + lajny(972, 845, 56, 122);
     s += '<rect class="m-pevna-strecha" x="848" y="745" width="169" height="190"/>';
     s += '<text class="m-popis m-popis--male" x="858" y="766">Pevná hala</text>';
     /* centrální dvorec C */
@@ -179,7 +179,7 @@
     };
     var rezim = maZimu ? c.sezona : 'leto';
     var sluzby = (data.sluzby || []).filter(function (s) { return SLUZBY[s.kotva]; });
-    var rezervace = String(data.rezervace || ''), cenikUrl = String(data.cenik_url || '');
+    var rezervace = String(data.rezervace || ''), cenikUrl = String(data.cenik_url || ''), sluzbyUrl = String(data.sluzby_url || '');
     var uid = 'mapa-' + Math.random().toString(36).slice(2, 7);
 
     var zaloha = box.querySelector('.mapa__zaloha');
@@ -308,7 +308,7 @@
         '<div class="mapa__karta-hlava"><span class="mapa__karta-cislo mapa__karta-cislo--sluzba" aria-hidden="true"></span><div>' +
         '<p class="mapa__karta-nazev">' + typo(sl.nazev) + '</p>' + (sl.perex ? '<p class="mapa__karta-pod">' + typo(sl.perex) + '</p>' : '') + '</div></div>' +
         sloupec('Časy', '<p>' + (sl.casy ? typo(sl.casy) : '<span class="doplni">doplní klub</span>') + '</p>', false) +
-        '<div class="mapa__karta-akce"><a class="odkaz" href="#' + esc(sl.kotva) + '">Podrobnosti <span class="sipka" aria-hidden="true"></span></a></div>';
+        '<div class="mapa__karta-akce"><a class="odkaz" href="' + esc(sluzbyUrl) + '#' + esc(sl.kotva) + '">Podrobnosti <span class="sipka" aria-hidden="true"></span></a></div>';
     }
 
     function vyber(id) {
@@ -357,9 +357,26 @@
       if (t.name === uid + '-s') nastavRezim(t.value);
       if (t.hasAttribute('data-vrstva')) box.setAttribute('data-vrstva-' + t.getAttribute('data-vrstva'), t.checked ? 'ano' : 'ne');
     });
+    function ukazNaPlanu(id) {
+      var bod = body.querySelector('[data-id="' + id + '"]');
+      if (!bod) return;
+      var plynule = CLTK.pohybPovolen && CLTK.pohybPovolen() ? 'smooth' : 'auto';
+      var navic = platno.scrollWidth - okno.clientWidth;
+      if (navic > 0) {
+        var x = bod.getBoundingClientRect().left - platno.getBoundingClientRect().left - okno.clientWidth / 2;
+        okno.scrollTo({ left: Math.max(0, Math.min(navic, x)), behavior: plynule });
+      }
+      var r = okno.getBoundingClientRect();
+      var horni = parseFloat(getComputedStyle(d.documentElement).getPropertyValue('--hlavicka-kompakt')) + (parseFloat(getComputedStyle(d.documentElement).getPropertyValue('--pruh-v')) || 0);
+      if (r.top < horni || r.bottom > window.innerHeight) okno.scrollIntoView({ block: r.height + horni < window.innerHeight ? 'nearest' : 'start', behavior: plynule });
+      bod.classList.remove('je-pulz'); void bod.offsetWidth; bod.classList.add('je-pulz');
+    }
     box.addEventListener('click', function (e) {
       var b = e.target.closest('button[data-id]');
-      if (b && box.contains(b)) vyber(b.getAttribute('data-id'));
+      if (!b || !box.contains(b)) return;
+      var id = b.getAttribute('data-id');
+      vyber(id);
+      if (!body.contains(b) && vybrano === id) ukazNaPlanu(id);
     });
     /* vnější přepínače (u leteckého snímku): [data-mapa-prepni="zima"] */
     Array.prototype.forEach.call(d.querySelectorAll('[data-mapa-prepni]'), function (t) {

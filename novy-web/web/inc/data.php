@@ -635,3 +635,71 @@ function ctc(?string $typ = null): array {
 function skola(string $typ): array {
     return data_rows('SELECT * FROM cltk_skola WHERE visible = 1 AND typ = ? ORDER BY poradi, id', [$typ]);
 }
+
+/* ---------- Plán areálu (mapa.js) – areal.php i úvodní stránka ---------- */
+
+/** Datum z textu „d. m. rrrr“ → RRRR-MM-DD (nebo null). */
+function areal_ymd(int $r, int $m, int $d): ?string {
+    return checkdate($m, $d, $r) ? sprintf('%04d-%02d-%02d', $r, $m, $d) : null;
+}
+
+/** Období z textu: „16.–22. 8. 2026“, „28. 9. – 4. 10. 2026“, „28. 9. 2026 – 4. 4. 2027“, „5. 10. 2026“ → [od, do]. */
+function areal_obdobi(string $t): array {
+    $t = str_replace(["\u{00A0}", '&nbsp;'], ' ', $t);
+    $p = '\s*[–-]\s*';
+    if (preg_match('/(\d{1,2})\.\s*(\d{1,2})\.\s*(\d{4})' . $p . '(\d{1,2})\.\s*(\d{1,2})\.\s*(\d{4})/u', $t, $m)) {
+        return [areal_ymd((int)$m[3], (int)$m[2], (int)$m[1]), areal_ymd((int)$m[6], (int)$m[5], (int)$m[4])];
+    }
+    if (preg_match('/(\d{1,2})\.\s*(\d{1,2})\.' . $p . '(\d{1,2})\.\s*(\d{1,2})\.\s*(\d{4})/u', $t, $m)) {
+        return [areal_ymd((int)$m[5], (int)$m[2], (int)$m[1]), areal_ymd((int)$m[5], (int)$m[4], (int)$m[3])];
+    }
+    if (preg_match('/(\d{1,2})\.' . $p . '(\d{1,2})\.\s*(\d{1,2})\.\s*(\d{4})/u', $t, $m)) {
+        return [areal_ymd((int)$m[4], (int)$m[3], (int)$m[1]), areal_ymd((int)$m[4], (int)$m[3], (int)$m[2])];
+    }
+    if (preg_match('/(\d{1,2})\.\s*(\d{1,2})\.\s*(\d{4})/u', $t, $m)) {
+        $x = areal_ymd((int)$m[3], (int)$m[2], (int)$m[1]);
+        return [$x, $x];
+    }
+    return [null, null];
+}
+
+/** Sezóna podle zimního ceníku (období „28. 9. 2026 – 4. 4. 2027“): 'zima' / 'leto'. Stejné pravidlo počítá cenik.js. */
+function areal_sezona(?array $zima): string {
+    if (!$zima || !$zima['sekce']) return 'leto';
+    [$od, $do] = areal_obdobi((string)$zima['list']['obdobi']);
+    if ($od === null || $do === null || $od === $do) return 'leto';
+    return dnes() >= $od && dnes() <= $do ? 'zima' : 'leto';
+}
+
+/** Ceník pro JavaScript – jen veřejné sloupce. */
+function areal_cenik_js(?array $c): ?array {
+    if (!$c) return null;
+    $l = $c['list'];
+    return [
+        'list'  => ['nazev' => (string)$l['nazev'], 'obdobi' => (string)$l['obdobi'], 'poznamka_dole' => (string)$l['poznamka_dole']],
+        'sekce' => array_map(fn($s) => [
+            'id' => (int)$s['id'], 'nazev' => (string)$s['nazev'], 'popis' => (string)$s['popis'],
+            'radky' => array_map(fn($r) => [
+                'id' => (int)$r['id'], 'nazev' => (string)$r['nazev'], 'poznamka' => (string)$r['poznamka'],
+                'cena' => (string)$r['cena'], 'cena_clen' => (string)$r['cena_clen'],
+                'cena_sezona' => (string)$r['cena_sezona'], 'cena_sezona_clen' => (string)$r['cena_sezona_clen'],
+            ], $s['radky']),
+        ], $c['sekce']),
+    ];
+}
+
+/** Data pro mapa.js: ceníky kurtů (zimní haly, ceny), služby s polohou podle kotvy, rezervace.
+    $sluzbyUrl = kam vede „Podrobnosti“ u služby ('' = kotva na téže stránce, jinak např. url('areal.php')). */
+function mapa_data(?array $cenikLeto = null, ?array $cenikZima = null, ?array $sluzby = null, string $sluzbyUrl = ''): array {
+    $cenikLeto = $cenikLeto ?? cenik('kurty-leto');
+    $cenikZima = $cenikZima ?? cenik('kurty-zima');
+    $sluzby = $sluzby ?? sluzby();
+    return [
+        'ceniky'     => ['leto' => areal_cenik_js($cenikLeto), 'zima' => areal_cenik_js($cenikZima), 'dnes' => dnes(), 'ladeni' => sablona_ladeni_dnes() !== ''],
+        'sluzby'     => array_map(fn($s) => ['kotva' => (string)$s['kotva'], 'nazev' => (string)$s['nazev'], 'perex' => (string)$s['perex'], 'casy' => (string)$s['casy']], $sluzby),
+        'rezervace'  => rezervace_url(),
+        'cenik_url'  => url('cenik-kurtu.php'),
+        'sluzby_url' => $sluzbyUrl,
+    ];
+}
+
