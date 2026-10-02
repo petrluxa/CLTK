@@ -204,7 +204,7 @@ html:not(.js) .galerie__ovladani { display: none; }
 .kal-polozka.je-probehla a[aria-current="true"] .kal-polozka__nazev { opacity: .75; }
 .kalendar__pozn { margin: 1.4rem 0 0 2rem; }
 
-.kalendar__okno { position: relative; display: flex; min-height: 30rem; padding: clamp(.4rem, .3rem + .3vw, .55rem); background: var(--ramecek); scroll-margin-top: calc(var(--hlavicka-kompakt) + 1rem); }
+.kalendar__okno { position: relative; display: flex; min-height: 30rem; padding: clamp(.4rem, .3rem + .3vw, .55rem); background: var(--ramecek); scroll-margin-top: calc(var(--pruh-v, 0px) + var(--hlavicka-kompakt) + 1rem); }
 .kalendar__okno:focus { outline: none; }
 .kalendar__okno:focus-visible { outline: 2px solid var(--navy); outline-offset: 4px; }
 .kal-detail { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0; padding: clamp(2rem, 1.2rem + 3vw, 4.4rem) clamp(1.3rem, .6rem + 3vw, 4.4rem); background: var(--paper); text-align: center; }

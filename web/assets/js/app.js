@@ -122,6 +122,15 @@
 
   /* ── Hlavička: kompaktní stav po odrolování ──────────────────────────── */
   function initHlavicka() {
+    /* Pruh „Režim přípravy“ je pevně nahoře nad hlavičkou; jeho skutečnou výšku
+       (na mobilu se zalomí) předáme CSS jako --pruh-v. */
+    var pruh = d.querySelector('.rezim-pruh');
+    if (pruh) {
+      var zmerPruh = function () { html.style.setProperty('--pruh-v', Math.ceil(pruh.getBoundingClientRect().height) + 'px'); };
+      zmerPruh();
+      window.addEventListener('resize', zmerPruh);
+      if (d.fonts && d.fonts.ready) d.fonts.ready.then(zmerPruh);
+    }
     var cekam = false;
     function stav() {
       cekam = false;

@@ -69,9 +69,11 @@
   --max-siroky: 92rem;   /* 1472 px */
   --max-text: 40rem;     /* ~66 znaků */
 
-  /* Hlavička (pevná): stuha 6 px + řádek 76 px, po odrolování 64 px */
-  --hlavicka-v: 82px;
+  /* Hlavička (pevná, jako v návrhu 1): stuha 6 px + horní lišta 38 px + řádek 82 px,
+     po odrolování horní lišta zajede a zůstane stuha + řádek 64 px */
+  --hlavicka-v: 126px;
   --hlavicka-kompakt: 70px;
+  --pruh-v: 0px;             /* pruh „Režim přípravy“ nad hlavičkou (měří app.js) */
   --lista-v: 0px;            /* lepivá lišta na mobilu */
 
   /* Stíny, rytina, pohyb */
@@ -108,7 +110,7 @@
 *, *::before, *::after { box-sizing: border-box; }
 html {
   -webkit-text-size-adjust: 100%; text-size-adjust: 100%;
-  scroll-padding-top: calc(var(--hlavicka-kompakt) + 1.5rem);
+  scroll-padding-top: calc(var(--pruh-v) + var(--hlavicka-kompakt) + 1.5rem);
   background: var(--paper);
 }
 @media (prefers-reduced-motion: no-preference) {
@@ -116,7 +118,7 @@ html {
 }
 body {
   margin: 0;
-  padding-top: var(--hlavicka-v);
+  padding-top: calc(var(--pruh-v) + var(--hlavicka-v));
   padding-bottom: var(--lista-v);
   background: var(--paper);
   color: var(--ink);
@@ -270,11 +272,29 @@ h1 em, h2 em, h3 em, .display em, .h1 em, .h2 em, .h3 em {
 .stuha__zlato { flex: 1; background: var(--gold); }
 .stuha__navy { flex: 1; background: var(--navy); }
 
-.hlavicka__hlavni { position: relative; height: 76px; display: flex; align-items: center; transition: height var(--pohyb); }
+.hlavicka { top: var(--pruh-v); }
+
+/* Horní lišta z návrhu 1: název klubu vlevo, recepce / obsazenost / kontakt vpravo.
+   Po odrolování zajede (výška 0) a znak se zmenší – efekt z návrhu. */
+.hlavicka__servis {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--s-5);
+  height: 38px; overflow: hidden;
+  font: 400 .75rem/1 var(--sans); letter-spacing: .06em; color: var(--muted);
+  transition: height var(--pohyb), opacity var(--pohyb);
+}
+.hlavicka__jmeno { margin: 0; display: flex; align-items: baseline; gap: .9rem; white-space: nowrap; }
+.hlavicka__jmeno .sc { font-size: 1.02rem; color: var(--navy); letter-spacing: .07em; }
+.hlavicka__jmeno .zalozen { font-size: .66rem; letter-spacing: .26em; text-transform: uppercase; color: var(--gold-text); }
+.servis { display: flex; align-items: center; gap: 1.6rem; margin: 0; padding: 0; list-style: none; }
+.servis a { text-decoration: none; color: var(--ink-2); white-space: nowrap; }
+.servis a:hover, .servis a[aria-current] { color: var(--navy); text-decoration: underline; text-decoration-color: var(--gold); text-underline-offset: .3em; }
+.servis .tel { color: var(--navy); font-weight: 500; letter-spacing: .08em; }
+
+.hlavicka__hlavni { position: relative; height: 82px; display: flex; align-items: center; transition: height var(--pohyb); }
 
 /* Znak – logo ke 130 letům (soubor jen přes logo_url()) */
-.znak { position: absolute; left: 50%; top: 50%; z-index: 2; display: block; transform: translate(-50%, -50%); text-decoration: none; }
-.znak img { height: 60px; width: auto; transition: height var(--pohyb); }
+.znak { position: absolute; left: 50%; top: -28px; z-index: 2; display: block; transform: translateX(-50%); text-decoration: none; transition: top var(--pohyb); }
+.znak img { display: block; height: 96px; width: auto; transition: height var(--pohyb); }
 .znak__text { display: none; }
 .znak:focus-visible { outline-offset: 4px; }
 
@@ -315,13 +335,28 @@ h1 em, h2 em, h3 em, .display em, .h1 em, .h2 em, .h3 em {
 
 /* Kompaktní stav po odrolování (třída na <html> z app.js) */
 @media (min-width: 1240px) {
-  html:not(.s-pruhem).je-odrolovano .hlavicka__hlavni { height: 64px; }
-  html:not(.s-pruhem).je-odrolovano .znak img { height: 48px; }
+  .je-odrolovano .hlavicka__servis { height: 0; opacity: 0; }
+  .je-odrolovano .hlavicka__hlavni { height: 64px; }
+  .je-odrolovano .znak { top: 7px; }
+  .je-odrolovano .znak img { height: 50px; }
+  .nav__seznam--l { padding-right: 64px; }
+  .nav__seznam--p { padding-left: 64px; }
+}
+/* Nejužší šířky s plným menu: o kousek menší znak, ať má kolem sebe vzduch */
+@media (min-width: 1240px) and (max-width: 1359.98px) {
+  .znak { top: -24px; }
+  .znak img { height: 84px; }
 }
 
 /* Pruh „Režim přípravy“ (jen správce / náhled): hlavička pak jen lepí, nezakrývá ho */
-html.s-pruhem body { padding-top: 0; }
-html.s-pruhem .hlavicka { position: sticky; top: 0; }
+html.s-pruhem { --pruh-v: 39px; }
+@media (max-width: 699.98px) { html.s-pruhem { --pruh-v: 78px; } }
+html.s-pruhem .rezim-pruh { position: fixed !important; top: 0; left: 0; right: 0; }
+/* bez JS (výška pruhu se nezměří) zůstane původní řešení: pruh v toku, hlavička lepí */
+html.s-pruhem:not(.js) { --pruh-v: 0px; }
+html.s-pruhem:not(.js) .rezim-pruh { position: relative !important; }
+html.s-pruhem:not(.js) body { padding-top: 0; }
+html.s-pruhem:not(.js) .hlavicka { position: sticky; top: 0; }
 
 /* 6 ─ PODMENU (desktop) ───────────────────────────────────────────────────── */
 .podmenu {
@@ -350,6 +385,7 @@ html:not(.js) .ma-podmenu:hover > .podmenu, html:not(.js) .ma-podmenu:focus-with
 /* 7 ─ MOBILNÍ HLAVIČKA A MENU (pod 1240 px) ──────────────────────────────── */
 @media (max-width: 1239.98px) {
   .stuha { height: 4px; }
+  .hlavicka__servis { display: none; }
   .hlavicka__hlavni { height: 64px; justify-content: space-between; }
   .znak { position: relative; left: auto; top: auto; transform: none; display: flex; align-items: center; gap: .75rem; min-height: 44px; }
   .znak img { height: 46px; }
@@ -368,7 +404,7 @@ html:not(.js) .ma-podmenu:hover > .podmenu, html:not(.js) .ma-podmenu:focus-with
   .menu-tlacitko[aria-expanded="true"] .menu-tlacitko__car::after { top: 6px; transform: rotate(-45deg); }
 
   .nav {
-    position: fixed; left: 0; right: 0; top: var(--hlavicka-v); bottom: 0; z-index: 59; height: auto;
+    position: fixed; left: 0; right: 0; top: calc(var(--pruh-v) + var(--hlavicka-v)); bottom: 0; z-index: 59; height: auto;
     display: none; flex-direction: column; align-items: stretch; overflow-y: auto; overscroll-behavior: contain;
     -webkit-overflow-scrolling: touch;
     padding: var(--s-5) var(--okraj) calc(var(--s-7) + env(safe-area-inset-bottom, 0px));

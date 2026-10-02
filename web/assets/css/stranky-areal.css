@@ -244,7 +244,7 @@
 .kalk { display: grid; gap: var(--s-7) var(--mezera); align-items: start; }
 @media (min-width: 1000px) {
   .kalk { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); column-gap: clamp(2rem, 1rem + 3.5vw, 5rem); }
-  .kalk__vysledek { position: sticky; top: calc(var(--hlavicka-kompakt) + 1.5rem); }
+  .kalk__vysledek { position: sticky; top: calc(var(--pruh-v, 0px) + var(--hlavicka-kompakt) + 1.5rem); }
 }
 .kalk__ovladani { display: grid; gap: var(--s-6); min-width: 0; }
 .kalk__skupina { display: grid; gap: .8rem; min-width: 0; }
