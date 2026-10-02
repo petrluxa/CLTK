@@ -156,34 +156,46 @@
 }
 .mapa__okno { scroll-margin-top: calc(var(--pruh-v, 0px) + var(--hlavicka-kompakt) + 1rem); scroll-margin-bottom: 1rem; }
 
-/* ── Kompaktní rozložení (úvodní stránka): plán vlevo, služby a karta vpravo,
-      celé na jednu obrazovku – po kliknutí na službu není třeba rolovat ─────── */
-.mapa--kompakt .mapa__listy { margin-bottom: var(--s-4); }
-.mapa--kompakt .mapa__sluzby { margin-top: 0; }
-.mapa--kompakt .mapa__karta { margin: var(--s-5) 0 0; min-height: 0; grid-template-columns: 1fr !important; gap: var(--s-4); }
-.mapa--kompakt .mapa__karta-nazev { font-size: clamp(1.25rem, 1.1rem + .4vw, 1.45rem); }
-.mapa--kompakt .mapa__sluzby .stitek { margin-bottom: .2rem; }
+/* ── Kompaktní rozložení (úvodní stránka): plán vlevo nahoře, pod ním proužek
+      s popiskem (jako na stránce Areál), vpravo všechny volby a služby.
+      Celé na jednu obrazovku – po kliknutí na službu není třeba rolovat ─────── */
+.mapa--kompakt .mapa__bok { display: grid; gap: var(--s-6); align-content: start; }
+.mapa--kompakt .mapa__bok .mapa__listy { margin: 0; flex-direction: column; align-items: flex-start; justify-content: flex-start; gap: var(--s-4); }
+.mapa--kompakt .mapa__bok .mapa__vrstvy { gap: .1rem 1.4rem; }
+.mapa--kompakt .mapa__bok .mapa__legenda { flex-basis: 100%; }
+.mapa--kompakt .mapa__sluzby { margin-top: 0; display: block; }
+.mapa--kompakt .mapa__sluzby .stitek { margin-bottom: .55rem; }
 @media (min-width: 1000px) {
   .mapa--kompakt.je-hotova {
     display: grid; grid-template-columns: minmax(0, 1.85fr) minmax(19rem, 1fr);
-    grid-template-rows: auto auto 1fr; column-gap: clamp(1.75rem, 3vw, 3.25rem); align-items: start;
+    grid-template-rows: auto auto; column-gap: clamp(1.75rem, 3vw, 3.25rem); align-items: start;
   }
-  .mapa--kompakt .mapa__listy { grid-column: 1 / -1; grid-row: 1; }
   .mapa--kompakt .mapa__posun { display: none; }
-  .mapa--kompakt .mapa__okno { grid-column: 1; grid-row: 2 / span 2; }
+  .mapa--kompakt .mapa__okno { grid-column: 1; grid-row: 1; }
+  .mapa--kompakt .mapa__karta { grid-column: 1; grid-row: 2; align-items: start; }
+  /* proužek: přehled a kurt = nadpis přes celou šířku, pod ním léto | zima, tlačítka vpravo;
+     služba = jeden řádek hlava · časy · akce */
+  .mapa--kompakt .mapa__karta { grid-template-columns: minmax(0, 2.3fr) minmax(0, 1.4fr) minmax(9.5rem, auto); }
+  .mapa--kompakt .mapa__karta:has(.mapa__karta-sloupec + .mapa__karta-sloupec) {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr) minmax(9.5rem, auto);
+    grid-template-areas: "hlava hlava akce" "leto zima akce"; row-gap: var(--s-4);
+  }
+  .mapa--kompakt .mapa__karta:has(.mapa__karta-sloupec + .mapa__karta-sloupec) > .mapa__karta-hlava { grid-area: hlava; }
+  .mapa--kompakt .mapa__karta:has(.mapa__karta-sloupec + .mapa__karta-sloupec) > .mapa__karta-sloupec:nth-child(2) { grid-area: leto; }
+  .mapa--kompakt .mapa__karta:has(.mapa__karta-sloupec + .mapa__karta-sloupec) > .mapa__karta-sloupec:nth-child(3) { grid-area: zima; }
+  .mapa--kompakt .mapa__karta:has(.mapa__karta-sloupec + .mapa__karta-sloupec) > .mapa__karta-akce { grid-area: akce; align-self: center; }
+  .mapa--kompakt .mapa__karta-nazev { font-size: clamp(1.2rem, .95rem + .45vw, 1.4rem); }
+  .mapa--kompakt .mapa__bok { grid-column: 2; grid-row: 1 / span 2; }
   /* plán se vejde do sloupce celý – bez vodorovného posuvníku, jen o kousek menší body */
   .mapa--kompakt .mapa__platno { min-width: 0; }
   .mapa--kompakt .mapa__bod { width: 28px; height: 28px; font-size: .7rem; }
   .mapa--kompakt .mapa__bod--sluzba { width: 23px; height: 23px; }
-  .mapa--kompakt .mapa__sluzby { grid-column: 2; grid-row: 2; display: block; }
   .mapa--kompakt .mapa__sluzby .pilulky { gap: .5rem .5rem; }
   .mapa--kompakt .mapa__sluzby .pilulka { font-size: .86rem; padding-block: .45rem; }
-  .mapa--kompakt .mapa__karta { grid-column: 2; grid-row: 3; margin-top: var(--s-5); }
 }
-/* na mobilu: plán, karta a pod nimi služby (klik na službu vrátí plán do zorného pole) */
+/* na mobilu: plán, proužek s popiskem, pod nimi volby a služby (klik na službu vrátí plán do zorného pole) */
 @media (max-width: 999.98px) {
-  .mapa--kompakt .mapa__karta { margin-top: var(--s-4); }
-  .mapa--kompakt .mapa__sluzby { margin-top: var(--s-5); }
+  .mapa--kompakt .mapa__bok { margin-top: var(--s-6); }
 }
 /* mobil: menší plán (méně svislého rolování) a o kousek menší body */
 @media (max-width: 999.98px) {

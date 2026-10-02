@@ -248,6 +248,15 @@
 
     box.appendChild(listy); box.appendChild(posun); box.appendChild(okno); box.appendChild(karta);
     if (sluzby.length) box.appendChild(cipy);
+    /* kompaktní rozložení (úvodní stránka): plán + proužek s popiskem vlevo,
+       všechny volby (Léto / Zima, vrstvy, legenda) a služby v panelu vpravo */
+    if (box.classList.contains('mapa--kompakt')) {
+      var bok = d.createElement('div');
+      bok.className = 'mapa__bok';
+      bok.appendChild(listy);
+      if (sluzby.length) bok.appendChild(cipy);
+      box.appendChild(bok);
+    }
 
     var foto = d.querySelector('[data-letecky]');
     var vybrano = null;
