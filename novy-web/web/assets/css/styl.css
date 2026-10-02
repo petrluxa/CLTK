@@ -416,12 +416,41 @@ html:not(.js) .ma-podmenu:hover > .podmenu, html:not(.js) .ma-podmenu:focus-with
 
 /* 8 ─ INFORMAČNÍ LIŠTA (pod menu, jen když je aktivní zpráva) ─────────────── */
 .lista-info { position: relative; z-index: 3; background: var(--lista); color: var(--paper); text-align: center; box-shadow: 0 12px 22px -18px rgba(14, 27, 48, .6); }
-.lista-info__vnitrek { padding-block: .8rem; }
+.lista-info__okno { overflow: hidden; padding-block: .8rem; }
 .lista-info p { margin: 0; font: 500 .74rem/1.55 var(--sans); letter-spacing: .24em; text-transform: uppercase; text-wrap: balance; }
-.lista-info p + p { margin-top: .35rem; }
 .lista-info a { color: inherit; text-decoration: underline; text-decoration-color: rgba(251, 250, 246, .65); text-underline-offset: .3em; }
 .lista-info a:hover { text-decoration-color: currentColor; }
-@media (max-width: 599.98px) { .lista-info p { letter-spacing: .14em; font-size: .7rem; } }
+/* Stojící podoba (bez JS, omezený pohyb): zprávy pod sebou uprostřed */
+.lista-info:not(.je-bezi) .lista-info__okno { padding-inline: var(--okraj); }
+.lista-info:not(.je-bezi) .lista-info__sada { display: grid; gap: .35rem; justify-items: center; }
+.lista-info:not(.je-bezi) .lista-info__oddel { display: none; }
+/* Běžící text: pás = sada + kopie, posun přesně o šířku jedné sady → plynulá smyčka */
+.lista-info.je-bezi .lista-info__okno { padding-right: 3.2rem;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 4rem, #000 calc(100% - 6.5rem), transparent calc(100% - 3.2rem));
+          mask-image: linear-gradient(90deg, transparent 0, #000 4rem, #000 calc(100% - 6.5rem), transparent calc(100% - 3.2rem)); }
+.lista-info.je-bezi .lista-info__pas { display: flex; width: max-content; will-change: transform; animation: lista-jizda var(--lista-trvani, 40s) linear infinite; }
+.lista-info.je-bezi .lista-info__sada { display: flex; align-items: center; flex: none; }
+.lista-info.je-bezi .lista-info__zprava { white-space: nowrap; text-wrap: nowrap; padding-inline: 2.2rem; }
+.lista-info__oddel { flex: none; width: 5px; height: 5px; border: 1px solid currentColor; transform: rotate(45deg); opacity: .75; }
+.lista-info.je-bezi:hover .lista-info__pas, .lista-info.je-bezi:focus-within .lista-info__pas, .lista-info.je-pauza .lista-info__pas { animation-play-state: paused; }
+@keyframes lista-jizda { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(calc(-1 * var(--lista-posun, 50%)), 0, 0); } }
+/* Tlačítko pauzy – drobné, na pravém kraji lišty */
+.lista-info__pauza { position: absolute; top: 50%; right: .55rem; transform: translateY(-50%); display: grid; place-items: center; width: 2.25rem; height: 2.25rem;
+  border: 1px solid rgba(251, 250, 246, .35); border-radius: 50%; background: transparent; color: var(--paper); cursor: pointer; transition: border-color var(--pohyb-rychly, .2s), background-color var(--pohyb-rychly, .2s); }
+.lista-info__pauza:hover { border-color: var(--paper); background: rgba(251, 250, 246, .08); }
+.lista-info__pauza[hidden] { display: none; }
+.lista-info__pauza-ikona { position: relative; width: 8px; height: 9px; }
+.lista-info__pauza-ikona::before, .lista-info__pauza-ikona::after { content: ''; position: absolute; top: 0; bottom: 0; width: 2px; background: currentColor; }
+.lista-info__pauza-ikona::before { left: 0; }
+.lista-info__pauza-ikona::after { right: 0; }
+.lista-info__pauza[aria-pressed="true"] .lista-info__pauza-ikona::before { left: 1px; width: 0; height: 0; background: none; border-style: solid; border-width: 4.5px 0 4.5px 8px; border-color: transparent transparent transparent currentColor; }
+.lista-info__pauza[aria-pressed="true"] .lista-info__pauza-ikona::after { display: none; }
+@media (max-width: 599.98px) {
+  .lista-info p { letter-spacing: .14em; font-size: .7rem; }
+  .lista-info.je-bezi .lista-info__zprava { padding-inline: 1.5rem; }
+  .lista-info.je-bezi .lista-info__okno { -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 1.5rem, #000 calc(100% - 4.5rem), transparent calc(100% - 3rem));
+            mask-image: linear-gradient(90deg, transparent 0, #000 1.5rem, #000 calc(100% - 4.5rem), transparent calc(100% - 3rem)); padding-right: 3rem; }
+}
 
 /* 9 ─ PATIČKA (PDF stranka-05/06) ──────────────────────────────────────────── */
 .paticka { background: var(--paper-2); border-top: 1px solid var(--line); color: var(--ink-2); font-size: var(--t-male); }
