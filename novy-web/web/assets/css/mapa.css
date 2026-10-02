@@ -171,6 +171,10 @@
   .mapa--kompakt .mapa__listy { grid-column: 1 / -1; grid-row: 1; }
   .mapa--kompakt .mapa__posun { display: none; }
   .mapa--kompakt .mapa__okno { grid-column: 1; grid-row: 2 / span 2; }
+  /* plán se vejde do sloupce celý – bez vodorovného posuvníku, jen o kousek menší body */
+  .mapa--kompakt .mapa__platno { min-width: 0; }
+  .mapa--kompakt .mapa__bod { width: 28px; height: 28px; font-size: .7rem; }
+  .mapa--kompakt .mapa__bod--sluzba { width: 23px; height: 23px; }
   .mapa--kompakt .mapa__sluzby { grid-column: 2; grid-row: 2; display: block; }
   .mapa--kompakt .mapa__sluzby .pilulky { gap: .5rem .5rem; }
   .mapa--kompakt .mapa__sluzby .pilulka { font-size: .86rem; padding-block: .45rem; }
