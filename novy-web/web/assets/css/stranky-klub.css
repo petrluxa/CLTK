@@ -136,8 +136,7 @@
 .kronika-sekce .hlava--radek .perex { max-width: 30rem; margin: 0; }
 .kronika-sekce .hlava--radek .perex p { margin: 0; }
 .kronika { display: grid; grid-template-columns: minmax(14rem, 3fr) minmax(0, 9fr); gap: 0 var(--mezera); }
-.kronika__bok { position: sticky; top: calc(var(--hlavicka-kompakt) + 2rem); align-self: start; padding-right: var(--s-5); }
-html.s-pruhem .kronika__bok { top: calc(var(--hlavicka-kompakt) + 4.5rem); }
+.kronika__bok { position: sticky; top: calc(var(--pruh-v, 0px) + var(--hlavicka-kompakt) + 2rem); align-self: start; padding-right: var(--s-5); }
 .kronika__razitko {
   display: inline-grid; justify-items: center; gap: .4rem; max-width: 100%; margin: .4rem 0 0 .3rem;
   padding: .85rem 1.1rem .8rem; border: 2px solid var(--navy); border-radius: 6px; outline: 1px solid var(--navy); outline-offset: 3px;
@@ -163,7 +162,7 @@ html.s-pruhem .kronika__bok { top: calc(var(--hlavicka-kompakt) + 4.5rem); }
 .kronika__kapitoly a:hover, .kronika__kapitoly a[aria-current="true"] { color: var(--navy); }
 .kronika__kapitoly a[aria-current="true"] .kronika__kapitoly-cislo { color: var(--gold-text); }
 .kapitola + .kapitola { margin-top: clamp(3rem, 2rem + 3vw, 5rem); }
-.kapitola { scroll-margin-top: calc(var(--hlavicka-kompakt) + 1.5rem); }
+.kapitola { scroll-margin-top: calc(var(--pruh-v, 0px) + var(--hlavicka-kompakt) + 1.5rem); }
 .kapitola__hlava { display: flex; flex-wrap: wrap; align-items: baseline; gap: .3rem 1rem; margin-bottom: var(--s-6); padding-bottom: var(--s-4); border-bottom: 1px solid var(--gold); }
 .kapitola__cislo { font: italic 400 1.5rem/1 var(--serif); color: var(--gold-text); }
 .kapitola__nazev { margin: 0; font: 500 clamp(1.45rem, 1.2rem + 1vw, 2.1rem)/1.15 var(--sc); letter-spacing: .04em; color: var(--navy); font-synthesis: none; }
@@ -255,8 +254,7 @@ html.s-pruhem .kronika__bok { top: calc(var(--hlavicka-kompakt) + 4.5rem); }
 /* IV · Přihláška: formulář vlevo, kancelář a dokumenty vpravo */
 .clen-prihlaska__mrizka { display: grid; grid-template-columns: minmax(0, 8fr) minmax(0, 3.4fr); gap: var(--s-7) clamp(2rem, 1rem + 3vw, 5rem); align-items: start; }
 .clen-prihlaska__hlavni > .hlava { margin-bottom: var(--s-6); }
-.clen-prihlaska__bok { position: sticky; top: calc(var(--hlavicka-kompakt) + 2rem); display: grid; gap: var(--s-6); padding-top: .4rem; }
-html.s-pruhem .clen-prihlaska__bok { top: calc(var(--hlavicka-kompakt) + 4.5rem); }
+.clen-prihlaska__bok { position: sticky; top: calc(var(--pruh-v, 0px) + var(--hlavicka-kompakt) + 2rem); display: grid; gap: var(--s-6); padding-top: .4rem; }
 .clen-bok__blok > .stitek { margin-bottom: var(--s-3); }
 .clen-bok__jmeno { margin: 0; font: 400 1.45rem/1.2 var(--serif); color: var(--navy); }
 .clen-bok__blok .drobne { margin: .3rem 0 0; color: var(--muted); }
@@ -474,7 +472,7 @@ html.s-pruhem .clen-prihlaska__bok { top: calc(var(--hlavicka-kompakt) + 4.5rem)
 .v2 .policka:focus-visible { outline: 2px solid var(--navy); outline-offset: 4px; }
 .revue-archiv__rozbal > summary .tlumene { font-size: .95rem; font-style: italic; }
 .revue-archiv__seznam { list-style: none; columns: 2 30rem; column-gap: var(--s-8); }
-.revue-archiv__cislo { break-inside: avoid; display: grid; grid-template-columns: 4.6rem minmax(0, 1fr) auto; align-items: baseline; gap: .2rem 1rem; padding: .7rem 0; border-bottom: 1px solid var(--line); scroll-margin-top: calc(var(--hlavicka-kompakt) + 2rem); }
+.revue-archiv__cislo { break-inside: avoid; display: grid; grid-template-columns: 4.6rem minmax(0, 1fr) auto; align-items: baseline; gap: .2rem 1rem; padding: .7rem 0; border-bottom: 1px solid var(--line); scroll-margin-top: calc(var(--pruh-v, 0px) + var(--hlavicka-kompakt) + 2rem); }
 .revue-archiv__cislo:target { background: var(--paper-2); }
 .revue-archiv__oznaceni { font: 400 1.15rem/1.2 var(--serif); color: var(--navy); }
 .revue-archiv__titulky { font-size: var(--t-drobne); color: var(--ink-2); line-height: 1.45; }

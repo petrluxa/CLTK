@@ -145,7 +145,7 @@
 .tenis-osoby--male > * { max-width: 17rem; }
 .tenis-osoby--male .osoba__jmeno { font-size: 1.3rem; }
 .tenis-osoby--male .osoba__foto { margin-bottom: .9rem; }
-.tenis-skupina { scroll-margin-top: calc(var(--hlavicka-kompakt) + 1.5rem); }
+.tenis-skupina { scroll-margin-top: calc(var(--pruh-v, 0px) + var(--hlavicka-kompakt) + 1.5rem); }
 .tenis-skupina .skupina-osob__nazev { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: .3rem 1.5rem; }
 .tenis-skupina__pocet { font: 500 .66rem/1.3 var(--sans); letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
 .osoby--bez-fotek.tenis-osoby { grid-template-columns: repeat(auto-fill, minmax(min(100%, 15.5rem), 1fr)); }
@@ -241,7 +241,7 @@
 .tenis-cenik-pozn p:last-child { margin-bottom: 0; }
 
 .tenis-prihlaska { position: relative; }
-@media (min-width: 900px) { .tenis-prihlaska { position: sticky; top: calc(var(--hlavicka-kompakt) + 1.5rem); } }
+@media (min-width: 900px) { .tenis-prihlaska { position: sticky; top: calc(var(--pruh-v, 0px) + var(--hlavicka-kompakt) + 1.5rem); } }
 .tenis-prihlaska .h3 { margin: .4rem 0 .7rem; }
 .tenis-prihlaska__perex { font-size: var(--t-male); color: var(--ink-2); }
 .tenis-prihlaska__perex p:last-child { margin-bottom: 0; }

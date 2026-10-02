@@ -55,6 +55,15 @@ $hlPolozka = static function (array $m, int $i): string {
 <a class="preskocit" href="#obsah">Přeskočit na obsah</a>
 <header class="hlavicka" id="hlavicka">
   <div class="stuha" aria-hidden="true"><span class="stuha__zlato"></span><span class="stuha__navy"></span></div>
+  <?php /* Horní lišta z návrhu 1: při rolování zajede a logo se zmenší (jen desktop). */ ?>
+  <div class="hlavicka__servis wrap">
+    <p class="hlavicka__jmeno"><span class="sc"><?= typo($hlNazev) ?></span><span class="zalozen">Založen 1893</span></p>
+    <ul class="servis">
+      <?php if ($hlTel !== ''): ?><li><a class="tel" href="<?= e(tel_href($hlTel)) ?>">Recepce <?= e(preg_replace('/\s+/', "\u{00A0}", trim(preg_replace('/^\+420\s*/', '', trim($hlTel))))) ?></a></li><?php endif; ?>
+      <?php $hlObsazenost = bezpecny_odkaz(setting('obsazenost_url')); if ($hlObsazenost !== ''): ?><li><a href="<?= e($hlObsazenost) ?>" target="_blank" rel="noopener">Obsazenost kurtů<span class="vh"> (v novém okně)</span></a></li><?php endif; ?>
+      <li><a href="<?= e(url('kontakt.php')) ?>"<?= here() === 'kontakt.php' ? ' aria-current="page"' : '' ?>>Kontakt</a></li>
+    </ul>
+  </div>
   <div class="hlavicka__hlavni wrap">
     <a class="znak" href="<?= e(url('index.php')) ?>"<?= here() === 'index.php' ? ' aria-current="page"' : '' ?>>
       <img src="<?= e(logo_url('svg')) ?>" width="224" height="256" alt="<?= e($hlZkratka) ?> – úvodní stránka">
