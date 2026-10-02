@@ -132,6 +132,65 @@
     stav();
   }
 
+  /* ── Informační lišta: běžící text ────────────────────────────────────
+        Sada zpráv se naklonuje tolikrát, aby pás pokryl šířku lišty i s rezervou
+        (kopie jsou aria-hidden a jejich odkazy mimo pořadí Tab). Pás se posouvá
+        přesně o šířku jedné sady → plynulá smyčka. Rychlost je stálá (px/s),
+        takže krátká i dlouhá zpráva jedou stejně. S omezeným pohybem zprávy stojí.
+        Zastaví se při najetí myší, při fokusu a tlačítkem pauzy. ─────────── */
+  var LISTA_RYCHLOST = 42; // px za sekundu
+  function initListaInfo() {
+    $$('[data-lista-info]').forEach(function (lista) {
+      if (!jednou(lista, 'lista')) return;
+      var pas = lista.querySelector('.lista-info__pas');
+      var sada = lista.querySelector('.lista-info__sada');
+      var okno = lista.querySelector('.lista-info__okno');
+      var pauza = lista.querySelector('.lista-info__pauza');
+      if (!pas || !sada || !okno) return;
+      var pozastaveno = false;
+
+      function zastav() {
+        lista.classList.remove('je-bezi');
+        $$('.lista-info__sada[data-kopie]', pas).forEach(function (k) { k.remove(); });
+        if (pauza) pauza.hidden = true;
+      }
+      function rozjed() {
+        zastav();
+        if (!CLTK.pohybPovolen()) return;
+        lista.classList.add('je-bezi');
+        var sirkaSady = sada.getBoundingClientRect().width;
+        if (sirkaSady < 1) { zastav(); return; }
+        var potreba = Math.max(1, Math.ceil(okno.clientWidth / sirkaSady)) ;
+        for (var i = 0; i < potreba; i++) {
+          var k = sada.cloneNode(true);
+          k.setAttribute('aria-hidden', 'true');
+          k.setAttribute('data-kopie', '');
+          $$('a, button', k).forEach(function (a) { a.setAttribute('tabindex', '-1'); });
+          pas.appendChild(k);
+        }
+        lista.style.setProperty('--lista-posun', sirkaSady + 'px');
+        lista.style.setProperty('--lista-trvani', (sirkaSady / LISTA_RYCHLOST).toFixed(2) + 's');
+        if (pauza) pauza.hidden = false;
+        lista.classList.toggle('je-pauza', pozastaveno);
+      }
+      if (pauza) pauza.addEventListener('click', function () {
+        pozastaveno = !pozastaveno;
+        lista.classList.toggle('je-pauza', pozastaveno);
+        pauza.setAttribute('aria-pressed', String(pozastaveno));
+        var t = pauza.querySelector('.vh');
+        if (t) t.textContent = pozastaveno ? 'Spustit běžící oznámení' : 'Zastavit běžící oznámení';
+      });
+      var cas = null, posledniSirka = window.innerWidth;
+      window.addEventListener('resize', function () {
+        if (Math.abs(window.innerWidth - posledniSirka) < 2) return; // mobil: změna výšky při rolování
+        posledniSirka = window.innerWidth;
+        clearTimeout(cas); cas = setTimeout(rozjed, 200);
+      });
+      d.addEventListener('cltk:pristupnost', rozjed);
+      if (d.fonts && d.fonts.ready) d.fonts.ready.then(rozjed); else rozjed();
+    });
+  }
+
   /* ── Podmenu: odkaz + tlačítko <button aria-expanded>.
         Desktop: najetí myší, kliknutí, ↓ otevře a skočí na první odkaz,
         ↑/↓ v podmenu, Esc zavře a vrátí fokus, odchod fokusu zavře.
@@ -585,6 +644,7 @@
   function start() {
     initPristupnost();
     initHlavicka();
+    initListaInfo();
     initPodmenu();
     initMenu();
     initDialogy();

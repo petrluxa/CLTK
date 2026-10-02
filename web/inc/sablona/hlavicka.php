@@ -84,13 +84,21 @@ $hlPolozka = static function (array $m, int $i): string {
   </div>
 </header>
 <?php if ($hlOznameni): ?>
-<div class="lista-info" role="region" aria-label="Oznámení klubu">
-  <div class="wrap lista-info__vnitrek">
-    <?php foreach ($hlOznameni as $o):
-      $oOdkaz = bezpecny_odkaz((string)$o['odkaz']); ?>
-    <p><?= $oOdkaz !== '' ? '<a href="' . e($oOdkaz) . '"' . odkaz_attr($oOdkaz) . '>' . typo((string)$o['text']) . '</a>' : typo((string)$o['text']) ?></p>
-    <?php endforeach; ?>
+<div class="lista-info" role="region" aria-label="Oznámení klubu" data-lista-info>
+  <?php /* Běžící text: app.js sadu zpráv naklonuje (kopie aria-hidden) a rozjede ji.
+           Bez JS nebo s omezeným pohybem zůstanou zprávy stát uprostřed. */ ?>
+  <div class="lista-info__okno">
+    <div class="lista-info__pas">
+      <div class="lista-info__sada">
+        <?php foreach ($hlOznameni as $o):
+          $oOdkaz = bezpecny_odkaz((string)$o['odkaz']); ?>
+        <p class="lista-info__zprava"><?= $oOdkaz !== '' ? '<a href="' . e($oOdkaz) . '"' . odkaz_attr($oOdkaz) . '>' . typo((string)$o['text']) . '</a>' : typo((string)$o['text']) ?></p>
+        <span class="lista-info__oddel" aria-hidden="true"></span>
+        <?php endforeach; ?>
+      </div>
+    </div>
   </div>
+  <button class="lista-info__pauza" type="button" aria-pressed="false" hidden><span class="lista-info__pauza-ikona" aria-hidden="true"></span><span class="vh">Zastavit běžící oznámení</span></button>
 </div>
 <?php endif; ?>
 <main id="obsah" tabindex="-1">
