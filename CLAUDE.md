@@ -13,7 +13,8 @@ seed, instalace (`web/instalace.php`) a přenos obsahu (`web/sql/data.json`). We
 `cltk_dokumenty.text`, tisk na A4 místo PDF), rozcestník `dokumenty.php`, archiv klubových turnajů (PDF),
 Revue + newslettery jako PDF v `uploads/`, jubilejní Revue 1893–2023 (`cltk_revue.cislo = 0`), rozvrhy
 Tenisové školy (`cltk_skola` typ `rozvrh`). Na cltk.cz / files.cltk.cz se nesmí odkazovat (kromě e-mailů).
-Běžící server se převádí migrací `web/sql/migrace/2026-10-02-dokumenty-archiv.php` (+ `.data.json`).
+Běžící server se převádí migrací `web/sql/migrace/2026-10-02-dokumenty-archiv.php` (+ `.data.json`) –
+**na testu proběhla 4. 10. 2026** (nanečisto → ostře → opakovaný běh beze změny; soubory z kořene webu smazány).
 
 ## Tvrdá pravidla
 - **Tabulky jen s předponou `cltk_`.** Produkční DB je sdílená s ostrým webem TK Olymp. Do DB jen přes
@@ -108,7 +109,7 @@ s omezeným pohybem (`RM=1`) musí být vidět všechen obsah. Po změně výcho
 Ověřit i stávající funkce, ne jen novou (admin e2e: `podklady/_raw/qa/integrace/e2e-uvod.mjs` s `UV_BASE=…`, `e2e-obsah.mjs` s `BASE=…` –
 kopie jsou napevno nad `web/data/integrace.sqlite`, originály agentů v `admin-uvod/`, `admin-obsah/`).
 
-## Nasazení na test – stav 2. 10. 2026
+## Nasazení na test – stav 4. 10. 2026
 
 - Běží na **https://www.tkolymppraha.cz/cltkv2/** (hosting TK Olymp, Forpsi), **režim přípravy zapnutý**
   (návštěvník vidí přípravnou stránku 503 + noindex, přihlášený správce celý web).
@@ -120,6 +121,9 @@ kopie jsou napevno nad `web/data/integrace.sqlite`, originály agentů v `admin-
 - Proxy Forpsi (aruba-proxy) **drží chvíli staré odpovědi** – po nasazení ověřovat s hlavičkou
   `Cache-Control: no-cache` a `?t=náhodné`. HTTPS vynucuje proxy sama, vlastní přesměrování
   v `web/.htaccess` je proto na testu vypnuté (jinak hrozí smyčka).
+- Archiv (Revue 40 PDF vč. jubilejní, 78 newsletterů, 23 PDF turnajů, obrázky dokumentů) je na serveru v `uploads/`
+  (`--soubory $(cat podklady/_raw/migrace-uploads.txt)`, 612 MB). Spuštění migrace z kořene webu:
+  `python deploy/migrace_archiv.py nahrat|nanecisto|ostre|smazat`.
 - `instalace.php` po instalaci ze serveru smazána, `INSTALL_KEY` z `cltk-config.php` odebrán.
   Účet správce: petr.luxa@gmail.com (heslo v `deploy/ucet-admin.txt`).
 - Ověření po nasazení: `node podklady/_raw/qa/server/prochazka.mjs` (přihlásí se a projde 45 stránek)
