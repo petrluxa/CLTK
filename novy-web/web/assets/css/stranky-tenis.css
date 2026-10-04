@@ -210,6 +210,68 @@
 .tenis-rozvrh .tabulka tbody th[colspan] { text-align: left; }
 .tenis-rozvrh__prazdne td { padding-block: 1.6rem; color: var(--muted); }
 .tenis-rozvrh__pozn { margin-top: var(--s-4); font-size: var(--t-drobne); color: var(--muted); }
+.tenis-rozvrh__kontakt { margin-top: 0; }
+
+/* Rozvrhy tréninků – týdenní mřížka dny × hodiny pro každý kurt (tenisova-skola-rozvrhy.php).
+   Buňka = trénink (papír, navy linka), „3 trenéři“ (zlatě), obsazený kurt (šrafa), volno (čárkovaně).
+   Pod 760 px místo mřížky seznam po dnech (.rozvrh-dny--mobil). */
+.rozvrhy__zalozky { margin-bottom: var(--s-6); }
+.rozvrh__hlava { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .4rem 2rem; margin-bottom: var(--s-6); padding-bottom: .9rem; border-bottom: 1px solid var(--navy); }
+.rozvrh__nazev { font: 400 var(--t-h3)/1.15 var(--serif); color: var(--navy); }
+.rozvrh__platnost { margin: 0; font: 500 .72rem/1.3 var(--sans); letter-spacing: .18em; text-transform: uppercase; color: var(--gold-text); }
+.rozvrh-kurt + .rozvrh-kurt { margin-top: clamp(2rem, 1.4rem + 2vw, 3.4rem); }
+.rozvrh-kurt__nazev { display: flex; align-items: baseline; gap: .9rem; margin: 0 0 var(--s-4); font: 600 1.06rem/1.3 var(--sc); letter-spacing: .1em; color: var(--gold-text); }
+.rozvrh-kurt__nazev::after { content: ''; flex: 1; height: 1px; background: var(--line-gold); transform: translateY(-.3em); }
+.rozvrh-mrizka-box { margin-inline: -3px; }
+.rozvrh-mrizka { width: 100%; min-width: calc(6.6rem + var(--hodin, 7) * 6.4rem); border-collapse: separate; border-spacing: 3px; table-layout: fixed; font-size: var(--t-drobne); }
+.rozvrh-mrizka thead th { padding: .2rem 0 .55rem; text-align: center; font: 500 .66rem/1.2 var(--sans); letter-spacing: .12em; color: var(--muted); font-variant-numeric: lining-nums tabular-nums; }
+.rozvrh-mrizka thead th:first-child { width: 6.6rem; }
+.rozvrh-mrizka tbody th { padding: 0 .7rem 0 0; text-align: left; vertical-align: middle; font: 400 1.14rem/1.2 var(--serif); color: var(--navy); }
+.rozvrh-mrizka td { padding: 0; vertical-align: middle; }
+.rozvrh-mrizka td.je-volno { height: 4.3rem; border: 1px dashed var(--line-2); }
+.rozvrh-mrizka td.je-vic { vertical-align: top; }
+.rozvrh-b { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: .15rem; min-height: 4.3rem; padding: .35rem .4rem;
+  background: var(--paper); border: 1px solid var(--line); box-shadow: inset 0 2px 0 var(--navy); text-align: center; line-height: 1.25; }
+.rozvrh-b + .rozvrh-b { margin-top: 3px; }
+.je-vic .rozvrh-b { min-height: calc((4.3rem - 3px) / 2); padding-block: .2rem; }
+.rozvrh-b b { font: 500 .62rem/1.2 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--navy); }
+.rozvrh-b small { font-size: .72rem; color: var(--muted); }
+.rozvrh-b__pozn { font-style: italic; }
+.rozvrh-b--vice { background: rgba(202, 172, 121, .22); border-color: var(--line-gold); box-shadow: inset 0 2px 0 var(--gold); }
+.rozvrh-b--vice b, .rozvrh-b--vice small { color: var(--gold-text); }
+.rozvrh-b--obsazeno { background: repeating-linear-gradient(135deg, var(--paper-3) 0 5px, #e6dfcf 5px 10px); border-color: var(--line-2); box-shadow: none;
+  font: 500 .6rem/1.2 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.rozvrh-legenda { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1.6rem; margin: var(--s-5) 0 0; padding: 0; list-style: none; font-size: var(--t-drobne); color: var(--ink-2); }
+.rozvrh-legenda li { display: inline-flex; align-items: center; gap: .55rem; }
+.rozvrh-legenda__vzor { width: 1.6rem; height: 1rem; background: var(--paper); border: 1px solid var(--line); box-shadow: inset 0 2px 0 var(--navy); }
+.rozvrh-legenda__vzor--vice { background: rgba(202, 172, 121, .22); border-color: var(--line-gold); box-shadow: inset 0 2px 0 var(--gold); }
+.rozvrh-legenda__vzor--obsazeno { background: repeating-linear-gradient(135deg, var(--paper-3) 0 4px, #e6dfcf 4px 8px); border-color: var(--line-2); box-shadow: none; }
+.rozvrh-legenda__pozn { color: var(--muted); font-style: italic; }
+/* seznam po dnech (mobil) */
+.rozvrh-dny { display: grid; gap: var(--s-4); margin: 0; padding: 0; list-style: none; }
+.rozvrh-dny--mobil { display: none; }
+.rozvrh-den { padding: .9rem 1rem 1rem; background: var(--paper); border: 1px solid var(--line); }
+.rozvrh-den__nazev { margin: 0 0 .5rem; font: 400 1.25rem/1.2 var(--serif); color: var(--navy); }
+.rozvrh-den__hodiny { margin: 0; padding: 0; list-style: none; }
+.rozvrh-den__hodiny li { display: grid; grid-template-columns: 6.4rem minmax(0, 1fr); gap: .8rem; padding: .45rem 0 .45rem .6rem; border-top: 1px solid var(--line); border-left: 2px solid var(--navy); }
+.rozvrh-den__hodiny li.je-vice { border-left-color: var(--gold); background: rgba(202, 172, 121, .14); }
+.rozvrh-den__hodiny li.je-obsazeno { border-left-color: var(--line-2); color: var(--muted); }
+.rozvrh-den__cas { font: 400 1.04rem/1.35 var(--serif); font-variant-numeric: lining-nums tabular-nums; color: var(--navy); white-space: nowrap; }
+.rozvrh-den__co { font-size: var(--t-male); line-height: 1.4; }
+.rozvrh-den__co small { color: var(--muted); }
+.rozvrh-prazdny { margin: 0; }
+.rozvrh-info { margin-top: clamp(2.6rem, 1.8rem + 3vw, 4.6rem); padding-top: clamp(1.8rem, 1.4rem + 1.4vw, 2.8rem); border-top: 1px solid var(--line-2); }
+.rozvrh-info__text h3 { margin-top: 0; }
+.rozvrh-info__text h3 + ul { margin-top: .4em; }
+@media (max-width: 759.98px) {
+  .rozvrh-mrizka-box { display: none; }
+  .rozvrh-dny--mobil { display: grid; }
+}
+@media print {
+  .rozvrh-mrizka { min-width: 0; font-size: 7.5pt; }
+  .rozvrh-b { min-height: 10mm; }
+  .rozvrh[hidden] { display: block !important; }
+}
 
 /* 10 ─ LETNÍ KEMPY ─────────────────────────────────────────────────────────── */
 .tenis-terminy { display: grid; gap: var(--mezera); list-style: none; grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr)); }

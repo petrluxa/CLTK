@@ -287,7 +287,8 @@ List podle `klic`: `kurty-leto`, `kurty-zima`, `clenstvi`, `skola`, `kempy`, `do
 Načíst: `cenik('kurty-zima')` → list se sekcemi a řádky (viz PRUVODCE-FRONT.md).
 
 `price_lists`: `klic`, `nazev`, `podnazev`, `obdobi`, `poznamka_nahore` (*text*), `poznamka_dole` (*text*),
-`pdf_url`, `visible`, `poradi`.
+`pdf_url` (odkaz „Ceník k tisku“ pod ceníkem: stránka dokumentu `dokument.php?d=cenik-zima-2026-2027`, nebo
+https://…; ceníky se jako PDF nenahrávají), `visible`, `poradi`.
 
 `price_sections`: `list_id`, `nazev` (např. „Přetlaková hala · antuka“), `popis` („kurty 5, 6 · od 5. 10. 2026“),
 hlavičky sloupců `hl_nazev`, `hl_cena`, `hl_cena_clen`, `hl_cena_sezona`, `hl_cena_sezona_clen`
@@ -298,9 +299,26 @@ hlavičky sloupců `hl_nazev`, `hl_cena`, `hl_cena_clen`, `hl_cena_sezona`, `hl_
 
 ### `cltk_skola` – tenisová škola
 `typ`: `info` (odstavce informací), `harmonogram` (termíny sezóny, prázdniny – `datum_od/do`, `termin_text`),
-`rozvrh` (`den`, `cas`, `skupina`, `misto` = kurt, `trener`), `kemp` (termín kempu – `datum_od/do`,
+`rozvrh` (jedna buňka rozvrhu – viz níže), `kemp` (termín kempu – `datum_od/do`,
 `nazev`, `cena`, `text`). Další sloupce: `text` (*text*), `odkaz`, `visible`, `poradi`.
 Ceny kempů a školy jsou v cenících (`kempy`, `skola`), tady jsou termíny.
+
+Řádek `rozvrh` = jedna hodina skupiny na jednom kurtu (stránka `tenisova-skola-rozvrhy.php` z nich skládá
+týdenní mřížku: dny × hodiny, pro každý kurt zvlášť):
+
+| sloupec | význam |
+|---|---|
+| nazev | název rozvrhu – řádky se stejným názvem tvoří jeden rozvrh („Zima 2026/27“, „Týden 29. 9. – 2. 10. 2026“) |
+| datum_od, datum_do | platnost rozvrhu (stejná u všech jeho řádků); rozvrh po `datum_do` se na webu neukáže |
+| den | `pondělí` … `neděle` |
+| cas | „16:00–17:00“ (přes dvě hodiny „17:00–19:00“) |
+| misto | kurt („Kurt 5 · antuka“) – podle něj se rozvrh dělí na mřížky |
+| skupina | název skupiny (nepovinný); **`obsazeno`** = kurt je v tu dobu obsazený (šedá buňka, ne trénink školy) |
+| trener | „3 trenéři“ / jméno trenéra (nepovinné) |
+| text | poznámka v buňce („samostatný sparing“) |
+
+Dvě buňky se stejným dnem, časem a kurtem = dvě souběžné skupiny (kurt 5 má hodinu rozdělenou na půlky).
+**Jména dětí do rozvrhu nepatří** – rozvrh je jen po hodinách a skupinách.
 
 ### `cltk_sluzby` – služby v areálu
 | sloupec | význam |
@@ -352,14 +370,22 @@ Texty desky (perexy záložek, poznámky) jsou v `cltk_bloky` se `stranka = 'his
 ## Revue, newslettery, vedení, CTC
 
 ### `cltk_revue` – I.ČLTK Revue
-`rok`, `cislo` (1/2), `oznaceni` („01/2026“), `obalka` (uploads/revue/revue-2026-1.jpg),
+`rok`, `cislo` (1 = jarní, 2 = podzimní, **0 = speciální číslo** – jubilejní Revue 1893–2023),
+`oznaceni` („01/2026“, „1893–2023“), `obalka` (uploads/revue/revue-2026-1.jpg),
 `obalka_popis`, `titulky` (JSON pole), `obsah` (JSON pole dvojic `["06","Velký titul pro Karolínu"]`),
-`stran`, `naklad`, `uzaverka`, `pdf_url` (odkaz na files.cltk.cz), `pdf_soubor` (nahrané PDF,
-má přednost), `pdf_mb`, `visible`, `poradi`. Řadit `ORDER BY rok DESC, cislo DESC`.
+`stran`, `naklad`, `uzaverka`, `pdf_soubor` (nahrané PDF v uploads/revue/pdf/ – „revue/pdf/revue-2026-1.pdf“,
+má přednost), `pdf_url` (odkaz ven, jen když PDF leží jinde), `pdf_mb` („12,7“), `visible`, `poradi`.
+Řadit `ORDER BY rok DESC, cislo DESC`. Adresu PDF dává `revue_cisla()` → `$c['pdf']`.
 
 ### `cltk_newslettery`
-`rok`, `cislo` („5“), `oznaceni` („5/2025“, „130 let“), `nazev` (volitelný), `pdf_cs`, `pdf_en`
-(odkazy), `visible`, `poradi`.
+`rok`, `cislo` („5“), `oznaceni` („5/2025“, „130 let“), `nazev` (volitelný), `pdf_cs_soubor`,
+`pdf_en_soubor` (nahraná PDF v uploads/newslettery/ – „newslettery/newsletter-2025-5.pdf“, mají přednost),
+`pdf_cs`, `pdf_en` (odkazy ven, jen když PDF leží jinde), `visible`, `poradi`.
+Adresy dává `newslettery()` → `$n['cs_url']`, `$n['en_url']`.
+
+Archiv Revue a newsletterů ze starého webu (files.cltk.cz) je od 2. 10. 2026 nahraný na webu
+(migrace `sql/migrace/2026-10-02-dokumenty-archiv.php`). Starý web se vypne – odkazy na cltk.cz
+a files.cltk.cz do databáze nepatří (výjimkou jsou e-mailové adresy @cltk.cz).
 
 ### `cltk_vedeni`
 `skupina`: `vybor` (Výkonný výbor), `kancelar` (kancelář klubu), `kontakt` (další kontakty – wellness,
@@ -387,7 +413,7 @@ nebo `bloky('areal')` (všechny viditelné bloky stránky podle `poradi`).
 | perex | *text* |
 | text | *html* z editoru |
 | foto, foto_popisek | |
-| odkaz, odkaz_text, odkaz2, odkaz2_text | tlačítka (hlavní a vedlejší) |
+| odkaz, odkaz_text, odkaz2, odkaz2_text | tlačítka (hlavní a vedlejší) – stránka webu (`clenstvi.php#prihlaska`, `dokument.php?d=plan-arealu`), soubor webu (`uploads/…`) nebo https://… |
 | doplni_klub | 1 = obsah zatím chybí → šablona ukáže štítek „doplní klub“ |
 
 Seznam výchozích bloků je v `sql/seed/60-bloky.php` a v PRUVODCE-FRONT.md.
@@ -400,10 +426,28 @@ Výchozích 25 partnerů má `logo_mono` = loga dodaná klientem (`podklady/klie
 v administraci a vyrábí stejný odstín; vždy založí nový soubor (staré logo se maže až po uložení).
 
 ### `cltk_dokumenty`
-`nazev`, `kategorie` (`klub` · `cenik` · `provoz` · `clenstvi` · `skola`), `popis`, `soubor`
-(nahrané PDF v uploads/dokumenty/) + `soubor_nazev` (původní název), `url` (odkaz ven, když soubor
-není), `v_paticce` (1 = ve sloupci „Dokumenty a sítě“), `paticka_text` (text odkazu v patičce),
-`visible`, `poradi`. Adresu dává `dokument_url($r)`.
+Dokumenty klubu jsou **stránky webu v klubovém stylu, ne PDF** (rozhodnutí klienta 2. 10. 2026): stanovy,
+pravidla hraní a rezervací, provozní řády, osobní údaje členů, ceník, plán areálu → `dokument.php?d=slug`
+(hlavičkový papír klubu, tisk na A4 místo PDF). PDF zůstávají jen u **příloh archivu klubových turnajů**
+(kategorie `turnaje` – pozvánky, rozlosování, výsledky) a u Revue a newsletterů (vlastní tabulky).
+
+| sloupec | význam |
+|---|---|
+| nazev | „Stanovy I. ČLTK Praha“ (nadpis stránky dokumentu i položka v seznamech); u archivu celý název „Babolat Non Profi Cup 2018 – pozvánka a pravidla soutěže“ |
+| kategorie | `klub` · `clenstvi` · `provoz` · `cenik` · `skola` · `turnaje` (archiv) – `DOKUMENTY_KATEGORIE` v inc/data.php |
+| popis | krátký popis do seznamů a řádek pod nadpisem dokumentu („Účinnost od 20. 6. 2017“) |
+| slug | adresa stránky `dokument.php?d=slug` (malá písmena, číslice, pomlčky; jedinečnost hlídá administrace, ne databáze) |
+| text | *html* z editoru – celý dokument (tabulky jako holé `table/tr/th/td`); vypisuje se přes `html_ocistit()` |
+| rok, skupina | jen archiv: rok a název turnaje / řady („Babolat Non Profi Cup“) – podle nich se archiv seskupuje |
+| stran | jen archiv: počet stran PDF (zjistí se při nahrání, `pdf_pocet_stran()`) |
+| soubor, soubor_nazev | jen archiv: nahrané PDF v uploads/dokumenty/turnaje/ a jeho původní název |
+| url | odkaz jinam – výjimečně, když dokument leží na jiném webu |
+| v_paticce, paticka_text | 1 = ve sloupci „Dokumenty a sítě“ v patičce; text odkazu |
+| visible, poradi | |
+
+Adresy: `dokument_url($r)` = stránka s textem (když má `slug` i `text`), jinak nahrané PDF, jinak odkaz;
+`dokument_podle_slugu()`. Seznamy: `dokumenty($kategorie)` (bez archivu), `dokumenty_archiv()` (archiv turnajů
+po turnajích a letech), rozcestník všech dokumentů `dokumenty.php`.
 
 ---
 

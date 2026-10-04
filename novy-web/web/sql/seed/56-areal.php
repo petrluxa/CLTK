@@ -88,6 +88,6 @@ $b('kontakt', 'lide', ['stitek' => 'Lidé a kontakty', 'nadpis' => 'Na koho se <
     'odkaz' => 'vedeni.php', 'odkaz_text' => 'Výkonný výbor a vedení klubu'], 10);
 $b('kontakt', 'prijezd', ['stitek' => 'Adresa a příjezd', 'nadpis' => 'Jak se k nám <em>dostanete</em>'], 11);
 $b('kontakt', 'fakturace', ['stitek' => 'Fakturační údaje', 'nadpis' => 'Fakturační údaje a <em>účty</em>'], 12);
-$b('kontakt', 'dokumenty', ['stitek' => 'Dokumenty', 'nadpis' => 'Dokumenty ke <em>stažení</em>'], 13);
+$b('kontakt', 'dokumenty', ['stitek' => 'Dokumenty', 'nadpis' => 'Dokumenty <em>klubu</em>'], 13);
 
 seed_log('Bloky areálu, ceníku, Prague Open a kontaktu: ' . $n . ' nových.');

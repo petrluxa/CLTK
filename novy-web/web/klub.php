@@ -235,6 +235,7 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
       <div class="klub-dokumenty">
         <h3 class="h4"><?= trim((string)$bDokumenty['nadpis']) !== '' ? html_inline((string)$bDokumenty['nadpis']) : 'Stanovy a dokumenty' ?></h3>
         <?= dokumenty_html($dokumentyKlub) ?>
+        <p class="klub-dokumenty__vse"><?= tlacitko('dokumenty.php', 'Všechny dokumenty klubu', 'odkaz') ?></p>
       </div>
       <?php endif; ?>
     </div>

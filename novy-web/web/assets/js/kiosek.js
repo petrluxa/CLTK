@@ -92,8 +92,8 @@
       box.className = 'revue-detail';
       box.innerHTML =
         '<div>' + (img ? '<img src="' + esc(img) + '" alt="Obálka I.ČLTK Revue ' + esc(r.o) + '" width="280" height="396">' : '') + '</div>' +
-        '<div><p class="nadtitul">I.ČLTK Revue · ' + (r.c === 1 ? 'jarní' : 'podzimní') + ' číslo ' + esc(r.rok) + '</p>' +
-        '<h3 class="t-d3">Číslo ' + esc(r.o) + '</h3>' +
+        '<div><p class="nadtitul">I.ČLTK Revue · ' + (r.c === 0 ? 'speciální číslo · ' : (r.c === 1 ? 'jarní' : 'podzimní') + ' číslo ') + esc(r.rok) + '</p>' +
+        '<h3 class="t-d3">' + (r.c === 0 ? 'Speciální číslo ' : 'Číslo ') + esc(r.o) + '</h3>' +
         (r.titulky.length ? '<p class="perex" style="font-size:1.12rem">' + r.titulky.map(esc).join(' · ') + '</p>' : '') +
         (r.obalka ? '<p class="poznamka" style="margin-top:12px">Na obálce: ' + esc(r.obalka) + '</p>' : '') +
         (obs ? '<p class="nadtitul" style="margin:22px 0 0">Obsah čísla · strana</p><ol class="revue-detail-obsah">' + obs + '</ol>' : '') +

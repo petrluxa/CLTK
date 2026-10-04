@@ -3,7 +3,7 @@
    kalkulačka ceny s přepínačem „Jsem člen klubu“ (cenik.js, podle návrhu 3),
    pravidla rezervací a trvalých rezervací, doplňkové služby a rezervace.
    Obsah: modul Ceníky (kurty-leto, kurty-zima, doplnkove), Stránky (bloky
-   „cenik-kurtu“), Dokumenty (ceníky v PDF, pravidla hraní) a Texty a údaje
+   „cenik-kurtu“), Dokumenty (ceník a pravidla hraní jako stránky k tisku) a Texty a údaje
    (rezervace, obsazenost, recepce). Natvrdo jsou jen popisky struktury.
    Adresa cenik-kurtu.php#zima / #leto otevře záložku, ?kurt=5#kalkulacka
    předvybere v kalkulačce halu s kurtem 5 (odkaz z plánu areálu). */
@@ -121,11 +121,9 @@ foreach ([['leto', $leto, 'Léto'], ['zima', $zima, 'Zima']] as [$klic, $c, $vyc
 }
 if ($zalozky && !in_array($sezona, array_column($zalozky, 'klic'), true)) $sezona = $zalozky[0]['klic'];
 
-/* dokumenty: ceníky v PDF a pravidla hraní (kategorie provoz, název „Pravidla …“) */
-$doky = array_merge(
-    dokumenty('cenik'),
-    array_values(array_filter(dokumenty('provoz'), fn($d) => mb_stripos((string)$d['nazev'], 'pravidl') !== false))
-);
+/* dokumenty (stránky webu k tisku): ceníky a pravidla hraní a rezervací (kategorie provoz, název „Pravidla …“) */
+$pravidlaDok = dokument_pravidla_hrani();
+$doky = array_merge(dokumenty('cenik'), $pravidlaDok ? [$pravidlaDok] : []);
 
 $rezervace  = rezervace_url();
 $obsazenost = bezpecny_odkaz(setting('obsazenost_url'));
@@ -212,10 +210,11 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
       <?= hlava_sekce($bPravidla, ['cislo' => $maKalk ? 3 : 2, 'id' => 'pravidla-nadpis', 'nadpis' => 'Pravidla rezervací', 'stitek' => 'Rezervace a předplatné']) ?>
       <?= blok_text($bPravidla, 'prose pravidla') ?>
       <?= blok_tlacitka($bPravidla) ?>
+      <?php if ($pravidlaDok): ?><p class="pravidla__cela"><?= tlacitko(dokument_url($pravidlaDok), 'Celá pravidla hraní a rezervací kurtů', 'odkaz') ?></p><?php endif; ?>
     </div>
     <?php if ($doky): ?>
     <div class="sl-5 od-8">
-      <h3 class="h5 mala-hlava">Ceníky a&nbsp;pravidla ke stažení</h3>
+      <h3 class="h5 mala-hlava">Ceníky a&nbsp;pravidla k&nbsp;přečtení a&nbsp;tisku</h3>
       <?= dokumenty_html($doky) ?>
     </div>
     <?php endif; ?>

@@ -1,0 +1,2635 @@
+{
+    "migrace": "2026-10-02-dokumenty-archiv",
+    "popis": "Web bez odkazů na starý web cltk.cz / files.cltk.cz: dokumenty klubu jako stránky webu (ne PDF), Revue a newslettery jako PDF na webu, archiv klubových turnajů, jubilejní Revue 1893–2023, rozvrhy Tenisové školy, prameny bez odkazů na staré články.",
+    "vytvoreno": "2026-10-04 12:16:24",
+    "soubory": {
+        "dokumenty/plan-arealu.jpg": 438160,
+        "dokumenty/stanovy-znak.jpg": 10948,
+        "dokumenty/turnaje/2018-babolat-non-profi-cup-pozvanka.pdf": 250250,
+        "dokumenty/turnaje/2018-babolat-non-profi-cup-vysledky.pdf": 142620,
+        "dokumenty/turnaje/2018-golf-cup-pozvanka.pdf": 491840,
+        "dokumenty/turnaje/2018-oslavy-125-let-klubu-pozvanka.pdf": 47368,
+        "dokumenty/turnaje/2019-babolat-non-profi-cup-pozvanka.pdf": 172843,
+        "dokumenty/turnaje/2019-babolat-non-profi-cup-rozlosovani.pdf": 88983,
+        "dokumenty/turnaje/2019-klubovy-den-vysledky-debla.pdf": 822059,
+        "dokumenty/turnaje/2020-babolat-non-profi-cup-pozvanka.pdf": 207560,
+        "dokumenty/turnaje/2020-babolat-non-profi-cup-rozlosovani.pdf": 91512,
+        "dokumenty/turnaje/2020-babolat-non-profi-cup-tabulky-skupin.pdf": 123897,
+        "dokumenty/turnaje/2021-babolat-non-profi-cup-pozvanka.pdf": 223195,
+        "dokumenty/turnaje/2021-babolat-non-profi-cup-tabulka.pdf": 91362,
+        "dokumenty/turnaje/2021-babolat-non-profi-cup-vysledky.pdf": 140001,
+        "dokumenty/turnaje/2022-babolat-non-profi-cup-pozvanka.pdf": 224411,
+        "dokumenty/turnaje/2022-babolat-non-profi-cup-tabulka.pdf": 93684,
+        "dokumenty/turnaje/2022-babolat-non-profi-cup-vysledky.pdf": 144612,
+        "dokumenty/turnaje/2023-babolat-non-profi-cup-pozvanka.pdf": 169970,
+        "dokumenty/turnaje/2023-babolat-non-profi-cup-tabulka.pdf": 83565,
+        "dokumenty/turnaje/2023-babolat-non-profi-cup-vysledky.pdf": 148952,
+        "dokumenty/turnaje/2024-babolat-amateur-tour-pozvanka.pdf": 150467,
+        "dokumenty/turnaje/2024-babolat-amateur-tour-vysledky.pdf": 147676,
+        "dokumenty/turnaje/2026-babolat-amateur-tour-pozvanka.pdf": 249410,
+        "dokumenty/turnaje/2026-babolat-amateur-tour-tabulka.pdf": 236284,
+        "newslettery/newsletter-2015-1.pdf": 167848,
+        "newslettery/newsletter-2015-2.pdf": 214117,
+        "newslettery/newsletter-2015-3.pdf": 190838,
+        "newslettery/newsletter-2015-4.pdf": 202833,
+        "newslettery/newsletter-2015-5.pdf": 230446,
+        "newslettery/newsletter-2015-6.pdf": 214876,
+        "newslettery/newsletter-2015-7.pdf": 230603,
+        "newslettery/newsletter-2016-1.pdf": 243314,
+        "newslettery/newsletter-2016-10.pdf": 314225,
+        "newslettery/newsletter-2016-2.pdf": 209042,
+        "newslettery/newsletter-2016-3.pdf": 224552,
+        "newslettery/newsletter-2016-4.pdf": 200365,
+        "newslettery/newsletter-2016-5.pdf": 211660,
+        "newslettery/newsletter-2016-6.pdf": 181254,
+        "newslettery/newsletter-2016-7.pdf": 148046,
+        "newslettery/newsletter-2016-8.pdf": 207505,
+        "newslettery/newsletter-2016-9.pdf": 253120,
+        "newslettery/newsletter-2017-1.pdf": 423372,
+        "newslettery/newsletter-2017-2.pdf": 324672,
+        "newslettery/newsletter-2017-3.pdf": 281805,
+        "newslettery/newsletter-2017-4.pdf": 279448,
+        "newslettery/newsletter-2017-5.pdf": 326674,
+        "newslettery/newsletter-2017-6.pdf": 246504,
+        "newslettery/newsletter-2017-7.pdf": 247807,
+        "newslettery/newsletter-2018-1.pdf": 178141,
+        "newslettery/newsletter-2018-2.pdf": 184225,
+        "newslettery/newsletter-2018-3.pdf": 314828,
+        "newslettery/newsletter-2018-4.pdf": 261924,
+        "newslettery/newsletter-2018-5.pdf": 325504,
+        "newslettery/newsletter-2018-6.pdf": 269637,
+        "newslettery/newsletter-2019-2.pdf": 236164,
+        "newslettery/newsletter-2019-4-en.pdf": 263919,
+        "newslettery/newsletter-2019-4.pdf": 259367,
+        "newslettery/newsletter-2019-5-en.pdf": 220048,
+        "newslettery/newsletter-2019-5.pdf": 218908,
+        "newslettery/newsletter-2020-1-en.pdf": 308217,
+        "newslettery/newsletter-2020-1.pdf": 306430,
+        "newslettery/newsletter-2020-2-en.pdf": 258360,
+        "newslettery/newsletter-2020-2.pdf": 220415,
+        "newslettery/newsletter-2020-3-en.pdf": 39599,
+        "newslettery/newsletter-2020-3.pdf": 374288,
+        "newslettery/newsletter-2020-4-en.pdf": 419177,
+        "newslettery/newsletter-2020-4.pdf": 414904,
+        "newslettery/newsletter-2021-1-en.pdf": 200067,
+        "newslettery/newsletter-2021-1.pdf": 200788,
+        "newslettery/newsletter-2021-2-en.pdf": 183657,
+        "newslettery/newsletter-2021-2.pdf": 209159,
+        "newslettery/newsletter-2021-3-en.pdf": 347751,
+        "newslettery/newsletter-2021-3.pdf": 362754,
+        "newslettery/newsletter-2022-3.pdf": 353020,
+        "newslettery/newsletter-2023-130-let-klubu-en.pdf": 1656632,
+        "newslettery/newsletter-2023-130-let-klubu.pdf": 1606294,
+        "newslettery/newsletter-2023-prosinec-en.pdf": 1660466,
+        "newslettery/newsletter-2023-prosinec.pdf": 1660700,
+        "newslettery/newsletter-2023-rijen-en.pdf": 1628882,
+        "newslettery/newsletter-2023-rijen.pdf": 1629470,
+        "newslettery/newsletter-2024-1-en.pdf": 1642912,
+        "newslettery/newsletter-2024-1.pdf": 1647335,
+        "newslettery/newsletter-2024-2.pdf": 1608313,
+        "newslettery/newsletter-2024-3.pdf": 1690544,
+        "newslettery/newsletter-2024-4-en.pdf": 1654765,
+        "newslettery/newsletter-2024-4.pdf": 1651643,
+        "newslettery/newsletter-2025-1-en.pdf": 1661197,
+        "newslettery/newsletter-2025-1.pdf": 1667815,
+        "newslettery/newsletter-2025-2-en.pdf": 1684249,
+        "newslettery/newsletter-2025-2.pdf": 1688486,
+        "newslettery/newsletter-2025-3-en.pdf": 1831378,
+        "newslettery/newsletter-2025-3.pdf": 1842346,
+        "newslettery/newsletter-2025-4-en.pdf": 3599962,
+        "newslettery/newsletter-2025-4.pdf": 3603916,
+        "newslettery/newsletter-2025-5-en.pdf": 1899871,
+        "newslettery/newsletter-2025-5.pdf": 1904083,
+        "newslettery/newsletter-2026-1-en.pdf": 1644505,
+        "newslettery/newsletter-2026-1.pdf": 1649056,
+        "newslettery/newsletter-2026-2-en.pdf": 1816080,
+        "newslettery/newsletter-2026-2.pdf": 1812994,
+        "newslettery/newsletter-2026-3-en.pdf": 2017392,
+        "newslettery/newsletter-2026-3.pdf": 2004622,
+        "revue/pdf/revue-2006-1.pdf": 15572338,
+        "revue/pdf/revue-2006-2.pdf": 21036785,
+        "revue/pdf/revue-2007-1.pdf": 18887345,
+        "revue/pdf/revue-2007-2.pdf": 17618172,
+        "revue/pdf/revue-2008-1.pdf": 17112458,
+        "revue/pdf/revue-2008-2.pdf": 16771802,
+        "revue/pdf/revue-2009-1.pdf": 6097765,
+        "revue/pdf/revue-2009-2.pdf": 7001897,
+        "revue/pdf/revue-2010-1.pdf": 6804751,
+        "revue/pdf/revue-2010-2.pdf": 6316449,
+        "revue/pdf/revue-2011-1.pdf": 11874479,
+        "revue/pdf/revue-2011-2.pdf": 17211259,
+        "revue/pdf/revue-2012-1.pdf": 13388973,
+        "revue/pdf/revue-2012-2.pdf": 25199803,
+        "revue/pdf/revue-2013-1.pdf": 20770516,
+        "revue/pdf/revue-2013-2.pdf": 12337336,
+        "revue/pdf/revue-2014-1.pdf": 19447424,
+        "revue/pdf/revue-2014-2.pdf": 20624694,
+        "revue/pdf/revue-2015-1.pdf": 19610056,
+        "revue/pdf/revue-2015-2.pdf": 19179284,
+        "revue/pdf/revue-2017-1.pdf": 12033614,
+        "revue/pdf/revue-2017-2.pdf": 10843141,
+        "revue/pdf/revue-2018-1.pdf": 12359556,
+        "revue/pdf/revue-2018-2.pdf": 12488391,
+        "revue/pdf/revue-2019-1.pdf": 12064908,
+        "revue/pdf/revue-2019-2.pdf": 10934970,
+        "revue/pdf/revue-2020-1.pdf": 12310524,
+        "revue/pdf/revue-2020-2.pdf": 11237205,
+        "revue/pdf/revue-2021-1.pdf": 11044360,
+        "revue/pdf/revue-2021-2.pdf": 11894962,
+        "revue/pdf/revue-2022-1.pdf": 9282416,
+        "revue/pdf/revue-2022-2.pdf": 9615494,
+        "revue/pdf/revue-2023-1.pdf": 14099364,
+        "revue/pdf/revue-2023-2.pdf": 14033540,
+        "revue/pdf/revue-2024-1.pdf": 10805626,
+        "revue/pdf/revue-2024-2.pdf": 10729196,
+        "revue/pdf/revue-2025-1.pdf": 9972106,
+        "revue/pdf/revue-2025-2.pdf": 13675082,
+        "revue/pdf/revue-2026-1.pdf": 13270760,
+        "revue/pdf/revue-special-130-let-1893-2023.pdf": 6910811,
+        "revue/revue-special-130-let.jpg": 116513,
+        "revue/revue-special-130-let.webp": 71278
+    },
+    "revue": [
+        {
+            "stara_url": "https://files.cltk.cz/2so4wzo52sl01/REVUE_2026_1_web.pdf",
+            "soubor": "revue/pdf/revue-2026-1.pdf",
+            "mb": "12,7"
+        },
+        {
+            "stara_url": "https://files.cltk.cz/o6xjsls6zgj01/2025_2_web.pdf",
+            "soubor": "revue/pdf/revue-2025-2.pdf",
+            "mb": "13,0"
+        },
+        {
+            "stara_url": "https://files.cltk.cz/n8asxxd98fg01/I.%C4%8CLTK%20Revue%2001_2025.pdf",
+            "soubor": "revue/pdf/revue-2025-1.pdf",
+            "mb": "9,5"
+        },
+        {
+            "stara_url": "https://files.cltk.cz/fa4cnmbc2qc01/REVUE_2024_2_web.pdf",
+            "soubor": "revue/pdf/revue-2024-2.pdf",
+            "mb": "10,2"
+        },
+        {
+            "stara_url": "https://files.cltk.cz/7bbfxfji4n701/REVUE_2024_1_web.pdf",
+            "soubor": "revue/pdf/revue-2024-1.pdf",
+            "mb": "10,3"
+        },
+        {
+            "stara_url": "https://files.cltk.cz/mgzpjbrkaq401/2023_2_web.pdf",
+            "soubor": "revue/pdf/revue-2023-2.pdf",
+            "mb": "13,4"
+        },
+        {
+            "stara_url": "https://files.cltk.cz/zmtia6qkem301/2023_1_web%20%28kopie%29.pdf",
+            "soubor": "revue/pdf/revue-2023-1.pdf",
+            "mb": "13,4"
+        },
+        {
+            "stara_url": "https://files.cltk.cz/wuz6a5cj4w34/2022_2_web.pdf",
+            "soubor": "revue/pdf/revue-2022-2.pdf",
+            "mb": "9,2"
+        },
+        {
+            "stara_url": "https://files.cltk.cz/kbegd1fjgt34/2022_1_web%20%28kopie%29.pdf",
+            "soubor": "revue/pdf/revue-2022-1.pdf",
+            "mb": "8,9"
+        },
+        {
+            "stara_url": "https://files.cltk.cz/88ezxt1iuz32/2021_2_web%20%28kopie%29.pdf",
+            "soubor": "revue/pdf/revue-2021-2.pdf",
+            "mb": "11,3"
+        },
+        {
+            "stara_url": "https://files.cltk.cz/rjqd2dshct31/2021_1_web.pdf",
+            "soubor": "revue/pdf/revue-2021-1.pdf",
+            "mb": "10,5"
+        },
+        {
+            "stara_url": "https://files.cltk.cz/pntjr4skon27/2020_2_web.pdf",
+            "soubor": "revue/pdf/revue-2020-2.pdf",
+            "mb": "10,7"
+        },
+        {
+            "stara_url": "https://files.cltk.cz/1mdybjtoem22/2020_1_web.pdf",
+            "soubor": "revue/pdf/revue-2020-1.pdf",
+            "mb": "11,7"
+        },
+        {
+            "stara_url": "https://files.cltk.cz/rfo7dwdpz621/2019_2_web.pdf",
+            "soubor": "revue/pdf/revue-2019-2.pdf",
+            "mb": "10,4"
+        },
+        {
+            "stara_url": "https://files.cltk.cz/rk3mxshusn16/1_2019_web.pdf",
+            "soubor": "revue/pdf/revue-2019-1.pdf",
+            "mb": "11,5"
+        },
+        {
+            "stara_url": "https://files.cltk.cz/66n4o2cu4r16/2_2018_web.pdf",
+            "soubor": "revue/pdf/revue-2018-2.pdf",
+            "mb": "11,9"
+        },
+        {
+            "stara_url": "https://files.cltk.cz/35au2pku6m16/1_2018_web.pdf",
+            "soubor": "revue/pdf/revue-2018-1.pdf",
+            "mb": "11,8"
+        },
+        {
+            "stara_url": "https://files.cltk.cz/pcpcsxeugp16/2_2017_web.pdf",
+            "soubor": "revue/pdf/revue-2017-2.pdf",
+            "mb": "10,3"
+        },
+        {
+            "stara_url": "https://files.cltk.cz/ymf3ypbgjk02/1_2017_web.pdf",
+            "soubor": "revue/pdf/revue-2017-1.pdf",
+            "mb": "11,5"
+        },
+        {
+            "stara_url": "https://files.cltk.cz/si4ee9tbpf05/2_15_web.compressed.pdf",
+            "soubor": "revue/pdf/revue-2015-2.pdf",
+            "mb": "18,3"
+        },
+        {
+            "stara_url": "https://files.cltk.cz/d7ghcdqbdh05/1_15_web.compressed.pdf",
+            "soubor": "revue/pdf/revue-2015-1.pdf",
+            "mb": "18,7"
+        },
+        {
+            "stara_url": "https://files.cltk.cz/q5pqa3zbfc05/2_14_web.pdf",
+            "soubor": "revue/pdf/revue-2014-2.pdf",
+            "mb": "19,7"
+        },
+        {
+            "stara_url": "https://files.cltk.cz/97moit5c5905/1_14_web.compressed.pdf",
+            "soubor": "revue/pdf/revue-2014-1.pdf",
+            "mb": "18,5"
+        },
+        {
+            "stara_url": "https://files.cltk.cz/k2f8xh6h3402/2_13_web.pdf",
+            "soubor": "revue/pdf/revue-2013-2.pdf",
+            "mb": "11,8"
+        },
+        {
+            "stara_url": "https://files.cltk.cz/n3pyf2ihhw01/1_13_web.pdf",
+            "soubor": "revue/pdf/revue-2013-1.pdf",
+            "mb": "19,8"
+        },
+        {
+            "stara_url": "https://files.cltk.cz/rz4oqiegwi02/REVUE_2_12_web.pdf",
+            "soubor": "revue/pdf/revue-2012-2.pdf",
+            "mb": "24,0"
+        },
+        {
+            "stara_url": "https://files.cltk.cz/5e8tjxkhtt01/1_12_web.pdf",
+            "soubor": "revue/pdf/revue-2012-1.pdf",
+            "mb": "12,8"
+        },
+        {
+            "stara_url": "https://files.cltk.cz/jbozuehg9h02/REVUE_2_11_web.pdf",
+            "soubor": "revue/pdf/revue-2011-2.pdf",
+            "mb": "16,4"
+        },
+        {
+            "stara_url": "https://files.cltk.cz/wcms57ngyd02/revue_1_2011.pdf",
+            "soubor": "revue/pdf/revue-2011-1.pdf",
+            "mb": "11,3"
+        },
+        {
+            "stara_url": "https://files.cltk.cz/3rmn2e9hf202/2_10_revue.pdf",
+            "soubor": "revue/pdf/revue-2010-2.pdf",
+            "mb": "6,0"
+        },
+        {
+            "stara_url": "https://files.cltk.cz/7nlznsnh7s01/1_10_4_ALL.pdf",
+            "soubor": "revue/pdf/revue-2010-1.pdf",
+            "mb": "6,5"
+        },
+        {
+            "stara_url": "https://files.cltk.cz/m3b47achrz01/2_09.pdf",
+            "soubor": "revue/pdf/revue-2009-2.pdf",
+            "mb": "6,7"
+        },
+        {
+            "stara_url": "https://files.cltk.cz/2najb6fh5y01/1_2009.pdf",
+            "soubor": "revue/pdf/revue-2009-1.pdf",
+            "mb": "5,8"
+        },
+        {
+            "stara_url": "https://files.cltk.cz/sgmf1bkglf02/revue_2_08.pdf",
+            "soubor": "revue/pdf/revue-2008-2.pdf",
+            "mb": "16,0"
+        },
+        {
+            "stara_url": "https://files.cltk.cz/lmh8a3qgbc02/revue_1_08.pdf",
+            "soubor": "revue/pdf/revue-2008-1.pdf",
+            "mb": "16,3"
+        },
+        {
+            "stara_url": "https://files.cltk.cz/xwdmeysgna02/2007_2.pdf",
+            "soubor": "revue/pdf/revue-2007-2.pdf",
+            "mb": "16,8"
+        },
+        {
+            "stara_url": "https://files.cltk.cz/zxczitwg1902/2007_1.pdf",
+            "soubor": "revue/pdf/revue-2007-1.pdf",
+            "mb": "18,0"
+        },
+        {
+            "stara_url": "https://files.cltk.cz/pxqdnpzgd702/2006_2.pdf",
+            "soubor": "revue/pdf/revue-2006-2.pdf",
+            "mb": "20,1"
+        },
+        {
+            "stara_url": "https://files.cltk.cz/d25srl3hp502/2006_1.pdf",
+            "soubor": "revue/pdf/revue-2006-1.pdf",
+            "mb": "14,9"
+        }
+    ],
+    "newslettery": [
+        {
+            "jazyk": "cs",
+            "stara_url": "https://files.cltk.cz/ob3upw1581n01/Newsletter%203%3A2026.pdf?download",
+            "soubor": "newslettery/newsletter-2026-3.pdf"
+        },
+        {
+            "jazyk": "en",
+            "stara_url": "https://files.cltk.cz/gltel1y4u2n01/EN%20Newsletter%203%3A2026.pdf?download",
+            "soubor": "newslettery/newsletter-2026-3-en.pdf"
+        },
+        {
+            "jazyk": "cs",
+            "stara_url": "https://files.cltk.cz/3gfd5r45iam01/Newsletter%202%3A2026.pages.pdf?download",
+            "soubor": "newslettery/newsletter-2026-2.pdf"
+        },
+        {
+            "jazyk": "en",
+            "stara_url": "https://files.cltk.cz/b5ok9n75u8m01/EN%20Newsletter%202%3A2026.pages.pdf?download",
+            "soubor": "newslettery/newsletter-2026-2-en.pdf"
+        },
+        {
+            "jazyk": "cs",
+            "stara_url": "https://files.cltk.cz/z21mu7d66ok01/Newsletter%201%3A2026.pdf?download",
+            "soubor": "newslettery/newsletter-2026-1.pdf"
+        },
+        {
+            "jazyk": "en",
+            "stara_url": "https://files.cltk.cz/9afaqba6spk01/EN%20Newsletter%201%3A2026.pdf?download",
+            "soubor": "newslettery/newsletter-2026-1-en.pdf"
+        },
+        {
+            "jazyk": "cs",
+            "stara_url": "https://files.cltk.cz/irruwdh6gyj01/Newsletter%205%3A2025.pdf?download",
+            "soubor": "newslettery/newsletter-2025-5.pdf"
+        },
+        {
+            "jazyk": "en",
+            "stara_url": "https://files.cltk.cz/n9f92ak6swj01/EN%20Newsletter%205%3A2025.pdf?download",
+            "soubor": "newslettery/newsletter-2025-5-en.pdf"
+        },
+        {
+            "jazyk": "cs",
+            "stara_url": "https://files.cltk.cz/a6xb82e6g5j01/Newsletter%204%3A2025.pdf?download",
+            "soubor": "newslettery/newsletter-2025-4.pdf"
+        },
+        {
+            "jazyk": "en",
+            "stara_url": "https://files.cltk.cz/b4rw36b647j01/EN%20Newsletter%204%3A2025.pdf?download",
+            "soubor": "newslettery/newsletter-2025-4-en.pdf"
+        },
+        {
+            "jazyk": "cs",
+            "stara_url": "https://files.cltk.cz/a6ndwmw7emh01/eNewsletter%203%3A2025.pdf?download",
+            "soubor": "newslettery/newsletter-2025-3.pdf"
+        },
+        {
+            "jazyk": "en",
+            "stara_url": "https://files.cltk.cz/ytoyqqs72oh01/eNewsletter%203%3A2025%20EN.pdf?download",
+            "soubor": "newslettery/newsletter-2025-3-en.pdf"
+        },
+        {
+            "jazyk": "cs",
+            "stara_url": "https://files.cltk.cz/f87iwez9srf01/Newsletter%202%3A2025.pdf?download",
+            "soubor": "newslettery/newsletter-2025-2.pdf"
+        },
+        {
+            "jazyk": "en",
+            "stara_url": "https://files.cltk.cz/ojts1b3a6qf01/EN%20Newsletter%202%3A2025.pdf?download",
+            "soubor": "newslettery/newsletter-2025-2-en.pdf"
+        },
+        {
+            "jazyk": "cs",
+            "stara_url": "https://files.cltk.cz/eds76y8a43f01/Newsletter.pdf?download",
+            "soubor": "newslettery/newsletter-2025-1.pdf"
+        },
+        {
+            "jazyk": "en",
+            "stara_url": "https://files.cltk.cz/lcze236aq4f01/EN%20Newsletter.pdf?download",
+            "soubor": "newslettery/newsletter-2025-1-en.pdf"
+        },
+        {
+            "jazyk": "cs",
+            "stara_url": "https://files.cltk.cz/qlzkl82cgdd01/Newsletter%204%20prosinec%202024.pdf?download",
+            "soubor": "newslettery/newsletter-2024-4.pdf"
+        },
+        {
+            "jazyk": "en",
+            "stara_url": "https://files.cltk.cz/ncxxp45csbd01/Newsletter%204%20December%202024.pdf?download",
+            "soubor": "newslettery/newsletter-2024-4-en.pdf"
+        },
+        {
+            "jazyk": "cs",
+            "stara_url": "https://files.cltk.cz/h3ai63pck9c01/Newsletter%203%3A2024.pdf?download",
+            "soubor": "newslettery/newsletter-2024-3.pdf"
+        },
+        {
+            "jazyk": "cs",
+            "stara_url": "https://files.cltk.cz/725bso3hs7901/Newsletter%202%3A2024%20rev.pdf?download",
+            "soubor": "newslettery/newsletter-2024-2.pdf"
+        },
+        {
+            "jazyk": "cs",
+            "stara_url": "https://files.cltk.cz/skktdjzisp601/Newsletter%201%3A2024.pdf?download",
+            "soubor": "newslettery/newsletter-2024-1.pdf"
+        },
+        {
+            "jazyk": "en",
+            "stara_url": "https://files.cltk.cz/o6q1if3j6o601/EN%20Newsletter%201%3A2024.pdf?download",
+            "soubor": "newslettery/newsletter-2024-1-en.pdf"
+        },
+        {
+            "jazyk": "cs",
+            "stara_url": "https://files.cltk.cz/9ikz8dmk62501/Newsletter%20prosinec%202023.pdf?download",
+            "soubor": "newslettery/newsletter-2023-prosinec.pdf"
+        },
+        {
+            "jazyk": "en",
+            "stara_url": "https://files.cltk.cz/zmsgd9pkiz401/Newsletter%20December%202023.pdf?download",
+            "soubor": "newslettery/newsletter-2023-prosinec-en.pdf"
+        },
+        {
+            "jazyk": "cs",
+            "stara_url": "https://files.cltk.cz/ybu7iq9kcl401/Newsletter%20%C5%99%C3%ADjen%202023.pdf?download",
+            "soubor": "newslettery/newsletter-2023-rijen.pdf"
+        },
+        {
+            "jazyk": "en",
+            "stara_url": "https://files.cltk.cz/4iymmmckoj401/Newsletter%20October%202023.pdf?download",
+            "soubor": "newslettery/newsletter-2023-rijen-en.pdf"
+        },
+        {
+            "jazyk": "cs",
+            "stara_url": "https://files.cltk.cz/jfl1wwfkk1401/newsletter%20130%20let%20klubu%202023-08.pdf",
+            "soubor": "newslettery/newsletter-2023-130-let-klubu.pdf"
+        },
+        {
+            "jazyk": "en",
+            "stara_url": "https://files.cltk.cz/7lch1sikxy301/newsletter%20130%20let%20klubu%202023-08%20%28EN%29.pdf",
+            "soubor": "newslettery/newsletter-2023-130-let-klubu-en.pdf"
+        },
+        {
+            "jazyk": "cs",
+            "stara_url": "https://files.cltk.cz/icqy93qjc5201/newsletter_3_22.pdf?download",
+            "soubor": "newslettery/newsletter-2022-3.pdf"
+        },
+        {
+            "jazyk": "cs",
+            "stara_url": "https://files.cltk.cz/jd3gwn9icn32/newsletter_3_21.pdf?download",
+            "soubor": "newslettery/newsletter-2021-3.pdf"
+        },
+        {
+            "jazyk": "en",
+            "stara_url": "https://files.cltk.cz/u5ix1kciol32/newsletter_3_21_en.pdf?download",
+            "soubor": "newslettery/newsletter-2021-3-en.pdf"
+        },
+        {
+            "jazyk": "cs",
+            "stara_url": "https://files.cltk.cz/3rxked4ic131/newsletter_2_21.pdf?download",
+            "soubor": "newslettery/newsletter-2021-2.pdf"
+        },
+        {
+            "jazyk": "en",
+            "stara_url": "https://files.cltk.cz/3dr3j97ioy30/newsletter_2_21%20_EN.pdf?download",
+            "soubor": "newslettery/newsletter-2021-2-en.pdf"
+        },
+        {
+            "jazyk": "cs",
+            "stara_url": "https://files.cltk.cz/adno5kmkcj28/newsletter_1_21.pdf?download",
+            "soubor": "newslettery/newsletter-2021-1.pdf"
+        },
+        {
+            "jazyk": "en",
+            "stara_url": "https://files.cltk.cz/fjt6agpkoh28/newsletter_1_21_en.pdf?download",
+            "soubor": "newslettery/newsletter-2021-1-en.pdf"
+        },
+        {
+            "jazyk": "cs",
+            "stara_url": "https://files.cltk.cz/di5ggfnkzq27/newsletter_4_20.pdf?download",
+            "soubor": "newslettery/newsletter-2020-4.pdf"
+        },
+        {
+            "jazyk": "en",
+            "stara_url": "https://files.cltk.cz/cjgf7pmkau27/newsletter_4_20%20%28EN%29.pdf?download",
+            "soubor": "newslettery/newsletter-2020-4-en.pdf"
+        },
+        {
+            "jazyk": "cs",
+            "stara_url": "https://files.cltk.cz/sw5zjbqkcp27/newsletter_3_20.pdf?download",
+            "soubor": "newslettery/newsletter-2020-3.pdf"
+        },
+        {
+            "jazyk": "en",
+            "stara_url": "https://files.cltk.cz/wtq7blpkms27/EN%20Newsletter%203%3A2020.pdf?download",
+            "soubor": "newslettery/newsletter-2020-3-en.pdf"
+        },
+        {
+            "jazyk": "cs",
+            "stara_url": "https://files.cltk.cz/m9ph5r8ng524/newsletter_2_20.pdf?download",
+            "soubor": "newslettery/newsletter-2020-2.pdf"
+        },
+        {
+            "jazyk": "en",
+            "stara_url": "https://files.cltk.cz/8naz9nbns324/newsletter_2_20_EN.pdf?download",
+            "soubor": "newslettery/newsletter-2020-2-en.pdf"
+        },
+        {
+            "jazyk": "cs",
+            "stara_url": "https://files.cltk.cz/o7ead5apua22/newsletter_1_20.pdf?download",
+            "soubor": "newslettery/newsletter-2020-1.pdf"
+        },
+        {
+            "jazyk": "en",
+            "stara_url": "https://files.cltk.cz/u9xr897pic22/newsletter_1_20_en.pdf?download",
+            "soubor": "newslettery/newsletter-2020-1-en.pdf"
+        },
+        {
+            "jazyk": "cs",
+            "stara_url": "https://files.cltk.cz/eq86zoepkd21/newsletter_5_19.pdf?download",
+            "soubor": "newslettery/newsletter-2019-5.pdf"
+        },
+        {
+            "jazyk": "en",
+            "stara_url": "https://files.cltk.cz/ucmhwj9pug21/newsletter_5_19_en.pdf?download",
+            "soubor": "newslettery/newsletter-2019-5-en.pdf"
+        },
+        {
+            "jazyk": "cs",
+            "stara_url": "https://files.cltk.cz/p14bc8prof19/newsletter_4_19.pdf?download",
+            "soubor": "newslettery/newsletter-2019-4.pdf"
+        },
+        {
+            "jazyk": "en",
+            "stara_url": "https://files.cltk.cz/uewj8cmrch19/newsletter_4_19_en.pdf?download",
+            "soubor": "newslettery/newsletter-2019-4-en.pdf"
+        },
+        {
+            "jazyk": "cs",
+            "stara_url": "https://files.cltk.cz/68rmpeluik16/newsletter%202019-01.pdf",
+            "soubor": "newslettery/newsletter-2019-2.pdf"
+        },
+        {
+            "jazyk": "cs",
+            "stara_url": "https://files.cltk.cz/h555uaouui16/newsletter%202018-06.pdf",
+            "soubor": "newslettery/newsletter-2018-6.pdf"
+        },
+        {
+            "jazyk": "cs",
+            "stara_url": "https://files.cltk.cz/jmbkz6ru8h16/newsletter%202018-05.pdf",
+            "soubor": "newslettery/newsletter-2018-5.pdf"
+        },
+        {
+            "jazyk": "cs",
+            "stara_url": "https://files.cltk.cz/wje253uukf16/newsletter%202018-04.pdf",
+            "soubor": "newslettery/newsletter-2018-4.pdf"
+        },
+        {
+            "jazyk": "cs",
+            "stara_url": "https://files.cltk.cz/idyi9yxuxd16/newsletter%202018-03.pdf",
+            "soubor": "newslettery/newsletter-2018-3.pdf"
+        },
+        {
+            "jazyk": "cs",
+            "stara_url": "https://files.cltk.cz/c1f1et1wac16/newsletter%202018-02.pdf",
+            "soubor": "newslettery/newsletter-2018-2.pdf"
+        },
+        {
+            "jazyk": "cs",
+            "stara_url": "https://files.cltk.cz/m6uhip4wma16/newsletter%202018-01.pdf",
+            "soubor": "newslettery/newsletter-2018-1.pdf"
+        },
+        {
+            "jazyk": "cs",
+            "stara_url": "https://files.cltk.cz/gt4zml7wz816/newsletter%202017-07.pdf",
+            "soubor": "newslettery/newsletter-2017-7.pdf"
+        },
+        {
+            "jazyk": "cs",
+            "stara_url": "https://files.cltk.cz/95lgrhawc716/newsletter%202017-06.pdf",
+            "soubor": "newslettery/newsletter-2017-6.pdf"
+        },
+        {
+            "jazyk": "cs",
+            "stara_url": "https://files.cltk.cz/wzcxwddwo516/newsletter%202017-05.pdf",
+            "soubor": "newslettery/newsletter-2017-5.pdf"
+        },
+        {
+            "jazyk": "cs",
+            "stara_url": "https://files.cltk.cz/7mbe2agw2416/newsletter%202017-04.pdf",
+            "soubor": "newslettery/newsletter-2017-4.pdf"
+        },
+        {
+            "jazyk": "cs",
+            "stara_url": "https://files.cltk.cz/ogpu66jwe216/newsletter%202017-03.pdf",
+            "soubor": "newslettery/newsletter-2017-3.pdf"
+        },
+        {
+            "jazyk": "cs",
+            "stara_url": "https://files.cltk.cz/hr8db2mwqz15/newsletter%202017-02.pdf",
+            "soubor": "newslettery/newsletter-2017-2.pdf"
+        },
+        {
+            "jazyk": "cs",
+            "stara_url": "https://files.cltk.cz/4cptfxow4y15/newsletter%202017-01.pdf",
+            "soubor": "newslettery/newsletter-2017-1.pdf"
+        },
+        {
+            "jazyk": "cs",
+            "stara_url": "https://files.cltk.cz/jydcksrwgw15/newsletter%202016-10.pdf",
+            "soubor": "newslettery/newsletter-2016-10.pdf"
+        },
+        {
+            "jazyk": "cs",
+            "stara_url": "https://files.cltk.cz/p9qsoouwst15/newsletter%202016-09.pdf",
+            "soubor": "newslettery/newsletter-2016-9.pdf"
+        },
+        {
+            "jazyk": "cs",
+            "stara_url": "https://files.cltk.cz/h4bbtkyw6s15/newsletter%202016-08.pdf",
+            "soubor": "newslettery/newsletter-2016-8.pdf"
+        },
+        {
+            "jazyk": "cs",
+            "stara_url": "https://files.cltk.cz/mwsryg2xiq15/newsletter%202016-07.pdf",
+            "soubor": "newslettery/newsletter-2016-7.pdf"
+        },
+        {
+            "jazyk": "cs",
+            "stara_url": "https://files.cltk.cz/foba4d5xuo15/newsletter%202016-06.pdf",
+            "soubor": "newslettery/newsletter-2016-6.pdf"
+        },
+        {
+            "jazyk": "cs",
+            "stara_url": "https://files.cltk.cz/86tq898x8n15/newsletter%202016-05.pdf",
+            "soubor": "newslettery/newsletter-2016-5.pdf"
+        },
+        {
+            "jazyk": "cs",
+            "stara_url": "https://files.cltk.cz/igc9d5bxkl15/newsletter%202016-04.pdf",
+            "soubor": "newslettery/newsletter-2016-4.pdf"
+        },
+        {
+            "jazyk": "cs",
+            "stara_url": "https://files.cltk.cz/e8uph1exxj15/newsletter%202016-03.pdf",
+            "soubor": "newslettery/newsletter-2016-3.pdf"
+        },
+        {
+            "jazyk": "cs",
+            "stara_url": "https://files.cltk.cz/hxc8mwgxai15/newsletter%202016-02.pdf",
+            "soubor": "newslettery/newsletter-2016-2.pdf"
+        },
+        {
+            "jazyk": "cs",
+            "stara_url": "https://files.cltk.cz/yw3pqrjxmg15/newsletter%202016-01.pdf",
+            "soubor": "newslettery/newsletter-2016-1.pdf"
+        },
+        {
+            "jazyk": "cs",
+            "stara_url": "https://files.cltk.cz/1ng7wnmxze15/newsletter%202015-07.pdf",
+            "soubor": "newslettery/newsletter-2015-7.pdf"
+        },
+        {
+            "jazyk": "cs",
+            "stara_url": "https://files.cltk.cz/jayn1kpxcd15/newsletter%202015-06.pdf",
+            "soubor": "newslettery/newsletter-2015-6.pdf"
+        },
+        {
+            "jazyk": "cs",
+            "stara_url": "https://files.cltk.cz/3qs66gsxob15/newsletter%202015-05.pdf",
+            "soubor": "newslettery/newsletter-2015-5.pdf"
+        },
+        {
+            "jazyk": "cs",
+            "stara_url": "https://files.cltk.cz/l75nacwx2a15/newsletter%202015-04.pdf",
+            "soubor": "newslettery/newsletter-2015-4.pdf"
+        },
+        {
+            "jazyk": "cs",
+            "stara_url": "https://files.cltk.cz/6by5f8zxe815/newsletter%202015-03.pdf",
+            "soubor": "newslettery/newsletter-2015-3.pdf"
+        },
+        {
+            "jazyk": "cs",
+            "stara_url": "https://files.cltk.cz/2fbmj43yq615/newsletter%202015-02.pdf",
+            "soubor": "newslettery/newsletter-2015-2.pdf"
+        },
+        {
+            "jazyk": "cs",
+            "stara_url": "https://files.cltk.cz/tpr4oz5y4515/newsletter%202015-01.pdf",
+            "soubor": "newslettery/newsletter-2015-1.pdf"
+        }
+    ],
+    "dokumenty": [
+        {
+            "id": 1,
+            "nazev": "Stanovy I. ČLTK Praha",
+            "slug": "stanovy",
+            "stara_url": "https://files.cltk.cz/szt6azj7muh01/Stanovy%20I.%C4%8CLTK%20Praha.pdf",
+            "text": "<h2>Stanovy I.&nbsp;Českého Lawn – Tennis Klubu Praha</h2>\n<h3>Preambule</h3>\n<p>1. I.&nbsp;Český Lawn – Tennis Klub Praha (dále jen „<strong>Klub</strong>“ nebo „<strong>I.&nbsp;ČLTK</strong>“) je spolkem, založeným za účelem podpory sportovních aktivit svých členů a&nbsp;rozvoje závodního i&nbsp;nezávodního tenisu. Klub je právním nástupcem a&nbsp;navazuje na činnost I.&nbsp;Českého Lawn – Tennis Klubu Praha založeného v&nbsp;roce 1893. Hlásí se jako jeho pokračovatel k&nbsp;tradici nejstaršího tenisového klubu na našem území, založeného na demokratických zásadách spolkového hnutí.</p>\n<p>2. Klub je založen na zásadě dobrovolného členství a&nbsp;na zásadě nezávislosti na jakékoliv politické straně, hnutí, náboženství nebo víře.</p>\n<p>3. Klub je členem mezinárodního sdružení stoletých klubů s&nbsp;názvem Centenary Tennis Clubs se sídlem v&nbsp;Lausanne. Klub je rovněž členem Českého tenisového svazu sdružujícího tenisové hnutí na území České republiky.</p>\n<p>4. Cílem činnosti Klubu je zejména vytvářet příznivé prostředí pro komplexní rozvoj a&nbsp;propagaci závodního i&nbsp;nezávodního tenisu v&nbsp;České republice za zachování rovnoprávných podmínek pro všechny. Prostřednictvím sportovní činnosti Klub přispívá k&nbsp;výchově mládeže k&nbsp;pozitivním občanským postojům, vede ji k&nbsp;respektování zásady fair play a&nbsp;ke zdravému způsobu života a&nbsp;poskytuje jí prostor pro naplňování volného času sportem bez drog, alkoholu a&nbsp;jakékoliv jiné závislosti.</p>\n<p>5. Klub rozvíjí sportovní činnost s&nbsp;vědomím svého poslání chránit zájmy a&nbsp;právo na svobodný rozvoj tenisového sportu v&nbsp;duchu neutrality a&nbsp;bez prosazování vlivu politických, náboženských nebo státních subjektů. Klub hájí zájem členů občanské společnosti svobodně rozvíjet sportovní činnost bez jakékoliv diskriminace zejména podle rasy, etnického původu, pohlaví, jazyka, náboženství, věku, zdravotního postižení, sexuální orientace nebo politického přesvědčení.</p>\n<p>6. Klub si je vědom své odpovědnosti za vedení sportovců k&nbsp;dodržování podmínek čestné soutěže. Prostřednictvím šíření informací dbá, aby nebyly používány látky nebo metody, které nedovoleným způsobem ovlivňují přirozený sportovní výkon.</p>\n<p>7. Za účelem dosažení svrchu uvedených cílů Klub spolupracuje s&nbsp;orgány veřejné moci, s&nbsp;veřejnými samosprávnými institucemi a&nbsp;soukromými subjekty k&nbsp;podpoře a&nbsp;propagaci tenisu.</p>\n<p>8. Proto Valná hromada I.&nbsp;Českého Lawn Tenis Klubu činí toto prohlášení s&nbsp;plným vědomím své odpovědnosti za zachovávání těchto programových zásad a&nbsp;na důkaz jejich respektování přijímá tyto své</p>\n<p><strong>STANOVY:</strong></p>\n<h3>Článek I.<br>Základní údaje</h3>\n<p>a) Název spolku: I.&nbsp;Český Lawn Tennis Klub Praha</p>\n<p>b) Sídlo: Ostrov Štvanice 38, 170&nbsp;00 Praha 7</p>\n<p>c) Identifikační číslo: 452&nbsp;43&nbsp;077</p>\n<p>d) Klub je spolkem ve smyslu ustanovení §&nbsp;214 a&nbsp;násl. zákona č.&nbsp;89/2012 Sb., občanský zákoník, ve znění pozdějších předpisů (dále jen „<strong>občanský zákoník</strong>“).</p>\n<p>e) Symbolem klubu je níže vyobrazený znak</p>\n<figure><img src=\"uploads/dokumenty/stanovy-znak.jpg\" alt=\"Znak I. ČLTK Praha\" loading=\"lazy\"></figure>\n<h3>Článek II.<br>Účel a&nbsp;předmět činnosti</h3>\n<p>2.1. Účelem Klubu je podpora sportovní aktivit svých členů a&nbsp;rozvoje závodního i&nbsp;nezávodního tenisu.</p>\n<p>2.2. Hlavní činnosti Klubu je:</p>\n<p>a) péče o&nbsp;zvyšování výkonnosti talentovaných mladých tenistů a&nbsp;péče o&nbsp;sportovní výchovu mládeže, zejména prostřednictvím dětských tenisových škol;</p>\n<p>b) zajišťování finanční podpory družstva závodního tenisu v&nbsp;celém spektru národních i&nbsp;mezinárodních soutěží;</p>\n<p>c) zřizování a&nbsp;pořádání tenisových škol, letních tenisových kempů a&nbsp;dalších tenisových soutěží a&nbsp;akcí;</p>\n<p>d) spolupráce s&nbsp;jinými sportovními organizacemi za účelem zapojení svých členů do jimi organizovaných akcí a&nbsp;soutěží;</p>\n<p>e) hospodaření s&nbsp;vlastním majetkem Klubu za účelem rozvoje a&nbsp;podpory tenisového sportu;</p>\n<p>f) organizování a&nbsp;řízení přípravy a&nbsp;činnosti trenérů a&nbsp;dalších zodpovědných osob včetně jejich školení a&nbsp;dalšího vzdělávání;</p>\n<p>g) zřizování nadací a&nbsp;nadačních fondů, případně jiných neziskových organizací, pokud je to potřebné k&nbsp;podpoře tenisového sportu a&nbsp;rozvoji sportovních aktivit mládeže;</p>\n<p>h) vydávání propagačních tiskovin, tiskovin pro potřeby soutěží a&nbsp;vlastní odborné literatury na podporu rozvoje tenisu a&nbsp;propagaci Klubu;</p>\n<p>i) zajišťování mediální propagace tenisu, organizování akcí pro veřejnost v&nbsp;souvislosti s&nbsp;tenisovými soutěžemi, s&nbsp;činností sportovních družstev i&nbsp;jednotlivců;</p>\n<p>j) ochrana práv a&nbsp;oprávněných zájmů svých členů, jimž zajišťuje možnost provozovat závodní i&nbsp;nezávodní sportovní aktivity v&nbsp;rozsahu, ve kterém to dovolují kapacitní možnosti Klubu;</p>\n<p>k) vytváření prostoru pro zájmovou činnost jednotlivců i&nbsp;zájmových sdružení, pokud je to v&nbsp;zájmu tenisového sportu a&nbsp;podle provozních možností Klubu;</p>\n<p>l) členství Klubu či členů Klubu v&nbsp;českých i&nbsp;mezinárodních sportovních organizacích na základě rozhodnutí Klubu o&nbsp;vstupu do nich v&nbsp;souladu s&nbsp;jejich statuty a&nbsp;jinými ustavujícími dokumenty.</p>\n<p>2.3. Vedle hlavní činnosti Klub za účelem naplnění svých cílů uvedených v&nbsp;preambuli provozuje rovněž vedlejší hospodářskou činnost spočívající v&nbsp;podnikání nebo jiné výdělečné činnosti, jejímž účelem je podpora hlavní činnosti Klubu nebo hospodárné využití majetku Klubu.</p>\n<p>2.4. Zisk z&nbsp;vedlejší činnosti Klubu lze použít pouze pro spolkovou činnost včetně správy Klubu. Klub je vlastníkem příslušných práv k&nbsp;pořádaným akcím, výtvorům apod., a&nbsp;spravuje je prostřednictvím svých orgánů.</p>\n<p>2.5. V&nbsp;zájmu získání prostředků může Klub vstupovat do právnických osob nebo je zakládat.</p>\n<p>2.6. Klub provozuje tuto vedlejší činnost:</p>\n<p>a) provozování kulturních, kulturně-vzdělávacích a&nbsp;zábavních zařízení, pořádání kulturních produkcí, výstav, veletrhů, přehlídek, prodejních a&nbsp;obdobných akcí;</p>\n<p>b) zprostředkování obchodu a&nbsp;služeb;</p>\n<p>c) velkoobchod a&nbsp;maloobchod;</p>\n<p>d) poradenská a&nbsp;konzultační činnost, zpracování odborných studií a&nbsp;posudků;</p>\n<p>e) pronájem nemovitostí, bytů a&nbsp;nebytových prostor;</p>\n<p>f) hostinská činnost.</p>\n<h3>Článek III.<br>Členství v&nbsp;Klubu</h3>\n<h4>3.1. Druhy členství</h4>\n<p>3.1.1. Členství v&nbsp;Klubu je různého druhu, přičemž s&nbsp;každým druhém členství mohou být spojena rozdílná členská práva a&nbsp;povinnosti.</p>\n<p>3.1.2. Členství v&nbsp;Klubu je:</p>\n<p>a) <strong>řádné</strong> – řádným členem Klubu jsou všichni členové Klubu, kteří nejsou členem čestným či zasloužilým.</p>\n<p>b) <strong>zasloužilý člen</strong> – zasloužilým členem Klubu se může stát na základě rozhodnutí Výkonného výboru pouze osoba splňující jedno z&nbsp;následujících kritérií:</p>\n<p>i) úspěšná sportovní reprezentace Klubu;</p>\n<p>ii) dlouhodobá dobrovolná prospěšná práce pro Klub</p>\n<p>c) <strong>čestný člen</strong> – čestným členem Klubu se může stát na základě rozhodnutí Valné hromady osoba navržená Výkonným výborem splňující nejvyšší sportovní kritéria (vítězství v&nbsp;grandslamové dvouhře, vítězství ve dvouhře na olympijských hrách) nebo osoba splňující nejvyšší politické zařazení (prezident ČR, premiér ČR, primátor hl. m. Prahy).</p>\n<p>3.1.3. Čestní členové Klubu nemají povinnost hradit členský příspěvek. Čestným členem nebo zasloužilým členem se může stát za splnění předchozích uvedených podmínek také člen in memoriam (v&nbsp;případě in memoriam není tento čestný člen započítáván do kvora, neboť nemá hlasovací práva).</p>\n<h4>3.2. Vznik členství</h4>\n<p>3.2.1. Členství v&nbsp;Klubu je dobrovolné. Členem Klubu se může stát každá fyzická nebo právnická osoba, která se ztotožňuje s&nbsp;cílem a&nbsp;posláním Klubu, chce se podílet na činnosti Klubu a&nbsp;Výkonný výbor rozhodne na základě její písemné přihlášky o&nbsp;jejím přijetí za člena Klubu.</p>\n<p>3.2.2. Písemná přihláška obsahuje následující:</p>\n<p>a) jméno a&nbsp;příjmení / obchodní firmu,</p>\n<p>b) bydliště / sídlo,</p>\n<p>c) datum narození a&nbsp;rodné číslo / IČO,</p>\n<p>d) telefonické a&nbsp;emailové spojení pro účely komunikace, případně ID datové schránky,</p>\n<p>e) osobu zástupce, je-li žadatelem právnická osoba,</p>\n<p>f) datum podání přihlášky,</p>\n<p>g) u&nbsp;osoby mladší 15&nbsp;let také jméno a&nbsp;příjmení zákonného zástupce včetně uvedení telefonního a&nbsp;emailového kontaktu zákonného zástupce,</p>\n<p>h) podpis žadatele / oprávněné osoby za žadatele jednat.</p>\n<p>i) prohlášení uchazeče o&nbsp;jeho úmyslu vstoupit dobrovolně do Klubu, jeho závazku dodržovat Stanovy, řády a&nbsp;vnitřní předpisy Klubu a&nbsp;podřizovat se rozhodnutím přijatých v&nbsp;rámci jeho orgánů.</p>\n<p>3.2.3. V&nbsp;případě, že se má stát členem Klubu právnická osoba, je povinna přiložit k&nbsp;písemné přihlášce výpis z&nbsp;příslušného veřejného rejstříku či obdobného rejstříku, a&nbsp;to i&nbsp;v&nbsp;případě právnické osoby mající sídlo mimo území ČR, a&nbsp;aktuální znění společenské smlouvy či jiného zakládacího dokumentu.</p>\n<p>3.2.4. Fyzická osoba mladší 15&nbsp;let věku se může stát členem Klubu pouze se souhlasem svého zákonného zástupce.</p>\n<p>3.2.5. Členství v&nbsp;Klubu vzniká dnem rozhodnutí Výkonného výboru o&nbsp;přijetí za člena Klubu. Výkonný výbor rozhoduje o&nbsp;přijetí člena bez zbytečného odkladu po dni podání přihlášky, zpravidla na prvním jeho nadcházejícím zasedání.</p>\n<p>3.2.6. Členství v&nbsp;Klubu se váže na osobu člena, a&nbsp;tudíž nepřechází na jejího právního nástupce.</p>\n<h4>3.3. Zánik a&nbsp;pozastavení členství</h4>\n<p>3.3.1. Členství v&nbsp;klubu zaniká:</p>\n<p>a) vystoupením;</p>\n<p>b) vyloučením;</p>\n<p>c) vyškrtnutím;</p>\n<p>d) úmrtím fyzické osoby nebo zánikem právnické osoby, přičemž u&nbsp;člena, který je právnickou osobou také jejím zrušením s&nbsp;likvidací, prohlášením konkursu nebo zrušením konkursu pro nedostatek majetku této právnické osoby;</p>\n<p>e) zánikem Klubu bez právního nástupce.</p>\n<p>Ad. 3.3.1.a) Kterýkoliv z&nbsp;členů Klubu může z&nbsp;kdykoliv bez uvedení důvodů vystoupit. V&nbsp;případě vystoupení daného člena končí jeho členství v&nbsp;Klubu uplynutím posledního dne kalendářního měsíce, ve kterém bylo Klubu doručeno písemné oznámení člena o&nbsp;tom, že dobrovolně ukončuje své členství v&nbsp;Klubu, nedohodne-li se Výkonný výbor s&nbsp;daným členem jinak.</p>\n<p>Ad. 3.3.1.b) Členství v&nbsp;Klubu zanikne vyloučením, jestliže se člen dopustí jednání neslučitelného s&nbsp;postavením a&nbsp;důstojností člena Klubu, nebo zvláště hrubě nebo opakovaně porušuje své členské povinnosti uložené těmito stanovami, řády nebo vnitřními předpisy Klubu, rozhodnutím příslušných orgánů Klubu nebo jiné povinnosti vyplývající z&nbsp;jeho členství a&nbsp;k&nbsp;výzvě Výkonného výboru ve stanovené lhůtě nezjedná nápravu. Výkonný výbor na tomto základě rozhodne o&nbsp;jeho vyloučení z&nbsp;Klubu, přičemž dané rozhodnutí zasílá příslušnému členovi na adresu uvedenou v&nbsp;seznamu členů nebo skrze datovou schránku, má-li ji dotčený člen zřízenou. Členství končí okamžikem doručení rozhodnutí Výkonného výboru o&nbsp;jeho vyloučení příslušnému členovi. Vyloučený člen může do 15&nbsp;kalendářních dní ode dne doručení rozhodnutí o&nbsp;vyloučení požádat Výkonný výbor, aby rozhodnutí o&nbsp;vyloučení přezkoumala Valná hromada. V&nbsp;takovém případě je Výkonný výbor povinen této žádosti vyhovět a&nbsp;předložit na nejbližší Valné hromadě přezkum rozhodnutí o&nbsp;vyloučení člena, přičemž v&nbsp;takovém případě má rozhodnutí o&nbsp;vyloučení člena odkladný účinek až do rozhodnutí Valné hromady, potvrdí-li jeho vyloučení. Pokud Valná hromada rozhodne o&nbsp;to, že se daný člen nevylučuje, rozhodnutí Výkonného výboru se ruší od počátku a&nbsp;členství člena se obnovuje zpětně ke dni doručení rozhodnutí Výkonného výboru o&nbsp;jeho vyloučení.</p>\n<p>Ad. 3.3.1.c) V&nbsp;případě nezaplacení členských příspěvků v&nbsp;aktuální výši pro běžný kalendářních rok v&nbsp;termínu do dne 30.&nbsp;6. tohoto kalendářního roku, je Výkonný výbor oprávněn zaslat členovi písemnou výzvu k&nbsp;úhradě s&nbsp;dodatečnou lhůtou v&nbsp;délce 14&nbsp;kalendářních dní k&nbsp;zaplacení a&nbsp;zároveň jej v&nbsp;rámci výzvy upozorní na to, že v&nbsp;případě neuhrazení členského příspěvku ani v&nbsp;dodatečné lhůtě může dojít na základě rozhodnutí Výkonného výboru k&nbsp;jeho vyškrtnutí ze seznamu členů. Tato výzva je zasílána na adresu člena uvedenou v&nbsp;seznamu členů nebo skrze datovou schránku, má-li dotčený člen zřízenu.</p>\n<h4>3.4. Seznam členů</h4>\n<p>3.4.1. Výkonný výbor zajišťuje prostřednictvím sekretariátu Klubu vedení seznamu členů.</p>\n<p>3.4.2. Do seznamu členů se zapisuje</p>\n<p>a) jméno a&nbsp;příjmení (obchodní firma);</p>\n<p>b) datum narození a&nbsp;rodné číslo (IČO);</p>\n<p>c) bydliště (sídlo);</p>\n<p>d) telefonní spojení a&nbsp;emailová adresa, případně ID datové schránky;</p>\n<p>e) u&nbsp;osoby mladší 18&nbsp;let také kontaktní údaje zákonného zástupce (jméno a&nbsp;příjmení, telefonní a&nbsp;emailový kontakt)</p>\n<p>3.4.3. Seznam členů je neveřejný, vede jej a&nbsp;zápisy do něho provádí sekretariát Výkonného výboru.</p>\n<p>3.4.4. Každý člen Klubu, a&nbsp;to i&nbsp;bývalý, obdrží k&nbsp;jeho žádosti a&nbsp;na náklady Klubu potvrzení s&nbsp;výpisem ze seznamu členů, obsahující údaje o&nbsp;své osobě a&nbsp;údaje o&nbsp;datu vzniku případně zániku členství v&nbsp;Klubu.</p>\n<h3>Článek IV.<br>Základní práva a&nbsp;povinnosti člena Klubu</h3>\n<h4>4.1. Základní povinnosti každého člena Klubu</h4>\n<p>4.1.1. Každý člen Klubu má tyto povinnosti:</p>\n<p>a) dodržovat tyto stanovy, řády a&nbsp;vnitřní předpisy Klubu;</p>\n<p>b) zachovávat v&nbsp;soutěžích i&nbsp;mimo ně zásady fair play a&nbsp;pravidla morálky a&nbsp;podrobovat se rozhodnutím orgánů Klubu;</p>\n<p>c) dodržovat sportovně technické předpisy orgánů řídících soutěže;</p>\n<p>d) řádně a&nbsp;včas hradit členské příspěvky v&nbsp;aktuálně stanovené výši, jakož i&nbsp;další finanční platby podle řádů a&nbsp;vnitřních předpisů Klubu; přičemž v&nbsp;odůvodnitelných konkrétních případech s&nbsp;přihlédnutím k&nbsp;osobním poměrům člena Klubu může být tato povinnost stanovena Výkonným výborem individuálně;</p>\n<p>e) chránit majetek Klubu, pečovat o&nbsp;jeho rozmnožení a&nbsp;zvelebení;</p>\n<p>f) podílet se aktivně podle svých možností na činnosti Klubu;</p>\n<p>g) reprezentovat Klub navenek dodržováním právních předpisů v&nbsp;souladu s&nbsp;morálkou a&nbsp;dobrými mravy včetně zásad slušného chování;</p>\n<p>h) zdržet se v&nbsp;prostorách Klubu jednání neslučitelného s&nbsp;postavením člena Klubu, zejména se zdržet provozování jakékoliv výdělečné činnosti v&nbsp;prostorách Klubu bez souhlasu Výkonného výboru. Porušení této povinnosti může být důvodem pro vyloučení člena z&nbsp;Klubu.</p>\n<h4>4.2. Základní práva každého člena Klubu</h4>\n<p>4.2.1. Každý člen Klubu má tato základní práva:</p>\n<p>a) využívat zařízení Klubu k&nbsp;tenisové sportovní činnosti a&nbsp;zúčastňovat se veškerých sportovně společenských akcí pořádaných pro členy Klubu;</p>\n<p>b) obracet se s&nbsp;písemnými připomínkami, žádostmi a&nbsp;podněty na orgány Klubu, a&nbsp;předkládat návrhy a&nbsp;vyjádření ve své záležitosti, která je na programu jednání Klubu;</p>\n<p>c) volit osoby do orgánů Klubu, přičemž být volen do orgánů Klubu může být pouze člen, který je fyzickou osobou;</p>\n<p>d) účastnit se Valné hromady a&nbsp;hlasovat na ní, přičemž hlasovací právo mají všichni řádní členové starší 15&nbsp;let;</p>\n<p>e) být osobně nebo v&nbsp;zastoupení přítomen na jednání i&nbsp;jiných orgánů Klubu, než je Valná hromada, pokud je projednávána jeho záležitost</p>\n<p>f) na základě své žádosti adresované Výkonnému výboru obdržet heslo umožňující mu přístup do členské sekce interního cloudu Klubu.</p>\n<p>4.2.2. Fyzická osoba s&nbsp;jakýmkoliv druhem členstvím v&nbsp;Klubu (tj. i&nbsp;čestní a&nbsp;zasloužilí členové) má právo volit do orgánů Klubu po dovršení 15&nbsp;let věku. Fyzická osoba s&nbsp;jakýmkoliv druhem členství v&nbsp;Klubu (tj. i&nbsp;čestní a&nbsp;zasloužilí členové) po dovršení 18&nbsp;let věku má člen Klubu rovněž právo být volen a&nbsp;zastávat funkce v&nbsp;orgánech Klubu.</p>\n<p>4.2.3. Volební právo vykonávají členové Klubu osobně na jednání Valné hromady nebo v&nbsp;zastoupení na základě plné moci udělené jinému členovi Klubu, která musí být v&nbsp;originálním znění předložena Výkonnému výboru. Každý člen Klubu může na konkrétním jednání Valné hromady zastoupit maximálně 10&nbsp;jiných členů Klubu (tj. předložit maximálně 10&nbsp;zmocnění). Členové Klubu, kteří jsou právnickými osobami, vykonávají volební právo prostřednictvím svých statutárních orgánů nebo prostřednictvím pověřené osoby či zaměstnance, a&nbsp;to na základě předložení písemného pověření Výkonnému výboru.</p>\n<p>4.2.4. Jiná práva a&nbsp;povinnosti mohou členové Klubu vykonávat osobně nebo v&nbsp;zastoupení umožňuje-li to povaha práv a&nbsp;povinností, přičemž výkon práv a&nbsp;povinností v&nbsp;zastoupení musí být vždy v&nbsp;souladu s&nbsp;příslušnými právními předpisy a&nbsp;těmito stanovami.</p>\n<p>4.2.5. Převod členství, členských práv a&nbsp;povinností v&nbsp;rámci Klubu není možný.</p>\n<h3>Článek V.<br>Disciplinární opatření</h3>\n<p>5.1. Za porušení těchto stanov, interních předpisů Klubu, sportovně technických předpisů orgánů řídících soutěže nebo obecně závazných právních předpisů mohou být uložena členu Klubu disciplinární opatření.</p>\n<p>5.2. Za hrubou nebo opakovanou nekázeň, vážné nedostatky ve výkonu svěřené funkce a&nbsp;za provinění související s&nbsp;účastí v&nbsp;soutěžích nebo jiných akcích Klubu, může být členovi nebo skupině členů uloženo disciplinárním řízením, některé z&nbsp;dále uvedených disciplinárních opatření:</p>\n<p>a) napomenutí</p>\n<p>b) důtka</p>\n<p>c) peněžitá pokuta</p>\n<p>d) pozastavení závodní činnosti</p>\n<p>e) zákaz výkonu funkce</p>\n<p>f) vyloučení.</p>\n<p>5.3. O&nbsp;těchto disciplinárních opatřeních rozhoduje Výkonný výbor Klubu, pokud není v&nbsp;souladu se sportovně technickými předpisy orgánů řídících soutěže dána pravomoc jiného orgánu. Výkonný výbor je povinen umožnit každému Členovi dostatečné právo na obhajobu, zejména právo účasti na jednání v&nbsp;rámci disciplinárního řízení.</p>\n<p>5.4. Proti rozhodnutí o&nbsp;uložení disciplinárního opatření může člen podat do 15&nbsp;kalendářních dnů, od doručení rozhodnutí, odvolání k&nbsp;Výkonnému výboru, který je povinen dané předložit na nejbližší Valné hromadě Klubu, pokud není sportovně technickými předpisy dána pravomoc jinému orgánu. Odvolání nemá odkladný účinek. Odvolání proti rozhodnutí Výkonného výboru o&nbsp;vyloučení člena má však vždy odkladný účinek.</p>\n<p>5.5. Článek 5.4. stanov se nevztahuje na vyloučení člena Klubu, neboť na toto disciplinární opatření se aplikuje přednostně ustanovení čl.&nbsp;Ad. 3.3.1.b) stanov.</p>\n<p>5.6. Bližší úpravu disciplinárního řízení může stanovit disciplinární řád Klubu.</p>\n<h3>Článek VI.<br>Organizační uspořádání Klubu</h3>\n<h4>6.1. Orgány Klubu</h4>\n<p>6.1.1. Orgány Klubu jsou:</p>\n<p>a) Valná hromada</p>\n<p>b) Výkonný výbor</p>\n<h4>Ad 6.1.1. a) Valná hromada</h4>\n<p>1. Nejvyšším orgánem Klubu je Valná hromada, ve které má každý člen Klubu (tj. zasloužilý člen, čestný člen či řádný člen starší 15&nbsp;let) bez ohledu na to, zda se jedná o&nbsp;fyzickou nebo právnickou osobu jeden hlas.</p>\n<p>2. Řádnou valnou hromadu po projednání ve Výkonném výboru svolává Prezident Klubu nejméně jedenkrát ročně, a&nbsp;to tak, aby se konala vždy nejpozději do 30.&nbsp;9. příslušného kalendářního roku.</p>\n<p>3. Zaslání pozvánek na Valnou hromadu zajišťuje Výkonný výbor, a&nbsp;to nejpozději 4&nbsp;týdny před stanoveným dnem jejího konání.</p>\n<p>4. Prezident může svolat Mimořádnou valnou hromadu, pokud to považuje Výkonný výbor za potřebné, nebo pokud o&nbsp;to požádá alespoň 30&nbsp;% členů Klubu majících hlasovací právo, kteří ve své žádosti uvedou konkrétní důvod pro svolání Mimořádné valné hromady a&nbsp;návrh programu jejího jednání. Prezident svolá Mimořádnou valnou hromadu tak, aby se konala nejpozději do 4&nbsp;týdnů ode dne doručení žádosti o&nbsp;její svolání, přičemž pozvánky na tuto mimořádnou Valnou hromadu je Výkonný výbor povinen zaslat nejpozději 2&nbsp;týdny před jejím konáním.</p>\n<p>5. Do výlučné pravomoci Valné hromady patří:</p>\n<p>a) schvalovat stanovy Klubu a&nbsp;jejich změny,</p>\n<p>b) volit a&nbsp;odvolávat členy Výkonného výboru,</p>\n<p>c) projednávat zprávy o&nbsp;činnosti a&nbsp;hospodaření Klubu,</p>\n<p>d) schvalovat roční účetní závěrku Klubu a&nbsp;výsledky hospodaření Klubu za uplynulé účetní období včetně jeho vypořádání;</p>\n<p>e) schvalovat veškeré dispozice s&nbsp;majetkem Klubu, jehož účetní hodnota přesahuje v&nbsp;jednotlivém případě částku 10&nbsp;mil.&nbsp;Kč;</p>\n<p>f) rozhodovat o&nbsp;zániku Klubu a&nbsp;o&nbsp;likvidaci jeho majetku,</p>\n<p>g) rozhodovat o&nbsp;odvolání proti disciplinárním opatřením uděleným Výkonným výborem Klubu;</p>\n<p>h) rozhodovat o&nbsp;vyloučení člena Klubu;</p>\n<p>i) rozhodovat také o&nbsp;dalších záležitostech, které si vyhradí, pokud nejsou výslovně svěřeny stanovami nebo právním předpisem jiným orgánům Klubu,</p>\n<p>j) na návrh Výkonného výboru Klubu jmenovat čestné členy Klubu.</p>\n<p>6. Zasedání Valné hromady zahájí a&nbsp;řídí Prezident Klubu nebo jiný člen Výkonného výboru, který byl řízením Valné hromady pověřen. Prezident či jiný pověřený člen Výkonného výboru (dále jen „<strong>předsedající Valné hromadě</strong>“) při zahájení zasedání ověří, zda je Valná hromada schopna se usnášet.</p>\n<p>7. Předsedající Valné hromady dále pak zajistí volbu ověřovatele zápisu z&nbsp;Valné hromady a&nbsp;dva skrutátory hlasů, kteří dbají na správnost sečtení všech hlasů při hlasování o&nbsp;jednotlivých bodech programu a&nbsp;o&nbsp;přijatých usneseních. Valná hromada může rovněž přijmout jednací či volební řád Valné hromady. Předsedající Valné hromady pak vede zasedání tak, jak byl její pořad ohlášen. Záležitost, která nebyla zařazena na pořad jednání při jejím ohlášení, lze zařadit na pořad jednání Valné hromady a&nbsp;rozhodnout o&nbsp;ní pouze za účasti a&nbsp;se souhlasem všech členů Klubu oprávněných na Valné hromadě hlasovat.</p>\n<p>8. Valná hromada je usnášeníschopná, je-li přítomna nebo zastoupena na základě plné moci, nadpoloviční většina členů Klubu s&nbsp;právem hlasovat. Nebude-li Valná hromada usnášeníschopná Prezident Valnou hromadu zruší a&nbsp;rozhodne o&nbsp;konání náhradní Valné hromady (dále jen „<strong>Náhradní valná hromada</strong>“), pro jejíž usnášeníschopnost již neplatí minimální přítomnost ½ členů Klubu s&nbsp;právem volit. Náhradní valná hromada se pak musí konat nejpozději do 10&nbsp;dnů ode dne konání zrušené valné hromady.</p>\n<p>9. Rozhodnutí valné hromady nebo Náhradní valné hromady je přijato, jestliže pro ně hlasuje většina přítomných členů Klubu majících hlasovací právo.</p>\n<p>10. Výkonný výbor zajistí vyhotovení zápisu ze zasedání Valné hromady nebo Náhradní valné hromady do 30&nbsp;dnů od ukončení Valné hromady. Zápis je uložen v&nbsp;sídle Klubu a&nbsp;dále je vložen do členské sekce interního cloudu Klubu, k&nbsp;němuž mají členové Klubu na základě jejich žádosti přístup.</p>\n<h4>Ad 6.1.1. b) Výkonný výbor</h4>\n<p>1. Výkonný výbor je statutární orgán a&nbsp;řídící orgán Klubu, který rozhoduje o&nbsp;všech záležitostech, které nejsou stanovami svěřeny do výlučné působnosti Valné hromady Klubu.</p>\n<p>2. Členem Výkonného výboru může být pouze fyzická osoba splňující podmínky výkonu funkce statutárního orgánu, která je členem Klubu a&nbsp;je starší 18&nbsp;let.</p>\n<p>3. Do výlučné pravomoci Výkonného výboru patří zejména:</p>\n<p>a) schvaluje svůj jednací řád, herní řád, organizační řád, podpisový řád a&nbsp;další řády a&nbsp;vnitřní předpisy Klubu, není-li jejich vydání není těmito stanovami svěřeno jinému orgánu Klubu;</p>\n<p>b) schvaluje plán činnosti a&nbsp;rozpočet Klubu;</p>\n<p>c) zabezpečování plnění hlavní i&nbsp;vedlejší činnosti Klubu včetně jeho každodenního chodu;</p>\n<p>d) vede (zápisy, výmazy, změny) seznamu členů Klubu;</p>\n<p>e) projednává a&nbsp;předkládá Valné hromadě ke schválení roční účetní závěrku a&nbsp;výsledky hospodaření Klubu za uplynulé účetní období;</p>\n<p>f) schvaluje zásady pro zavedení a&nbsp;výběr členských příspěvků, jejich výši, strukturu a&nbsp;způsob použití;</p>\n<p>g) schvaluje vnitřní strukturu sekretariátu Klubu, rozhoduje o&nbsp;přijetí pracovníků do pracovněprávního vztahu ke Klubu;</p>\n<p>h) rozhoduje o&nbsp;přijetí, případně vyloučení člena z&nbsp;Klubu;</p>\n<p>i) rozhoduje o&nbsp;vyškrtnutí člena z&nbsp;Klubu;</p>\n<p>j) navrhuje Valné hromadě kandidáta na udělení čestného členství;</p>\n<p>k) rozhoduje o&nbsp;udělení zasloužilého členství;</p>\n<p>l) plní další úkoly uložené mu Valnou hromadou;</p>\n<p>m) za účelem zajištění výkonu odborných činností v&nbsp;rámci svých pravomocí může svým rozhodnutím zřizovat komise Klubu;</p>\n<p>n) další činnosti svěřené Výkonnému výboru jako statutárnímu orgánu právními předpisy a&nbsp;těmito stanovami.</p>\n<p>4. Členství ve Výkonném výboru zaniká:</p>\n<p>a) uplynutím funkčního období;</p>\n<p>b) odvoláním Valné hromady z&nbsp;funkce;</p>\n<p>c) vzdáním se funkce, přičemž tato rezignace musí být adresována k&nbsp;rukám Prezidenta, případně kterémukoliv členovi Výkonného výboru, není-li Prezident zvolen, přičemž funkce člena Výkonné výboru zaniká uplynutím 2&nbsp;měsíců ode dne doručení rezignace, neschválí-li Výkonný výbor jiný okamžik skončení funkce rezignujícího člena;</p>\n<p>d) zánikem členství v&nbsp;Klubu či pozbytí podmínek pro výkon funkce člena statutárního orgánu.</p>\n<p>5. Výkonný výbor organizuje a&nbsp;řídí běžný provoz Klubu. Výkonný výbor má celkem 9&nbsp;členů volených Valnou hromadou.</p>\n<p>6. Funkční období voleného člena Výkonného výboru je tříleté, a&nbsp;to i&nbsp;opakovaně. Členství však neskončí uplynutím doby, dokud není na místo voleného člena Výkonného výboru zvolen nový člen, případně nedojde k&nbsp;opětovně volbě daného člena.</p>\n<p>7. Poklesne-li celkový počet členů Výkonného výboru v&nbsp;období mezi Valnými hromadami pod 9, ne však pod polovinu členů, a&nbsp;vyžaduje-li si to situace Klubu, může Výkonný výbor rozhodnout o&nbsp;doplnění členů Výkonného výboru kooptací, přičemž kooptovaný člen je zvolen pouze do konání Valné hromady, na které budou zvoleni noví členové Výkonného výboru. Kooptovaný člen Výkonného výboru může být rovněž zvolen Valnou hromadou za řádného člena Výkonného výboru.</p>\n<p>8. Výkonný výbor volí a&nbsp;odvolává ze svých členů Prezidenta Klubu, a&nbsp;to vždy nejpozději do 1&nbsp;měsíce ode dne neobsazení této funkce.</p>\n<p>9. Výkon člena Výkonného výboru je osobního charakteru a&nbsp;člen výboru je povinen účastnit se zasedání Výkonného výboru. Člen může v&nbsp;závažných či neočekávaných případech (např. pro nemoc; kolizi s&nbsp;pracovním úkolem; jinou událost, kterou nemohl člen výboru ovlivnit) zplnomocnit jiného člena Výkonného výboru, ale vždy pouze individuálně a&nbsp;pouze pro konkrétní zasedání. Plná moc musí být písemná.</p>\n<p>10. Zasedání Výkonného výboru se může konat za využití technických prostředků, a&nbsp;to v&nbsp;případě, že využitý technický prostředek umožňuje ověření totožnosti daného člena Výkonného výboru.</p>\n<p>11. Zároveň Výkonný výbor může ve výjimečných případech rozhodovat formou per rollam, a&nbsp;to tak, že Prezident zašle všem členům Výkonného výboru prostřednictvím emailové zprávy či datové schránky písemný podepsaný návrh bodů programu zasedání včetně návrhů usneseních a&nbsp;jejich odůvodnění (dále jen „<strong>Návrh</strong>“). Hlasování probíhá tak, že člen Výkonného výboru zašle ve lhůtě určené v&nbsp;Návrhu, ne kratší než 15&nbsp;kalendářních dní, formou emailové zprávy či datové schránky své vyjádření ke všem bodům uvedeným v&nbsp;Návrhu, a&nbsp;to tak, že ke každému usnesení uvede, zda souhlasí/nesouhlasí/nehlasuje, přičemž takto podepsané vyjádření zašle zpět Prezidentovi formou emailové zprávy či datové schránky. Hlasování člena Výkonného výboru je platné pouze pokud je Prezidentovi doručeno způsobem a&nbsp;ve lhůtě určené těmito stanovami či v&nbsp;Návrhu. Pokud člen Výkonného výboru nestihne lhůtu nebo se k&nbsp;některému bodu v&nbsp;Návrhu nevyjádří, platí, že hlasuje proti. Pro rozhodování Výkonného výboru mimo zasedání (per rollam) platí stejná kvóra pro přijetí rozhodnutí.</p>\n<p>12. Zasedání Výkonného výboru řídí a&nbsp;svolává Prezident Klubu zpravidla jedenkrát do měsíce, alespoň 10&nbsp;kalendářních dní přede dnem jeho konání písemně či elektronicky na emailovou adresu či skrze datovou schránku písemnou pozvánkou, v&nbsp;níž musí být kromě termínu a&nbsp;místa zasedání také uveden program zasedání. Prezident může výkonem této činnosti pověřit jiného člena Výkonného výboru. Mimořádné zasedání Výkonného výboru může předsedající svolat také na žádost člena Výkonného výboru. Výkonný výbor je usnášeníschopný, je-li přítomna nadpoloviční většina jeho členů.</p>\n<p>13. Výkonný výbor tvoří kolektivní orgán. Každý člen výboru má 1&nbsp;hlas. Rozhodnutí Výkonného výboru je přijato, pokud pro ně hlasuje nadpoloviční většina přítomných členů. V&nbsp;případě rovnosti hlasů rozhoduje hlas předsedajícího.</p>\n<p>14. Zasedání Výkonného výboru je neveřejné, nedohodnou-li se členové Výkonného výboru jinak. Bližší podmínky svolávání a&nbsp;zasedání Výkonného výboru mohou být upraveny v&nbsp;jednacím řádu výboru, který je Výkonným výborem schvalován.</p>\n<p>15. Prezident Klubu kromě činností jako člena Výkonného výboru stanovených mu právními předpisy a&nbsp;těmito stanovami, se věnuje také jednání s&nbsp;orgány a&nbsp;organizacemi, jak tuzemskými, tak zahraničními, a&nbsp;především reprezentuje Klub navenek.</p>\n<h3>Článek VII.<br>Jednání a&nbsp;podepisování jménem Klubu</h3>\n<p>7.1. Klub navenek ve všech věcech zastupuje Prezident samostatně, případně alespoň dva členové Výkonného výboru společně.</p>\n<p>7.2. Klub mohou dále oprávnění zastupovat také zaměstnanci Klubu, a&nbsp;to v&nbsp;rozsahu vyplývajícím z&nbsp;jejích pracovního zařazení v&nbsp;Klubu, případně osoby pověřené Klubem v&nbsp;rámci pověřené činnosti.</p>\n<h3>Článek VIII.<br>Majetek Klubu a&nbsp;hospodaření s&nbsp;ním</h3>\n<p>8.1. Majetek Klubu tvoří finanční prostředky na účtech Klubu, hmotný a&nbsp;nehmotný majetek, pohledávky a&nbsp;jiná majetková práva.</p>\n<p>8.2. Zdrojem majetku Klubu jsou zejména:</p>\n<p>a) členské příspěvky a&nbsp;ostatní poplatky členů Klubu;</p>\n<p>b) dobrovolné příspěvky, dotace, dary a&nbsp;příjmy z&nbsp;podílu na činnosti jiných organizací, od sportovních svazů, ze státního rozpočtu nebo jiných veřejných rozpočtů, granty apod</p>\n<p>c) příjmy z&nbsp;vlastní vedlejší činnosti, zejména činnosti tělovýchovné, sportovní, kulturní, společenské, hospodářské, obchodní a&nbsp;zahraničně-obchodní činnosti,</p>\n<p>d) dary a&nbsp;příspěvky sponzorů.</p>\n<p>8.3. S&nbsp;výsledky hospodaření za příslušný kalendářní rok seznamuje Výkonný výbor členy na Valné hromadě.</p>\n<p>8.4. Prostředky vynakládá Klub výhradně na úkony spojené s&nbsp;předmětem činnosti Klubu tak, aby byly řádně podložené účetními doklady.</p>\n<p>8.5. Bližší zásady hospodaření s&nbsp;majetkem mohou být upraveny vnitřním předpisem.</p>\n<p>8.6. V&nbsp;případě zrušení Klubu bez právního nástupce bude provedena jeho likvidace za účelem vypořádání majetku Klubu. Likvidátora jmenuje Valná hromada. Likvidační zůstatek po provedení likvidace bude rozdělen mezi členy Klubu, kteří byli ke dni vstupu do likvidace zapsání v&nbsp;seznamu členů Klubu, nedohodnou-li se všichni tito členové tak, že likvidační zůstatek bude použit k&nbsp;veřejně prospěšným cílům a&nbsp;přednostně bude nabídnut právnické osobě s&nbsp;účelem a&nbsp;statusem obdobným účelu a&nbsp;statusu Klubu.</p>\n<h3>Článek IX.<br>Doručování</h3>\n<p>9.1. Komunikace mezi orgány Klubu navzájem a&nbsp;komunikace orgánů Klubu se členy Klubu probíhá především pomocí emailu či prostřednictvím datových zpráv.</p>\n<p>9.2. Písemnost, kterou je třeba podle těchto stanov doručovat členům Klubu, se doručuje prostřednictvím držitele poštovní licence doporučenou zásilkou, případně datovou schránkou, má-li daný člen zřízenou, přičemž doručení písemnosti se posuzuje dle příslušných právních předpisů. Pokud adresát nebyl zastižen, písemnost byla uložena u&nbsp;držitele poštovní licence a&nbsp;adresát si písemnost v&nbsp;úložní lhůtě podle právního předpisu o&nbsp;poštovních službách nevyzvedl, považuje se písemnost za doručenou posledním dnem úložní lhůty, i&nbsp;když se adresát o&nbsp;uložení nedozvěděl nebo se v&nbsp;místě doručení nezdržoval.</p>\n<p>9.3. Písemnost může být doručena rovněž zaměstnancem Klubu nebo jinou jím k&nbsp;tomu pověřenou osobou osobně. V&nbsp;takovém případě se písemnost považuje za doručenou dnem jejího převzetí adresátem, případně okamžikem odmítnutí převzetí takové písemnosti.</p>\n<p>9.4. Pokud se písemnost vrátí odesílateli jako nedoručená z&nbsp;jiných důvodů, považuje se tato písemnost za doručenou dnem jejího vrácení odesílateli.</p>\n<h3>Článek X.<br>Ustanovení přechodná a&nbsp;závěrečná</h3>\n<p>10.1. Tyto stanovy v&nbsp;úplném znění byly schváleny Valnou hromadou Klubu konanou dne 25.&nbsp;6.&nbsp;2025.</p>\n<p>10.2. Záležitosti neupravené těmito stanovami se řídi obecně platnými právními předpisy, zejména ustanoveními občanského zákoníku.</p>\n<p>10.3. Úplné znění stanov je vždy přístupné na vyžádání v&nbsp;sídle Klubu.</p>\n<p>Prezident I.&nbsp;ČLTK Praha<br>Ing. Petr Šimůnek</p>",
+            "popis_stary": "Stanovy spolku ve znění z 6. 7. 2025",
+            "popis_novy": "Úplné znění schválené Valnou hromadou 25. 6. 2025",
+            "paticka_stary": "Stanovy klubu (PDF)",
+            "paticka_novy": "Stanovy klubu"
+        },
+        {
+            "id": 2,
+            "nazev": "Pravidla hraní na tenisových kurtech 2026",
+            "slug": "pravidla-hrani-2026",
+            "stara_url": "https://files.cltk.cz/7km6d916kbl01/Pravidla%20pro%20rezervace%20kurt%C5%AF%202026.pdf",
+            "text": "<h2>Pravidla hraní na tenisových kurtech</h2>\n<h3>Obecná pravidla:</h3>\n<ul>\n  <li>Začátek „zimní i&nbsp;letní sezóny“ stanovuje management klubu podle počasí a&nbsp;stavu kurtů.</li>\n  <li>V&nbsp;letní sezóně mohou členové klubu využívat bezplatné hraní dle níže uvedených pravidel, v&nbsp;zimní sezóně si musí hodiny v&nbsp;hale hradit buď formou trvalé rezervace nebo jednotlivých rezervací za zvýhodněnou cenu.</li>\n  <li>Osobám, které nebudou mít v&nbsp;daný čas aktivní (zaplacené) členství, nebude umožněno udělat si bezplatnou „členskou“ rezervaci na venkovních kurtech. Kurt si mohou zarezervovat v&nbsp;režimu „prodej“ a&nbsp;následně za něj zaplatit.</li>\n  <li>V&nbsp;letním období není možné dělat trvalé rezervace vyjma klubových privátních trenérů.</li>\n  <li>Privátní trenéři schválení managementem klubu mají právo zapisovat trvalé rezervace se členy i&nbsp;nečleny klubu (neplatí pro kurt č.&nbsp;5). Každá trvalá rezervace podléhá schválení managementem klubu.</li>\n  <li>V&nbsp;rámci členské rezervace (neplatí pro „prodej“) musí být vždy v&nbsp;rezervačním systému uvedena minimálně dvě jména. Není možné si rezervovat kurt pro jednu osobu.</li>\n  <li>Recepce má právo kontrolovat správnost rezervací a&nbsp;v&nbsp;případě nesouladu s&nbsp;rezervačním systémem vyloučit hráče z&nbsp;kurtu.</li>\n  <li>Hrací jednotka obsahuje dobu na úpravu dvorce. Srovnání povrchu hrablem, přemetení celého dvorce včetně výběhů síťovačkou a&nbsp;vrácení náčiní na místo k&nbsp;tomu určené.</li>\n</ul>\n<h3>Člen s&nbsp;platným hrajícím členstvím má nárok:</h3>\n<ul>\n  <li>Rezervovat si kurt zdarma – ne však déle, než jeden týden dopředu.</li>\n  <li>Rezervovat si kurt v&nbsp;jeden den maximálně na 1,5&nbsp;hod. a&nbsp;to pouze v&nbsp;rámci jedné rezervace.</li>\n  <li>Mít aktuálně platné nanejvýše dvě rezervace.</li>\n</ul>\n<h3>Kurt č.&nbsp;5 je vyhrazen pouze pro členy klubu</h3>\n<ul>\n  <li>Na tomto kurtu smí hrát pouze členové klubu (člen + člen / člen + host).</li>\n  <li>Privátní trenéři mohou na tomto kurtu hrát pouze se členy klubu.</li>\n  <li>Privátní trenéři si nemohou na tomto kurtu dělat trvalé rezervace.</li>\n</ul>\n<p><strong>Jakékoli změny či výjimky z&nbsp;těchto pravidel může schválit pouze management klubu.</strong></p>",
+            "paticka_stary": "Pravidla hraní 2026 (PDF)",
+            "paticka_novy": "Pravidla hraní 2026"
+        },
+        {
+            "id": 3,
+            "nazev": "Osobní údaje členů",
+            "slug": "osobni-udaje-clenu",
+            "stara_url": "https://cltk.cz/cs/gdpr/",
+            "text": "<h2>Oznámení o&nbsp;zpracování osobních údajů pro členy I.&nbsp;ČLTK Praha</h2>\n<p>Správce<br><strong>I.&nbsp;Český Lawn – Tennis Klub Praha</strong><br>Ostrov Štvanice 38, Praha 7, 170&nbsp;00<br>IČO: 45243077<br>(dále jen „klub“)</p>\n<p>Vážení členové klubu, informujeme vás tímto o&nbsp;zpracování problematiky ochrany osobních údajů dle nařízení Evropského parlamentu a&nbsp;Rady (EU) 2016/679 ze dne 27.&nbsp;dubna 2016 (dále jen „GDPR“) v&nbsp;našem tenisovém klubu I.&nbsp;ČLTK Praha.</p>\n<p>Vaše osobní údaje zpracováváme především z&nbsp;důvodu vaší identifikace, vedení členské základny a&nbsp;z&nbsp;toho vyplývajících práv a&nbsp;povinností, které máme vůči vám i&nbsp;vůči státu. Dále samozřejmě z&nbsp;důvodu, abychom vás mohli kontaktovat, komunikovat s&nbsp;vámi, provádět rezervace sportovišť, evidovat a&nbsp;zveřejňovat vaše sportovní výsledky a&nbsp;také v&nbsp;souvislosti s&nbsp;povinností vést evidenci členské základny sportovního spolku vůči příslušnému sportovnímu svazu, Národní sportovní agentuře, České unii sportu a&nbsp;příslušným orgánům státní správy a&nbsp;samosprávy, jejichž oprávnění je dáno právními předpisy.</p>\n<p>Zpracováváme tyto osobní údaje:</p>\n<ul>\n  <li>jméno, příjmení</li>\n  <li>e-mailovou adresu</li>\n  <li>telefonní číslo</li>\n  <li>kontaktní adresu</li>\n  <li>datum narození</li>\n  <li>rodné číslo</li>\n  <li>státní občanství</li>\n  <li>profesi</li>\n  <li>fotografie z&nbsp;turnajů či akcí</li>\n</ul>\n<p>Veškeré osobní údaje jsou zpracovávány v&nbsp;souladu s&nbsp;ustanovením čl.&nbsp;6 odst.&nbsp;1 písm.&nbsp;f) GDPR pouze za účely popsanými výše. Údaje jsou veřejně nepřístupné, v&nbsp;papírové podobě uschované v&nbsp;uzamčených místnostech se zabezpečovacím zařízením a&nbsp;v&nbsp;elektronické podobě v&nbsp;databázi chráněné uživatelským jménem a&nbsp;heslem. Zpracování osobních údajů provádíme našimi zaměstnanci, údaje mohou být dále sdíleny s&nbsp;osobami, které pro klub zajišťují plnění smluvních či zákonných povinností (účetní, softwarové, pojišťovací či podobné služby).</p>\n<p>Vaše práva dle GDPR:</p>\n<ul>\n  <li>právo mít přístup ke svým osobním údajům (čl.&nbsp;15 GDPR),</li>\n  <li>právo požadovat opravu osobních údajů (čl.&nbsp;16 GDPR) či jejich výmaz (čl.&nbsp;17 GDPR)</li>\n  <li>právo na omezení zpracování osobních údajů v&nbsp;případech dle čl.&nbsp;18 GDPR,</li>\n  <li>právo na přenositelnost osobních údajů v&nbsp;případech stanovených v&nbsp;čl.&nbsp;20 GDPR,</li>\n  <li>právo podat stížnost proti neoprávněnému nakládání s&nbsp;osobními údaji podle čl.&nbsp;77 GDPR u&nbsp;dozorového úřadu.</li>\n</ul>\n<p>Členové podpisem členské přihlášky či zaplacením ročního členství <strong>udělují klubu souhlas</strong> s&nbsp;výše uvedenými procesy zpracování osobních údajů a&nbsp;berou na vědomí svá práva vyplývající z&nbsp;nařízení GDPR.</p>\n<p>V&nbsp;případě nesouhlasu s&nbsp;výše uvedeným je člen povinen toto klubu ohlásit a&nbsp;dle práv GDPR budou jeho údaje z&nbsp;databáze vymazány.</p>"
+        },
+        {
+            "id": 4,
+            "nazev": "Ceník zimní halové sezóny 2026/2027",
+            "slug": "cenik-zima-2026-2027",
+            "stara_url": "https://files.cltk.cz/9lawqgo4cjn01/Cen%C3%ADk%20zimn%C3%AD%20sezona%2026-27.pdf",
+            "text": "<p><strong>I.&nbsp;ČLTK Praha</strong></p>\n<h2>Ceník zimní halové sezóny 2026/2027</h2>\n<h3>Přetlaková hala – antuka (kurty 5, 6)</h3>\n<p><em>Hrací období 5.&nbsp;10.&nbsp;26 – 4.&nbsp;4.&nbsp;27 (26&nbsp;týdnů)</em></p>\n<table>\n  <thead>\n    <tr><th>Hrací čas</th><th>Jednotlivé hodiny<br>veřejnost</th><th>Jednotlivé hodiny<br>členové I.&nbsp;ČLTK</th><th>Předplatné na celé hrací období<br>veřejnost</th><th>Předplatné na celé hrací období<br>členové I.&nbsp;ČLTK</th></tr>\n  </thead>\n  <tbody>\n    <tr><td>všední den 7:00–14:00</td><td>540&nbsp;Kč</td><td>430&nbsp;Kč</td><td>12&nbsp;480&nbsp;Kč<br>(480,–/hod)</td><td>10&nbsp;140&nbsp;Kč<br>(390,–/hod)</td></tr>\n    <tr><td>všední den 14:00–21:00</td><td>730&nbsp;Kč</td><td>590&nbsp;Kč</td><td>17&nbsp;160&nbsp;Kč<br>(660,–/hod)</td><td>13&nbsp;780&nbsp;Kč<br>(530,–/hod)</td></tr>\n    <tr><td>víkend 8:00–21:00</td><td>450&nbsp;Kč</td><td>390&nbsp;Kč</td><td>10&nbsp;660&nbsp;Kč<br>(410,–/hod)</td><td>8&nbsp;580&nbsp;Kč<br>(330,–/hod)</td></tr>\n  </tbody>\n</table>\n<h3>Přetlaková hala – tvrdý povrch (kurty C, 1, 2, 3, 4, 7, 8, 9)</h3>\n<p><em>Hrací období 5.&nbsp;10.&nbsp;26 – 4.&nbsp;4.&nbsp;27 (26&nbsp;týdnů)</em></p>\n<table>\n  <thead>\n    <tr><th>Hrací čas</th><th>Jednotlivé hodiny<br>veřejnost</th><th>Jednotlivé hodiny<br>členové I.&nbsp;ČLTK</th><th>Předplatné na celé hrací období<br>veřejnost</th><th>Předplatné na celé hrací období<br>členové I.&nbsp;ČLTK</th></tr>\n  </thead>\n  <tbody>\n    <tr><td>všední den 7:00–14:00</td><td>730&nbsp;Kč</td><td>590&nbsp;Kč</td><td>17&nbsp;160&nbsp;Kč<br>(660,–/hod)</td><td>13&nbsp;780&nbsp;Kč<br>(530,–/hod)</td></tr>\n    <tr><td>všední den 14:00–22:00</td><td>860&nbsp;Kč</td><td>690&nbsp;Kč</td><td>20&nbsp;280&nbsp;Kč<br>(780,–/hod)</td><td>16&nbsp;380&nbsp;Kč<br>(630,–/hod)</td></tr>\n    <tr><td>víkend 7:00–22:00</td><td>600&nbsp;Kč</td><td>490&nbsp;Kč</td><td>14&nbsp;040&nbsp;Kč<br>(540,–/hod)</td><td>11&nbsp;440&nbsp;Kč<br>(440,–/hod)</td></tr>\n  </tbody>\n</table>\n<h3>Pevná hala Novasport – tvrdý povrch (kurty P1, P2)</h3>\n<p><em>Hrací období 28.&nbsp;9.&nbsp;26 – 4.&nbsp;4.&nbsp;27 (27&nbsp;týdnů)</em></p>\n<table>\n  <thead>\n    <tr><th>Hrací čas</th><th>Jednotlivé hodiny<br>veřejnost</th><th>Jednotlivé hodiny<br>členové I.&nbsp;ČLTK</th><th>Předplatné na celé hrací období<br>veřejnost</th><th>Předplatné na celé hrací období<br>členové I.&nbsp;ČLTK</th></tr>\n  </thead>\n  <tbody>\n    <tr><td>všední den 7:00–22:00</td><td>890&nbsp;Kč</td><td>800&nbsp;Kč</td><td>21&nbsp;870&nbsp;Kč<br>(810,–/hod)</td><td>19&nbsp;710&nbsp;Kč<br>(730,–/hod)</td></tr>\n    <tr><td>víkend 7:00–22:00</td><td>700&nbsp;Kč</td><td>630&nbsp;Kč</td><td>17&nbsp;010&nbsp;Kč<br>(630,–/hod)</td><td>15&nbsp;120&nbsp;Kč<br>(560,–/hod)</td></tr>\n  </tbody>\n</table>\n<p>* Zvýhodněná cena za předplatné na celé hrací období platí pouze při platbě předem a&nbsp;za celé období.</p>\n<p>** Klub si vyhrazuje právo přesunout rezervaci na jiný dvorec nebo do jiné haly, přičemž musí dodržet rezervovaný čas a&nbsp;typ povrchu.</p>"
+        },
+        {
+            "id": 5,
+            "nazev": "Plán areálu",
+            "slug": "plan-arealu",
+            "stara_url": "https://files.cltk.cz/l8wemjw6xri01/Pl%C3%A1n%20are%C3%A1lu%20%2009-2025%20na%20web.pdf",
+            "text": "<figure><img src=\"uploads/dokumenty/plan-arealu.jpg\" alt=\"Plán areálu I. ČLTK Praha na ostrově Štvanice\" loading=\"lazy\"><figcaption>Plán areálu I.&nbsp;ČLTK Praha, verze 09-2025</figcaption></figure>\n<h3>Popisky v&nbsp;plánu</h3>\n<ul>\n  <li>Slavoj</li>\n  <li>16, 15, 14, 13, 12, 11, 10</li>\n  <li>Multifunkční hřiště</li>\n  <li>Hřiště na beach volejbal</li>\n  <li>Negrelliho viadukt</li>\n  <li>Parkoviště</li>\n  <li>Vstup</li>\n  <li>Fitness 2.&nbsp;NP</li>\n  <li>Regenerace 2.&nbsp;NP</li>\n  <li>Sportovní lékařství</li>\n  <li>Kadeřnictví</li>\n  <li>Šatna D1</li>\n  <li>Šatny D2, M1, M2, M3</li>\n  <li>Management 2.&nbsp;NP</li>\n  <li>1</li>\n  <li>Recepce</li>\n  <li>Šatny 58–59</li>\n  <li>Tenis shop</li>\n  <li>Salónek a&nbsp;dětský koutek</li>\n  <li>Restaurace s&nbsp;terasou</li>\n  <li>Pevná hala</li>\n  <li>P1, P2</li>\n  <li>C</li>\n  <li>Kanceláře ČTS</li>\n  <li>Bazén</li>\n  <li>5, 6, 7, 8, 9</li>\n  <li>2, 3, 4</li>\n  <li>Odrazová stěna</li>\n  <li>Multifunkční hřiště</li>\n</ul>"
+        },
+        {
+            "id": 6,
+            "nazev": "Provozní řád – bazén",
+            "slug": "provozni-rad-bazen",
+            "stara_url": "https://files.cltk.cz/555n53okod501/Provozn%C3%AD%20%C5%99%C3%A1d%20-%20BAZ%C3%89N.pdf",
+            "text": "<p><strong>I.&nbsp;Český Lawn – Tennis Klub Praha</strong><br><em>Ostrov Štvanice 38, Praha 7, 170&nbsp;00, IČ: 45243077, tel.: 222&nbsp;316&nbsp;317</em><br>jako provozovatel objektu vydává v&nbsp;zájmu zabezpečení řádné správy a&nbsp;ochrany majetku i&nbsp;podmínek pro provádění sportovní činnosti v&nbsp;tomto zařízení následující</p>\n<h2>PROVOZNÍ ŘÁD VENKOVNÍHO BAZÉNU</h2>\n<p>1. Bazén v&nbsp;areálu I.&nbsp;ČLTK je určen pouze pro členy klubu, event. jejich hosty.</p>\n<p>2. Vstup osobám mladším 12&nbsp;let je povolen pouze v&nbsp;doprovodu rodičů.</p>\n<p>3. Návštěvníkům bazénu je zakázáno:</p>\n<p>a) vstupovat do vody bez předchozího osprchování</p>\n<p>b) vstupovat do vody v&nbsp;jiném úboru než v&nbsp;plavkách</p>\n<p>c) skákat do bazénu</p>\n<p>4. Každý návštěvník prostoru je povinen se chovat tak, aby nedocházelo ke škodám na zahradním nábytku, záhonech, trávníku a&nbsp;ke znečištění vody a&nbsp;dlažby bazénu!</p>\n<p>5. Koupání všech oprávněných osob v&nbsp;tomto bazénu bez plavčíka je na vlastní riziko!</p>\n<p>6. Do prostoru bazénu je zákaz vstupu se psy i&nbsp;s&nbsp;jakýmikoliv jinými zvířaty.</p>\n<p>7. Do prostoru bazénu je zakázáno vnášení skla, povoleny jsou pouze nealkoholické nápoje v&nbsp;plastových obalech.</p>\n<p>8. Pro hosty člena klubu u&nbsp;bazénu platí: každý člen klubu má právo přivést si k&nbsp;bazénu svého hosta za částku 400,–&nbsp;Kč/1&nbsp;den, a&nbsp;to bez ohledu na čas, který host u&nbsp;bazénu v&nbsp;daném dni stráví. Tato částka není požadována za dítě do věku 2&nbsp;let. Platba musí být provedena v&nbsp;recepci klubu před vstupem k&nbsp;bazénu.</p>\n<p>9. V&nbsp;rámci rodinného členství může nehrající rodič využívat zdarma bazén.</p>"
+        },
+        {
+            "id": 7,
+            "nazev": "Provozní řád – posilovna (fitness)",
+            "slug": "provozni-rad-posilovna",
+            "stara_url": "https://files.cltk.cz/ogu817lkcf501/Provozn%C3%AD%20%C5%99%C3%A1d%20-%20posilovna%20I.%C4%8CLTK.pdf",
+            "text": "<p><strong>I.&nbsp;Český Lawn – Tennis Klub Praha</strong><br><em>Ostrov Štvanice 38, Praha 7, 170&nbsp;00, IČ: 45243077, tel.: 222&nbsp;316&nbsp;317</em><br>jako provozovatel objektu vydává v&nbsp;zájmu zabezpečení řádné správy a&nbsp;ochrany majetku i&nbsp;podmínek pro provádění sportovní činnosti v&nbsp;tomto zařízení následující</p>\n<h2>PROVOZNÍ ŘÁD POSILOVNY</h2>\n<h3>I.&nbsp;Základní ustanovení</h3>\n<p>1. Tento Provozní řád určuje zásady chování uživatelů posilovny, jejich práva a&nbsp;povinnosti.</p>\n<p>2. Provozní řád se vztahuje na všechny uživatele posilovny a&nbsp;jejího příslušenství a&nbsp;tito jsou povinni jej dodržovat.</p>\n<p>3. Vstupem do prostoru posilovny uživatelé vyjadřují svůj souhlas s&nbsp;dodržováním tohoto Provozního řádu.</p>\n<p>4. Porušení tohoto Provozního řádu je důvodem k&nbsp;zákazu vstupu.</p>\n<h3>II.&nbsp;Všeobecná pravidla užívání posilovny</h3>\n<p>1. Časové využívání prostor posilovny je dáno otevírací dobou budovy, kterou stanovuje provozovatel budovy.</p>\n<p>2. <strong>Vstup do posilovny je povolen pouze členům I.&nbsp;ČLTK Praha nebo jejich hostům, kteří uhradili jednorázový vstupní poplatek 400&nbsp;Kč na recepci klubu.</strong></p>\n<p>3. Dětem do 12&nbsp;let je povolen vstup pouze v&nbsp;doprovodu dospělé osoby starší 18&nbsp;let.</p>\n<p>4. V&nbsp;celém prostoru posilovny platí přísný zákaz konzumování potravin, vnášení skla, kouření, používání otevřeného ohně a&nbsp;požívání alkoholických nápojů. Povoleny jsou pouze nealkoholické nápoje v&nbsp;plastových obalech.</p>\n<p>5. Návštěvníci se chovají tak, aby neohrozili své zdraví ani zdraví ostatních návštěvníků.</p>\n<p>6. Prostor posilovny je monitorován kamerovým systémem.</p>\n<h3>III.&nbsp;Provozní zásady užívání posilovny</h3>\n<p>1. Vstup do posilovny je povolen pouze ve vhodném sportovním oblečení. Z&nbsp;hygienických důvodů je zakázáno cvičit bez trička – do půli těla, při cvičení na posilovacích strojích musí každý návštěvník používat ručník.</p>\n<p>2. Do sportovního úboru se převléká výhradně v&nbsp;šatnách. Provozovatel neručí za odložené cennosti v&nbsp;prostorech posilovny. Cenné věci lze odložit v&nbsp;uzamykatelné skříňce v&nbsp;šatně, popřípadě na recepci.</p>\n<p>3. Vstup do posilovny je povolen pouze v&nbsp;čisté sálové obuvi. <strong>Přísný zákaz vstupu v&nbsp;tenisové obuvi od antuky!</strong> (Tuto obuv si můžete odkládat v&nbsp;botníku před dveřmi). Při zjištění porušení tohoto pokynu je provozovatel oprávněn takové osobě naúčtovat úklid daných prostor a&nbsp;neumožnit další vstup do posilovny.</p>\n<p>4. Všechny osoby jsou povinny udržovat v&nbsp;posilovně pořádek a&nbsp;čistotu. Každý cvičící uloží činky, kotouče a&nbsp;lavičky po cvičení na původní místo.</p>\n<p>5. Jakékoliv škody na zařízení posilovny a&nbsp;cvičebním náčiní jsou návštěvníci povinni nahlásit na recepci.</p>\n<p>6. Pokud návštěvník odchází a&nbsp;prostor posilovny už nikdo jiný nevyužívá, při odchodu zkontroluje, zda je vše v&nbsp;pořádku, zda jsou zhasnutá světla, zavřená okna, vypnuté televize i&nbsp;klimatizace.</p>\n<h3>IV.&nbsp;Bezpečnostní zásady užívání posilovny</h3>\n<p>1. Všichni návštěvníci posilovny mají za povinnost chovat se ukázněně, užívat prostory posilovny pouze k&nbsp;účelům, ke kterým jsou určeny a&nbsp;dbát na dodržování zásad bezpečnosti, hygieny a&nbsp;požární ochrany.</p>\n<p>2. Při cvičení s&nbsp;vyšší váhou cvičte vždy se záchranou a&nbsp;s&nbsp;použitím uzávěrů na činkách.</p>\n<p>3. Do všech prostor posilovny je zakázán vstup osobám: v&nbsp;podnapilém stavu, pod vlivem návykových, omamných nebo psychotropních látek, ve špinavém nebo zjevně nevhodném oblečení, nebo vzbuzující veřejné pohoršení.</p>\n<p>4. Cvičenci v&nbsp;prostorách posilovny užívají zařízení posilovny na vlastní nebezpečí.</p>\n<h3>VI.&nbsp;Závěrečná ustanovení</h3>\n<p>1. Všichni návštěvníci posilovny jsou povinni seznámit se s&nbsp;provozním řádem a&nbsp;dbát na jeho dodržování.</p>\n<p>2. Provozovatel budovy má právo kontrolovat dodržování pravidel provozu, která jsou v&nbsp;tomto řádu uvedena a&nbsp;vyvozovat z&nbsp;nich příslušná opatření.</p>\n<p>3. Nedodržování provozního řádu má za následek vykázání návštěvníka bez nároku na vrácení vstupného.</p>\n<p>4. Tento provozní řád musí být vyvěšen viditelně při vstupu do posilovny.</p>\n<p>5. Tento provozní řád vstupuje v&nbsp;účinnost dne 20.&nbsp;6.&nbsp;2017.</p>"
+        },
+        {
+            "id": 8,
+            "nazev": "Provozní řád – wellness",
+            "slug": "provozni-rad-wellness",
+            "stara_url": "https://files.cltk.cz/4fwmpb64fx11/Provozn%C3%AD%20%C5%99%C3%A1d%20-%20wellness%20I.%C4%8CLTK.pdf",
+            "text": "<p><strong>I.&nbsp;Český Lawn – Tennis Klub Praha</strong><br><em>Ostrov Štvanice 38, Praha 7, 170&nbsp;00, IČ: 45243077, tel.: 222&nbsp;316&nbsp;317</em><br>jako provozovatel objektu vydává v&nbsp;zájmu zabezpečení řádné správy a&nbsp;ochrany majetku</p>\n<h2>PROVOZNÍ ŘÁD WELLNESS CENTRA</h2>\n<h3>I.&nbsp;Základní ustanovení</h3>\n<p>1. Tento Provozní řád určuje zásady chování uživatelů wellness centra, jejich práva a&nbsp;povinnosti.</p>\n<p>2. Provozní řád se vztahuje na všechny uživatele wellness centra a&nbsp;tito jsou povinni jej dodržovat.</p>\n<p>3. Vstupem do prostoru wellness centra uživatelé vyjadřují svůj souhlas s&nbsp;dodržováním tohoto Provozního řádu.</p>\n<p>4. Porušení tohoto Provozního řádu je důvodem k&nbsp;zákazu vstupu.</p>\n<h3>II.&nbsp;Všeobecná pravidla užívání wellness centra</h3>\n<p>1. Časové využívání prostor wellness centra je dáno otevírací dobou, ta je uvedena na www.cltk.cz a&nbsp;může se operativně měnit.</p>\n<p>2. Na klubových stránkách je také specifikován režim, v&nbsp;jakém bude wellness centrum fungovat, povolená četnost návštěv členů klubu i&nbsp;závodních hráčů a&nbsp;další případné uzavírky či omezení vyplývající z&nbsp;mimořádných událostí či akcí konaných v&nbsp;tenisovém areálu Štvanice.</p>\n<p>3. Vstup do wellness centra je povolen pouze členům I.&nbsp;ČLTK Praha.</p>\n<p>4. Při naplnění kapacity prostorů nebude povolen vstup dalším návštěvníkům.</p>\n<p>5. Před vstupem do wellness centra se musí návštěvník nahlásit na recepci klubu, zde si také vyzvedne vstupní čip, může si zapůjčit klíček od skříňky, ručník či prostěradlo do sauny.</p>\n<p>6. Mladistvým do 14&nbsp;let je povolen vstup pouze v&nbsp;doprovodu dospělé osoby starší 18&nbsp;let.</p>\n<p>7. V&nbsp;celém prostoru wellness centra platí přísný zákaz konzumování potravin, vnášení skla, kouření, používání otevřeného ohně a&nbsp;požívání alkoholických nápojů. Povoleny jsou pouze nealkoholické nápoje v&nbsp;plastových obalech.</p>\n<p>8. Návštěvníci se chovají tak, aby neohrozili své zdraví ani zdraví ostatních návštěvníků.</p>\n<p>9. Prostor vstupu do wellness centra je monitorován kamerovým systémem.</p>\n<h3>III.&nbsp;Provozní zásady užívání wellness centra</h3>\n<p>1. Vstup do wellness centra je povolen pouze ve vhodném oblečení – tedy v&nbsp;plavkách či podobném koupacím nebo relaxačním úboru a&nbsp;zároveň buď bez bot či ve vhodné a&nbsp;čisté indoorové nejlépe plážové obuvi. <strong>Přísný zákaz vstupu v&nbsp;tenisové obuvi od antuky!</strong> (Při zjištění porušení tohoto pokynu je provozovatel oprávněn takové osobě naúčtovat úklid daných prostor a&nbsp;neumožnit další vstup do wellness centra.)</p>\n<p>2. Do plavek se návštěvník převléká výhradně v&nbsp;šatnách. Provozovatel neručí za odložené cennosti v&nbsp;prostorech wellness centra. Cenné věci lze odložit v&nbsp;uzamykatelné skříňce v&nbsp;šatně, popřípadě na recepci.</p>\n<p>3. Před vstupem do sauny nebo vířivky je návštěvník povinen se celý řádně omýt mýdlem a&nbsp;osprchovat.</p>\n<p>4. Do sauny si každý návštěvník musí vzít prostěradlo, osušku nebo ručník, na který si sedne. Návštěvník by neměl být v&nbsp;přímém kontaktu s&nbsp;pryčnami lavic.</p>\n<p>5. Z&nbsp;hygienických důvodů je zakázáno vstupovat do vířivé vany či do sauny v&nbsp;tričku, v&nbsp;kraťasech či jiném oblečení než v&nbsp;plavkách.</p>\n<p>6. Jakékoliv škody na zařízení wellness centra jsou návštěvníci povinni nahlásit na recepci.</p>\n<p>7. Při odchodu z&nbsp;wellness centra je návštěvník povinen nahlásit svůj odchod na recepci a&nbsp;odevzdat tam svůj zapůjčený vstupní čip či klíčky od skříňky v&nbsp;šatně.</p>\n<p>8. Půjčená prostěradla, osušky nebo ručníky odkládají návštěvníci při odchodu do sběrných košů u&nbsp;východu z&nbsp;wellness centra.</p>\n<h3>IV.&nbsp;Bezpečnostní zásady užívání wellness centra</h3>\n<p>1. Všichni návštěvníci užívají prostory wellness centra <strong>na vlastní nebezpečí</strong>. Provozovatel wellness centra nepřebírá jakoukoliv odpovědnost za škodu na zdraví či majetku vzniklou na straně návštěvníka jeho zaviněním.</p>\n<p>2. V&nbsp;celém prostoru platí zvýšené riziko uklouznutí, proto je každý návštěvník povinen se pohybovat pomalu a&nbsp;zvolna, aby předešel možnosti úrazu sobě, či ostatním.</p>\n<p>3. Všichni návštěvníci wellness centra mají za povinnost chovat se ukázněně, užívat prostory pouze k&nbsp;účelům, ke kterým jsou určeny a&nbsp;dbát na dodržování zásad bezpečnosti, hygieny a&nbsp;požární ochrany.</p>\n<p>4. Do všech prostor wellness centra je zakázán vstup osobám: v&nbsp;podnapilém stavu, pod vlivem návykových, omamných nebo psychotropních látek, ve špinavém nebo zjevně nevhodném oblečení, osobám s&nbsp;kožními nebo jinými přenosnými nemocemi ohrožující zdraví ostatních návštěvníků</p>\n<h3>VI.&nbsp;Závěrečná ustanovení</h3>\n<p>1. Všichni návštěvníci wellness centra jsou povinni seznámit se s&nbsp;provozním řádem a&nbsp;dbát na jeho dodržování.</p>\n<p>2. Provozovatel budovy má právo kontrolovat dodržování pravidel provozu, která jsou v&nbsp;tomto řádu uvedena a&nbsp;vyvozovat z&nbsp;nich příslušná opatření.</p>\n<p>3. Nedodržování provozního řádu má za následek vykázání návštěvníka bez nároku na vrácení vstupného.</p>\n<p>4. Tento provozní řád musí být vyvěšen viditelně při vstupu do wellness centra a&nbsp;na webových stránkách klubu.</p>\n<p>5. Tento provozní řád vstupuje v&nbsp;účinnost dne 1.&nbsp;2.&nbsp;2019.</p>"
+        }
+    ],
+    "odkazy": [
+        {
+            "tabulka": "cltk_price_lists",
+            "sloupec": "pdf_url",
+            "stara": "https://files.cltk.cz/9lawqgo4cjn01/Cen%C3%ADk%20zimn%C3%AD%20sezona%2026-27.pdf",
+            "nova": "dokument.php?d=cenik-zima-2026-2027"
+        },
+        {
+            "tabulka": "cltk_bloky",
+            "sloupec": "odkaz",
+            "stara": "https://files.cltk.cz/l8wemjw6xri01/Pl%C3%A1n%20are%C3%A1lu%20%2009-2025%20na%20web.pdf",
+            "nova": "dokument.php?d=plan-arealu"
+        }
+    ],
+    "bloky": [
+        {
+            "stranka": "kontakt",
+            "klic": "dokumenty",
+            "zmeny": {
+                "nadpis": [
+                    "Dokumenty ke <em>stažení</em>",
+                    "Dokumenty <em>klubu</em>"
+                ]
+            }
+        },
+        {
+            "stranka": "vedeni",
+            "klic": "dokumenty",
+            "zmeny": {
+                "perex": [
+                    "Stanovy klubu a další dokumenty jsou ke stažení v PDF.",
+                    "Stanovy klubu a další dokumenty si přečtete přímo na webu – každý jde i vytisknout."
+                ]
+            }
+        },
+        {
+            "stranka": "areal",
+            "klic": "plan",
+            "zmeny": {
+                "odkaz_text": [
+                    "Plán areálu v PDF",
+                    "Plán areálu k vytištění"
+                ]
+            }
+        },
+        {
+            "stranka": "revue",
+            "klic": "uvod",
+            "zmeny": {
+                "perex": [
+                    "41 čísel klubového časopisu od roku 2006, dvakrát ročně. Texty Jiljí Kubec, grafika Kateřina Kuželová, hlavní fotograf Martin Sidorják. Čísla 01/2016 a 02/2016 v archivu PDF chybí.",
+                    "41 čísel klubového časopisu od roku 2006, dvakrát ročně, a jubilejní speciál 1893–2023. Texty Jiljí Kubec, grafika Kateřina Kuželová, hlavní fotograf Martin Sidorják. Čísla 01/2016 a 02/2016 v archivu PDF chybí."
+                ]
+            }
+        },
+        {
+            "stranka": "tenisova-skola-rozvrhy",
+            "klic": "rozvrhy",
+            "zmeny": {
+                "nadpis": [
+                    "Zimní rozvrhy skupin",
+                    "Rozvrhy <em>tréninků</em>"
+                ],
+                "perex": [
+                    "Rozvrhy jednotlivých skupin doplní klub.",
+                    "Týdenní rozvrh Tenisové školy Markéty Vondroušové po kurtech a hodinách. Jména dětí na webu nejsou. Změny vyhrazeny."
+                ],
+                "text": [
+                    "",
+                    "<h3>Důležité informace k&nbsp;tréninkům dětí v&nbsp;halách</h3><ul><li>Prosíme rodiče a&nbsp;doprovod, aby se z&nbsp;organizačních, pedagogicko-psychologických a&nbsp;hygienických důvodů během tréninků zdržovali mimo halu.</li><li>Vstup dětí do haly nejdříve 5 minut před zahájením vlastního tréninku.</li><li>Absence a&nbsp;omluvy z&nbsp;tréninků hlaste přímo trenérce či trenérovi (kontakty níže).</li></ul><h3>Kontaktní trenéři kurtů</h3><p><strong>Kurt 5 (antuka):</strong> Andrea Vašíčková, <a href=\"tel:+420602819899\">+420 602 819 899</a> · Adéla Vašíčková, <a href=\"tel:+420725480412\">+420 725 480 412</a></p><p><strong>Kurt 6 (antuka):</strong> Jan Pecha, <a href=\"tel:+420721663118\">+420 721 663 118</a></p>"
+                ],
+                "doplni_klub": [
+                    1,
+                    0
+                ]
+            }
+        }
+    ],
+    "bloky_nove": [
+        {
+            "stranka": "dokumenty",
+            "klic": "uvod",
+            "poradi": 0,
+            "stitek": "Dokumenty",
+            "nadpis": "Dokumenty <em>klubu</em>.",
+            "perex": "Stanovy, pravidla hraní a provozní řády areálu přímo na webu – každý dokument si můžete i vytisknout. Níže je archiv klubových turnajů a jubilejní Revue."
+        },
+        {
+            "stranka": "dokumenty",
+            "klic": "pravidla",
+            "poradi": 1,
+            "nadpis": "Pravidla a provozní <em>řády</em>",
+            "perex": "Pravidla hraní a rezervací kurtů, provozní řády bazénu, posilovny a wellness a plán areálu."
+        },
+        {
+            "stranka": "dokumenty",
+            "klic": "klub",
+            "poradi": 2,
+            "nadpis": "Klub a <em>spolek</em>",
+            "perex": "Stanovy spolku a oznámení o zpracování osobních údajů členů."
+        },
+        {
+            "stranka": "dokumenty",
+            "klic": "ceniky",
+            "poradi": 3,
+            "nadpis": "Ceníky",
+            "perex": "Ceník k vytištění. Aktuální ceny kurtů v létě i v zimě jsou na stránce Ceník kurtů."
+        },
+        {
+            "stranka": "dokumenty",
+            "klic": "archiv",
+            "poradi": 4,
+            "stitek": "Archiv",
+            "nadpis": "Archiv klubových <em>turnajů</em>",
+            "perex": "Pozvánky, rozlosování a výsledky klubových turnajů a akcí. Soubory PDF, jak je klub vydal."
+        },
+        {
+            "stranka": "dokumenty",
+            "klic": "revue",
+            "poradi": 5,
+            "stitek": "I.ČLTK Revue",
+            "nadpis": "Kompletní historie v jubilejní <em>Revue</em>",
+            "perex": "Speciální číslo I.ČLTK Revue ke 130. výročí klubu – dějiny klubu od roku 1893, prezidenti, legendy Štvanice."
+        }
+    ],
+    "prameny": [
+        {
+            "tabulka": "cltk_milniky",
+            "id": 7,
+            "stary": "I.ČLTK Revue 02/2013 – 120 let (https://files.cltk.cz/k2f8xh6h3402/2_13_web.pdf) s. 8",
+            "novy": "I.ČLTK Revue 02/2013 – 120 let (uploads/revue/pdf/revue-2013-2.pdf) s. 8"
+        },
+        {
+            "tabulka": "cltk_milniky",
+            "id": 9,
+            "stary": "I.ČLTK Revue 01/2023 + Bulletin 1893–2023 (https://files.cltk.cz/zmtia6qkem301/2023_1_web%20%28kopie%29.pdf) s. 39; en.wikipedia Tennis at the 1912 Summer Olympics",
+            "novy": "I.ČLTK Revue 01/2023 + Bulletin 1893–2023 (uploads/revue/pdf/revue-2023-1.pdf) s. 39; en.wikipedia Tennis at the 1912 Summer Olympics"
+        },
+        {
+            "tabulka": "cltk_milniky",
+            "id": 13,
+            "stary": "I.ČLTK Revue 02/2013 – 120 let (https://files.cltk.cz/k2f8xh6h3402/2_13_web.pdf) s. 9–10",
+            "novy": "I.ČLTK Revue 02/2013 – 120 let (uploads/revue/pdf/revue-2013-2.pdf) s. 9–10"
+        },
+        {
+            "tabulka": "cltk_milniky",
+            "id": 15,
+            "stary": "I.ČLTK Revue 02/2013 – 120 let (https://files.cltk.cz/k2f8xh6h3402/2_13_web.pdf) s. 10, 15; I.ČLTK Revue 01/2023 + Bulletin 1893–2023 (https://files.cltk.cz/zmtia6qkem301/2023_1_web%20%28kopie%29.pdf) s. 42",
+            "novy": "I.ČLTK Revue 02/2013 – 120 let (uploads/revue/pdf/revue-2013-2.pdf) s. 10, 15; I.ČLTK Revue 01/2023 + Bulletin 1893–2023 (uploads/revue/pdf/revue-2023-1.pdf) s. 42"
+        },
+        {
+            "tabulka": "cltk_milniky",
+            "id": 18,
+            "stary": "I.ČLTK Revue 02/2013 – 120 let (https://files.cltk.cz/k2f8xh6h3402/2_13_web.pdf) s. 11; cs.wikipedia Drobný",
+            "novy": "I.ČLTK Revue 02/2013 – 120 let (uploads/revue/pdf/revue-2013-2.pdf) s. 11; cs.wikipedia Drobný"
+        },
+        {
+            "tabulka": "cltk_milniky",
+            "id": 21,
+            "stary": "cs.wikipedia Jan Kodeš; I.ČLTK Revue 02/2013 – 120 let (https://files.cltk.cz/k2f8xh6h3402/2_13_web.pdf) s. 11",
+            "novy": "cs.wikipedia Jan Kodeš; I.ČLTK Revue 02/2013 – 120 let (uploads/revue/pdf/revue-2013-2.pdf) s. 11"
+        },
+        {
+            "tabulka": "cltk_milniky",
+            "id": 29,
+            "stary": "iROZHLAS 20. 12. 2018; I.ČLTK Revue 01/2023 + Bulletin 1893–2023 (https://files.cltk.cz/zmtia6qkem301/2023_1_web%20%28kopie%29.pdf) s. 3, 12",
+            "novy": "iROZHLAS 20. 12. 2018; I.ČLTK Revue 01/2023 + Bulletin 1893–2023 (uploads/revue/pdf/revue-2023-1.pdf) s. 3, 12"
+        },
+        {
+            "tabulka": "cltk_milniky",
+            "id": 33,
+            "stary": "iROZHLAS 20. 12. 2018; tenisovaextraliga.cz; https://cltk.cz/cs/klub/klubove-turnaje-a-akce:51/oslavy-125-let-klubu/",
+            "novy": "iROZHLAS 20. 12. 2018; tenisovaextraliga.cz; I. ČLTK Praha, stránka „Oslavy 125 let klubu“"
+        },
+        {
+            "tabulka": "cltk_milniky",
+            "id": 36,
+            "stary": "en.wikipedia 2022 Billie Jean King Cup qualifying round; https://cltk.cz/cs/clanky/ing-petr-simunek-byl-zvolen-novym-prezidentem-klubu:231/",
+            "novy": "en.wikipedia 2022 Billie Jean King Cup qualifying round; I. ČLTK Praha, článek „Ing. Petr Šimůnek byl zvolen novým prezidentem klubu“ (2022)"
+        },
+        {
+            "tabulka": "cltk_milniky",
+            "id": 37,
+            "stary": "en.wikipedia Vondroušová; https://cltk.cz/cs/klub/klubove-turnaje-a-akce:51/oslavy-130-let-klubu-2272023/ ; ČT24 28. 7. 2023",
+            "novy": "en.wikipedia Vondroušová; I. ČLTK Praha, stránka „Oslavy 130 let klubu 22. 7. 2023“; ČT24 28. 7. 2023"
+        },
+        {
+            "tabulka": "cltk_milniky",
+            "id": 38,
+            "stary": "usopen.org; olympics.com; https://cltk.cz/cs/clanky/karolina-muchova-ovladla-smisenou-ctyrhru-na-us-open:385/ ; newsletter 3/2026",
+            "novy": "usopen.org; olympics.com; I. ČLTK Praha, článek „Karolína Muchová ovládla smíšenou čtyřhru na US Open“ (2026); newsletter 3/2026"
+        },
+        {
+            "tabulka": "cltk_ctc",
+            "id": 5,
+            "stary": "https://cltk.cz/cs/klub/ctc/",
+            "novy": "I. ČLTK Praha, stránka „CTC – Centenary Tennis Clubs“"
+        },
+        {
+            "tabulka": "cltk_ctc",
+            "id": 6,
+            "stary": "https://cltk.cz/cs/klub/ctc/",
+            "novy": "I. ČLTK Praha, stránka „CTC – Centenary Tennis Clubs“"
+        },
+        {
+            "tabulka": "cltk_ctc",
+            "id": 7,
+            "stary": "https://cltk.cz/cs/klub/ctc/",
+            "novy": "I. ČLTK Praha, stránka „CTC – Centenary Tennis Clubs“"
+        },
+        {
+            "tabulka": "cltk_ctc",
+            "id": 8,
+            "stary": "https://cltk.cz/cs/klub/ctc/",
+            "novy": "I. ČLTK Praha, stránka „CTC – Centenary Tennis Clubs“"
+        },
+        {
+            "tabulka": "cltk_ctc",
+            "id": 9,
+            "stary": "https://cltk.cz/cs/klub/ctc/",
+            "novy": "I. ČLTK Praha, stránka „CTC – Centenary Tennis Clubs“"
+        }
+    ],
+    "revue_special": {
+        "stara_url": "https://files.cltk.cz/s26yxq6kkn501/I.%C4%8CLTK%20revue%201893-2023.pdf",
+        "rok": 2023,
+        "cislo": 0,
+        "oznaceni": "1893–2023",
+        "obalka": "revue/revue-special-130-let.jpg",
+        "obalka_popis": "Markéta Vondroušová se stříbrnou medailí z OH Tokio 2021 (foto Martin Sidorják)",
+        "titulky": [
+            "1893–2023",
+            "MARKÉTA VONDROUŠOVÁ – STŘÍBRNÁ MEDAILE, OH TOKIO 2021"
+        ],
+        "obsah": [
+            [
+                "03",
+                "Editorial"
+            ],
+            [
+                "04",
+                "Moderna s geniem loci"
+            ],
+            [
+                "08",
+                "Neměnila bych (Markéta Vondroušová)"
+            ],
+            [
+                "11",
+                "Oáza na ostrově – kapitoly ze slavných dějin I. ČLTK Praha"
+            ],
+            [
+                "15",
+                "Prezidenti I. ČLTK Praha od roku 1893"
+            ],
+            [
+                "23",
+                "Legenda o legendě s geny útočníka (Jan Kodeš o Jaroslavu Drobném)"
+            ],
+            [
+                "26",
+                "Zázemí nové dimenze"
+            ],
+            [
+                "29",
+                "Klíčem bylo rozdělení"
+            ],
+            [
+                "30",
+                "Ti, kteří šířili slávu"
+            ],
+            [
+                "36",
+                "Legendy na Štvanici"
+            ],
+            [
+                "40",
+                "„Čemp“ patří na Štvanici (Jan Kodeš)"
+            ]
+        ],
+        "stran": 44,
+        "naklad": "300 výtisků",
+        "uzaverka": "",
+        "pdf_soubor": "revue/pdf/revue-special-130-let-1893-2023.pdf",
+        "pdf_mb": "6,9"
+    },
+    "archiv_turnaju": [
+        {
+            "nazev": "Babolat Amateur Tour 2026 – pozvánka a pravidla soutěže",
+            "skupina": "Babolat Amateur Tour",
+            "rok": 2026,
+            "soubor": "dokumenty/turnaje/2026-babolat-amateur-tour-pozvanka.pdf",
+            "soubor_nazev": "Babolat Amateur Tour 2026.pdf",
+            "stran": 2,
+            "poradi": 0,
+            "stara_url": "https://files.cltk.cz/i44oyxu4onm01/Babolat%20Amateur%20Tour%202026.pdf"
+        },
+        {
+            "nazev": "Babolat Amateur Tour 2026 – tabulka každý s každým (bez výsledků)",
+            "skupina": "Babolat Amateur Tour",
+            "rok": 2026,
+            "soubor": "dokumenty/turnaje/2026-babolat-amateur-tour-tabulka.pdf",
+            "soubor_nazev": "Babolat Amateur Tour 2026 - tabulka.pdf",
+            "stran": 1,
+            "poradi": 2,
+            "stara_url": "https://files.cltk.cz/zqo64ty42mm01/Babolat%20Amateur%20Tour%202026%20-%20tabulka.pdf"
+        },
+        {
+            "nazev": "Babolat Amateur Tour 2024 – pozvánka a pravidla soutěže",
+            "skupina": "Babolat Amateur Tour",
+            "rok": 2024,
+            "soubor": "dokumenty/turnaje/2024-babolat-amateur-tour-pozvanka.pdf",
+            "soubor_nazev": "Babolat Amateur Tour 2024.pdf",
+            "stran": 2,
+            "poradi": 0,
+            "stara_url": "https://files.cltk.cz/f6gu5moh4h801/Babolat%20Amateur%20Tour%202024.pdf"
+        },
+        {
+            "nazev": "Babolat Amateur Tour 2024 – kompletní výsledky",
+            "skupina": "Babolat Amateur Tour",
+            "rok": 2024,
+            "soubor": "dokumenty/turnaje/2024-babolat-amateur-tour-vysledky.pdf",
+            "soubor_nazev": "Babolat Amateur Tour 2024 - Kompletní výsledky.pdf",
+            "stran": 1,
+            "poradi": 3,
+            "stara_url": "https://files.cltk.cz/jrmtyz6c4fd01/Babolat%20Amateur%20Tour%202024%20-%20Kompletn%C3%AD%20v%C3%BDsledky.pdf"
+        },
+        {
+            "nazev": "Babolat Non Profi Cup 2023 – pozvánka a pravidla soutěže",
+            "skupina": "Babolat Non Profi Cup",
+            "rok": 2023,
+            "soubor": "dokumenty/turnaje/2023-babolat-non-profi-cup-pozvanka.pdf",
+            "soubor_nazev": "Non profi Cup 2023.pdf",
+            "stran": 2,
+            "poradi": 0,
+            "stara_url": "https://files.cltk.cz/a1tdc6nka4301/Non%20profi%20Cup%202023.pdf"
+        },
+        {
+            "nazev": "Babolat Non Profi Cup 2023 – tabulka každý s každým (před zahájením, bez výsledků)",
+            "skupina": "Babolat Non Profi Cup",
+            "rok": 2023,
+            "soubor": "dokumenty/turnaje/2023-babolat-non-profi-cup-tabulka.pdf",
+            "soubor_nazev": "Tabulka - každý s každým 2023.pdf",
+            "stran": 1,
+            "poradi": 2,
+            "stara_url": "https://files.cltk.cz/smycd9okx5301/Tabulka%20-%20ka%C5%BEd%C3%BD%20s%20ka%C5%BEd%C3%BDm%202023.pdf"
+        },
+        {
+            "nazev": "Babolat Non Profi Cup 2023 – kompletní výsledky",
+            "skupina": "Babolat Non Profi Cup",
+            "rok": 2023,
+            "soubor": "dokumenty/turnaje/2023-babolat-non-profi-cup-vysledky.pdf",
+            "soubor_nazev": "Non profi Cup 2023 - Kompletní výsledky.pdf",
+            "stran": 1,
+            "poradi": 3,
+            "stara_url": "https://files.cltk.cz/g8mmsjukkt401/Non%20profi%20Cup%202023%20-%20Kompletn%C3%AD%20v%C3%BDsledky.pdf"
+        },
+        {
+            "nazev": "Babolat Non Profi Cup 2022 – pozvánka a pravidla soutěže",
+            "skupina": "Babolat Non Profi Cup",
+            "rok": 2022,
+            "soubor": "dokumenty/turnaje/2022-babolat-non-profi-cup-pozvanka.pdf",
+            "soubor_nazev": "Non profi Cup 2022.pdf",
+            "stran": 3,
+            "poradi": 0,
+            "stara_url": "https://files.cltk.cz/3oicly4jch33/Non%20profi%20Cup%202022.pdf"
+        },
+        {
+            "nazev": "Babolat Non Profi Cup 2022 – tabulka každý s každým (před zahájením, bez výsledků)",
+            "skupina": "Babolat Non Profi Cup",
+            "rok": 2022,
+            "soubor": "dokumenty/turnaje/2022-babolat-non-profi-cup-tabulka.pdf",
+            "soubor_nazev": "Tabulka - každý s každým 2022.pdf",
+            "stran": 1,
+            "poradi": 2,
+            "stara_url": "https://files.cltk.cz/mcrbo37jzi33/Tabulka%20-%20ka%C5%BEd%C3%BD%20s%20ka%C5%BEd%C3%BDm%202022.pdf"
+        },
+        {
+            "nazev": "Babolat Non Profi Cup 2022 – kompletní výsledky",
+            "skupina": "Babolat Non Profi Cup",
+            "rok": 2022,
+            "soubor": "dokumenty/turnaje/2022-babolat-non-profi-cup-vysledky.pdf",
+            "soubor_nazev": "Kompletní výsledky - NON Profi Cup 2022.pdf",
+            "stran": 1,
+            "poradi": 3,
+            "stara_url": "https://files.cltk.cz/2j9nccjjo3201/Kompletn%C3%AD%20v%C3%BDsledky%20-%20NON%20Profi%20Cup%202022.pdf"
+        },
+        {
+            "nazev": "Babolat Non Profi Cup 2021 – pozvánka a pravidla soutěže",
+            "skupina": "Babolat Non Profi Cup",
+            "rok": 2021,
+            "soubor": "dokumenty/turnaje/2021-babolat-non-profi-cup-pozvanka.pdf",
+            "soubor_nazev": "Non profi Cup 2021.pdf",
+            "stran": 3,
+            "poradi": 0,
+            "stara_url": "https://files.cltk.cz/x56gskqh8b31/Non%20profi%20Cup%202021.pdf"
+        },
+        {
+            "nazev": "Babolat Non Profi Cup 2021 – tabulka každý s každým (před zahájením, bez výsledků)",
+            "skupina": "Babolat Non Profi Cup",
+            "rok": 2021,
+            "soubor": "dokumenty/turnaje/2021-babolat-non-profi-cup-tabulka.pdf",
+            "soubor_nazev": "Tabulka - každý s každým 2021.pdf",
+            "stran": 1,
+            "poradi": 2,
+            "stara_url": "https://files.cltk.cz/u8gynonhuc31/Tabulka%20-%20ka%C5%BEd%C3%BD%20s%20ka%C5%BEd%C3%BDm%202021.pdf"
+        },
+        {
+            "nazev": "Babolat Non Profi Cup 2021 – kompletní výsledky",
+            "skupina": "Babolat Non Profi Cup",
+            "rok": 2021,
+            "soubor": "dokumenty/turnaje/2021-babolat-non-profi-cup-vysledky.pdf",
+            "soubor_nazev": "Kompletní výsledky - BABOLAT NON Profi Cup 2021.pdf",
+            "stran": 1,
+            "poradi": 3,
+            "stara_url": "https://files.cltk.cz/dw18zifi6a32/Kompletn%C3%AD%20v%C3%BDsledky%20-%20BABOLAT%20NON%20Profi%20Cup%202021.pdf"
+        },
+        {
+            "nazev": "Babolat Non Profi Cup 2020 – pozvánka a pravidla soutěže",
+            "skupina": "Babolat Non Profi Cup",
+            "rok": 2020,
+            "soubor": "dokumenty/turnaje/2020-babolat-non-profi-cup-pozvanka.pdf",
+            "soubor_nazev": "Non profi Cup 2020.pdf",
+            "stran": 3,
+            "poradi": 0,
+            "stara_url": "https://files.cltk.cz/81gbp6am2625/Non%20profi%20Cup%202020.pdf"
+        },
+        {
+            "nazev": "Babolat Non Profi Cup 2020 – rozlosování do skupin",
+            "skupina": "Babolat Non Profi Cup",
+            "rok": 2020,
+            "soubor": "dokumenty/turnaje/2020-babolat-non-profi-cup-rozlosovani.pdf",
+            "soubor_nazev": "Rozlosování + kontakty 2020.pdf",
+            "stran": 1,
+            "poradi": 1,
+            "stara_url": "https://files.cltk.cz/3rsk44dlex25/Rozlosov%C3%A1n%C3%AD%20%2B%20kontakty%202020.pdf"
+        },
+        {
+            "nazev": "Babolat Non Profi Cup 2020 – tabulky skupin s výsledky",
+            "skupina": "Babolat Non Profi Cup",
+            "rok": 2020,
+            "soubor": "dokumenty/turnaje/2020-babolat-non-profi-cup-tabulky-skupin.pdf",
+            "soubor_nazev": "Tabulky skupin 2020 - doplněná.pdf",
+            "stran": 1,
+            "poradi": 2,
+            "stara_url": "https://files.cltk.cz/8iwyllwkeq26/Tabulky%20skupin%202020%20-%20dopln%C4%9Bn%C3%A1.pdf"
+        },
+        {
+            "nazev": "Babolat Non Profi Cup 2019 – pozvánka a pravidla soutěže",
+            "skupina": "Babolat Non Profi Cup",
+            "rok": 2019,
+            "soubor": "dokumenty/turnaje/2019-babolat-non-profi-cup-pozvanka.pdf",
+            "soubor_nazev": "Non profi Cup 2019.pdf",
+            "stran": 3,
+            "poradi": 0,
+            "stara_url": "https://files.cltk.cz/8w11xiusct17/Non%20profi%20Cup%202019.pdf"
+        },
+        {
+            "nazev": "Babolat Non Profi Cup 2019 – rozlosování do skupin",
+            "skupina": "Babolat Non Profi Cup",
+            "rok": 2019,
+            "soubor": "dokumenty/turnaje/2019-babolat-non-profi-cup-rozlosovani.pdf",
+            "soubor_nazev": "Rozlosování + kontakty 2019.pdf",
+            "stran": 1,
+            "poradi": 1,
+            "stara_url": "https://files.cltk.cz/m4ljrmrszu17/Rozlosov%C3%A1n%C3%AD%20%2B%20kontakty%202019.pdf"
+        },
+        {
+            "nazev": "Klubový den 2019 – výsledky deblového turnaje",
+            "skupina": "Klubový den",
+            "rok": 2019,
+            "soubor": "dokumenty/turnaje/2019-klubovy-den-vysledky-debla.pdf",
+            "soubor_nazev": "Výsledky - deblový turnaj.pdf",
+            "stran": 5,
+            "poradi": 3,
+            "stara_url": "https://files.cltk.cz/kbxl211riu19/V%C3%BDsledky%20-%20deblov%C3%BD%20turnaj.pdf"
+        },
+        {
+            "nazev": "Babolat Non Profi Cup 2018 – pozvánka a pravidla soutěže",
+            "skupina": "Babolat Non Profi Cup",
+            "rok": 2018,
+            "soubor": "dokumenty/turnaje/2018-babolat-non-profi-cup-pozvanka.pdf",
+            "soubor_nazev": "Babolat Non profi Cup 2018.pdf",
+            "stran": 3,
+            "poradi": 0,
+            "stara_url": "https://files.cltk.cz/mnbn96x3d312/Babolat%20Non%20profi%20Cup%202018.pdf"
+        },
+        {
+            "nazev": "Babolat Non Profi Cup 2018 – výsledky skupin a play-off",
+            "skupina": "Babolat Non Profi Cup",
+            "rok": 2018,
+            "soubor": "dokumenty/turnaje/2018-babolat-non-profi-cup-vysledky.pdf",
+            "soubor_nazev": "Tabulka s výsledky + Play Off.pdf",
+            "stran": 1,
+            "poradi": 3,
+            "stara_url": "https://files.cltk.cz/ygo65at31512/Tabulka%20s%20v%C3%BDsledky%20%2B%20Play%20Off.pdf"
+        },
+        {
+            "nazev": "I. ČLTK Praha Golf Cup 2018 – pozvánka",
+            "skupina": "I. ČLTK Praha Golf Cup",
+            "rok": 2018,
+            "soubor": "dokumenty/turnaje/2018-golf-cup-pozvanka.pdf",
+            "soubor_nazev": "pozvanka_golf 2018.pdf",
+            "stran": 2,
+            "poradi": 0,
+            "stara_url": "https://files.cltk.cz/rwbxzdq3n612/pozvanka_golf%202018.pdf"
+        },
+        {
+            "nazev": "Oslavy 125 let klubu 10. 6. 2018 – pozvánka",
+            "skupina": "Oslavy 125 let klubu",
+            "rok": 2018,
+            "soubor": "dokumenty/turnaje/2018-oslavy-125-let-klubu-pozvanka.pdf",
+            "soubor_nazev": "pozvánka - 125 let klubu.pdf",
+            "stran": 1,
+            "poradi": 0,
+            "stara_url": "https://files.cltk.cz/d64eqlk3y912/pozv%C3%A1nka%20-%20125%20let%20klubu.pdf"
+        }
+    ],
+    "rozvrhy": [
+        {
+            "nazev": "Zima 2026/27",
+            "datum_od": "2026-09-29",
+            "datum_do": "2027-04-02",
+            "radky": [
+                {
+                    "den": "pondělí",
+                    "cas": "12:00–13:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "pondělí",
+                    "cas": "13:00–14:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "pondělí",
+                    "cas": "13:00–14:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "pondělí",
+                    "cas": "14:00–15:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "pondělí",
+                    "cas": "14:00–15:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "pondělí",
+                    "cas": "15:00–16:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "pondělí",
+                    "cas": "15:00–16:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "pondělí",
+                    "cas": "16:00–17:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "3 trenéři",
+                    "text": ""
+                },
+                {
+                    "den": "pondělí",
+                    "cas": "17:00–18:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "3 trenéři",
+                    "text": ""
+                },
+                {
+                    "den": "pondělí",
+                    "cas": "18:00–19:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "3 trenéři",
+                    "text": ""
+                },
+                {
+                    "den": "úterý",
+                    "cas": "12:00–13:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "úterý",
+                    "cas": "13:00–14:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "úterý",
+                    "cas": "13:00–14:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "úterý",
+                    "cas": "14:00–15:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "úterý",
+                    "cas": "14:00–15:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "úterý",
+                    "cas": "15:00–16:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "úterý",
+                    "cas": "15:00–16:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "úterý",
+                    "cas": "16:00–17:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "úterý",
+                    "cas": "17:00–18:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "úterý",
+                    "cas": "18:00–19:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "úterý",
+                    "cas": "18:00–19:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "středa",
+                    "cas": "12:00–13:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "obsazeno",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "středa",
+                    "cas": "13:00–14:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "středa",
+                    "cas": "13:00–14:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "středa",
+                    "cas": "14:00–15:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "středa",
+                    "cas": "14:00–15:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "středa",
+                    "cas": "15:00–16:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "středa",
+                    "cas": "15:00–16:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "středa",
+                    "cas": "16:00–17:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "středa",
+                    "cas": "16:00–17:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "středa",
+                    "cas": "17:00–18:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "středa",
+                    "cas": "18:00–19:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "středa",
+                    "cas": "18:00–19:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "čtvrtek",
+                    "cas": "12:00–13:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "obsazeno",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "čtvrtek",
+                    "cas": "13:00–14:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "čtvrtek",
+                    "cas": "14:00–15:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "čtvrtek",
+                    "cas": "14:00–15:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "čtvrtek",
+                    "cas": "15:00–16:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "čtvrtek",
+                    "cas": "15:00–16:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "čtvrtek",
+                    "cas": "16:00–17:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "čtvrtek",
+                    "cas": "17:00–18:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "čtvrtek",
+                    "cas": "17:00–18:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "čtvrtek",
+                    "cas": "18:00–19:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "čtvrtek",
+                    "cas": "18:00–19:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "pátek",
+                    "cas": "12:00–13:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "obsazeno",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "pátek",
+                    "cas": "13:00–14:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "pátek",
+                    "cas": "14:00–15:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "pátek",
+                    "cas": "14:00–15:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "pátek",
+                    "cas": "15:00–16:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "pátek",
+                    "cas": "16:00–17:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "pátek",
+                    "cas": "17:00–18:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "pátek",
+                    "cas": "18:00–19:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "pondělí",
+                    "cas": "13:00–14:00",
+                    "misto": "Kurt 6 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "pondělí",
+                    "cas": "14:00–15:00",
+                    "misto": "Kurt 6 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "pondělí",
+                    "cas": "15:00–16:00",
+                    "misto": "Kurt 6 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "pondělí",
+                    "cas": "16:00–17:00",
+                    "misto": "Kurt 6 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "pondělí",
+                    "cas": "17:00–18:00",
+                    "misto": "Kurt 6 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "pondělí",
+                    "cas": "18:00–19:00",
+                    "misto": "Kurt 6 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "úterý",
+                    "cas": "13:00–14:00",
+                    "misto": "Kurt 6 · antuka",
+                    "skupina": "obsazeno",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "úterý",
+                    "cas": "14:00–15:00",
+                    "misto": "Kurt 6 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "úterý",
+                    "cas": "15:00–16:00",
+                    "misto": "Kurt 6 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "úterý",
+                    "cas": "16:00–17:00",
+                    "misto": "Kurt 6 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "úterý",
+                    "cas": "17:00–18:00",
+                    "misto": "Kurt 6 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "úterý",
+                    "cas": "18:00–19:00",
+                    "misto": "Kurt 6 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "středa",
+                    "cas": "13:00–14:00",
+                    "misto": "Kurt 6 · antuka",
+                    "skupina": "obsazeno",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "středa",
+                    "cas": "14:00–15:00",
+                    "misto": "Kurt 6 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "středa",
+                    "cas": "15:00–16:00",
+                    "misto": "Kurt 6 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "středa",
+                    "cas": "16:00–17:00",
+                    "misto": "Kurt 6 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "středa",
+                    "cas": "17:00–19:00",
+                    "misto": "Kurt 6 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "čtvrtek",
+                    "cas": "13:00–14:00",
+                    "misto": "Kurt 6 · antuka",
+                    "skupina": "obsazeno",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "čtvrtek",
+                    "cas": "14:00–15:00",
+                    "misto": "Kurt 6 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "čtvrtek",
+                    "cas": "15:00–16:00",
+                    "misto": "Kurt 6 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "čtvrtek",
+                    "cas": "16:00–17:00",
+                    "misto": "Kurt 6 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "čtvrtek",
+                    "cas": "17:00–18:00",
+                    "misto": "Kurt 6 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "čtvrtek",
+                    "cas": "18:00–19:00",
+                    "misto": "Kurt 6 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "pátek",
+                    "cas": "13:00–14:00",
+                    "misto": "Kurt 6 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "pátek",
+                    "cas": "14:00–15:00",
+                    "misto": "Kurt 6 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "pátek",
+                    "cas": "15:00–16:00",
+                    "misto": "Kurt 6 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "pátek",
+                    "cas": "16:00–17:00",
+                    "misto": "Kurt 6 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "pátek",
+                    "cas": "17:00–18:00",
+                    "misto": "Kurt 6 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "pátek",
+                    "cas": "18:00–19:00",
+                    "misto": "Kurt 6 · antuka",
+                    "skupina": "obsazeno",
+                    "trener": "",
+                    "text": ""
+                }
+            ]
+        },
+        {
+            "nazev": "Týden 29. 9. – 2. 10. 2026",
+            "datum_od": "2026-09-29",
+            "datum_do": "2026-10-02",
+            "radky": [
+                {
+                    "den": "pondělí",
+                    "cas": "12:00–13:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "pondělí",
+                    "cas": "13:00–14:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "pondělí",
+                    "cas": "13:00–14:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "pondělí",
+                    "cas": "14:00–15:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "pondělí",
+                    "cas": "14:00–15:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "pondělí",
+                    "cas": "15:00–16:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "pondělí",
+                    "cas": "15:00–16:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "pondělí",
+                    "cas": "16:00–17:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "3 trenéři",
+                    "text": ""
+                },
+                {
+                    "den": "pondělí",
+                    "cas": "17:00–18:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "3 trenéři",
+                    "text": ""
+                },
+                {
+                    "den": "pondělí",
+                    "cas": "18:00–19:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "3 trenéři",
+                    "text": ""
+                },
+                {
+                    "den": "úterý",
+                    "cas": "12:00–13:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "úterý",
+                    "cas": "13:00–14:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "úterý",
+                    "cas": "13:00–14:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "úterý",
+                    "cas": "14:00–15:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "úterý",
+                    "cas": "14:00–15:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "úterý",
+                    "cas": "15:00–16:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "úterý",
+                    "cas": "15:00–16:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "úterý",
+                    "cas": "16:00–17:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "úterý",
+                    "cas": "17:00–18:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "úterý",
+                    "cas": "18:00–19:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "úterý",
+                    "cas": "18:00–19:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "středa",
+                    "cas": "12:00–13:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "obsazeno",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "středa",
+                    "cas": "13:00–14:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "středa",
+                    "cas": "13:00–14:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "středa",
+                    "cas": "14:00–15:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "středa",
+                    "cas": "14:00–15:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "středa",
+                    "cas": "15:00–16:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "středa",
+                    "cas": "15:00–16:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "středa",
+                    "cas": "16:00–17:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "středa",
+                    "cas": "16:00–17:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "středa",
+                    "cas": "17:00–18:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "středa",
+                    "cas": "18:00–19:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "středa",
+                    "cas": "18:00–19:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "čtvrtek",
+                    "cas": "12:00–13:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "obsazeno",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "čtvrtek",
+                    "cas": "13:00–14:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "čtvrtek",
+                    "cas": "14:00–15:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "čtvrtek",
+                    "cas": "14:00–15:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "čtvrtek",
+                    "cas": "15:00–16:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "čtvrtek",
+                    "cas": "15:00–16:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "čtvrtek",
+                    "cas": "16:00–17:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "čtvrtek",
+                    "cas": "17:00–18:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "čtvrtek",
+                    "cas": "17:00–18:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "čtvrtek",
+                    "cas": "18:00–19:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "čtvrtek",
+                    "cas": "18:00–19:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "pátek",
+                    "cas": "12:00–13:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "obsazeno",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "pátek",
+                    "cas": "13:00–14:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "pátek",
+                    "cas": "14:00–15:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "pátek",
+                    "cas": "14:00–15:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "pátek",
+                    "cas": "15:00–16:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "pátek",
+                    "cas": "16:00–17:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "pátek",
+                    "cas": "17:00–18:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "pátek",
+                    "cas": "18:00–19:00",
+                    "misto": "Kurt 5 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "pondělí",
+                    "cas": "13:00–14:00",
+                    "misto": "Kurt 6 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "pondělí",
+                    "cas": "14:00–15:00",
+                    "misto": "Kurt 6 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "pondělí",
+                    "cas": "15:00–16:00",
+                    "misto": "Kurt 6 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "pondělí",
+                    "cas": "16:00–17:00",
+                    "misto": "Kurt 6 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "pondělí",
+                    "cas": "17:00–18:00",
+                    "misto": "Kurt 6 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "pondělí",
+                    "cas": "18:00–19:00",
+                    "misto": "Kurt 6 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "úterý",
+                    "cas": "13:00–14:00",
+                    "misto": "Kurt 6 · antuka",
+                    "skupina": "obsazeno",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "úterý",
+                    "cas": "14:00–15:00",
+                    "misto": "Kurt 6 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "úterý",
+                    "cas": "15:00–16:00",
+                    "misto": "Kurt 6 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "úterý",
+                    "cas": "16:00–17:00",
+                    "misto": "Kurt 6 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "úterý",
+                    "cas": "17:00–18:00",
+                    "misto": "Kurt 6 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "úterý",
+                    "cas": "18:00–19:00",
+                    "misto": "Kurt 6 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "středa",
+                    "cas": "13:00–14:00",
+                    "misto": "Kurt 6 · antuka",
+                    "skupina": "obsazeno",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "středa",
+                    "cas": "14:00–15:00",
+                    "misto": "Kurt 6 · antuka",
+                    "skupina": "obsazeno",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "středa",
+                    "cas": "15:00–16:00",
+                    "misto": "Kurt 6 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": "samostatný sparing"
+                },
+                {
+                    "den": "středa",
+                    "cas": "16:00–17:00",
+                    "misto": "Kurt 6 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": "samostatný sparing"
+                },
+                {
+                    "den": "středa",
+                    "cas": "17:00–19:00",
+                    "misto": "Kurt 6 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": "samostatný sparing"
+                },
+                {
+                    "den": "čtvrtek",
+                    "cas": "13:00–14:00",
+                    "misto": "Kurt 6 · antuka",
+                    "skupina": "obsazeno",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "čtvrtek",
+                    "cas": "14:00–15:00",
+                    "misto": "Kurt 6 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "čtvrtek",
+                    "cas": "15:00–16:00",
+                    "misto": "Kurt 6 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "čtvrtek",
+                    "cas": "16:00–17:00",
+                    "misto": "Kurt 6 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "čtvrtek",
+                    "cas": "17:00–18:00",
+                    "misto": "Kurt 6 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "čtvrtek",
+                    "cas": "18:00–19:00",
+                    "misto": "Kurt 6 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "pátek",
+                    "cas": "13:00–14:00",
+                    "misto": "Kurt 6 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "pátek",
+                    "cas": "14:00–15:00",
+                    "misto": "Kurt 6 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "pátek",
+                    "cas": "15:00–16:00",
+                    "misto": "Kurt 6 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "pátek",
+                    "cas": "16:00–17:00",
+                    "misto": "Kurt 6 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "pátek",
+                    "cas": "17:00–18:00",
+                    "misto": "Kurt 6 · antuka",
+                    "skupina": "",
+                    "trener": "",
+                    "text": ""
+                },
+                {
+                    "den": "pátek",
+                    "cas": "18:00–19:00",
+                    "misto": "Kurt 6 · antuka",
+                    "skupina": "obsazeno",
+                    "trener": "",
+                    "text": ""
+                }
+            ]
+        }
+    ]
+}

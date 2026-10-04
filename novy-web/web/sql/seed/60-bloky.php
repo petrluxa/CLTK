@@ -77,12 +77,12 @@ $b('historie', 'osobnosti', ['stitek' => 'Osobnosti klubu', 'nadpis' => 'Od Žem
 /* ================= VEDENÍ, CTC, REVUE ================= */
 $b('vedeni', 'uvod', ['stitek' => 'Vedení klubu', 'nadpis' => 'Kdo klub <em>vede</em>.',
     'perex' => 'Prezidentem klubu je od 14. 7. 2022 Ing. Petr Šimůnek. Klub řídí devítičlenný Výkonný výbor, provoz zajišťuje kancelář klubu.'], 0);
-$b('vedeni', 'dokumenty', ['nadpis' => 'Stanovy a dokumenty', 'perex' => 'Stanovy klubu a další dokumenty jsou ke stažení v PDF.'], 1);
+$b('vedeni', 'dokumenty', ['nadpis' => 'Stanovy a dokumenty', 'perex' => 'Stanovy klubu a další dokumenty si přečtete přímo na webu – každý jde i vytisknout.'], 1);
 $b('ctc', 'uvod', ['stitek' => 'Centenary Tennis Clubs', 'nadpis' => 'Jediný český člen <em>stoletých</em> klubů.',
     'perex' => 'Centenary Tennis Clubs sdružuje tenisové kluby starší 100 let. I. ČLTK Praha je členem od roku 2000 a jediným klubem z České republiky.'], 0);
 $b('ctc', 'rodokmen', ['stitek' => 'Rodokmen stoletých', 'perex' => 'Rok založení 1893 sdílí klub s Lawn Tennis de Monte-Carlo. Kdo z nich byl první, prameny neurčí – přesné datum založení I. ČLTK neuvádějí. Roky podle webů jednotlivých klubů.'], 1);
 $b('revue', 'uvod', ['stitek' => 'I.ČLTK Revue', 'nadpis' => 'Dvacet let Revue v jedné <em>poličce</em>.',
-    'perex' => '41 čísel klubového časopisu od roku 2006, dvakrát ročně. Texty Jiljí Kubec, grafika Kateřina Kuželová, hlavní fotograf Martin Sidorják. Čísla 01/2016 a 02/2016 v archivu PDF chybí.'], 0);
+    'perex' => '41 čísel klubového časopisu od roku 2006, dvakrát ročně, a jubilejní speciál 1893–2023. Texty Jiljí Kubec, grafika Kateřina Kuželová, hlavní fotograf Martin Sidorják. Čísla 01/2016 a 02/2016 v archivu PDF chybí.'], 0);
 $b('revue', 'newslettery', ['stitek' => 'Newsletter', 'nadpis' => 'Klubový <em>newsletter</em>.',
     'perex' => 'Klubový dvouměsíčník od roku 2015, česky i anglicky. Editor Mgr. Jan Pecha, Ph.D.'], 1);
 
@@ -96,7 +96,7 @@ $b('areal', 'kurty', ['nadpis' => 'Kurty v létě a v <em>zimě</em>',
             . '<p>Velký centrální dvorec patří Českému tenisovému svazu, ostatní kurty klubu.</p>'], 1);
 $b('areal', 'plan', ['nadpis' => 'Plán areálu', 'perex' => 'Zleva: Slavoj s kurty 10–16, Negrelliho viadukt a parkoviště, hlavní budova s kurtem 1 a stadionem, bazén, kurty 5–9 a trojkurt.',
     'foto' => seed_obrazek(seed_navrhy('assets/foto/plan-arealu.jpg'), 'bloky', 'plan-arealu', 3600, 3600), 'foto_popisek' => 'Plán areálu, verze 09-2025',
-    'odkaz' => 'https://files.cltk.cz/l8wemjw6xri01/Pl%C3%A1n%20are%C3%A1lu%20%2009-2025%20na%20web.pdf', 'odkaz_text' => 'Plán areálu v PDF'], 2);
+    'odkaz' => 'dokument.php?d=plan-arealu', 'odkaz_text' => 'Plán areálu k vytištění'], 2);
 $b('areal', 'prijezd', ['nadpis' => 'Jak se k nám <em>dostanete</em>',
     'perex' => 'Přístup z Hlávkova mostu (tramvaj č. 14, brána pro pěší) nebo z Karlína a Holešovic po lávce HolKa. Autem na vyhrazené parkoviště u Negrelliho viaduktu a zadním vchodem do areálu.'], 3);
 $b('cenik-kurtu', 'uvod', ['stitek' => 'Ceník kurtů', 'nadpis' => 'Ceník <em>kurtů</em>.',
@@ -133,7 +133,9 @@ $b('tenisova-skola-ceniky', 'uvod', ['stitek' => 'Tenisová škola', 'nadpis' =>
     'perex' => 'Cena zahrnuje trenéra i pronájem kurtu. Základní členství Tenisové školy 1 000 Kč se hradí vždy na začátku roku.'], 0);
 $b('tenisova-skola-rozvrhy', 'uvod', ['stitek' => 'Tenisová škola', 'nadpis' => 'Rozvrhy a <em>harmonogram</em>.',
     'perex' => 'Tréninky podle zimních rozvrhů od 29. 9. 2026 do 2. 4. 2027. Změny vyhrazeny.'], 0);
-$b('tenisova-skola-rozvrhy', 'rozvrhy', ['nadpis' => 'Zimní rozvrhy skupin', 'perex' => 'Rozvrhy jednotlivých skupin doplní klub.', 'doplni_klub' => 1], 1);
+/* text bloku (informace pro rodiče, kontaktní trenéři kurtů) doplní sada 95-archiv-pdf z datového souboru migrace */
+$b('tenisova-skola-rozvrhy', 'rozvrhy', ['nadpis' => 'Rozvrhy <em>tréninků</em>',
+    'perex' => 'Týdenní rozvrh Tenisové školy Markéty Vondroušové po kurtech a hodinách. Jména dětí na webu nejsou. Změny vyhrazeny.'], 1);
 $b('tenisova-skola-treneri', 'uvod', ['stitek' => 'Tenisová škola', 'nadpis' => 'Trenéři <em>tenisové školy</em>.',
     'perex' => 'Trenérský tým Tenisové školy Markéty Vondroušové.'], 0);
 $b('letni-kempy', 'uvod', ['stitek' => 'Tenisová škola', 'nadpis' => 'Letní kempy <em>2026</em>.',

@@ -385,6 +385,8 @@ CREATE TABLE cltk_deska_zaznamy (
 -- ================================================================
 
 -- titulky = JSON pole řetězců, obsah = JSON pole dvojic ["strana","titulek"]
+-- cislo 1/2 = jarní/podzimní číslo, 0 = speciální číslo (jubilejní Revue 1893–2023)
+-- pdf_soubor = PDF nahrané na web (uploads/revue/pdf/), pdf_url jen odkaz jinam
 CREATE TABLE cltk_revue (
   id            INTEGER PRIMARY KEY AUTO_INCREMENT,
   rok           INTEGER      NOT NULL DEFAULT 0,
@@ -404,16 +406,19 @@ CREATE TABLE cltk_revue (
   poradi        INTEGER      NOT NULL DEFAULT 0
 );
 
+-- pdf_cs_soubor / pdf_en_soubor = nahrané PDF v uploads/newslettery/ (má přednost před odkazem pdf_cs / pdf_en)
 CREATE TABLE cltk_newslettery (
-  id         INTEGER PRIMARY KEY AUTO_INCREMENT,
-  rok        INTEGER      NOT NULL DEFAULT 0,
-  cislo      VARCHAR(10)  NOT NULL DEFAULT '',
-  oznaceni   VARCHAR(40)  NOT NULL DEFAULT '',
-  nazev      VARCHAR(160) NOT NULL DEFAULT '',
-  pdf_cs     VARCHAR(255) NOT NULL DEFAULT '',
-  pdf_en     VARCHAR(255) NOT NULL DEFAULT '',
-  visible    INTEGER      NOT NULL DEFAULT 1,
-  poradi     INTEGER      NOT NULL DEFAULT 0
+  id            INTEGER PRIMARY KEY AUTO_INCREMENT,
+  rok           INTEGER      NOT NULL DEFAULT 0,
+  cislo         VARCHAR(10)  NOT NULL DEFAULT '',
+  oznaceni      VARCHAR(40)  NOT NULL DEFAULT '',
+  nazev         VARCHAR(160) NOT NULL DEFAULT '',
+  pdf_cs        VARCHAR(255) NOT NULL DEFAULT '',
+  pdf_en        VARCHAR(255) NOT NULL DEFAULT '',
+  pdf_cs_soubor VARCHAR(255) NOT NULL DEFAULT '',
+  pdf_en_soubor VARCHAR(255) NOT NULL DEFAULT '',
+  visible       INTEGER      NOT NULL DEFAULT 1,
+  poradi        INTEGER      NOT NULL DEFAULT 0
 );
 
 -- skupina: vybor | kancelar | kontakt
@@ -484,12 +489,20 @@ CREATE TABLE cltk_partneri (
   updated_at DATETIME     NULL
 );
 
--- Dokumenty ke stažení (soubor = nahrané PDF v uploads/, nebo url = odkaz ven)
+-- Dokumenty klubu: stanovy, pravidla, provozní řády, ceník… = TEXT na webu (stránka
+-- dokument.php?d=slug, jedinečnost slugu hlídá administrace; text = HTML z editoru).
+-- PDF (soubor = nahrané PDF v uploads/dokumenty/) jen u příloh archivu – kategorie 'turnaje'
+-- (rok + skupina = turnaj, stran = počet stran). url = odkaz jinam (výjimečně).
 CREATE TABLE cltk_dokumenty (
   id            INTEGER PRIMARY KEY AUTO_INCREMENT,
   nazev         VARCHAR(200) NOT NULL DEFAULT '',
   kategorie     VARCHAR(40)  NOT NULL DEFAULT 'klub',
   popis         VARCHAR(255) NOT NULL DEFAULT '',
+  slug          VARCHAR(120) NOT NULL DEFAULT '',
+  text          TEXT         NOT NULL DEFAULT '',
+  rok           INTEGER      NULL,
+  skupina       VARCHAR(120) NOT NULL DEFAULT '',
+  stran         INTEGER      NULL,
   soubor        VARCHAR(255) NOT NULL DEFAULT '',
   soubor_nazev  VARCHAR(160) NOT NULL DEFAULT '',
   url           VARCHAR(255) NOT NULL DEFAULT '',

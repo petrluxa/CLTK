@@ -72,7 +72,7 @@ Podrobné návody: `web/inc/PRUVODCE-FRONT.md` (jádro pro stránky), `web/PRUVO
 
 | Menu | Stránky |
 |---|---|
-| Klub | `klub.php` · Členství `clenstvi.php` (konfigurátor ceny + přihláška do klubu) · Historie `historie.php` (triptych, kronika, Zlatá deska, medailony) · Vedení `vedeni.php` · CTC `ctc.php` · Revue `revue.php` (kiosek 41 čísel, newslettery) |
+| Klub | `klub.php` · Členství `clenstvi.php` (konfigurátor ceny + přihláška do klubu) · Historie `historie.php` (triptych, kronika, Zlatá deska, medailony, jubilejní Revue 1893–2023) · Vedení `vedeni.php` · CTC `ctc.php` · Revue `revue.php` (kiosek 41 čísel + speciál 1893–2023, newslettery – vše PDF na webu) |
 | Areál a služby | `areal.php` (služby s kotvami, plán areálu léto/zima, uzávěrky, příjezd) · Ceník kurtů `cenik-kurtu.php` (léto/zima, kalkulačka) · Privátní trenéři · Body Solution · Sportovní lékařství |
 | Závodní tenis | `zavodni-tenis.php` (pyramida, hráči, extraliga, výsledky) · Trenérský tým `zavodni-tenis-treneri.php` |
 | Tenisová škola | `tenisova-skola.php` · Ceníky · Rozvrhy · Trenérský tým · Letní kempy `letni-kempy.php` |
@@ -80,6 +80,8 @@ Podrobné návody: `web/inc/PRUVODCE-FRONT.md` (jádro pro stránky), `web/PRUVO
 | Prague Open | nastavení `prague_open_url`, prázdné → `prague-open.php` |
 
 Mimo menu: `kontakt.php` (z patičky), `akce.php?id=…` (detail akce s přihláškou), `404.php`,
+`dokumenty.php` (Klub › Dokumenty – rozcestník dokumentů, archiv klubových turnajů, jubilejní Revue; odkaz
+v patičce, na Kontaktu a v Klubu), `dokument.php?d=…` (dokument klubu jako stránka – viz §5),
 přípravná stránka (režim přípravy). Úvodní stránka `index.php`: informační lišta, galerie se štítovým
 přechodem, aktuality (ne články), pás výsledků, klubový kalendář s přihláškou v okně, video
 a Služby v areálu, triptych historie, partneři 5 × 5, patička podle PDF.
@@ -131,6 +133,19 @@ pro cestu webu (nekoliduje s `olymp_admin`).
   starší než „Mazat staré přihlášky po (měsících)“ (Texty a údaje, výchozí 12) se samy smažou.
 - **E-mail:** upozornění na přihlášky se posílá, jen když je v Textech a údajích vyplněný „E-mail pro
   přihlášky“; výchozí prázdný = přihlášky se jen ukládají do administrace.
+- **Dokumenty klubu nejsou PDF** (rozhodnutí klienta 2. 10. 2026): stanovy, pravidla hraní a rezervací,
+  provozní řády, osobní údaje členů, ceník zimní sezóny a plán areálu jsou stránky `dokument.php?d=<slug>`
+  v klubovém stylu (hlavičkový papír se znakem, oddíly zlatými kapitálkami, číslované body, závěrečné
+  upozornění v rámečku) s tlačítkem **Vytisknout** – tisk na A4 (`@media print` v `dokument.css`) PDF
+  nahrazuje. Text je v `cltk_dokumenty.text` (editor v modulu Dokumenty), sazbu doplňuje jen výpis
+  (`dokument_sazba()`). PDF zůstávají jen u **Revue a newsletterů** (nahrané na webu, `uploads/revue/pdf/`,
+  `uploads/newslettery/`) a v **archivu klubových turnajů** (`uploads/dokumenty/turnaje/`, kategorie `turnaje`).
+  **Na starý web cltk.cz / files.cltk.cz se nikde neodkazuje** (vypne se) – výjimkou jsou e-maily @cltk.cz.
+  Rozvrhy Tenisové školy jsou řádky `cltk_skola` (typ `rozvrh`, buňka mřížky, bez jmen dětí).
+- **Migrace běžícího serveru** (server byl nainstalovaný dřív): `web/sql/migrace/2026-10-02-dokumenty-archiv.php`
+  + data `…data.json` (sestavuje `nastroje/archiv-pdf/data-migrace.php`). Přidá sloupce, převede adresy
+  PDF na nahrané soubory, doplní texty dokumentů, archiv turnajů, rozvrhy a jubilejní Revue; přepisuje jen
+  hodnoty, které se pořád rovnají původním. Nový seed volá stejnou logiku (`seed/95-archiv-pdf.php`).
 
 ## 6. Nasazení (dělá jen orchestrátor – agenti ne)
 
@@ -162,8 +177,7 @@ pro cestu webu (nekoliduje s `olymp_admin`).
 
 **Přestěhování na cltk.cz:** `BASE_PATH` se zjistí sám (případně ho nastavit v `cltk-config.php`), upravit
 `SITE_URL`, v `web/.htaccess` změnit přesměrování na HTTPS z `R=302` na `R=301` a odkomentovat HSTS,
-dokument „Osobní údaje členů“ dnes vede na `https://cltk.cz/cs/gdpr/` dnešního webu – nahradit PDF
-(v adminu nahrát soubor). **Než web půjde ven (s přihláškami do klubu), dát ČLTK vlastní databázi
+dokumenty, Revue a newslettery už na starý web neodkazují (migrace 2. 10. 2026). **Než web půjde ven (s přihláškami do klubu), dát ČLTK vlastní databázi
 a vlastního databázového uživatele** – dokud je databáze sdílená s TK Olymp, kompromitace jednoho webu
 odhalí osobní údaje druhého (přihlášky dětí, adresy, data narození). Testovat po co nejkratší dobu,
 ideálně na vlastní subdoméně (na sdíleném původu www.tkolymppraha.cz by skript jednoho webu mohl jednat
@@ -219,17 +233,22 @@ Výsledek integrace 1. 10. 2026 (web v `/cltkv2/`): 35 stránek, 310 souborů, 0
 jádro 75/75; seed od nuly i instalace z `data.json` dávají stejný obsah (29 tabulek, 633 řádků obsahu);
 `chyby.log` prázdný.
 
+Dokumenty a archiv 4. 10. 2026: procházka 44 stránek / 457 souborů (všechna PDF se stáhnou) bez vad;
+migrace nad databází ve stavu serveru (`git show HEAD:web/sql/data.json` → seed z HEAD → migrace 2× →
+stejný obsah jako nový seed, 0 odkazů na cltk.cz); admin e2e 218 + 145 + 41 + 66 (`qa/dokumenty/e2e-dokumenty.mjs`);
+snímky dokumentů na desktopu, mobilu a v tisku (`qa/dokumenty/render.mjs` – `page.pdf` A4).
+
 ## 9. Co ještě dodá klub (na webu je decentní štítek „doplní klub“)
 
 - Obsah stránek **Body Solution, Sportovní lékařství, Privátní trenéři** (texty, ceny, kontakty),
-  otevírací doba a kontakt **Restaurace Tiebreak**, zimní rozvrhy skupin Tenisové školy.
+  otevírací doba a kontakt **Restaurace Tiebreak**. (Zimní rozvrhy Tenisové školy jsou převzaté z PDF klubu.)
 - Otevírací doby u většiny služeb areálu; fotky u služeb bez fotky (Fyzioterapie, Parkoviště, hřiště u trojkurtu).
 - Termíny akcí CTC U14, Mikulášská besídka, Večer talentů a Vánoční večírek, OSTRA extraliga;
   **ověřit název belgického klubu** u CTC U14 (poznámka u akce v administraci).
 - Seznamy Zlaté desky: čestní členové, zasloužilí členové, prezidenti (doplnění).
 - Fotka z finále Billie Jean King Cupu 2026 (snímek galerie je zatím navy deska).
 - Formuláře přihlášek k jednotlivým akcím (v administraci se nastaví u každé akce zvlášť).
-- PDF „Osobní údaje členů“ (dnes odkaz na stránku dnešního webu), případně další dokumenty
-  (dnes odkazy na files.cltk.cz).
+- Aktualizace dokumentů (text v modulu Dokumenty – PDF se nenahrává), nové pozvánky a výsledky turnajů
+  do archivu (PDF), nová čísla Revue a newsletterů (PDF nahrát v administraci; Revue do ~20 MB).
 - Vlastní weby Restaurace a Prague Open → vyplnit `restaurace_url` / `prague_open_url` v Textech a údajích.
 - E-mail pro upozornění na přihlášky (Texty a údaje).

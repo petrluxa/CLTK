@@ -2,8 +2,8 @@
 defined('SEED_DATA_JSON') || exit;   // jen přes sql/seed.php nebo instalace.php, nikdy přímo
 /* Tenisová škola Markéty Vondroušové: informace, harmonogram sezóny, termíny kempů.
    Zdroj: podklady/03 kap. 9 (stránky Informace, Ceník, Rozvrhy, Letní kempy),
-   obsah.json → cenik.letni_kempy_2026. Zimní rozvrhy (dny a časy skupin) klub
-   teprve doplní – stránka Rozvrhy na to upozorní blokem „doplní klub“. */
+   obsah.json → cenik.letni_kempy_2026. Rozvrhy tréninků (zima 2026/27, přechodný týden)
+   z PDF starého webu (bez jmen dětí) vloží sada 95-archiv-pdf z datového souboru migrace. */
 
 if (!seed_prazdna('cltk_skola')) return;
 

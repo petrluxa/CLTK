@@ -64,7 +64,7 @@ $zaloz('kurty-zima', 'Kurty – zimní sezóna 2026/27', 'Cena za hodinu a před
     '28. 9. 2026 – 4. 4. 2027',
     'Pevná hala od 28. 9. 2026, přetlakové haly od 5. 10. 2026 do 4. 4. 2027. V zimě je k dispozici 12 krytých kurtů.',
     implode("\n\n", array_merge($cenik['zima_2026_27']['poznamky'] ?? [], $cenik['pravidla_trvalych_rezervaci'] ?? [])),
-    'https://files.cltk.cz/9lawqgo4cjn01/Cen%C3%ADk%20zimn%C3%AD%20sezona%2026-27.pdf', $sekceZima, 1);
+    'dokument.php?d=cenik-zima-2026-2027', $sekceZima, 1);              // ceník k vytištění = stránka dokumentu (sada 70-dokumenty)
 
 /* --- členství 2026 --- */
 $hl = ['Druh členství', 'Roční příspěvek'];

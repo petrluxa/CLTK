@@ -154,8 +154,11 @@ function pole_pdf(string $name, string $label, ?string $rel, ?string $nazev = ''
         $h .= '<div class="doc-prev"><a href="' . e(upload_url($rel)) . '" target="_blank" rel="noopener">' . e($nazev ?: basename($rel)) . '</a>'
             . '<label class="check"><input type="checkbox" name="' . e($name) . '_odebrat" value="1"><span>Odebrat soubor</span></label></div>';
     }
-    $h .= '<input type="file" id="' . e($id) . '" name="' . e($name) . '" accept="application/pdf,.pdf">';
-    $o['hint'] = $o['hint'] ?? 'Jen PDF, nejvýš ' . ini_get('upload_max_filesize') . 'B.';
+    // data-max-bajtu: admin.js upozorní na příliš velký soubor hned po výběru (ne až po dlouhém nahrávání)
+    $limit = upload_limit_bajtu();
+    $h .= '<input type="file" id="' . e($id) . '" name="' . e($name) . '" accept="application/pdf,.pdf" data-max-bajtu="' . $limit . '"'
+        . ' data-max-text="' . e(velikost_text($limit)) . '">';
+    $o['hint'] = $o['hint'] ?? 'Jen PDF, nejvýš ' . e(velikost_text($limit)) . '.';
     return ui_obal($id, $label, $h, $o);
 }
 
@@ -243,7 +246,15 @@ function admin_zalozky(array $polozky, string $aktivni): string {
 function admin_post_zacatek(string $zpet): void {
     if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') return;
     if (!$_POST && !$_FILES && (int)($_SERVER['CONTENT_LENGTH'] ?? 0) > 0) {
-        redirect($zpet, 'Soubor je příliš velký – server přijme najednou nejvýš ' . ini_get('post_max_size') . 'B. Zmenšete ho a zkuste to znovu.', 'err');
+        $max = ini_bajty((string)ini_get('post_max_size'));
+        $zprava = 'Soubor je příliš velký – server přijme najednou nejvýš ' . ($max > 0 ? velikost_text($max) : ini_get('post_max_size') . 'B')
+            . '. Zmenšete ho (PDF v Acrobatu „Uložit jako jiný → Zmenšený soubor PDF“, z InDesignu export „pro web“) a zkuste to znovu.';
+        if (headers_sent()) {
+            // PHP s display_startup_errors vypíše varování o velikosti ještě před skriptem – přesměrovat už nejde
+            echo '<p>' . e($zprava) . ' <a href="' . e($zpet) . '">Zpět</a></p>';
+            exit;
+        }
+        redirect($zpet, $zprava, 'err');
     }
     csrf_check();
 }

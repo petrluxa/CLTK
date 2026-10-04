@@ -1,8 +1,12 @@
 <?php
-/* Tenisová škola – informace, harmonogram sezóny, rozvrhy skupin a termíny letních kempů
+/* Tenisová škola – informace, harmonogram sezóny, rozvrhy tréninků a termíny letních kempů
    (cltk_skola, typ = info | harmonogram | rozvrh | kemp). Ceny školy a kempů jsou
    v Cenících (klíče skola, kempy), texty hlaviček stránek ve Stránkách.
-   Adresy: skola.php?typ=kemp (seznam), …&nova=1 (nový), skola.php?id=5 (úprava). */
+   Rozvrh: jeden řádek = jedna buňka mřížky (den, čas, kurt, skupina / „obsazeno“, trenéři);
+   řádky se stejným názvem tvoří rozvrh, platnost (datum_od/do) se ukládá pro celý rozvrh.
+   Jména dětí do rozvrhu nepatří.
+   Adresy: skola.php?typ=kemp (seznam), …&nova=1 (nový), skola.php?id=5 (úprava),
+   skola.php?typ=rozvrh&rozvrh=Zima%202026%2F27 (buňky jednoho rozvrhu). */
 require __DIR__ . '/inc/layout.php';
 $user = require_login();
 
@@ -140,8 +144,8 @@ const SKOLA_TYPY = [
                       'Přidat odstavec', 'Nový odstavec informací', 'Odstavec informací'],
     'harmonogram' => ['Harmonogram', 'tenisova-skola-rozvrhy.php', 'Termíny sezóny: začátek a konec rozvrhů, prázdniny, dny, kdy se nehraje.',
                       'Přidat termín', 'Nový termín harmonogramu', 'Termín harmonogramu'],
-    'rozvrh'      => ['Rozvrhy', 'tenisova-skola-rozvrhy.php', 'Rozvrh skupin – den, čas, kurt a trenér. Dokud tu nic není, stránka ukáže „doplní klub“.',
-                      'Přidat skupinu', 'Nová skupina rozvrhu', 'Skupina rozvrhu'],
+    'rozvrh'      => ['Rozvrhy', 'tenisova-skola-rozvrhy.php', 'Rozvrhy tréninků – co řádek, to buňka týdenní mřížky (den, čas, kurt). Web z nich skládá mřížku dny × hodiny pro každý kurt; rozvrh po konci platnosti zmizí sám. Jména dětí sem nepatří.',
+                      'Přidat hodinu', 'Nová hodina rozvrhu', 'Hodina rozvrhu'],
     'kemp'        => ['Letní kempy', 'letni-kempy.php', 'Termíny letních kempů. Ceny variant jsou v Cenících (ceník „kempy“), texty ve Stránkách.',
                       'Přidat termín kempu', 'Nový termín kempu', 'Termín kempu'],
 ];
@@ -155,6 +159,11 @@ $typ = $z ? (string)$z['typ'] : obsah_get('typ', 'info', true);
 if (!isset(SKOLA_TYPY[$typ])) $typ = 'info';
 $rezim = $z ? 'uprava' : (!empty($_GET['nova']) ? 'nova' : 'seznam');
 $seznamUrl = 'skola.php?typ=' . $typ;
+/* rozvrhy: vybraný rozvrh (název) – seznam ukazuje hodiny jednoho rozvrhu */
+$rozvrhNazvy = $typ === 'rozvrh' ? array_map('strval', array_column(rows("SELECT nazev, MIN(datum_od) AS od, MAX(datum_do) AS dd FROM cltk_skola WHERE typ = 'rozvrh' GROUP BY nazev ORDER BY MIN(datum_od), MAX(datum_do), nazev"), 'nazev')) : [];
+$rozvrhVybrany = $typ === 'rozvrh' ? ($z ? (string)$z['nazev'] : obsah_get('rozvrh', $rozvrhNazvy[0] ?? '', true)) : '';
+if ($typ === 'rozvrh' && $rozvrhNazvy && !in_array($rozvrhVybrany, $rozvrhNazvy, true) && $rezim === 'seznam') $rozvrhVybrany = $rozvrhNazvy[0];
+if ($typ === 'rozvrh' && $rozvrhVybrany !== '') $seznamUrl .= '&rozvrh=' . rawurlencode($rozvrhVybrany);
 
 $f = [
     'nazev' => (string)($z['nazev'] ?? ''), 'datum_od' => (string)($z['datum_od'] ?? ''), 'datum_do' => (string)($z['datum_do'] ?? ''),
@@ -163,6 +172,12 @@ $f = [
     'cena' => (string)($z['cena'] ?? ''), 'text' => (string)($z['text'] ?? ''), 'odkaz' => (string)($z['odkaz'] ?? ''),
     'visible' => (int)($z['visible'] ?? 1),
 ];
+if ($typ === 'rozvrh' && !$z) {
+    // nová hodina do vybraného rozvrhu: název, platnost a kurt se převezmou
+    $vzor = $rozvrhVybrany !== '' ? row("SELECT nazev, datum_od, datum_do, misto FROM cltk_skola WHERE typ = 'rozvrh' AND nazev = ? ORDER BY id LIMIT 1", [$rozvrhVybrany]) : null;
+    if ($vzor) { $f['nazev'] = (string)$vzor['nazev']; $f['datum_od'] = (string)$vzor['datum_od']; $f['datum_do'] = (string)$vzor['datum_do']; $f['misto'] = (string)$vzor['misto']; }
+}
+$f['druh'] = skola_rozvrh_obsazeno($f) ? 'obsazeno' : 'trenink';
 $chyby = [];
 
 if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
@@ -175,8 +190,17 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
             'termin_text' => obsah_pole('termin_text', 120), 'den' => vstup('den', 30), 'cas' => obsah_pole('cas', 60),
             'skupina' => obsah_pole('skupina', 120), 'misto' => obsah_pole('misto', 120), 'trener' => obsah_pole('trener', 160),
             'cena' => obsah_pole('cena', 120), 'text' => obsah_pole('text', 6000), 'odkaz' => vstup('odkaz', 255),
-            'visible' => vstup_bool('visible'),
+            'visible' => vstup_bool('visible'), 'druh' => vstup('druh', 20) === 'obsazeno' ? 'obsazeno' : 'trenink',
         ];
+        if ($typ === 'rozvrh') {
+            // „16:00 - 17:00“ / „16–17“ → „16:00–17:00“; obsazený kurt = skupina „obsazeno“
+            $cas = str_replace(["\u{00A0}", ' '], '', $f['cas']);
+            if (preg_match('/^(\d{1,2})(?::(\d{2}))?[–—-](\d{1,2})(?::(\d{2}))?$/u', $cas, $mc)) {
+                $f['cas'] = sprintf('%d:%s–%d:%s', (int)$mc[1], $mc[2] !== '' ? $mc[2] : '00', (int)$mc[3], ($mc[4] ?? '') !== '' ? $mc[4] : '00');
+            }
+            if ($f['druh'] === 'obsazeno') $f['skupina'] = 'obsazeno';
+            elseif (skola_rozvrh_obsazeno($f)) $f['skupina'] = '';
+        }
         $od = normalizuj_datum($f['datum_od']);
         $do = normalizuj_datum($f['datum_do']);
         if ($od === false) $chyby['datum_od'] = 'Datum „od“ nedává smysl – zadejte ho jako 29. 6. 2026.';
@@ -197,7 +221,12 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
         if (in_array($typ, ['harmonogram', 'kemp'], true) && !$od && $f['termin_text'] === '' && !isset($chyby['datum_od'])) {
             $chyby['datum_od'] = 'Vyplňte datum, nebo aspoň text termínu.';
         }
-        if ($typ === 'rozvrh' && $f['skupina'] === '' && $f['nazev'] === '') $chyby['skupina'] = 'Vyplňte název skupiny (např. „Minitenis – začátečníci“).';
+        if ($typ === 'rozvrh') {
+            if ($f['nazev'] === '') $chyby['nazev'] = 'Vyplňte název rozvrhu (např. „Zima 2026/27“) – hodiny se stejným názvem tvoří jeden rozvrh.';
+            if ($f['den'] === '') $chyby['den'] = 'Vyberte den.';
+            if (!preg_match('/^\d{1,2}:\d{2}–\d{1,2}:\d{2}$/u', $f['cas'])) $chyby['cas'] = 'Čas zapište jako 16:00–17:00 (od–do).';
+            if ($f['misto'] === '') $chyby['misto'] = 'Vyplňte kurt (např. „Kurt 5 · antuka“) – podle něj se rozvrh dělí na mřížky.';
+        }
 
         if (!$chyby) {
             $data = [
@@ -206,16 +235,40 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
                 'misto' => $f['misto'], 'trener' => $f['trener'], 'cena' => $f['cena'], 'text' => $f['text'],
                 'odkaz' => (string)$odkaz, 'visible' => $f['visible'], 'updated_at' => ted(),
             ];
+            $zpet = $typ === 'rozvrh' ? 'skola.php?typ=rozvrh&rozvrh=' . rawurlencode($f['nazev']) : $seznamUrl;
+            $celyRozvrh = '';
+            if ($typ === 'rozvrh') {
+                // platnost patří celému rozvrhu – srovná se u všech jeho hodin
+                $jinak = 0;
+                foreach (rows("SELECT id, datum_od, datum_do FROM cltk_skola WHERE typ = 'rozvrh' AND nazev = ? AND id <> ?", [$f['nazev'], $id]) as $x) {
+                    if ((string)substr((string)$x['datum_od'], 0, 10) !== (string)($od ?: '') || (string)substr((string)$x['datum_do'], 0, 10) !== (string)($do ?: '')) $jinak++;
+                }
+                if ($jinak > 0) {
+                    q("UPDATE cltk_skola SET datum_od = ?, datum_do = ?, updated_at = ? WHERE typ = 'rozvrh' AND nazev = ?", [$od ?: null, $do ?: null, ted(), $f['nazev']]);
+                    $celyRozvrh = ' Platnost se upravila u celého rozvrhu „' . $f['nazev'] . '“.';
+                }
+            }
             if ($z) {
                 db_update('cltk_skola', $id, $data);
-                redirect($seznamUrl . '#z' . $id, 'Uloženo.');
+                redirect($zpet . '#z' . $id, 'Uloženo.' . $celyRozvrh);
             }
             $data['poradi'] = admin_dalsi_poradi('cltk_skola', 'typ', $typ);
             $data['created_at'] = ted();
             $noveId = db_insert('cltk_skola', $data);
-            redirect($seznamUrl . '#z' . $noveId, 'Přidáno na konec seznamu.');
+            redirect($zpet . '#z' . $noveId, ($typ === 'rozvrh' ? 'Hodina je přidaná do rozvrhu.' : 'Přidáno na konec seznamu.') . $celyRozvrh);
         }
         $rezim = $z ? 'uprava' : 'nova';
+    } elseif (in_array($akce, ['rozvrh_skryt', 'rozvrh_zobrazit', 'rozvrh_smazat'], true) && $typ === 'rozvrh') {
+        /* celý rozvrh najednou (např. přechodný týden po skončení platnosti) */
+        $nazevRozvrhu = vstup('rozvrh', 200);
+        $pocet = (int)val("SELECT COUNT(*) FROM cltk_skola WHERE typ = 'rozvrh' AND nazev = ?", [$nazevRozvrhu]);
+        if ($pocet === 0) redirect('skola.php?typ=rozvrh', 'Rozvrh nebyl nalezen – možná byl mezitím smazán.', 'err');
+        if ($akce === 'rozvrh_smazat') {
+            q("DELETE FROM cltk_skola WHERE typ = 'rozvrh' AND nazev = ?", [$nazevRozvrhu]);
+            redirect('skola.php?typ=rozvrh', 'Rozvrh „' . $nazevRozvrhu . '“ (' . $pocet . ' ' . sklonuj($pocet, 'hodina', 'hodiny', 'hodin') . ') byl smazán.');
+        }
+        q("UPDATE cltk_skola SET visible = ?, updated_at = ? WHERE typ = 'rozvrh' AND nazev = ?", [$akce === 'rozvrh_zobrazit' ? 1 : 0, ted(), $nazevRozvrhu]);
+        redirect('skola.php?typ=rozvrh&rozvrh=' . rawurlencode($nazevRozvrhu), 'Rozvrh „' . $nazevRozvrhu . '“ je ' . ($akce === 'rozvrh_zobrazit' ? 'na webu vidět.' : 'na webu skrytý.'));
     } elseif ($akce === 'seradit' && in_array($typ, ['harmonogram', 'kemp'], true)) {
         /* seřadit podle data (záznamy bez data na konec, v dosavadním pořadí) */
         $r = rows('SELECT id, datum_od FROM cltk_skola WHERE typ = ? ORDER BY poradi, id', [$typ]);
@@ -227,7 +280,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
         $rid = (int)vstup_int('id');
         $x = $rid ? row('SELECT * FROM cltk_skola WHERE id = ?', [$rid]) : null;
         if (!$x) redirect($seznamUrl, 'Záznam nebyl nalezen – možná byl mezitím smazán.', 'err');
-        $seznamUrl = 'skola.php?typ=' . (isset(SKOLA_TYPY[$x['typ']]) ? $x['typ'] : 'info');
+        $seznamUrl = 'skola.php?typ=' . (isset(SKOLA_TYPY[$x['typ']]) ? $x['typ'] : 'info') . ($x['typ'] === 'rozvrh' ? '&rozvrh=' . rawurlencode((string)$x['nazev']) : '');
         $popis = $x['nazev'] !== '' ? $x['nazev'] : $x['skupina'];
         if ($akce === 'prepnout') {
             $novy = admin_prepni('cltk_skola', $rid);
@@ -269,7 +322,80 @@ if ($rezim === 'seznam') {
 }
 echo obsah_assets();
 
-if ($rezim === 'seznam'):
+if ($rezim === 'seznam' && $typ === 'rozvrh'):
+    /* ---------- rozvrhy: výběr rozvrhu a jeho hodiny po kurtech, dnech a časech ---------- */
+    $dnyPoradi = array_flip(['pondělí', 'úterý', 'středa', 'čtvrtek', 'pátek', 'sobota', 'neděle']);
+    $radky = $rozvrhVybrany !== '' ? rows("SELECT * FROM cltk_skola WHERE typ = 'rozvrh' AND nazev = ? ORDER BY id", [$rozvrhVybrany]) : [];
+    $kurtyPoradi = [];
+    foreach ($radky as $r) $kurtyPoradi[(string)$r['misto']] ??= count($kurtyPoradi);
+    usort($radky, static fn($a, $b) => [$kurtyPoradi[(string)$a['misto']], $dnyPoradi[mb_strtolower((string)$a['den'])] ?? 99, strnatcmp((string)$a['cas'], (string)$b['cas']), (int)$a['id']]
+                                    <=> [$kurtyPoradi[(string)$b['misto']], $dnyPoradi[mb_strtolower((string)$b['den'])] ?? 99, 0, (int)$b['id']]);
+    $naWebu = count(array_filter($radky, static fn($r) => (int)$r['visible'] === 1));
+    $prvni = $radky[0] ?? null;
+    $skoncil = $prvni && !empty($prvni['datum_do']) && substr((string)$prvni['datum_do'], 0, 10) < dnes();
+?>
+<?= admin_zalozky($zalozky, 'skola.php?typ=rozvrh') ?>
+<section class="panel">
+  <div class="panel-head">
+    <h2>Rozvrhy tréninků <small><?= cislo(count($rozvrhNazvy)) ?> <?= sklonuj(count($rozvrhNazvy), 'rozvrh', 'rozvrhy', 'rozvrhů') ?></small></h2>
+    <div class="btn-row">
+      <a class="btn btn-sm btn-ghost" href="<?= e(url('tenisova-skola-rozvrhy.php#rozvrhy')) ?>" target="_blank" rel="noopener">Zobrazit na webu <span aria-hidden="true">↗</span></a>
+    </div>
+  </div>
+  <div class="panel-body">
+    <p class="hint"><?= e(SKOLA_TYPY['rozvrh'][2]) ?> Informace pro rodiče a kontaktní trenéři pod rozvrhem jsou ve <a href="stranky.php?stranka=tenisova-skola-rozvrhy">Stránkách</a> (blok Rozvrhy).</p>
+    <?php if (count($rozvrhNazvy) > 1): ?>
+    <nav class="zalozky zalozky--male" aria-label="Rozvrhy">
+      <?php foreach ($rozvrhNazvy as $n): ?><a href="skola.php?typ=rozvrh&amp;rozvrh=<?= e(rawurlencode($n)) ?>"<?= $n === $rozvrhVybrany ? ' aria-current="page"' : '' ?>><?= e($n !== '' ? $n : 'bez názvu') ?></a><?php endforeach; ?>
+    </nav>
+    <?php endif; ?>
+  </div>
+</section>
+
+<?php if (!$radky): ?>
+<section class="panel">
+  <?= prazdny_stav('Zatím žádný rozvrh', 'Přidejte první hodinu – název rozvrhu (např. „Zima 2026/27“), platnost, den, čas a kurt. Stránka Rozvrhy do té doby ukazuje štítek „doplní klub“.',
+      '<a class="btn btn-primary" href="skola.php?typ=rozvrh&amp;nova=1">Přidat hodinu</a>') ?>
+</section>
+<?php else: ?>
+<section class="panel">
+  <div class="panel-head">
+    <h2><?= e($rozvrhVybrany !== '' ? $rozvrhVybrany : 'Rozvrh') ?> <small><?= cislo($naWebu) ?> na webu z <?= cislo(count($radky)) ?> · platí <?= e($prvni && $prvni['datum_od'] ? cz_range((string)$prvni['datum_od'], (string)($prvni['datum_do'] ?? '')) : 'bez data') ?></small></h2>
+    <div class="btn-row">
+      <a class="btn btn-sm btn-primary" href="skola.php?typ=rozvrh&amp;rozvrh=<?= e(rawurlencode($rozvrhVybrany)) ?>&amp;nova=1">Přidat hodinu</a>
+      <?php if ($naWebu > 0): ?>
+        <?= tlacitko_akce('rozvrh_skryt', 0, 'Skrýt celý rozvrh', 'btn-ghost', ['typ' => 'rozvrh', 'rozvrh' => $rozvrhVybrany]) ?>
+      <?php else: ?>
+        <?= tlacitko_akce('rozvrh_zobrazit', 0, 'Zobrazit celý rozvrh', 'btn-ghost', ['typ' => 'rozvrh', 'rozvrh' => $rozvrhVybrany]) ?>
+      <?php endif; ?>
+      <?= tlacitko_akce('rozvrh_smazat', 0, 'Smazat celý rozvrh', 'btn-danger', ['typ' => 'rozvrh', 'rozvrh' => $rozvrhVybrany], 'Smazat celý rozvrh „' . $rozvrhVybrany . '“ (' . count($radky) . ' hodin)? Nejde to vrátit.') ?>
+    </div>
+  </div>
+  <?php if ($skoncil): ?><div class="panel-body"><p class="hint"><?= badge('platnost skončila', 'warn') ?> Rozvrh platil do <?= e(cz_date((string)$prvni['datum_do'])) ?> – na webu se už neukazuje. Můžete ho smazat.</p></div><?php endif; ?>
+  <div class="tbl-wrap tbl-karty">
+    <table>
+      <thead><tr><th>Kurt</th><th>Den a čas</th><th>Co se děje</th><th>Stav</th><th class="right">Akce</th></tr></thead>
+      <tbody>
+      <?php foreach ($radky as $r): $rid = (int)$r['id']; $obs = skola_rozvrh_obsazeno($r); ?>
+        <tr id="z<?= $rid ?>"<?= (int)$r['visible'] ? '' : ' class="je-skryte"' ?>>
+          <td data-label="Kurt" class="td-mala"><?= e((string)$r['misto'] !== '' ? (string)$r['misto'] : '–') ?></td>
+          <td data-label="Den a čas" class="nowrap"><b><?= e($r['den'] !== '' ? $r['den'] : '–') ?></b> <span class="td-mala"><?= e($r['cas']) ?></span></td>
+          <td data-label="Co se děje" class="td-nazev"><?php if ($obs): ?><?= badge('obsazeno', 'off') ?><?php else: ?><b><?= e($r['skupina'] !== '' ? $r['skupina'] : 'trénink') ?></b><?php endif; ?><?php $navic = array_filter([(string)$r['trener'], (string)$r['text']], static fn($x) => trim($x) !== ''); if ($navic): ?><small><?= e(implode(' · ', $navic)) ?></small><?php endif; ?></td>
+          <td data-label="Stav"><?= stav_badge($r['visible']) ?></td>
+          <td data-label="Akce" class="right"><div class="akce-radku">
+            <a class="btn btn-sm btn-ghost" href="skola.php?id=<?= $rid ?>">Upravit</a>
+            <?= tlacitko_prepnout($rid, $r['visible'], ['typ' => 'rozvrh']) ?>
+            <?= tlacitko_smazat($rid, 'Smazat hodinu ' . $r['den'] . ' ' . $r['cas'] . ' (' . $r['misto'] . ')? Nejde to vrátit.', ['typ' => 'rozvrh']) ?>
+          </div></td>
+        </tr>
+      <?php endforeach; ?>
+      </tbody>
+    </table>
+  </div>
+</section>
+<?php endif; ?>
+
+<?php elseif ($rezim === 'seznam'):
     $radky = rows('SELECT * FROM cltk_skola WHERE typ = ? ORDER BY poradi, id', [$typ]);
     $posl = count($radky) - 1;
     $naWebu = count(array_filter($radky, static fn($r) => (int)$r['visible'] === 1));
@@ -342,17 +468,34 @@ if ($rezim === 'seznam'):
         <?= pole_textarea('text', 'Text', $f['text'], ['rows' => 6, 'required' => true, 'hint' => obsah_chyba($chyby, 'text', 'Odstavce oddělte prázdným řádkem.')]) ?>
         <?= pole_text('odkaz', 'Odkaz (nepovinný)', $f['odkaz'], ['maxlength' => 255, 'placeholder' => 'https://… nebo tenisova-skola-ceniky.php', 'hint' => obsah_chyba($chyby, 'odkaz')]) ?>
 
-      <?php elseif ($typ === 'rozvrh'): ?>
-        <?= pole_radek([
-              pole_select('den', 'Den', $f['den'], SKOLA_DNY),
-              pole_text('cas', 'Čas', $f['cas'], ['maxlength' => 60, 'placeholder' => '15:00–16:00']),
-            ]) ?>
-        <?= pole_text('skupina', 'Skupina', $f['skupina'], ['maxlength' => 120, 'placeholder' => 'Minitenis – začátečníci', 'hint' => obsah_chyba($chyby, 'skupina')]) ?>
-        <?= pole_radek([
-              pole_text('misto', 'Kurt / místo', $f['misto'], ['maxlength' => 120, 'placeholder' => 'pevná hala, kurt P1']),
-              pole_text('trener', 'Trenér', $f['trener'], ['maxlength' => 160]),
-            ]) ?>
-        <?= pole_textarea('text', 'Poznámka', $f['text'], ['rows' => 3]) ?>
+      <?php elseif ($typ === 'rozvrh'):
+        $kurty = array_column(rows("SELECT DISTINCT misto FROM cltk_skola WHERE typ = 'rozvrh' AND misto <> '' ORDER BY misto"), 'misto'); ?>
+        <fieldset>
+          <legend>Rozvrh</legend>
+          <?= pole_text('nazev', 'Název rozvrhu', $f['nazev'], ['required' => true, 'maxlength' => 200, 'placeholder' => 'Zima 2026/27', 'attrs' => ['list' => 'rozvrhy-nazvy', 'autocomplete' => 'off'],
+                'hint' => obsah_chyba($chyby, 'nazev', 'Hodiny se stejným názvem tvoří jeden rozvrh – na webu záložka s týdenní mřížkou.')]) ?>
+          <datalist id="rozvrhy-nazvy"><?php foreach ($rozvrhNazvy as $n): ?><option value="<?= e($n) ?>"></option><?php endforeach; ?></datalist>
+          <?= pole_radek([
+                pole_datum('datum_od', 'Platí od', $f['datum_od'], ['hint' => obsah_chyba($chyby, 'datum_od')]),
+                pole_datum('datum_do', 'Platí do', $f['datum_do'], ['hint' => obsah_chyba($chyby, 'datum_do', 'Po tomto dni se rozvrh na webu neukáže. Platnost se uloží pro celý rozvrh.')]),
+              ]) ?>
+        </fieldset>
+        <fieldset>
+          <legend>Hodina</legend>
+          <?= pole_radek([
+                pole_select('den', 'Den', $f['den'], SKOLA_DNY, ['hint' => obsah_chyba($chyby, 'den')]),
+                pole_text('cas', 'Čas', $f['cas'], ['maxlength' => 60, 'placeholder' => '16:00–17:00', 'hint' => obsah_chyba($chyby, 'cas', 'Od–do v celých hodinách (přes dvě hodiny 17:00–19:00).')]),
+              ]) ?>
+          <?= pole_text('misto', 'Kurt', $f['misto'], ['maxlength' => 120, 'placeholder' => 'Kurt 5 · antuka', 'attrs' => ['list' => 'rozvrhy-kurty', 'autocomplete' => 'off'],
+                'hint' => obsah_chyba($chyby, 'misto', 'Podle kurtu se rozvrh na webu dělí na mřížky – pište ho u všech hodin stejně.')]) ?>
+          <datalist id="rozvrhy-kurty"><?php foreach ($kurty as $k): ?><option value="<?= e((string)$k) ?>"></option><?php endforeach; ?></datalist>
+          <?= pole_select('druh', 'Co se v hodině děje', $f['druh'], ['trenink' => 'Trénink Tenisové školy', 'obsazeno' => 'Kurt je obsazený (jiný program než škola)']) ?>
+          <?= pole_radek([
+                pole_text('skupina', 'Skupina (nepovinné)', skola_rozvrh_obsazeno($f) ? '' : $f['skupina'], ['maxlength' => 120, 'placeholder' => 'Minitenis – začátečníci', 'hint' => obsah_chyba($chyby, 'skupina', 'Jen název skupiny – jména dětí na web nepatří.')]),
+                pole_text('trener', 'Trenéři (nepovinné)', $f['trener'], ['maxlength' => 160, 'placeholder' => '3 trenéři', 'hint' => '„3 trenéři“ web zvýrazní zlatě.']),
+              ]) ?>
+          <?= pole_textarea('text', 'Poznámka (nepovinná)', $f['text'], ['rows' => 2, 'placeholder' => 'samostatný sparing']) ?>
+        </fieldset>
 
       <?php else: /* harmonogram, kemp */ ?>
         <?= pole_text('nazev', $typ === 'kemp' ? 'Název termínu' : 'Co se děje', $f['nazev'], ['required' => true, 'maxlength' => 200,

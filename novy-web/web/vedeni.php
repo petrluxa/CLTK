@@ -183,7 +183,10 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
       <div class="sl-5">
         <?= hlava_sekce($bDokumenty, ['cislo' => ++$cislo, 'id' => 'dokumenty-nadpis', 'stitek' => 'Dokumenty', 'nadpis' => 'Stanovy a dokumenty']) ?>
       </div>
-      <div class="sl-6 od-7"><?= dokumenty_html($dokumentyKlub) ?></div>
+      <div class="sl-6 od-7">
+        <?= dokumenty_html($dokumentyKlub) ?>
+        <p class="vedeni-dokumenty__vse"><?= tlacitko('dokumenty.php', 'Všechny dokumenty klubu', 'odkaz') ?></p>
+      </div>
     </div>
   </section>
 <?php endif; ?>

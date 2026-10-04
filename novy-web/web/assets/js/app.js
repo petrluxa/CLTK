@@ -650,6 +650,15 @@
     initBoxy(koren);
   };
 
+  /* ── Tlačítko Vytisknout [data-tisk hidden] (stránka dokumentu) – bez JS zůstane skryté ── */
+  function initTisk() {
+    $$('[data-tisk]').forEach(function (b) {
+      if (!jednou(b, 'tisk')) return;
+      b.hidden = false;
+      b.addEventListener('click', function () { window.print(); });
+    });
+  }
+
   function start() {
     initPristupnost();
     initHlavicka();
@@ -658,6 +667,7 @@
     initMenu();
     initDialogy();
     initOtevrit();
+    initTisk();
     nactiCenyClenstvi();
     CLTK.init(d);
     initReveal();

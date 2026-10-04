@@ -418,6 +418,7 @@
   .prezidenti__radek--dnes::before { left: -.6rem; }
 }
 .vedeni-dokumenty .mrizka { align-items: start; }
+.vedeni-dokumenty__vse { margin: var(--s-4) 0 0; }
 
 /* ==========================================================================
    CTC (ctc.php)
@@ -511,3 +512,20 @@
 .clen-cenik .segment span { display: flex; align-items: center; min-height: 44px; padding-block: 0; }
 .prihlaska .volby-radek .volba { align-items: center; min-height: 44px; padding-top: 0; }
 .prihlaska .volby-radek .volba input { margin-top: 0; }
+
+/* Jubilejní Revue 1893–2023 u kroniky (historie.php) – „kompletní historie klubu“ */
+.jubilejni-revue {
+  position: relative; display: grid; grid-template-columns: minmax(0, 6.6rem) minmax(0, 1fr); gap: 1rem 1.6rem; align-items: center;
+  max-width: 46rem; margin: 0 0 clamp(2.6rem, 1.8rem + 2.6vw, 4.6rem); padding: clamp(1rem, .8rem + .8vw, 1.5rem) clamp(1.1rem, .8rem + 1vw, 1.7rem);
+  background: var(--paper-2); border: 1px solid var(--line);
+}
+.jubilejni-revue::before { content: ''; position: absolute; inset: 5px; border: 1px solid var(--line-gold); pointer-events: none; }
+.jubilejni-revue__obalka { position: relative; z-index: 1; display: block; }
+.jubilejni-revue__obalka img { width: 100%; height: auto; box-shadow: var(--stin-foto); transition: transform var(--pohyb); }
+.jubilejni-revue__obalka:hover img { transform: translateY(-3px) rotate(-.8deg); }
+.jubilejni-revue__text { position: relative; z-index: 1; min-width: 0; }
+.jubilejni-revue__nadpis { margin: .4rem 0 .3rem; font: 400 clamp(1.25rem, 1.08rem + .65vw, 1.62rem)/1.2 var(--serif); color: var(--navy); text-wrap: balance; }
+.jubilejni-revue .drobne { margin: 0; }
+.jubilejni-revue__akce { display: flex; flex-wrap: wrap; align-items: center; gap: .2rem 1.7rem; margin: .7rem 0 0; }
+.jubilejni-revue__akce .odkaz { min-height: 44px; padding-top: .7em; }
+@media (max-width: 479.98px) { .jubilejni-revue { grid-template-columns: minmax(0, 4.6rem) minmax(0, 1fr); gap: .9rem 1rem; } }

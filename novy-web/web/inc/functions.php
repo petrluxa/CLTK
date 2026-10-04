@@ -308,8 +308,22 @@ function bezpecny_odkaz(?string $url): string {
     if (preg_match('~^(https?://|mailto:|tel:)~i', $holy)) return preg_match('~[\s"<>]~', $u) ? $holy : $u;
     if (str_starts_with($u, '#')) return $u;
     if (preg_match('~^[a-z0-9][a-z0-9\-_/]*\.php([?#][^\s"<>]*)?$~i', $u)) return url($u);
+    if (odkaz_je_soubor_webu($u)) return url($u);
+    // adresa, kterou už jednou vrátila url() / upload_url() / dokument_url() („/cltkv2/dokument.php?d=…“,
+    // „/cltkv2/uploads/…pdf“) – tlacitko() ji pouští znovu přes bezpecny_odkaz() a nesmí ji zahodit
+    if (BASE_PATH !== '' && str_starts_with($u, BASE_PATH) && !str_starts_with($u, '//')) {
+        $rel = substr($u, strlen(BASE_PATH));
+        if ($rel === '' || preg_match('~^[a-z0-9][a-z0-9\-_/]*\.php([?#][^\s"<>]*)?$~i', $rel)
+            || odkaz_je_soubor_webu(rawurldecode($rel))) return $u;
+    }
     if (preg_match('~^(www\.)[a-z0-9.\-]+~i', $u)) return 'https://' . $u;
     return '';
+}
+
+/** Soubor nahraný na tento web zapsaný jako odkaz: „uploads/dokumenty/cenik.pdf“
+ *  (ceník v PDF, plán areálu v PDF …). Jen bezpečné znaky, žádné „..“. */
+function odkaz_je_soubor_webu(string $u): bool {
+    return (bool)preg_match('~^uploads/[a-z0-9][a-z0-9\-_/]*(\.[a-z0-9]{2,5})$~i', $u) && !str_contains($u, '..');
 }
 
 /** Doplní https:// když chybí; prázdné nechá prázdné (pro ukládání odkazů z adminu). */
@@ -318,6 +332,7 @@ function normalizuj_url(?string $url): string {
     if ($u === '') return '';
     if (preg_match('~^(https?://|mailto:|tel:|#)~i', $u)) return mb_substr($u, 0, 255);
     if (preg_match('~^[a-z0-9][a-z0-9\-_/]*\.php([?#].*)?$~i', $u)) return mb_substr($u, 0, 255);
+    if (odkaz_je_soubor_webu($u)) return $u;                       // uploads/dokumenty/cenik.pdf
     return mb_substr('https://' . ltrim($u, '/'), 0, 255);
 }
 

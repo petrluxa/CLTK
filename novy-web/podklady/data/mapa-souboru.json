@@ -1,0 +1,1342 @@
+[
+ {
+  "stara_url": "https://files.cltk.cz/2so4wzo52sl01/REVUE_2026_1_web.pdf",
+  "nova_cesta": "revue/pdf/revue-2026-1.pdf",
+  "tabulka": "cltk_revue",
+  "sloupec": "pdf_url",
+  "id": 1,
+  "velikost_puvodni": 13270760,
+  "velikost_nova": 13270760,
+  "stran": 44
+ },
+ {
+  "stara_url": "https://files.cltk.cz/o6xjsls6zgj01/2025_2_web.pdf",
+  "nova_cesta": "revue/pdf/revue-2025-2.pdf",
+  "tabulka": "cltk_revue",
+  "sloupec": "pdf_url",
+  "id": 2,
+  "velikost_puvodni": 13675082,
+  "velikost_nova": 13675082,
+  "stran": 52
+ },
+ {
+  "stara_url": "https://files.cltk.cz/n8asxxd98fg01/I.%C4%8CLTK%20Revue%2001_2025.pdf",
+  "nova_cesta": "revue/pdf/revue-2025-1.pdf",
+  "tabulka": "cltk_revue",
+  "sloupec": "pdf_url",
+  "id": 3,
+  "velikost_puvodni": 9972106,
+  "velikost_nova": 9972106,
+  "stran": 44
+ },
+ {
+  "stara_url": "https://files.cltk.cz/fa4cnmbc2qc01/REVUE_2024_2_web.pdf",
+  "nova_cesta": "revue/pdf/revue-2024-2.pdf",
+  "tabulka": "cltk_revue",
+  "sloupec": "pdf_url",
+  "id": 4,
+  "velikost_puvodni": 10729196,
+  "velikost_nova": 10729196,
+  "stran": 44
+ },
+ {
+  "stara_url": "https://files.cltk.cz/7bbfxfji4n701/REVUE_2024_1_web.pdf",
+  "nova_cesta": "revue/pdf/revue-2024-1.pdf",
+  "tabulka": "cltk_revue",
+  "sloupec": "pdf_url",
+  "id": 5,
+  "velikost_puvodni": 10805626,
+  "velikost_nova": 10805626,
+  "stran": 44
+ },
+ {
+  "stara_url": "https://files.cltk.cz/mgzpjbrkaq401/2023_2_web.pdf",
+  "nova_cesta": "revue/pdf/revue-2023-2.pdf",
+  "tabulka": "cltk_revue",
+  "sloupec": "pdf_url",
+  "id": 6,
+  "velikost_puvodni": 14033540,
+  "velikost_nova": 14033540,
+  "stran": 52
+ },
+ {
+  "stara_url": "https://files.cltk.cz/zmtia6qkem301/2023_1_web%20%28kopie%29.pdf",
+  "nova_cesta": "revue/pdf/revue-2023-1.pdf",
+  "tabulka": "cltk_revue",
+  "sloupec": "pdf_url",
+  "id": 7,
+  "velikost_puvodni": 14099364,
+  "velikost_nova": 14099364,
+  "stran": 72
+ },
+ {
+  "stara_url": "https://files.cltk.cz/wuz6a5cj4w34/2022_2_web.pdf",
+  "nova_cesta": "revue/pdf/revue-2022-2.pdf",
+  "tabulka": "cltk_revue",
+  "sloupec": "pdf_url",
+  "id": 8,
+  "velikost_puvodni": 9615494,
+  "velikost_nova": 9615494,
+  "stran": 44
+ },
+ {
+  "stara_url": "https://files.cltk.cz/kbegd1fjgt34/2022_1_web%20%28kopie%29.pdf",
+  "nova_cesta": "revue/pdf/revue-2022-1.pdf",
+  "tabulka": "cltk_revue",
+  "sloupec": "pdf_url",
+  "id": 9,
+  "velikost_puvodni": 9282416,
+  "velikost_nova": 9282416,
+  "stran": 44
+ },
+ {
+  "stara_url": "https://files.cltk.cz/88ezxt1iuz32/2021_2_web%20%28kopie%29.pdf",
+  "nova_cesta": "revue/pdf/revue-2021-2.pdf",
+  "tabulka": "cltk_revue",
+  "sloupec": "pdf_url",
+  "id": 10,
+  "velikost_puvodni": 11894962,
+  "velikost_nova": 11894962,
+  "stran": 44
+ },
+ {
+  "stara_url": "https://files.cltk.cz/rjqd2dshct31/2021_1_web.pdf",
+  "nova_cesta": "revue/pdf/revue-2021-1.pdf",
+  "tabulka": "cltk_revue",
+  "sloupec": "pdf_url",
+  "id": 11,
+  "velikost_puvodni": 11044360,
+  "velikost_nova": 11044360,
+  "stran": 44
+ },
+ {
+  "stara_url": "https://files.cltk.cz/pntjr4skon27/2020_2_web.pdf",
+  "nova_cesta": "revue/pdf/revue-2020-2.pdf",
+  "tabulka": "cltk_revue",
+  "sloupec": "pdf_url",
+  "id": 12,
+  "velikost_puvodni": 11237205,
+  "velikost_nova": 11237205,
+  "stran": 44
+ },
+ {
+  "stara_url": "https://files.cltk.cz/1mdybjtoem22/2020_1_web.pdf",
+  "nova_cesta": "revue/pdf/revue-2020-1.pdf",
+  "tabulka": "cltk_revue",
+  "sloupec": "pdf_url",
+  "id": 13,
+  "velikost_puvodni": 12310524,
+  "velikost_nova": 12310524,
+  "stran": 44
+ },
+ {
+  "stara_url": "https://files.cltk.cz/rfo7dwdpz621/2019_2_web.pdf",
+  "nova_cesta": "revue/pdf/revue-2019-2.pdf",
+  "tabulka": "cltk_revue",
+  "sloupec": "pdf_url",
+  "id": 14,
+  "velikost_puvodni": 10934970,
+  "velikost_nova": 10934970,
+  "stran": 44
+ },
+ {
+  "stara_url": "https://files.cltk.cz/rk3mxshusn16/1_2019_web.pdf",
+  "nova_cesta": "revue/pdf/revue-2019-1.pdf",
+  "tabulka": "cltk_revue",
+  "sloupec": "pdf_url",
+  "id": 15,
+  "velikost_puvodni": 12064908,
+  "velikost_nova": 12064908,
+  "stran": 44
+ },
+ {
+  "stara_url": "https://files.cltk.cz/66n4o2cu4r16/2_2018_web.pdf",
+  "nova_cesta": "revue/pdf/revue-2018-2.pdf",
+  "tabulka": "cltk_revue",
+  "sloupec": "pdf_url",
+  "id": 16,
+  "velikost_puvodni": 12488391,
+  "velikost_nova": 12488391,
+  "stran": 44
+ },
+ {
+  "stara_url": "https://files.cltk.cz/35au2pku6m16/1_2018_web.pdf",
+  "nova_cesta": "revue/pdf/revue-2018-1.pdf",
+  "tabulka": "cltk_revue",
+  "sloupec": "pdf_url",
+  "id": 17,
+  "velikost_puvodni": 12359556,
+  "velikost_nova": 12359556,
+  "stran": 44
+ },
+ {
+  "stara_url": "https://files.cltk.cz/pcpcsxeugp16/2_2017_web.pdf",
+  "nova_cesta": "revue/pdf/revue-2017-2.pdf",
+  "tabulka": "cltk_revue",
+  "sloupec": "pdf_url",
+  "id": 18,
+  "velikost_puvodni": 10843141,
+  "velikost_nova": 10843141,
+  "stran": 44
+ },
+ {
+  "stara_url": "https://files.cltk.cz/ymf3ypbgjk02/1_2017_web.pdf",
+  "nova_cesta": "revue/pdf/revue-2017-1.pdf",
+  "tabulka": "cltk_revue",
+  "sloupec": "pdf_url",
+  "id": 19,
+  "velikost_puvodni": 12033614,
+  "velikost_nova": 12033614,
+  "stran": 44
+ },
+ {
+  "stara_url": "https://files.cltk.cz/si4ee9tbpf05/2_15_web.compressed.pdf",
+  "nova_cesta": "revue/pdf/revue-2015-2.pdf",
+  "tabulka": "cltk_revue",
+  "sloupec": "pdf_url",
+  "id": 22,
+  "velikost_puvodni": 19179284,
+  "velikost_nova": 19179284,
+  "stran": 44
+ },
+ {
+  "stara_url": "https://files.cltk.cz/d7ghcdqbdh05/1_15_web.compressed.pdf",
+  "nova_cesta": "revue/pdf/revue-2015-1.pdf",
+  "tabulka": "cltk_revue",
+  "sloupec": "pdf_url",
+  "id": 23,
+  "velikost_puvodni": 19610056,
+  "velikost_nova": 19610056,
+  "stran": 44
+ },
+ {
+  "stara_url": "https://files.cltk.cz/q5pqa3zbfc05/2_14_web.pdf",
+  "nova_cesta": "revue/pdf/revue-2014-2.pdf",
+  "tabulka": "cltk_revue",
+  "sloupec": "pdf_url",
+  "id": 24,
+  "velikost_puvodni": 20624694,
+  "velikost_nova": 20624694,
+  "stran": 44
+ },
+ {
+  "stara_url": "https://files.cltk.cz/97moit5c5905/1_14_web.compressed.pdf",
+  "nova_cesta": "revue/pdf/revue-2014-1.pdf",
+  "tabulka": "cltk_revue",
+  "sloupec": "pdf_url",
+  "id": 25,
+  "velikost_puvodni": 19447424,
+  "velikost_nova": 19447424,
+  "stran": 44
+ },
+ {
+  "stara_url": "https://files.cltk.cz/k2f8xh6h3402/2_13_web.pdf",
+  "nova_cesta": "revue/pdf/revue-2013-2.pdf",
+  "tabulka": "cltk_revue",
+  "sloupec": "pdf_url",
+  "id": 26,
+  "velikost_puvodni": 12337336,
+  "velikost_nova": 12337336,
+  "stran": 22
+ },
+ {
+  "stara_url": "https://files.cltk.cz/n3pyf2ihhw01/1_13_web.pdf",
+  "nova_cesta": "revue/pdf/revue-2013-1.pdf",
+  "tabulka": "cltk_revue",
+  "sloupec": "pdf_url",
+  "id": 27,
+  "velikost_puvodni": 47140315,
+  "velikost_nova": 20770516,
+  "stran": 22
+ },
+ {
+  "stara_url": "https://files.cltk.cz/rz4oqiegwi02/REVUE_2_12_web.pdf",
+  "nova_cesta": "revue/pdf/revue-2012-2.pdf",
+  "tabulka": "cltk_revue",
+  "sloupec": "pdf_url",
+  "id": 28,
+  "velikost_puvodni": 48767941,
+  "velikost_nova": 25199803,
+  "stran": 22
+ },
+ {
+  "stara_url": "https://files.cltk.cz/5e8tjxkhtt01/1_12_web.pdf",
+  "nova_cesta": "revue/pdf/revue-2012-1.pdf",
+  "tabulka": "cltk_revue",
+  "sloupec": "pdf_url",
+  "id": 29,
+  "velikost_puvodni": 26603290,
+  "velikost_nova": 13388973,
+  "stran": 22
+ },
+ {
+  "stara_url": "https://files.cltk.cz/jbozuehg9h02/REVUE_2_11_web.pdf",
+  "nova_cesta": "revue/pdf/revue-2011-2.pdf",
+  "tabulka": "cltk_revue",
+  "sloupec": "pdf_url",
+  "id": 30,
+  "velikost_puvodni": 17211259,
+  "velikost_nova": 17211259,
+  "stran": 22
+ },
+ {
+  "stara_url": "https://files.cltk.cz/wcms57ngyd02/revue_1_2011.pdf",
+  "nova_cesta": "revue/pdf/revue-2011-1.pdf",
+  "tabulka": "cltk_revue",
+  "sloupec": "pdf_url",
+  "id": 31,
+  "velikost_puvodni": 11874479,
+  "velikost_nova": 11874479,
+  "stran": 22
+ },
+ {
+  "stara_url": "https://files.cltk.cz/3rmn2e9hf202/2_10_revue.pdf",
+  "nova_cesta": "revue/pdf/revue-2010-2.pdf",
+  "tabulka": "cltk_revue",
+  "sloupec": "pdf_url",
+  "id": 32,
+  "velikost_puvodni": 6316449,
+  "velikost_nova": 6316449,
+  "stran": 22
+ },
+ {
+  "stara_url": "https://files.cltk.cz/7nlznsnh7s01/1_10_4_ALL.pdf",
+  "nova_cesta": "revue/pdf/revue-2010-1.pdf",
+  "tabulka": "cltk_revue",
+  "sloupec": "pdf_url",
+  "id": 33,
+  "velikost_puvodni": 6804751,
+  "velikost_nova": 6804751,
+  "stran": 22
+ },
+ {
+  "stara_url": "https://files.cltk.cz/m3b47achrz01/2_09.pdf",
+  "nova_cesta": "revue/pdf/revue-2009-2.pdf",
+  "tabulka": "cltk_revue",
+  "sloupec": "pdf_url",
+  "id": 34,
+  "velikost_puvodni": 7001897,
+  "velikost_nova": 7001897,
+  "stran": 24
+ },
+ {
+  "stara_url": "https://files.cltk.cz/2najb6fh5y01/1_2009.pdf",
+  "nova_cesta": "revue/pdf/revue-2009-1.pdf",
+  "tabulka": "cltk_revue",
+  "sloupec": "pdf_url",
+  "id": 35,
+  "velikost_puvodni": 6097765,
+  "velikost_nova": 6097765,
+  "stran": 24
+ },
+ {
+  "stara_url": "https://files.cltk.cz/sgmf1bkglf02/revue_2_08.pdf",
+  "nova_cesta": "revue/pdf/revue-2008-2.pdf",
+  "tabulka": "cltk_revue",
+  "sloupec": "pdf_url",
+  "id": 36,
+  "velikost_puvodni": 22860884,
+  "velikost_nova": 16771802,
+  "stran": 22
+ },
+ {
+  "stara_url": "https://files.cltk.cz/lmh8a3qgbc02/revue_1_08.pdf",
+  "nova_cesta": "revue/pdf/revue-2008-1.pdf",
+  "tabulka": "cltk_revue",
+  "sloupec": "pdf_url",
+  "id": 37,
+  "velikost_puvodni": 25592002,
+  "velikost_nova": 17112458,
+  "stran": 22
+ },
+ {
+  "stara_url": "https://files.cltk.cz/xwdmeysgna02/2007_2.pdf",
+  "nova_cesta": "revue/pdf/revue-2007-2.pdf",
+  "tabulka": "cltk_revue",
+  "sloupec": "pdf_url",
+  "id": 38,
+  "velikost_puvodni": 24032954,
+  "velikost_nova": 17618172,
+  "stran": 22
+ },
+ {
+  "stara_url": "https://files.cltk.cz/zxczitwg1902/2007_1.pdf",
+  "nova_cesta": "revue/pdf/revue-2007-1.pdf",
+  "tabulka": "cltk_revue",
+  "sloupec": "pdf_url",
+  "id": 39,
+  "velikost_puvodni": 26617127,
+  "velikost_nova": 18887345,
+  "stran": 22
+ },
+ {
+  "stara_url": "https://files.cltk.cz/pxqdnpzgd702/2006_2.pdf",
+  "nova_cesta": "revue/pdf/revue-2006-2.pdf",
+  "tabulka": "cltk_revue",
+  "sloupec": "pdf_url",
+  "id": 40,
+  "velikost_puvodni": 32454561,
+  "velikost_nova": 21036785,
+  "stran": 22
+ },
+ {
+  "stara_url": "https://files.cltk.cz/d25srl3hp502/2006_1.pdf",
+  "nova_cesta": "revue/pdf/revue-2006-1.pdf",
+  "tabulka": "cltk_revue",
+  "sloupec": "pdf_url",
+  "id": 41,
+  "velikost_puvodni": 21760515,
+  "velikost_nova": 15572338,
+  "stran": 22
+ },
+ {
+  "stara_url": "https://files.cltk.cz/ob3upw1581n01/Newsletter%203%3A2026.pdf?download",
+  "nova_cesta": "newslettery/newsletter-2026-3.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_cs",
+  "id": 1,
+  "velikost_puvodni": 25831761,
+  "velikost_nova": 2004622,
+  "stran": 4
+ },
+ {
+  "stara_url": "https://files.cltk.cz/gltel1y4u2n01/EN%20Newsletter%203%3A2026.pdf?download",
+  "nova_cesta": "newslettery/newsletter-2026-3-en.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_en",
+  "id": 1,
+  "velikost_puvodni": 29085242,
+  "velikost_nova": 2017392,
+  "stran": 4
+ },
+ {
+  "stara_url": "https://files.cltk.cz/3gfd5r45iam01/Newsletter%202%3A2026.pages.pdf?download",
+  "nova_cesta": "newslettery/newsletter-2026-2.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_cs",
+  "id": 2,
+  "velikost_puvodni": 22749163,
+  "velikost_nova": 1812994,
+  "stran": 3
+ },
+ {
+  "stara_url": "https://files.cltk.cz/b5ok9n75u8m01/EN%20Newsletter%202%3A2026.pages.pdf?download",
+  "nova_cesta": "newslettery/newsletter-2026-2-en.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_en",
+  "id": 2,
+  "velikost_puvodni": 22769108,
+  "velikost_nova": 1816080,
+  "stran": 3
+ },
+ {
+  "stara_url": "https://files.cltk.cz/z21mu7d66ok01/Newsletter%201%3A2026.pdf?download",
+  "nova_cesta": "newslettery/newsletter-2026-1.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_cs",
+  "id": 3,
+  "velikost_puvodni": 11965801,
+  "velikost_nova": 1649056,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/9afaqba6spk01/EN%20Newsletter%201%3A2026.pdf?download",
+  "nova_cesta": "newslettery/newsletter-2026-1-en.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_en",
+  "id": 3,
+  "velikost_puvodni": 11961125,
+  "velikost_nova": 1644505,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/irruwdh6gyj01/Newsletter%205%3A2025.pdf?download",
+  "nova_cesta": "newslettery/newsletter-2025-5.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_cs",
+  "id": 4,
+  "velikost_puvodni": 57511298,
+  "velikost_nova": 1904083,
+  "stran": 3
+ },
+ {
+  "stara_url": "https://files.cltk.cz/n9f92ak6swj01/EN%20Newsletter%205%3A2025.pdf?download",
+  "nova_cesta": "newslettery/newsletter-2025-5-en.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_en",
+  "id": 4,
+  "velikost_puvodni": 57541420,
+  "velikost_nova": 1899871,
+  "stran": 3
+ },
+ {
+  "stara_url": "https://files.cltk.cz/a6xb82e6g5j01/Newsletter%204%3A2025.pdf?download",
+  "nova_cesta": "newslettery/newsletter-2025-4.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_cs",
+  "id": 5,
+  "velikost_puvodni": 5448696,
+  "velikost_nova": 3603916,
+  "stran": 3
+ },
+ {
+  "stara_url": "https://files.cltk.cz/b4rw36b647j01/EN%20Newsletter%204%3A2025.pdf?download",
+  "nova_cesta": "newslettery/newsletter-2025-4-en.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_en",
+  "id": 5,
+  "velikost_puvodni": 5445026,
+  "velikost_nova": 3599962,
+  "stran": 3
+ },
+ {
+  "stara_url": "https://files.cltk.cz/a6ndwmw7emh01/eNewsletter%203%3A2025.pdf?download",
+  "nova_cesta": "newslettery/newsletter-2025-3.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_cs",
+  "id": 6,
+  "velikost_puvodni": 46237093,
+  "velikost_nova": 1842346,
+  "stran": 3
+ },
+ {
+  "stara_url": "https://files.cltk.cz/ytoyqqs72oh01/eNewsletter%203%3A2025%20EN.pdf?download",
+  "nova_cesta": "newslettery/newsletter-2025-3-en.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_en",
+  "id": 6,
+  "velikost_puvodni": 46226057,
+  "velikost_nova": 1831378,
+  "stran": 3
+ },
+ {
+  "stara_url": "https://files.cltk.cz/f87iwez9srf01/Newsletter%202%3A2025.pdf?download",
+  "nova_cesta": "newslettery/newsletter-2025-2.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_cs",
+  "id": 7,
+  "velikost_puvodni": 12100280,
+  "velikost_nova": 1688486,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/ojts1b3a6qf01/EN%20Newsletter%202%3A2025.pdf?download",
+  "nova_cesta": "newslettery/newsletter-2025-2-en.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_en",
+  "id": 7,
+  "velikost_puvodni": 12516228,
+  "velikost_nova": 1684249,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/eds76y8a43f01/Newsletter.pdf?download",
+  "nova_cesta": "newslettery/newsletter-2025-1.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_cs",
+  "id": 8,
+  "velikost_puvodni": 7371788,
+  "velikost_nova": 1667815,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/lcze236aq4f01/EN%20Newsletter.pdf?download",
+  "nova_cesta": "newslettery/newsletter-2025-1-en.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_en",
+  "id": 8,
+  "velikost_puvodni": 7784930,
+  "velikost_nova": 1661197,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/qlzkl82cgdd01/Newsletter%204%20prosinec%202024.pdf?download",
+  "nova_cesta": "newslettery/newsletter-2024-4.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_cs",
+  "id": 9,
+  "velikost_puvodni": 28386687,
+  "velikost_nova": 1651643,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/ncxxp45csbd01/Newsletter%204%20December%202024.pdf?download",
+  "nova_cesta": "newslettery/newsletter-2024-4-en.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_en",
+  "id": 9,
+  "velikost_puvodni": 29152846,
+  "velikost_nova": 1654765,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/h3ai63pck9c01/Newsletter%203%3A2024.pdf?download",
+  "nova_cesta": "newslettery/newsletter-2024-3.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_cs",
+  "id": 10,
+  "velikost_puvodni": 25788939,
+  "velikost_nova": 1690544,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/725bso3hs7901/Newsletter%202%3A2024%20rev.pdf?download",
+  "nova_cesta": "newslettery/newsletter-2024-2.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_cs",
+  "id": 11,
+  "velikost_puvodni": 14693808,
+  "velikost_nova": 1608313,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/skktdjzisp601/Newsletter%201%3A2024.pdf?download",
+  "nova_cesta": "newslettery/newsletter-2024-1.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_cs",
+  "id": 12,
+  "velikost_puvodni": 16960110,
+  "velikost_nova": 1647335,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/o6q1if3j6o601/EN%20Newsletter%201%3A2024.pdf?download",
+  "nova_cesta": "newslettery/newsletter-2024-1-en.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_en",
+  "id": 12,
+  "velikost_puvodni": 16956221,
+  "velikost_nova": 1642912,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/9ikz8dmk62501/Newsletter%20prosinec%202023.pdf?download",
+  "nova_cesta": "newslettery/newsletter-2023-prosinec.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_cs",
+  "id": 13,
+  "velikost_puvodni": 14321525,
+  "velikost_nova": 1660700,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/zmsgd9pkiz401/Newsletter%20December%202023.pdf?download",
+  "nova_cesta": "newslettery/newsletter-2023-prosinec-en.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_en",
+  "id": 13,
+  "velikost_puvodni": 14321443,
+  "velikost_nova": 1660466,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/ybu7iq9kcl401/Newsletter%20%C5%99%C3%ADjen%202023.pdf?download",
+  "nova_cesta": "newslettery/newsletter-2023-rijen.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_cs",
+  "id": 14,
+  "velikost_puvodni": 13501660,
+  "velikost_nova": 1629470,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/4iymmmckoj401/Newsletter%20October%202023.pdf?download",
+  "nova_cesta": "newslettery/newsletter-2023-rijen-en.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_en",
+  "id": 14,
+  "velikost_puvodni": 13500757,
+  "velikost_nova": 1628882,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/jfl1wwfkk1401/newsletter%20130%20let%20klubu%202023-08.pdf",
+  "nova_cesta": "newslettery/newsletter-2023-130-let-klubu.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_cs",
+  "id": 15,
+  "velikost_puvodni": 13738479,
+  "velikost_nova": 1606294,
+  "stran": 4
+ },
+ {
+  "stara_url": "https://files.cltk.cz/7lch1sikxy301/newsletter%20130%20let%20klubu%202023-08%20%28EN%29.pdf",
+  "nova_cesta": "newslettery/newsletter-2023-130-let-klubu-en.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_en",
+  "id": 15,
+  "velikost_puvodni": 16971338,
+  "velikost_nova": 1656632,
+  "stran": 4
+ },
+ {
+  "stara_url": "https://files.cltk.cz/icqy93qjc5201/newsletter_3_22.pdf?download",
+  "nova_cesta": "newslettery/newsletter-2022-3.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_cs",
+  "id": 16,
+  "velikost_puvodni": 1425850,
+  "velikost_nova": 353020,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/jd3gwn9icn32/newsletter_3_21.pdf?download",
+  "nova_cesta": "newslettery/newsletter-2021-3.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_cs",
+  "id": 17,
+  "velikost_puvodni": 1419815,
+  "velikost_nova": 362754,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/u5ix1kciol32/newsletter_3_21_en.pdf?download",
+  "nova_cesta": "newslettery/newsletter-2021-3-en.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_en",
+  "id": 17,
+  "velikost_puvodni": 1404549,
+  "velikost_nova": 347751,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/3rxked4ic131/newsletter_2_21.pdf?download",
+  "nova_cesta": "newslettery/newsletter-2021-2.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_cs",
+  "id": 18,
+  "velikost_puvodni": 695783,
+  "velikost_nova": 209159,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/3dr3j97ioy30/newsletter_2_21%20_EN.pdf?download",
+  "nova_cesta": "newslettery/newsletter-2021-2-en.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_en",
+  "id": 18,
+  "velikost_puvodni": 666656,
+  "velikost_nova": 183657,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/adno5kmkcj28/newsletter_1_21.pdf?download",
+  "nova_cesta": "newslettery/newsletter-2021-1.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_cs",
+  "id": 19,
+  "velikost_puvodni": 676639,
+  "velikost_nova": 200788,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/fjt6agpkoh28/newsletter_1_21_en.pdf?download",
+  "nova_cesta": "newslettery/newsletter-2021-1-en.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_en",
+  "id": 19,
+  "velikost_puvodni": 675932,
+  "velikost_nova": 200067,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/di5ggfnkzq27/newsletter_4_20.pdf?download",
+  "nova_cesta": "newslettery/newsletter-2020-4.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_cs",
+  "id": 20,
+  "velikost_puvodni": 12270084,
+  "velikost_nova": 414904,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/cjgf7pmkau27/newsletter_4_20%20%28EN%29.pdf?download",
+  "nova_cesta": "newslettery/newsletter-2020-4-en.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_en",
+  "id": 20,
+  "velikost_puvodni": 12274687,
+  "velikost_nova": 419177,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/sw5zjbqkcp27/newsletter_3_20.pdf?download",
+  "nova_cesta": "newslettery/newsletter-2020-3.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_cs",
+  "id": 21,
+  "velikost_puvodni": 2205932,
+  "velikost_nova": 374288,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/wtq7blpkms27/EN%20Newsletter%203%3A2020.pdf?download",
+  "nova_cesta": "newslettery/newsletter-2020-3-en.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_en",
+  "id": 21,
+  "velikost_puvodni": 39599,
+  "velikost_nova": 39599,
+  "stran": 3
+ },
+ {
+  "stara_url": "https://files.cltk.cz/m9ph5r8ng524/newsletter_2_20.pdf?download",
+  "nova_cesta": "newslettery/newsletter-2020-2.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_cs",
+  "id": 22,
+  "velikost_puvodni": 1555326,
+  "velikost_nova": 220415,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/8naz9nbns324/newsletter_2_20_EN.pdf?download",
+  "nova_cesta": "newslettery/newsletter-2020-2-en.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_en",
+  "id": 22,
+  "velikost_puvodni": 2481456,
+  "velikost_nova": 258360,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/o7ead5apua22/newsletter_1_20.pdf?download",
+  "nova_cesta": "newslettery/newsletter-2020-1.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_cs",
+  "id": 23,
+  "velikost_puvodni": 1788549,
+  "velikost_nova": 306430,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/u9xr897pic22/newsletter_1_20_en.pdf?download",
+  "nova_cesta": "newslettery/newsletter-2020-1-en.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_en",
+  "id": 23,
+  "velikost_puvodni": 1937238,
+  "velikost_nova": 308217,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/eq86zoepkd21/newsletter_5_19.pdf?download",
+  "nova_cesta": "newslettery/newsletter-2019-5.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_cs",
+  "id": 24,
+  "velikost_puvodni": 2039342,
+  "velikost_nova": 218908,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/ucmhwj9pug21/newsletter_5_19_en.pdf?download",
+  "nova_cesta": "newslettery/newsletter-2019-5-en.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_en",
+  "id": 24,
+  "velikost_puvodni": 2151027,
+  "velikost_nova": 220048,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/p14bc8prof19/newsletter_4_19.pdf?download",
+  "nova_cesta": "newslettery/newsletter-2019-4.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_cs",
+  "id": 25,
+  "velikost_puvodni": 1365761,
+  "velikost_nova": 259367,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/uewj8cmrch19/newsletter_4_19_en.pdf?download",
+  "nova_cesta": "newslettery/newsletter-2019-4-en.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_en",
+  "id": 25,
+  "velikost_puvodni": 1517141,
+  "velikost_nova": 263919,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/68rmpeluik16/newsletter%202019-01.pdf",
+  "nova_cesta": "newslettery/newsletter-2019-2.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_cs",
+  "id": 26,
+  "velikost_puvodni": 2528617,
+  "velikost_nova": 236164,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/h555uaouui16/newsletter%202018-06.pdf",
+  "nova_cesta": "newslettery/newsletter-2018-6.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_cs",
+  "id": 27,
+  "velikost_puvodni": 6220236,
+  "velikost_nova": 269637,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/jmbkz6ru8h16/newsletter%202018-05.pdf",
+  "nova_cesta": "newslettery/newsletter-2018-5.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_cs",
+  "id": 28,
+  "velikost_puvodni": 1360988,
+  "velikost_nova": 325504,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/wje253uukf16/newsletter%202018-04.pdf",
+  "nova_cesta": "newslettery/newsletter-2018-4.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_cs",
+  "id": 29,
+  "velikost_puvodni": 1061227,
+  "velikost_nova": 261924,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/idyi9yxuxd16/newsletter%202018-03.pdf",
+  "nova_cesta": "newslettery/newsletter-2018-3.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_cs",
+  "id": 30,
+  "velikost_puvodni": 1300293,
+  "velikost_nova": 314828,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/c1f1et1wac16/newsletter%202018-02.pdf",
+  "nova_cesta": "newslettery/newsletter-2018-2.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_cs",
+  "id": 31,
+  "velikost_puvodni": 1107250,
+  "velikost_nova": 184225,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/m6uhip4wma16/newsletter%202018-01.pdf",
+  "nova_cesta": "newslettery/newsletter-2018-1.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_cs",
+  "id": 32,
+  "velikost_puvodni": 1690477,
+  "velikost_nova": 178141,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/gt4zml7wz816/newsletter%202017-07.pdf",
+  "nova_cesta": "newslettery/newsletter-2017-7.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_cs",
+  "id": 33,
+  "velikost_puvodni": 1301878,
+  "velikost_nova": 247807,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/95lgrhawc716/newsletter%202017-06.pdf",
+  "nova_cesta": "newslettery/newsletter-2017-6.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_cs",
+  "id": 34,
+  "velikost_puvodni": 4125419,
+  "velikost_nova": 246504,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/wzcxwddwo516/newsletter%202017-05.pdf",
+  "nova_cesta": "newslettery/newsletter-2017-5.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_cs",
+  "id": 35,
+  "velikost_puvodni": 3674227,
+  "velikost_nova": 326674,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/7mbe2agw2416/newsletter%202017-04.pdf",
+  "nova_cesta": "newslettery/newsletter-2017-4.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_cs",
+  "id": 36,
+  "velikost_puvodni": 637808,
+  "velikost_nova": 279448,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/ogpu66jwe216/newsletter%202017-03.pdf",
+  "nova_cesta": "newslettery/newsletter-2017-3.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_cs",
+  "id": 37,
+  "velikost_puvodni": 580328,
+  "velikost_nova": 281805,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/hr8db2mwqz15/newsletter%202017-02.pdf",
+  "nova_cesta": "newslettery/newsletter-2017-2.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_cs",
+  "id": 38,
+  "velikost_puvodni": 973269,
+  "velikost_nova": 324672,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/4cptfxow4y15/newsletter%202017-01.pdf",
+  "nova_cesta": "newslettery/newsletter-2017-1.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_cs",
+  "id": 39,
+  "velikost_puvodni": 1057840,
+  "velikost_nova": 423372,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/jydcksrwgw15/newsletter%202016-10.pdf",
+  "nova_cesta": "newslettery/newsletter-2016-10.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_cs",
+  "id": 40,
+  "velikost_puvodni": 853271,
+  "velikost_nova": 314225,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/p9qsoouwst15/newsletter%202016-09.pdf",
+  "nova_cesta": "newslettery/newsletter-2016-9.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_cs",
+  "id": 41,
+  "velikost_puvodni": 810882,
+  "velikost_nova": 253120,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/h4bbtkyw6s15/newsletter%202016-08.pdf",
+  "nova_cesta": "newslettery/newsletter-2016-8.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_cs",
+  "id": 42,
+  "velikost_puvodni": 730134,
+  "velikost_nova": 207505,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/mwsryg2xiq15/newsletter%202016-07.pdf",
+  "nova_cesta": "newslettery/newsletter-2016-7.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_cs",
+  "id": 43,
+  "velikost_puvodni": 281336,
+  "velikost_nova": 148046,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/foba4d5xuo15/newsletter%202016-06.pdf",
+  "nova_cesta": "newslettery/newsletter-2016-6.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_cs",
+  "id": 44,
+  "velikost_puvodni": 531522,
+  "velikost_nova": 181254,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/86tq898x8n15/newsletter%202016-05.pdf",
+  "nova_cesta": "newslettery/newsletter-2016-5.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_cs",
+  "id": 45,
+  "velikost_puvodni": 966049,
+  "velikost_nova": 211660,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/igc9d5bxkl15/newsletter%202016-04.pdf",
+  "nova_cesta": "newslettery/newsletter-2016-4.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_cs",
+  "id": 46,
+  "velikost_puvodni": 461040,
+  "velikost_nova": 200365,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/e8uph1exxj15/newsletter%202016-03.pdf",
+  "nova_cesta": "newslettery/newsletter-2016-3.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_cs",
+  "id": 47,
+  "velikost_puvodni": 458721,
+  "velikost_nova": 224552,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/hxc8mwgxai15/newsletter%202016-02.pdf",
+  "nova_cesta": "newslettery/newsletter-2016-2.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_cs",
+  "id": 48,
+  "velikost_puvodni": 547233,
+  "velikost_nova": 209042,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/yw3pqrjxmg15/newsletter%202016-01.pdf",
+  "nova_cesta": "newslettery/newsletter-2016-1.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_cs",
+  "id": 49,
+  "velikost_puvodni": 681525,
+  "velikost_nova": 243314,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/1ng7wnmxze15/newsletter%202015-07.pdf",
+  "nova_cesta": "newslettery/newsletter-2015-7.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_cs",
+  "id": 50,
+  "velikost_puvodni": 646518,
+  "velikost_nova": 230603,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/jayn1kpxcd15/newsletter%202015-06.pdf",
+  "nova_cesta": "newslettery/newsletter-2015-6.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_cs",
+  "id": 51,
+  "velikost_puvodni": 650431,
+  "velikost_nova": 214876,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/3qs66gsxob15/newsletter%202015-05.pdf",
+  "nova_cesta": "newslettery/newsletter-2015-5.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_cs",
+  "id": 52,
+  "velikost_puvodni": 811404,
+  "velikost_nova": 230446,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/l75nacwx2a15/newsletter%202015-04.pdf",
+  "nova_cesta": "newslettery/newsletter-2015-4.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_cs",
+  "id": 53,
+  "velikost_puvodni": 485269,
+  "velikost_nova": 202833,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/6by5f8zxe815/newsletter%202015-03.pdf",
+  "nova_cesta": "newslettery/newsletter-2015-3.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_cs",
+  "id": 54,
+  "velikost_puvodni": 869202,
+  "velikost_nova": 190838,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/2fbmj43yq615/newsletter%202015-02.pdf",
+  "nova_cesta": "newslettery/newsletter-2015-2.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_cs",
+  "id": 55,
+  "velikost_puvodni": 639176,
+  "velikost_nova": 214117,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/tpr4oz5y4515/newsletter%202015-01.pdf",
+  "nova_cesta": "newslettery/newsletter-2015-1.pdf",
+  "tabulka": "cltk_newslettery",
+  "sloupec": "pdf_cs",
+  "id": 56,
+  "velikost_puvodni": 484806,
+  "velikost_nova": 167848,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/szt6azj7muh01/Stanovy%20I.%C4%8CLTK%20Praha.pdf",
+  "nova_cesta": "dokumenty/stanovy-klubu.pdf",
+  "tabulka": "cltk_dokumenty",
+  "sloupec": "url",
+  "id": 1,
+  "velikost_puvodni": 194971,
+  "velikost_nova": 194971,
+  "stran": 12
+ },
+ {
+  "stara_url": "https://files.cltk.cz/7km6d916kbl01/Pravidla%20pro%20rezervace%20kurt%C5%AF%202026.pdf",
+  "nova_cesta": "dokumenty/pravidla-hrani-2026.pdf",
+  "tabulka": "cltk_dokumenty",
+  "sloupec": "url",
+  "id": 2,
+  "velikost_puvodni": 238089,
+  "velikost_nova": 238089,
+  "stran": 1
+ },
+ {
+  "stara_url": "https://files.cltk.cz/9lawqgo4cjn01/Cen%C3%ADk%20zimn%C3%AD%20sezona%2026-27.pdf",
+  "nova_cesta": "dokumenty/cenik-zimni-sezona-2026-27.pdf",
+  "tabulka": "cltk_dokumenty",
+  "sloupec": "url",
+  "id": 4,
+  "velikost_puvodni": 49414,
+  "velikost_nova": 49414,
+  "stran": 1
+ },
+ {
+  "stara_url": "https://files.cltk.cz/l8wemjw6xri01/Pl%C3%A1n%20are%C3%A1lu%20%2009-2025%20na%20web.pdf",
+  "nova_cesta": "dokumenty/plan-arealu-09-2025.pdf",
+  "tabulka": "cltk_dokumenty",
+  "sloupec": "url",
+  "id": 5,
+  "velikost_puvodni": 263804,
+  "velikost_nova": 194923,
+  "stran": 1
+ },
+ {
+  "stara_url": "https://files.cltk.cz/555n53okod501/Provozn%C3%AD%20%C5%99%C3%A1d%20-%20BAZ%C3%89N.pdf",
+  "nova_cesta": "dokumenty/provozni-rad-bazen.pdf",
+  "tabulka": "cltk_dokumenty",
+  "sloupec": "url",
+  "id": 6,
+  "velikost_puvodni": 127854,
+  "velikost_nova": 127854,
+  "stran": 1
+ },
+ {
+  "stara_url": "https://files.cltk.cz/ogu817lkcf501/Provozn%C3%AD%20%C5%99%C3%A1d%20-%20posilovna%20I.%C4%8CLTK.pdf",
+  "nova_cesta": "dokumenty/provozni-rad-posilovna.pdf",
+  "tabulka": "cltk_dokumenty",
+  "sloupec": "url",
+  "id": 7,
+  "velikost_puvodni": 172083,
+  "velikost_nova": 172083,
+  "stran": 1
+ },
+ {
+  "stara_url": "https://files.cltk.cz/4fwmpb64fx11/Provozn%C3%AD%20%C5%99%C3%A1d%20-%20wellness%20I.%C4%8CLTK.pdf",
+  "nova_cesta": "dokumenty/provozni-rad-wellness.pdf",
+  "tabulka": "cltk_dokumenty",
+  "sloupec": "url",
+  "id": 8,
+  "velikost_puvodni": 180599,
+  "velikost_nova": 180599,
+  "stran": 2
+ },
+ {
+  "stara_url": "https://files.cltk.cz/9lawqgo4cjn01/Cen%C3%ADk%20zimn%C3%AD%20sezona%2026-27.pdf",
+  "nova_cesta": "dokumenty/cenik-zimni-sezona-2026-27.pdf",
+  "tabulka": "cltk_price_lists",
+  "sloupec": "pdf_url",
+  "id": 2,
+  "velikost_puvodni": 49414,
+  "velikost_nova": 49414,
+  "stran": 1
+ },
+ {
+  "stara_url": "https://files.cltk.cz/l8wemjw6xri01/Pl%C3%A1n%20are%C3%A1lu%20%2009-2025%20na%20web.pdf",
+  "nova_cesta": "dokumenty/plan-arealu-09-2025.pdf",
+  "tabulka": "cltk_bloky",
+  "sloupec": "odkaz",
+  "id": 101,
+  "velikost_puvodni": 263804,
+  "velikost_nova": 194923,
+  "stran": 1
+ },
+ {
+  "stara_url": "https://files.cltk.cz/k2f8xh6h3402/2_13_web.pdf",
+  "nova_cesta": "revue/pdf/revue-2013-2.pdf",
+  "tabulka": "cltk_milniky",
+  "sloupec": "zdroj",
+  "id": 7,
+  "velikost_puvodni": 12337336,
+  "velikost_nova": 12337336,
+  "stran": 22
+ },
+ {
+  "stara_url": "https://files.cltk.cz/zmtia6qkem301/2023_1_web%20%28kopie%29.pdf",
+  "nova_cesta": "revue/pdf/revue-2023-1.pdf",
+  "tabulka": "cltk_milniky",
+  "sloupec": "zdroj",
+  "id": 9,
+  "velikost_puvodni": 14099364,
+  "velikost_nova": 14099364,
+  "stran": 72
+ },
+ {
+  "stara_url": "https://files.cltk.cz/k2f8xh6h3402/2_13_web.pdf",
+  "nova_cesta": "revue/pdf/revue-2013-2.pdf",
+  "tabulka": "cltk_milniky",
+  "sloupec": "zdroj",
+  "id": 13,
+  "velikost_puvodni": 12337336,
+  "velikost_nova": 12337336,
+  "stran": 22
+ },
+ {
+  "stara_url": "https://files.cltk.cz/k2f8xh6h3402/2_13_web.pdf",
+  "nova_cesta": "revue/pdf/revue-2013-2.pdf",
+  "tabulka": "cltk_milniky",
+  "sloupec": "zdroj",
+  "id": 15,
+  "velikost_puvodni": 12337336,
+  "velikost_nova": 12337336,
+  "stran": 22
+ },
+ {
+  "stara_url": "https://files.cltk.cz/zmtia6qkem301/2023_1_web%20%28kopie%29.pdf",
+  "nova_cesta": "revue/pdf/revue-2023-1.pdf",
+  "tabulka": "cltk_milniky",
+  "sloupec": "zdroj",
+  "id": 15,
+  "velikost_puvodni": 14099364,
+  "velikost_nova": 14099364,
+  "stran": 72
+ },
+ {
+  "stara_url": "https://files.cltk.cz/k2f8xh6h3402/2_13_web.pdf",
+  "nova_cesta": "revue/pdf/revue-2013-2.pdf",
+  "tabulka": "cltk_milniky",
+  "sloupec": "zdroj",
+  "id": 18,
+  "velikost_puvodni": 12337336,
+  "velikost_nova": 12337336,
+  "stran": 22
+ },
+ {
+  "stara_url": "https://files.cltk.cz/k2f8xh6h3402/2_13_web.pdf",
+  "nova_cesta": "revue/pdf/revue-2013-2.pdf",
+  "tabulka": "cltk_milniky",
+  "sloupec": "zdroj",
+  "id": 21,
+  "velikost_puvodni": 12337336,
+  "velikost_nova": 12337336,
+  "stran": 22
+ },
+ {
+  "stara_url": "https://files.cltk.cz/zmtia6qkem301/2023_1_web%20%28kopie%29.pdf",
+  "nova_cesta": "revue/pdf/revue-2023-1.pdf",
+  "tabulka": "cltk_milniky",
+  "sloupec": "zdroj",
+  "id": 29,
+  "velikost_puvodni": 14099364,
+  "velikost_nova": 14099364,
+  "stran": 72
+ }
+]
