@@ -3,7 +3,8 @@
    Léto / Zima (mapa.js podle návrhu 3), všechny služby s kotvami pro štítky
    „Služby v areálu“ z úvodu (areal.php#bazen …) a příjezd.
    Obsah: moduly Areál a služby (cltk_sluzby), Stránky (bloky „areal“),
-   Ceníky (kurty léto / zima – ceny a zimní haly na plánu), Dokumenty (provoz)
+   Ceníky (kurty léto / zima – ceny a zimní haly na plánu), Dokumenty (provoz – stránky dokumentů,
+   u kurtů odkaz na pravidla hraní a rezervací)
    a Texty a údaje (adresa, mapa). Natvrdo jsou jen popisky struktury. */
 require __DIR__ . '/inc/rezim.php';
 require_once __DIR__ . '/inc/sablona/komponenty.php';
@@ -105,7 +106,8 @@ $maLeteckyZima = $maLetecky && $fotoZima !== '' && is_file(UPLOAD_DIR . '/' . $f
 $mapaData = mapa_data($cenikLeto, $cenikZima, $sluzby);
 
 $mapaUrl = bezpecny_odkaz(setting('mapa_url'));
-$planPdf = bezpecny_odkaz((string)$bPlan['odkaz']);
+$planPdf = bezpecny_odkaz((string)$bPlan['odkaz']);          // plán k vytištění (dokument.php?d=plan-arealu)
+$pravidlaDok = dokument_pravidla_hrani();                     // pravidla hraní a rezervací – u kurtů
 
 $sablona = [
     'titulek' => html_text((string)$uvod['stitek']) ?: 'Areál a služby',
@@ -201,7 +203,8 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
         <?= blok_text($bKurty) ?>
         <div class="odkazy-radek">
           <?= tlacitko('cenik-kurtu.php', 'Ceník kurtů', 'odkaz') ?>
-          <?= $planPdf !== '' ? tlacitko($planPdf, trim((string)$bPlan['odkaz_text']) ?: 'Plán areálu v PDF', 'odkaz') : '' ?>
+          <?= $pravidlaDok ? tlacitko(dokument_url($pravidlaDok), 'Pravidla hraní a rezervací', 'odkaz') : '' ?>
+          <?= $planPdf !== '' ? tlacitko($planPdf, trim((string)$bPlan['odkaz_text']) ?: 'Plán areálu k vytištění', 'odkaz') : '' ?>
           <?php if ($maPlan): ?><button class="odkaz" type="button" data-dialog-otevrit="d-plan" data-jen-js hidden>Plán areálu jako obrázek <?= sipka() ?></button><?php endif; ?>
         </div>
       </div>

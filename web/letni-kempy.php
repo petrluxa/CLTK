@@ -166,7 +166,7 @@ $sekce = 0;
     </ul>
     <?php endforeach; ?>
     <?php if (trim((string)$l['poznamka_dole']) !== ''): ?><div class="tenis-cenik-pozn"><?= paragraphs((string)$l['poznamka_dole']) ?></div><?php endif; ?>
-    <?php $pdf = bezpecny_odkaz((string)$l['pdf_url']); if ($pdf !== ''): ?><p class="tenis-cenik-pozn"><?= tlacitko($pdf, 'Ceník v PDF', 'odkaz') ?></p><?php endif; ?>
+    <?php $pdf = bezpecny_odkaz((string)$l['pdf_url']); if ($pdf !== ''): ?><p class="tenis-cenik-pozn"><?= tlacitko($pdf, cenik_odkaz_text($pdf), 'odkaz') ?></p><?php endif; ?>
     <?php else: ?>
     <p><?= doplni_klub('ceník kempů doplní klub') ?></p>
     <?php endif; ?>

@@ -69,32 +69,26 @@ if (seed_prazdna('cltk_aktuality')) {
    Data zápasů: BJK, US Open, Memphis a Wimbledon podle Varianty 4; Bad Homburg
    (finále v sobotu 27. 6.), Figueira da Foz („nedělní finále“ = 21. 6.), Dauhá
    („této soboty“ = 14. 2.) a Conseq Prague Open („v neděli“ = 15. 2.) podle
-   textů klubových článků. */
+   textů klubových článků. Bez odkazu – karta je soběstačná a články starého webu
+   cltk.cz po jeho vypnutí zmizí. */
 if (seed_prazdna('cltk_vysledky')) {
     $vysl = [
         ['2026-09-27', 'Šen-čen', 'Billie Jean King Cup · finále · Česko – Ukrajina 2:0', 'Karolína Muchová', 'Anhelina Kalininová',
          'V úvodní dvouhře finále porazila Anhelinu Kalininovou. Česko získalo dvanáctý titul v soutěži.', '6:2 6:3', 'Titul', ''],
         ['2026-08-27', 'New York', 'US Open · finále · smíšená čtyřhra', 'Karolína Muchová a Jakub Menšík', 'Belinda Bencicová, Flavio Cobolli',
-         'Česká dvojice získala senzační grandslamový titul, když ve finále porazila švýcarsko-italský pár Bencicová, Cobolli.', '6:3 1:6 10:6', 'Titul',
-         'https://cltk.cz/cs/clanky/karolina-muchova-ovladla-smisenou-ctyrhru-na-us-open:385/'],
+         'Česká dvojice získala senzační grandslamový titul, když ve finále porazila švýcarsko-italský pár Bencicová, Cobolli.', '6:3 1:6 10:6', 'Titul', ''],
         ['2026-08-02', 'Memphis', 'WTA 250 Memphis · finále', 'Darja Viďmanová', 'Kristina Liutová',
-         'Finále s Kristinou Liutovou a posun do elitní stovky.', '6:1 1:6 3:6', 'Finále',
-         'https://cltk.cz/cs/clanky/darja-vidmanova-ve-finale-turnaje-wta-250-v-memphisu:383/'],
+         'Finále s Kristinou Liutovou a posun do elitní stovky.', '6:1 1:6 3:6', 'Finále', ''],
         ['2026-07-11', 'Londýn', 'Wimbledon · finále · dvouhra žen', 'Karolína Muchová', 'Linda Nosková',
-         'První ryze české finále ženské dvouhry ve Wimbledonu. Dva dny nato kariérní maximum – 6. místo žebříčku WTA.', '2:6 7:5 3:6', 'Finále',
-         'https://cltk.cz/cs/clanky/karolina-muchova-ve-finale-wimbledonu:381/'],
+         'První ryze české finále ženské dvouhry ve Wimbledonu. Dva dny nato kariérní maximum – 6. místo žebříčku WTA.', '2:6 7:5 3:6', 'Finále', ''],
         ['2026-06-27', 'Bad Homburg', 'WTA 500 Bad Homburg · finále · tráva', 'Karolína Muchová', 'Naomi Osaka',
-         'Ve finále vedla 6:1, 1:0, když Naomi Osaka skrečovala. Premiérový titul na trávě a návrat do elitní desítky.', '6:1 1:0 skr.', 'Titul',
-         'https://cltk.cz/cs/clanky/karolina-muchova-ziskala-titul-na-wta-premier-500-v-bad-homburgu:377/'],
+         'Ve finále vedla 6:1, 1:0, když Naomi Osaka skrečovala. Premiérový titul na trávě a návrat do elitní desítky.', '6:1 1:0 skr.', 'Titul', ''],
         ['2026-06-21', 'Figueira da Foz', 'WTA 125 Figueira da Foz · finále', 'Darja Viďmanová', 'Ayla Aksuová',
-         'Ve finále porazila Turkyni Aylu Aksuovou. První titul z okruhu WTA.', '6:2 6:3', 'Titul',
-         'https://cltk.cz/cs/clanky/darja-vidmanova-ma-prvni-titul-z-wta:375/'],
+         'Ve finále porazila Turkyni Aylu Aksuovou. První titul z okruhu WTA.', '6:2 6:3', 'Titul', ''],
         ['2026-02-15', 'Praha', 'ITF W75 Conseq Prague Open · finále · Štvanice', 'Tereza Martincová', 'Sinja Krausová',
-         'Doma na Štvanici prošla z kvalifikace až k titulu, ve finále porazila nejvýše nasazenou Sinju Krausovou.', '6:3 6:4', 'Titul',
-         'https://cltk.cz/cs/clanky/tereza-martincova-ovladla-conseq-prague-open-26:363/'],
+         'Doma na Štvanici prošla z kvalifikace až k titulu, ve finále porazila nejvýše nasazenou Sinju Krausovou.', '6:3 6:4', 'Titul', ''],
         ['2026-02-14', 'Dauhá', 'WTA 1000 Dauhá · finále', 'Karolína Muchová', 'Victoria Mboko',
-         'Ve finále porazila Kanaďanku Victorii Mboko a získala dosud největší titul kariéry.', '6:4 7:5', 'Titul',
-         'https://cltk.cz/cs/clanky/karolina-muchova-vyhrala-tisicovku-v-dauha:364/'],
+         'Ve finále porazila Kanaďanku Victorii Mboko a získala dosud největší titul kariéry.', '6:4 7:5', 'Titul', ''],
     ];
     $radky = [];
     foreach ($vysl as [$datum, $misto, $stitek, $hraci, $souper, $text, $sety, $verdikt, $odkaz]) {

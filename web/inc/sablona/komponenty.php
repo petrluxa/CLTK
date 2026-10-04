@@ -200,7 +200,7 @@ function blok_text(array $b, string $trida = 'prose'): string {
     if ($text === '') {
         return (int)($b['doplni_klub'] ?? 0) === 1 ? '<p class="blok-doplni">' . doplni_klub('obsah doplní klub') . '</p>' : '';
     }
-    return '<div class="' . e($trida) . '">' . $text . '</div>';
+    return '<div class="' . e($trida) . '">' . html_tabulky_obal($text) . '</div>';
 }
 
 /** Fotka bloku v rámečku s popiskem (prázdné, když blok fotku nemá). */
@@ -258,8 +258,14 @@ function cenik_html(?array $c, array $volby = []): string {
     }
     if (trim((string)$l['poznamka_dole']) !== '') $h .= '<div class="cenik__pozn">' . paragraphs((string)$l['poznamka_dole']) . '</div>';
     $pdf = bezpecny_odkaz((string)($l['pdf_url'] ?? ''));
-    if ($pdf !== '') $h .= '<p class="cenik__pozn">' . tlacitko($pdf, 'Ceník v PDF', 'odkaz') . '</p>';
+    if ($pdf !== '') $h .= '<p class="cenik__pozn">' . tlacitko($pdf, cenik_odkaz_text($pdf), 'odkaz') . '</p>';
     return $h . '</div>';
+}
+
+/** Text odkazu pod ceníkem (pole „pdf_url“ ceníku): stránka dokumentu = „Ceník k vytištění“,
+ *  soubor PDF jinde = „Ceník v PDF“. */
+function cenik_odkaz_text(string $href): string {
+    return preg_match('~\.pdf($|[?#])~i', $href) ? 'Ceník v PDF' : 'Ceník k vytištění';
 }
 
 /**
@@ -304,17 +310,28 @@ function pilulky_html(array $polozky, string $trida = 'pilulky'): string {
     return $h === '' ? '' : '<ul class="' . e($trida) . '" role="list">' . $h . '</ul>';
 }
 
-/** Seznam dokumentů ke stažení (dokumenty('klub')). */
-function dokumenty_html(array $docs): string {
+/** Seznam dokumentů (dokumenty('klub')). Dokument klubu vede na svou stránku v klubovém stylu
+ *  (dokument.php?d=…, vpravo šipka); příloha archivu na PDF („PDF · 3 strany · 244 kB“).
+ *  Volby: 'nazev' => callable (vlastní text položky, např. dokument_archiv_nazev), 'trida'. */
+function dokumenty_html(array $docs, array $volby = []): string {
     if (!$docs) return '';
-    $h = '<ul class="dokumenty">';
+    $h = '<ul class="dokumenty' . (isset($volby['trida']) ? ' ' . e((string)$volby['trida']) : '') . '">';
     foreach ($docs as $d) {
         $href = dokument_url($d);
         if ($href === '') continue;
-        $pdf = !empty($d['soubor']) || preg_match('~\.pdf($|\?)~i', $href);
-        $h .= '<li><a class="dokument" href="' . e($href) . '"' . odkaz_attr($href) . '>'
-            . '<span class="dokument__nazev">' . typo((string)$d['nazev']) . '</span>'
-            . '<span class="dokument__typ">' . ($pdf ? 'PDF' : 'odkaz') . (odkaz_je_externi($href) ? '<span class="vh"> (v novém okně)</span>' : '') . '</span>'
+        $ven = odkaz_je_externi($href);
+        $stranka = dokument_ma_text($d);
+        $pdf = !$stranka && (!empty($d['soubor']) || preg_match('~\.pdf($|[?#])~i', $href));
+        $nazev = isset($volby['nazev']) && is_callable($volby['nazev']) ? (string)($volby['nazev'])($d) : (string)$d['nazev'];
+        if ($stranka) {
+            $typ = '<span class="dokument__typ dokument__typ--stranka">' . sipka() . '<span class="vh"> (stránka dokumentu)</span></span>';
+        } else {
+            $info = $pdf ? dokument_soubor_info($d) : '';
+            $typ = '<span class="dokument__typ">' . ($pdf ? 'PDF' : 'Odkaz') . ($info !== '' ? '<small> · ' . str_replace("\u{00A0}", '&nbsp;', e($info)) . '</small>' : '')
+                 . ($ven ? ' ' . sipka('ven') . '<span class="vh"> (v novém okně)</span>' : '') . '</span>';
+        }
+        $h .= '<li><a class="dokument' . ($stranka ? ' dokument--stranka' : '') . '" href="' . e($href) . '"' . odkaz_attr($href) . ($pdf ? ' type="application/pdf"' : '') . '>'
+            . '<span class="dokument__nazev">' . typo($nazev) . '</span>' . $typ
             . (trim((string)($d['popis'] ?? '')) !== '' ? '<span class="dokument__popis">' . typo((string)$d['popis']) . '</span>' : '')
             . '</a></li>';
     }

@@ -176,7 +176,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
         ]);
         if ($fh['nazev'] === '') $chyby['nazev'] = 'Název ceníku nesmí zůstat prázdný.';
         $pdf = obsah_odkaz($fh['pdf_url']);
-        if ($pdf === false) $chyby['pdf_url'] = 'Odkaz na PDF musí začínat https:// (nebo ho nechte prázdný).';
+        if ($pdf === false) $chyby['pdf_url'] = 'Odkaz musí být stránka tohoto webu (dokument.php?d=…), nebo začínat https://. Nebo ho nechte prázdný.';
         if (!$chyby) {
             db_update('cltk_price_lists', $id, [
                 'nazev' => $fh['nazev'], 'podnazev' => $fh['podnazev'], 'obdobi' => $fh['obdobi'],
@@ -320,8 +320,8 @@ echo obsah_assets();
           ]) ?>
       <?= pole_radek([
             pole_text('obdobi', 'Období', $fh['obdobi'], ['maxlength' => 120, 'placeholder' => '28. 9. 2026 – 4. 4. 2027']),
-            pole_text('pdf_url', 'Odkaz na ceník v PDF', $fh['pdf_url'], ['type' => 'url', 'maxlength' => 255, 'placeholder' => 'https://…',
-                'hint' => obsah_chyba($chyby, 'pdf_url', 'Nepovinné – web pod ceník přidá odkaz ke stažení.')]),
+            pole_text('pdf_url', 'Odkaz „Ceník k vytištění“', $fh['pdf_url'], ['maxlength' => 255, 'placeholder' => 'dokument.php?d=cenik-zima-2026-2027',
+                'hint' => obsah_chyba($chyby, 'pdf_url', 'Nepovinné – web pod ceník přidá odkaz. Ceník k tisku je stránka v modulu Dokumenty: sem napište její adresu (dokument.php?d=…). PDF se nenahrává; výjimečně celá adresa https://….')]),
           ]) ?>
       <?= pole_radek([
             pole_textarea('poznamka_nahore', 'Poznámka nad tabulkami', $fh['poznamka_nahore'], ['rows' => 3]),

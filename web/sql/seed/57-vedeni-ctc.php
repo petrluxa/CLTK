@@ -63,7 +63,7 @@ if (seed_prazdna('cltk_ctc')) {
 
     foreach (['Real Club de Tenis Barcelona-1899' => 'Barcelona', 'Villa Primrose' => 'Bordeaux', 'Fitzwilliam LTC' => 'Dublin',
               'H.L.T.C. Leimonias' => 'Haag', 'Carrickmines Croquet & LTC' => 'Dublin'] as $nazev => $misto) {
-        $add(['typ' => 'klub', 'nazev' => $nazev, 'misto' => $misto, 'text' => 'přátelské utkání na Štvanici', 'zdroj' => 'https://cltk.cz/cs/klub/ctc/']);
+        $add(['typ' => 'klub', 'nazev' => $nazev, 'misto' => $misto, 'text' => 'přátelské utkání na Štvanici', 'zdroj' => 'I. ČLTK Praha, stránka „CTC – Centenary Tennis Clubs“']);
     }
 
     $add(['typ' => 'utkani', 'nazev' => 'All England Lawn Tennis Club na Štvanici', 'rok' => '2025', 'text' => '6.–8. 6. 2025', 'zdroj' => 'klubový kalendář; newsletter 5/2025']);

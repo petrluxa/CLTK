@@ -28,6 +28,22 @@ Když se něco v zadání změní, upraví se tady.
    i s přihláškou** (formulář přímo v okně nebo tlačítko, které ho otevře), bez přenačtení stránky.
    Na mobilu se detail zobrazí pod seznamem a stránka k němu sjede.
 
+## 0b. ZMĚNY 2. 10. 2026 – web bez starého webu cltk.cz (mají přednost)
+
+1. Nový web **nesmí odkazovat na starý web cltk.cz ani na files.cltk.cz** (vypne se). E-mailové adresy
+   @cltk.cz zůstávají.
+2. **Dokumenty** (stanovy, pravidla hraní a rezervací, provozní řády, osobní údaje členů, ceníky, plán areálu)
+   jsou **stránky webu v klubovém stylu, ne PDF** – žádné „Stáhnout PDF“. Stránka `dokument.php?d=<slug>`
+   = hlavičkový papír klubu (znak, „I. Český Lawn-Tennis Klub Praha · Založen 1893“, velký nadpis, oddíly
+   zlatými kapitálkami, závěrečné upozornění v rámečku, patička s adresou a recepcí z nastavení), tlačítko
+   **Vytisknout** a tisková podoba na A4 (nahrazuje PDF). Rozcestník `dokumenty.php` (Klub › Dokumenty):
+   Pravidla a provozní řády · Klub a spolek · Ceníky · Archiv klubových turnajů · jubilejní Revue.
+3. **PDF zůstávají** u Revue a newsletterů (časopisy – nahrané na webu) a v archivu klubových turnajů.
+4. **Jubilejní Revue 1893–2023** v kiosku (speciální číslo, `cislo = 0`) a odkaz z historie.php.
+5. **Rozvrhy Tenisové školy** z PDF klubu jako tabulky na `tenisova-skola-rozvrhy.php` (bez jmen dětí),
+   editovatelné v modulu Tenisová škola.
+6. Prameny kroniky a CTC: staré články a stránky jako prostý text s názvem; karta výsledku bez odkazu.
+
 ## 1. Co stavíme
 
 Kompletní nový web klubu **I. Český Lawn-Tennis Klub Praha** (cltk.cz) s administrací.
@@ -241,7 +257,8 @@ Moduly (pořadí v postranním panelu):
     co nemá vlastní modul (Body Solution, Sportovní lékařství, Privátní trenéři, Restaurace, Prague Open,
     úvodní texty stránek …).
 17. **Partneři** (logo → automaticky jednobarevné, odkaz, pořadí)
-18. **Dokumenty** (PDF ke stažení: Stanovy, Pravidla hraní, Osobní údaje členů, ceníky…)
+18. **Dokumenty** (stránky s textem z editoru: Stanovy, Pravidla hraní, Osobní údaje členů, ceníky… –
+    adresa stránky `slug`; PDF jen u příloh archivu klubových turnajů – viz §0b)
 19. **Texty a údaje** (kontakty, adresa, příjezd, sítě, odkazy Restaurace/Prague Open, rezervace,
     režim přípravy + náhledové heslo, e-mail pro přihlášky – výchozí prázdný = jen ukládat, neposílat)
 20. **Účet** (změna hesla)

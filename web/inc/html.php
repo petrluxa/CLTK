@@ -12,9 +12,12 @@
       <em>každý</em>.“, popisky galerie). Všechno se escapuje a zpět se
       vrátí jen <em>, <strong>, <br> a &nbsp;. */
 
-/** Značky, které smí zůstat v textu z editoru (vypisují se holé). */
+/** Značky, které smí zůstat v textu z editoru (vypisují se holé).
+ *  Tabulky (ceník v dokumentu) bez atributů – colspan/rowspan se zahodí. Pro výpis je
+ *  zabalí do posuvného obalu html_tabulky_obal() (blok_text(), dokument.php). */
 const HTML_POVOLENE = ['p', 'br', 'strong', 'b', 'em', 'i', 'u', 's', 'h2', 'h3', 'h4',
-                       'ul', 'ol', 'li', 'blockquote', 'figure', 'figcaption', 'a', 'img', 'hr'];
+                       'ul', 'ol', 'li', 'blockquote', 'figure', 'figcaption', 'a', 'img', 'hr',
+                       'table', 'caption', 'thead', 'tbody', 'tfoot', 'tr', 'th', 'td'];
 
 /** Značky, které se zahodí i s obsahem. */
 const HTML_ZAHODIT = ['script', 'style', 'iframe', 'object', 'embed', 'form', 'input', 'button',
@@ -83,7 +86,7 @@ function html_sestav_uzel(DOMNode $uzel, int $hloubka): string {
     if (!in_array($znacka, HTML_POVOLENE, true)) {
         // nepovolená značka (span, div, font…) zmizí, text uvnitř zůstane;
         // blokové obaly dostanou aspoň mezeru, ať se slova neslepí
-        return in_array($znacka, ['div', 'section', 'article', 'table', 'tr', 'td', 'th', 'h1', 'h5', 'h6', 'pre'], true)
+        return in_array($znacka, ['div', 'section', 'article', 'h1', 'h5', 'h6', 'pre'], true)
             ? ($znacka === 'h1' || $znacka === 'h5' || $znacka === 'h6' ? '<h3>' . $vnitrek . '</h3>' : $vnitrek . ' ')
             : $vnitrek;
     }
@@ -176,9 +179,16 @@ function html_inline(?string $s): string {
     return $t;
 }
 
+/** Tabulky v už vyčištěném HTML (html_ocistit) do posuvného obalu webu – jen pro VÝPIS,
+ *  v databázi zůstávají holé značky. Na mobilu se široká tabulka posouvá do strany. */
+function html_tabulky_obal(string $html): string {
+    if (!str_contains($html, '<table>')) return $html;
+    return str_replace(['<table>', '</table>'], ['<div class="tabulka-box"><table class="tabulka">', '</table></div>'], $html);
+}
+
 /** Krátký text bez značek (pro meta description, title, aria-label). */
 function html_text(?string $html): string {
-    $t = preg_replace('~</(p|h2|h3|h4|li|blockquote|figcaption)>|<br\s*/?>~i', ' ', (string)$html);
+    $t = preg_replace('~</(p|h2|h3|h4|li|blockquote|figcaption|caption|th|td)>|<br\s*/?>~i', ' ', (string)$html);
     $t = html_entity_decode(strip_tags((string)$t), ENT_QUOTES | ENT_HTML5, 'UTF-8');
     return trim((string)preg_replace('/\s+/u', ' ', $t));
 }

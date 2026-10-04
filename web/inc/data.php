@@ -65,10 +65,12 @@ function menu_hlavni(): array {
             ['Letní kempy', 'letni-kempy.php'],
         ]],
     ];
+    // stránky větve mimo podmenu (zvýrazní položku menu): dokumenty klubu patří pod Klub
+    $navic = ['klub.php' => ['dokumenty.php', 'dokument.php']];
     $tady = here();
     $menu = [];
     foreach ($definice as [$nazev, $soubor, $strana, $pod]) {
-        $soubory = array_merge([$soubor], array_column($pod, 1));
+        $soubory = array_merge([$soubor], array_column($pod, 1), $navic[$soubor] ?? []);
         $podmenu = [];
         foreach ($pod as [$pn, $ps]) {
             $podmenu[] = ['nazev' => $pn, 'url' => url($ps), 'soubor' => $ps, 'aktivni' => $tady === $ps];
@@ -570,15 +572,64 @@ function partner_logo_url(array $p): string {
     return $rel !== '' ? upload_url($rel) : '';
 }
 
+/** Kategorie dokumentů (admin Dokumenty, štítek nad nadpisem dokument.php, rozcestník dokumenty.php).
+ *  Dokumenty jsou text na webu; PDF mají jen přílohy archivu turnajů (kategorie DOKUMENTY_ARCHIV). */
+const DOKUMENTY_KATEGORIE = ['klub' => 'Klub a spolek', 'clenstvi' => 'Členství', 'provoz' => 'Pravidla a provozní řády',
+                             'cenik' => 'Ceníky', 'skola' => 'Tenisová škola', 'turnaje' => 'Archiv klubových turnajů'];
+const DOKUMENTY_ARCHIV = 'turnaje';
+
+/** Viditelné dokumenty kategorie; bez kategorie všechny KROMĚ archivu turnajů
+ *  (ten má vlastní výpis dokumenty_archiv() na stránce dokumenty.php). */
 function dokumenty(?string $kategorie = null): array {
     return $kategorie === null
-        ? data_rows('SELECT * FROM cltk_dokumenty WHERE visible = 1 ORDER BY poradi, id')
+        ? data_rows('SELECT * FROM cltk_dokumenty WHERE visible = 1 AND kategorie <> ? ORDER BY poradi, id', [DOKUMENTY_ARCHIV])
         : data_rows('SELECT * FROM cltk_dokumenty WHERE visible = 1 AND kategorie = ? ORDER BY poradi, id', [$kategorie]);
+}
+
+/** Archiv klubových turnajů po turnajích: [['nazev' => 'Babolat Amateur Tour', 'roky' => [2026 => [dok…], …]], …].
+ *  Turnaje podle nejnovějšího ročníku (nejčerstvější nahoře), ročníky od nejnovějšího, uvnitř ročníku pořadí. */
+function dokumenty_archiv(): array {
+    $turnaje = [];
+    foreach (data_rows('SELECT * FROM cltk_dokumenty WHERE visible = 1 AND kategorie = ? ORDER BY rok DESC, poradi, id', [DOKUMENTY_ARCHIV]) as $d) {
+        if (dokument_url($d) === '') continue;
+        $t = trim((string)($d['skupina'] ?? '')) ?: 'Další klubové akce';
+        $turnaje[$t]['nazev'] = $t;
+        $turnaje[$t]['roky'][(int)($d['rok'] ?? 0)][] = $d;
+    }
+    $turnaje = array_values($turnaje);
+    usort($turnaje, static fn(array $a, array $b): int => [max(array_keys($b['roky'])), count($b['roky'])] <=> [max(array_keys($a['roky'])), count($a['roky'])]);
+    return $turnaje;
+}
+
+/** Krátký název přílohy archivu bez turnaje a roku: „Babolat Non Profi Cup 2018 – pozvánka a pravidla soutěže“
+ *  → „Pozvánka a pravidla soutěže“ (když název tvar „turnaj rok – co“ nemá, vrátí ho celý). */
+function dokument_archiv_nazev(array $d): string {
+    $n = trim((string)$d['nazev']);
+    if (preg_match('/^.+?\s(?:19|20)\d\d\s+[–-]\s+(.+)$/u', $n, $m)) {
+        return mb_strtoupper(mb_substr($m[1], 0, 1)) . mb_substr($m[1], 1);
+    }
+    return $n;
+}
+
+/** Pravidla hraní a rezervací kurtů (dokument kategorie provoz s „pravidl“ v názvu) – odkaz u rezervací
+ *  na Ceníku kurtů a v Areálu. Null = žádný viditelný dokument s adresou. */
+function dokument_pravidla_hrani(): ?array {
+    foreach (dokumenty('provoz') as $d) {
+        if (mb_stripos((string)$d['nazev'], 'pravidl') !== false && dokument_url($d) !== '') return $d;
+    }
+    return null;
 }
 
 /** Dokumenty do patičky (sloupec „Dokumenty a sítě“). */
 function dokumenty_paticka(): array {
     return data_rows('SELECT * FROM cltk_dokumenty WHERE visible = 1 AND v_paticce = 1 ORDER BY poradi, id');
+}
+
+/** Dokument podle adresy stránky (dokument.php?d=stanovy). Skrytý dokument jen s $iSkryte
+ *  (náhled pro přihlášeného správce). Neplatná adresa nebo neexistující dokument = null. */
+function dokument_podle_slugu(string $slug, bool $iSkryte = false): ?array {
+    if (!dokument_slug_platny($slug)) return null;
+    return data_row('SELECT * FROM cltk_dokumenty WHERE slug = ?' . ($iSkryte ? '' : ' AND visible = 1') . ' ORDER BY visible DESC, id LIMIT 1', [$slug]);
 }
 
 function triptych(): array {
@@ -613,8 +664,16 @@ function revue_cisla(): array {
     return $r;
 }
 
+/** Newslettery (nejnovější rok první); 'cs_url' a 'en_url' = nahrané PDF, jinak odkaz. */
 function newslettery(): array {
-    return data_rows('SELECT * FROM cltk_newslettery WHERE visible = 1 ORDER BY rok DESC, poradi, id');
+    $r = data_rows('SELECT * FROM cltk_newslettery WHERE visible = 1 ORDER BY rok DESC, poradi, id');
+    foreach ($r as &$n) {
+        foreach (['cs', 'en'] as $j) {
+            $soubor = (string)($n['pdf_' . $j . '_soubor'] ?? '');
+            $n[$j . '_url'] = $soubor !== '' ? upload_url($soubor) : bezpecny_odkaz((string)($n['pdf_' . $j] ?? ''));
+        }
+    }
+    return $r;
 }
 
 /** Vedení: vybor | kancelar | kontakt (null = vše). */
@@ -634,6 +693,35 @@ function ctc(?string $typ = null): array {
 /** Tenisová škola: info | harmonogram | rozvrh | kemp. */
 function skola(string $typ): array {
     return data_rows('SELECT * FROM cltk_skola WHERE visible = 1 AND typ = ? ORDER BY poradi, id', [$typ]);
+}
+
+/** Řádek rozvrhu = obsazený kurt (skupina „obsazeno“), ne trénink školy? */
+function skola_rozvrh_obsazeno(array $r): bool {
+    return mb_strtolower(trim((string)($r['skupina'] ?? ''))) === 'obsazeno';
+}
+
+/**
+ * Rozvrhy Tenisové školy (cltk_skola, typ = rozvrh) po rozvrzích: řádky se stejným názvem (`nazev`)
+ * a platností tvoří jeden rozvrh, uvnitř po kurtech (`misto`) v pořadí prvního výskytu.
+ *   [['nazev' => 'Zima 2026/27', 'od' => '2026-09-29', 'do' => '2027-04-02', 'kurty' => ['Kurt 5 · antuka' => [řádky…]]], …]
+ * Rozvrh, jehož platnost skončila (datum_do < $dnes), se vynechá. Řazení: začátek, pak konec platnosti
+ * (krátký přechodný rozvrh před celou sezónou), rozvrhy bez data na konec.
+ */
+function skola_rozvrhy(?string $dnes = null): array {
+    $dnes = $dnes ?? dnes();
+    $v = [];
+    foreach (skola('rozvrh') as $r) {
+        $od = substr((string)($r['datum_od'] ?? ''), 0, 10);
+        $do = substr((string)($r['datum_do'] ?? ''), 0, 10);
+        if ($do !== '' && $do < $dnes) continue;
+        $klic = trim((string)$r['nazev']) . '|' . $od . '|' . $do;
+        if (!isset($v[$klic])) $v[$klic] = ['nazev' => trim((string)$r['nazev']), 'od' => $od, 'do' => $do, 'kurty' => []];
+        $v[$klic]['kurty'][trim((string)$r['misto'])][] = $r;
+    }
+    $v = array_values($v);
+    usort($v, static fn(array $a, array $b): int => [$a['od'] === '' ? '9999' : $a['od'], $a['do'] === '' ? '9999' : $a['do']]
+                                                <=> [$b['od'] === '' ? '9999' : $b['od'], $b['do'] === '' ? '9999' : $b['do']]);
+    return $v;
 }
 
 /* ---------- Plán areálu (mapa.js) – areal.php i úvodní stránka ---------- */

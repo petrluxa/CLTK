@@ -291,16 +291,20 @@ function delete_upload(?string $rel): void {
  * (hlavička %PDF- i MIME podle obsahu), a uloží pod bezpečným názvem.
  * Vrací ['ok'=>true, 'file'=>'dokumenty/…pdf', 'name'=>'Původní název.pdf'].
  */
-function upload_document(array $file, string $podslozka = 'dokumenty', int $maxMB = 25): array {
+function upload_document(array $file, string $podslozka = 'dokumenty', int $maxMB = UPLOAD_PDF_MAX_MB): array {
     if (!isset($file['tmp_name']) || (int)($file['error'] ?? UPLOAD_ERR_NO_FILE) === UPLOAD_ERR_NO_FILE) {
         return ['ok' => false, 'error' => 'Nebyl vybrán žádný soubor.'];
     }
     $chyba = (int)($file['error'] ?? 0);
+    $zmensit = ' Zmenšete prosím PDF (v Acrobatu „Uložit jako jiný → Zmenšený soubor PDF“, z InDesignu export „pro web“) a nahrajte ho znovu.';
     if ($chyba === UPLOAD_ERR_INI_SIZE || $chyba === UPLOAD_ERR_FORM_SIZE) {
-        return ['ok' => false, 'error' => 'Soubor je příliš velký – server přijme nejvýš ' . ini_get('upload_max_filesize') . 'B.'];
+        return ['ok' => false, 'error' => 'Soubor je příliš velký – server přijme nejvýš ' . velikost_text(upload_limit_bajtu($maxMB)) . '.' . $zmensit];
     }
+    if ($chyba === UPLOAD_ERR_PARTIAL) return ['ok' => false, 'error' => 'Soubor dorazil jen zčásti (přerušené spojení). Zkuste ho nahrát znovu.'];
     if ($chyba !== UPLOAD_ERR_OK) return ['ok' => false, 'error' => 'Nahrání se nezdařilo (kód ' . $chyba . ').'];
-    if (($file['size'] ?? 0) > $maxMB * 1048576) return ['ok' => false, 'error' => 'Soubor je větší než ' . $maxMB . ' MB.'];
+    if (($file['size'] ?? 0) > $maxMB * 1048576) {
+        return ['ok' => false, 'error' => 'Soubor má ' . velikost_text((int)$file['size']) . ', web přijme nejvýš ' . $maxMB . "\u{00A0}MB." . $zmensit];
+    }
     $tmp = (string)$file['tmp_name'];
     if (PHP_SAPI !== 'cli' && !is_uploaded_file($tmp)) return ['ok' => false, 'error' => 'Soubor se nepodařilo přečíst.'];
 
@@ -339,10 +343,81 @@ function upload_document(array $file, string $podslozka = 'dokumenty', int $maxM
     return ['ok' => true, 'file' => $podslozka . '/' . $jmeno, 'name' => mb_substr($puvodni, 0, 160)];
 }
 
-/** Adresa dokumentu: nahrané PDF má přednost před odkazem ven. */
-function dokument_url(array $d): string {
+/** Má dokument vlastní stránku s textem (dokument.php?d=slug)? */
+function dokument_ma_text(array $d): bool {
+    return trim((string)($d['slug'] ?? '')) !== '' && trim((string)($d['text'] ?? '')) !== '';
+}
+
+/** Adresa souboru dokumentu: nahrané PDF (přílohy archivu turnajů), jinak odkaz jinam.
+ *  Prázdné = dokument soubor nemá. */
+function dokument_soubor_url(array $d): string {
     if (!empty($d['soubor'])) return upload_url((string)$d['soubor']);
     return bezpecny_odkaz((string)($d['url'] ?? ''));
+}
+
+/** Adresa dokumentu pro seznamy a patičku: stránka s textem (dokument.php?d=…) – dokumenty klubu
+ *  jsou text na webu, ne PDF; soubor/odkaz jen u příloh archivu, nebo když text chybí. */
+function dokument_url(array $d): string {
+    if (dokument_ma_text($d)) return url('dokument.php?d=' . rawurlencode(trim((string)$d['slug'])));
+    return dokument_soubor_url($d);
+}
+
+/** Počet stran PDF (přílohy archivu): počet objektů /Type /Page, u komprimovaných
+ *  objektových proudů /Count kořene stromu stránek. Nepovede-li se, null (počet se nevypíše). */
+function pdf_pocet_stran(string $cesta): ?int {
+    if (!is_file($cesta) || filesize($cesta) > 64 * 1048576) return null;
+    $obsah = (string)@file_get_contents($cesta);
+    if (!preg_match('~^(?:\xEF\xBB\xBF)?[\x00\s]{0,16}%PDF-\d~', substr($obsah, 0, 1024))) return null;
+    $n = (int)preg_match_all('~/Type\s*/Page(?![a-zA-Z])~', $obsah);
+    if ($n > 0) return $n;
+    if (preg_match_all('~/Count\s+(\d+)~', $obsah, $m)) return max(array_map('intval', $m[1])) ?: null;
+    return null;
+}
+
+/** „3 strany · 244 kB“ pro přílohu archivu (počet stran z DB, velikost z disku). */
+function dokument_soubor_info(array $d): string {
+    $casti = [];
+    $stran = (int)($d['stran'] ?? 0);
+    if ($stran > 0) $casti[] = $stran . "\u{00A0}" . sklonuj($stran, 'strana', 'strany', 'stran');
+    $rel = (string)($d['soubor'] ?? '');
+    if ($rel !== '' && is_file(UPLOAD_DIR . '/' . $rel)) $casti[] = velikost_text((int)filesize(UPLOAD_DIR . '/' . $rel));
+    return implode(' · ', $casti);
+}
+
+/** Adresa dokumentu pro stránku: „stanovy“, „provozni-rad-bazen“ (malá písmena, číslice, pomlčky). */
+function dokument_slug_platny(string $slug): bool {
+    return strlen($slug) <= 120 && (bool)preg_match('/^[a-z0-9]+(?:-[a-z0-9]+)*$/', $slug);
+}
+
+/* ---------------- Velikost nahrávaných souborů ---------------- */
+
+/** Největší PDF, které web přijme (vlastní pojistka; skutečný strop dává server – upload_limit_bajtu()). */
+const UPLOAD_PDF_MAX_MB = 40;
+
+/** Hodnota z php.ini („20M“, „512K“, „1G“) v bajtech; 0 = bez omezení / neznámé. */
+function ini_bajty(string $v): int {
+    $v = trim($v);
+    if ($v === '' || $v === '-1') return 0;
+    $n = (float)$v;
+    $j = strtolower(substr($v, -1));
+    $n *= match ($j) { 'g' => 1073741824, 'm' => 1048576, 'k' => 1024, default => 1 };
+    return (int)$n;
+}
+
+/** Kolik bajtů jde nahrát jedním souborem: menší z upload_max_filesize, post_max_size
+ *  a pojistky webu ($maxMB). */
+function upload_limit_bajtu(int $maxMB = UPLOAD_PDF_MAX_MB): int {
+    $limity = array_filter([ini_bajty((string)ini_get('upload_max_filesize')), ini_bajty((string)ini_get('post_max_size')), $maxMB * 1048576]);
+    return $limity ? (int)min($limity) : $maxMB * 1048576;
+}
+
+/** Velikost souboru česky: 24 MB, 1,5 MB, 640 kB. */
+function velikost_text(int $bajty): string {
+    if ($bajty >= 1048576) {
+        $mb = $bajty / 1048576;
+        return str_replace('.', ',', (string)($mb >= 10 || abs($mb - round($mb)) < 0.05 ? round($mb) : round($mb, 1))) . "\u{00A0}MB";
+    }
+    return max(1, (int)round($bajty / 1024)) . "\u{00A0}kB";
 }
 
 /* ---------------- Loga partnerů ---------------- */

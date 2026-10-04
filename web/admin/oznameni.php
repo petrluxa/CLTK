@@ -42,7 +42,7 @@ function oz_odkaz(string $vstup): array {
     if (preg_match('~^https?://~i', $n)) {
         $host = (string)parse_url($n, PHP_URL_HOST);
         if (preg_match('~\s~u', $n) || !preg_match('/^[\p{L}\p{N}.\-]+\.\p{L}{2,}$/u', $host)) {
-            return [$u, 'Odkaz nevypadá jako adresa webu. Zapište ho celý, např. https://www.cltk.cz/…, nebo jako stránku webu (restaurace.php).'];
+            return [$u, 'Odkaz nevypadá jako adresa webu. Zapište ho celý (zkopírujte z prohlížeče https://…), nebo jako stránku webu (restaurace.php).'];
         }
     }
     if (bezpecny_odkaz($n) === '') return [$u, 'Tento odkaz nejde použít.'];

@@ -1,8 +1,9 @@
 <?php
 /* Revue a newslettery – čísla klubového časopisu I.ČLTK Revue (cltk_revue: obálka,
-   titulky, obsah čísla, PDF) a klubové newslettery (cltk_newslettery: odkazy na PDF
-   česky a anglicky). Čísla Revue se na webu řadí samy podle roku a čísla, newslettery
-   podle roku a uvnitř roku šipkami.
+   titulky, obsah čísla, PDF) a klubové newslettery (cltk_newslettery: PDF česky
+   a anglicky). PDF se nahrávají na web (uploads/revue/pdf/, uploads/newslettery/);
+   odkaz ven jen tehdy, když PDF leží jinde. Čísla Revue se na webu řadí samy podle
+   roku a čísla, newslettery podle roku a uvnitř roku šipkami.
    Adresy: revue.php?cast=revue|newslettery, …&nova=1, revue.php?cast=revue&id=5. */
 require __DIR__ . '/inc/layout.php';
 $user = require_login();
@@ -146,6 +147,7 @@ if ($id && !$z) redirect('revue.php?cast=' . $cast, 'Číslo nebylo nalezeno –
 $rezim = $z ? 'uprava' : (!empty($_GET['nova']) ? 'nova' : 'seznam');
 $seznamUrl = 'revue.php?cast=' . $cast;
 const REVUE_SOUBORY = [['cltk_revue', 'obalka'], ['cltk_revue', 'pdf_soubor']];
+const NEWSLETTER_SOUBORY = [['cltk_newslettery', 'pdf_cs_soubor'], ['cltk_newslettery', 'pdf_en_soubor']];
 
 if ($cast === 'revue') {
     $f = [
@@ -161,6 +163,7 @@ if ($cast === 'revue') {
     $f = [
         'rok' => (string)($z['rok'] ?? date('Y')), 'cislo' => (string)($z['cislo'] ?? ''), 'oznaceni' => (string)($z['oznaceni'] ?? ''),
         'nazev' => (string)($z['nazev'] ?? ''), 'pdf_cs' => (string)($z['pdf_cs'] ?? ''), 'pdf_en' => (string)($z['pdf_en'] ?? ''),
+        'pdf_cs_soubor' => (string)($z['pdf_cs_soubor'] ?? ''), 'pdf_en_soubor' => (string)($z['pdf_en_soubor'] ?? ''),
         'visible' => (int)($z['visible'] ?? 1),
     ];
 }
@@ -193,7 +196,8 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
             'visible' => vstup_bool('visible'),
         ];
         if (!preg_match('/^(19|20)\d\d$/', $f['rok'])) $chyby['rok'] = 'Rok zapište čtyřmi číslicemi (např. 2026).';
-        if (!preg_match('/^[1-9]$/', $f['cislo'])) $chyby['cislo'] = 'Číslo v roce je 1 nebo 2 (Revue vychází dvakrát ročně).';
+        if (!preg_match('/^[0-9]$/', $f['cislo'])) $chyby['cislo'] = 'Číslo v roce je 1 nebo 2 (Revue vychází dvakrát ročně), 0 = speciální číslo.';
+        if ($f['cislo'] === '0' && $f['oznaceni'] === '') $chyby['oznaceni'] = 'U speciálního čísla vyplňte označení (např. „1893–2023“).';
         if ($f['stran'] !== '' && !preg_match('/^\d{1,4}$/', $f['stran'])) $chyby['stran'] = 'Počet stran zapište číslem.';
         if (!$chyby && row('SELECT id FROM cltk_revue WHERE rok = ? AND cislo = ? AND id <> ?', [(int)$f['rok'], (int)$f['cislo'], $id])) {
             $chyby['cislo'] = 'Číslo ' . $f['cislo'] . '/' . $f['rok'] . ' už v seznamu je.';
@@ -235,9 +239,11 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
         }
         $rezim = $z ? 'uprava' : 'nova';
     } elseif ($akce === 'ulozit') {
+        $bylSoubor = obsah_byl_soubor();
         $f = [
             'rok' => vstup('rok', 6), 'cislo' => obsah_pole('cislo', 10), 'oznaceni' => obsah_pole('oznaceni', 40),
             'nazev' => obsah_pole('nazev', 160), 'pdf_cs' => vstup('pdf_cs', 255), 'pdf_en' => vstup('pdf_en', 255),
+            'pdf_cs_soubor' => $f['pdf_cs_soubor'], 'pdf_en_soubor' => $f['pdf_en_soubor'],
             'visible' => vstup_bool('visible'),
         ];
         if (!preg_match('/^(19|20)\d\d$/', $f['rok'])) $chyby['rok'] = 'Rok zapište čtyřmi číslicemi (např. 2026).';
@@ -246,11 +252,26 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
         $en = obsah_odkaz($f['pdf_en']);
         if ($cs === false) $chyby['pdf_cs'] = 'Odkaz musí začínat https://.';
         if ($en === false) $chyby['pdf_en'] = 'Odkaz musí začínat https://.';
-        if (!$chyby && $cs === '' && $en === '') $chyby['pdf_cs'] = 'Vyplňte aspoň jeden odkaz na PDF (česky nebo anglicky).';
         if ($f['oznaceni'] === '' && !isset($chyby['rok'])) $f['oznaceni'] = $f['cislo'] . '/' . $f['rok'];
+        $pdfCs = $pdfEn = null;
+        if (!$chyby) {
+            $pdfCs = admin_pdf('pdf_cs_soubor', $z['pdf_cs_soubor'] ?? '', '', 'newslettery');
+            if ($pdfCs['chyba'] !== '') $chyby['pdf_cs_soubor'] = $pdfCs['chyba'];
+        }
+        if (!$chyby) {
+            $pdfEn = admin_pdf('pdf_en_soubor', $z['pdf_en_soubor'] ?? '', '', 'newslettery');
+            if ($pdfEn['chyba'] !== '') {
+                $chyby['pdf_en_soubor'] = $pdfEn['chyba'];
+                if ($pdfCs['soubor'] !== ($z['pdf_cs_soubor'] ?? '')) delete_upload($pdfCs['soubor']);   // nové české PDF by zůstalo viset
+            }
+        }
+        if (!$chyby && $pdfCs['soubor'] === '' && $pdfEn['soubor'] === '' && $cs === '' && $en === '') {
+            $chyby['pdf_cs_soubor'] = 'Nahrajte aspoň jedno PDF (česky nebo anglicky), případně vyplňte odkaz.';
+        }
         if (!$chyby) {
             $data = ['rok' => (int)$f['rok'], 'cislo' => $f['cislo'], 'oznaceni' => $f['oznaceni'], 'nazev' => $f['nazev'],
-                     'pdf_cs' => (string)$cs, 'pdf_en' => (string)$en, 'visible' => $f['visible']];
+                     'pdf_cs' => (string)$cs, 'pdf_en' => (string)$en, 'pdf_cs_soubor' => $pdfCs['soubor'], 'pdf_en_soubor' => $pdfEn['soubor'],
+                     'visible' => $f['visible']];
             if ($z) {
                 if ((int)$z['rok'] !== (int)$f['rok']) $data['poradi'] = admin_dalsi_poradi('cltk_newslettery', 'rok', (int)$f['rok']);
                 db_update('cltk_newslettery', $id, $data);
@@ -260,6 +281,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
                 $data['poradi'] = 0;
                 $id = db_insert('cltk_newslettery', $data);
             }
+            obsah_smazat_nepouzite(array_merge($pdfCs['smazat'], $pdfEn['smazat']), NEWSLETTER_SOUBORY);   // až po zápisu
             redirect($seznamUrl . '#n' . $id, 'Newsletter ' . $f['oznaceni'] . ($z ? ' je uložený.' : ' je přidaný.'));
         }
         $rezim = $z ? 'uprava' : 'nova';
@@ -281,6 +303,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
         if ($akce === 'smazat') {
             q('DELETE FROM ' . $tabulka . ' WHERE id = ?', [$rid]);
             if ($cast === 'revue') obsah_smazat_nepouzite([(string)$x['obalka'], (string)$x['pdf_soubor']], REVUE_SOUBORY);
+            else obsah_smazat_nepouzite([(string)($x['pdf_cs_soubor'] ?? ''), (string)($x['pdf_en_soubor'] ?? '')], NEWSLETTER_SOUBORY);
             redirect($seznamUrl, $popis . ' ' . $smazany . '.');
         }
         redirect($seznamUrl, 'Neznámý požadavek.', 'err');
@@ -328,7 +351,7 @@ if ($rezim === 'seznam'):
           <td data-label="Na obálce" class="td-mala"><?= $tit ? e(implode(' · ', array_slice(array_map('strval', $tit), 0, 2))) : '–' ?>
             <br><?= cislo(count(json_pole((string)$r['obsah']))) ?> položek obsahu</td>
           <td data-label="PDF" class="td-mala">
-            <?php if ($r['pdf_soubor'] !== ''): ?><?= badge('nahrané PDF', 'navy') ?>
+            <?php if ($r['pdf_soubor'] !== ''): ?><?= is_file(UPLOAD_DIR . '/' . $r['pdf_soubor']) ? '<a href="' . e(upload_url($r['pdf_soubor'])) . '" target="_blank" rel="noopener">' . badge('nahrané PDF', 'navy') . '</a>' : badge('soubor chybí', 'err') ?>
             <?php elseif ($r['pdf_url'] !== ''): ?><a href="<?= e(bezpecny_odkaz($r['pdf_url'])) ?>" target="_blank" rel="noopener">odkaz ↗</a>
             <?php else: ?><?= badge('chybí', 'warn') ?><?php endif; ?>
             <?= $r['pdf_mb'] !== '' ? e($r['pdf_mb']) . ' MB' : '' ?>
@@ -372,8 +395,11 @@ if ($rezim === 'seznam'):
         <tr id="n<?= $rid ?>"<?= (int)$r['visible'] ? '' : ' class="je-skryte"' ?>>
           <td data-label="Vydání" class="td-nazev"><b><a href="revue.php?cast=newslettery&amp;id=<?= $rid ?>"><?= e($r['oznaceni']) ?></a></b><?php if ($r['nazev'] !== ''): ?><small><?= e($r['nazev']) ?></small><?php endif; ?></td>
           <td data-label="PDF" class="td-mala">
-            <?= $r['pdf_cs'] !== '' ? '<a href="' . e(bezpecny_odkaz($r['pdf_cs'])) . '" target="_blank" rel="noopener">česky ↗</a>' : badge('CS chybí', 'off') ?>
-            · <?= $r['pdf_en'] !== '' ? '<a href="' . e(bezpecny_odkaz($r['pdf_en'])) . '" target="_blank" rel="noopener">anglicky ↗</a>' : badge('EN chybí', 'off') ?>
+            <?php foreach (['cs' => ['česky', 'CS chybí'], 'en' => ['anglicky', 'EN chybí']] as $j => [$jazyk, $bez]):
+                $soubor = (string)($r['pdf_' . $j . '_soubor'] ?? '');
+                $u = $soubor !== '' ? upload_url($soubor) : bezpecny_odkaz((string)$r['pdf_' . $j]); ?>
+              <?= $j === 'en' ? ' · ' : '' ?><?= $u !== '' ? '<a href="' . e($u) . '" target="_blank" rel="noopener">' . $jazyk . ($soubor !== '' ? '' : ' (odkaz)') . ' ↗</a>' : badge($bez, 'off') ?>
+            <?php endforeach; ?>
           </td>
           <td data-label="Stav"><?= stav_badge($r['visible']) ?></td>
           <td data-label="Akce" class="right"><div class="akce-radku">
@@ -405,8 +431,8 @@ if ($rezim === 'seznam'):
       <input type="hidden" name="cast" value="revue">
       <?= pole_radek([
             pole_text('rok', 'Rok', $f['rok'], ['type' => 'number', 'required' => true, 'attrs' => ['min' => 1990, 'max' => 2100, 'inputmode' => 'numeric'], 'hint' => obsah_chyba($chyby, 'rok')]),
-            pole_text('cislo', 'Číslo v roce', $f['cislo'], ['type' => 'number', 'required' => true, 'attrs' => ['min' => 1, 'max' => 9, 'inputmode' => 'numeric'], 'hint' => obsah_chyba($chyby, 'cislo', '1 = jarní, 2 = podzimní číslo.')]),
-            pole_text('oznaceni', 'Označení', $f['oznaceni'], ['maxlength' => 20, 'placeholder' => '01/2026', 'hint' => 'Prázdné = složí se z čísla a roku.']),
+            pole_text('cislo', 'Číslo v roce', $f['cislo'], ['type' => 'number', 'required' => true, 'attrs' => ['min' => 0, 'max' => 9, 'inputmode' => 'numeric'], 'hint' => obsah_chyba($chyby, 'cislo', '1 = jarní, 2 = podzimní číslo, 0 = speciální číslo (jubilejní Revue).')]),
+            pole_text('oznaceni', 'Označení', $f['oznaceni'], ['maxlength' => 20, 'placeholder' => '01/2026', 'hint' => obsah_chyba($chyby, 'oznaceni', 'Prázdné = složí se z čísla a roku (u speciálního čísla vyplňte, např. „1893–2023“).')]),
           ], 3) ?>
       <?= pole_obrazek('obalka', 'Obálka', $f['obalka'], ['nahled' => 'ctverec', 'hint' => obsah_chyba($chyby, 'obalka', 'Obrázek titulní strany (JPG, PNG). Zmenší se sám.' . ($f['obalka'] !== '' ? ' Nový obrázek nahradí stávající.' : ''))]) ?>
       <?= pole_text('obalka_popis', 'Kdo je na obálce', $f['obalka_popis'], ['maxlength' => 255, 'placeholder' => 'Karolína Muchová s trofejí… (foto …)']) ?>
@@ -441,8 +467,8 @@ if ($rezim === 'seznam'):
         <legend>PDF čísla</legend>
         <div class="form-mrizka">
           <?= pole_pdf('pdf_soubor', 'Nahrát PDF', $f['pdf_soubor'], basename($f['pdf_soubor']), ['sirka' => 'cela', 'hint' => obsah_chyba($chyby, 'pdf_soubor',
-                'Nahrané PDF má přednost před odkazem. Jen PDF, nejvýš ' . e(ini_get('upload_max_filesize')) . 'B – větší soubor dejte na files.cltk.cz a vložte odkaz.')]) ?>
-          <?= pole_text('pdf_url', 'Nebo odkaz na PDF', $f['pdf_url'], ['type' => 'url', 'maxlength' => 255, 'placeholder' => 'https://files.cltk.cz/…', 'hint' => obsah_chyba($chyby, 'pdf_url')]) ?>
+                'Jen PDF, nejvýš ' . e(velikost_text(upload_limit_bajtu())) . '. Nahrané PDF má přednost před odkazem. Větší soubor zmenšete (export „pro web“, obrázky 150 dpi) a nahrajte znovu.')]) ?>
+          <?= pole_text('pdf_url', 'Nebo odkaz na PDF jinde', $f['pdf_url'], ['type' => 'url', 'maxlength' => 255, 'placeholder' => 'https://…', 'hint' => obsah_chyba($chyby, 'pdf_url', 'Jen když PDF leží na jiném webu.')]) ?>
           <?= pole_text('pdf_mb', 'Velikost (MB)', $f['pdf_mb'], ['maxlength' => 10, 'placeholder' => '13,3', 'hint' => 'U nahraného PDF se doplní sama.']) ?>
         </div>
       </fieldset>
@@ -461,10 +487,10 @@ if ($rezim === 'seznam'):
 <?php endif; ?>
 
 <?php else: /* ---------- formulář newsletteru ---------- */ ?>
-<?= obsah_chyby_box($chyby) ?>
+<?= obsah_chyby_box($chyby, $bylSoubor) ?>
 <section class="panel">
   <div class="panel-body">
-    <form method="post" class="form" data-hlidat-zmeny>
+    <form method="post" class="form" enctype="multipart/form-data" data-hlidat-zmeny>
       <?= csrf_field() ?>
       <input type="hidden" name="action" value="ulozit">
       <input type="hidden" name="cast" value="newslettery">
@@ -474,8 +500,22 @@ if ($rezim === 'seznam'):
             pole_text('oznaceni', 'Označení', $f['oznaceni'], ['maxlength' => 40, 'placeholder' => '4/2026', 'hint' => 'Prázdné = „číslo/rok“.']),
           ], 3) ?>
       <?= pole_text('nazev', 'Název (nepovinný)', $f['nazev'], ['maxlength' => 160, 'placeholder' => 'Speciální vydání ke 130 letům klubu']) ?>
-      <?= pole_text('pdf_cs', 'PDF česky – odkaz', $f['pdf_cs'], ['type' => 'url', 'maxlength' => 255, 'placeholder' => 'https://files.cltk.cz/…', 'hint' => obsah_chyba($chyby, 'pdf_cs')]) ?>
-      <?= pole_text('pdf_en', 'PDF anglicky – odkaz', $f['pdf_en'], ['type' => 'url', 'maxlength' => 255, 'placeholder' => 'https://files.cltk.cz/…', 'hint' => obsah_chyba($chyby, 'pdf_en')]) ?>
+      <fieldset>
+        <legend>PDF česky</legend>
+        <div class="form-mrizka">
+          <?= pole_pdf('pdf_cs_soubor', 'Nahrát PDF česky', $f['pdf_cs_soubor'], basename($f['pdf_cs_soubor']), ['sirka' => 'cela',
+                'hint' => obsah_chyba($chyby, 'pdf_cs_soubor', 'Jen PDF, nejvýš ' . e(velikost_text(upload_limit_bajtu())) . '. Nahrané PDF má přednost před odkazem.')]) ?>
+          <?= pole_text('pdf_cs', 'Nebo odkaz na PDF jinde', $f['pdf_cs'], ['type' => 'url', 'maxlength' => 255, 'placeholder' => 'https://…', 'hint' => obsah_chyba($chyby, 'pdf_cs', 'Jen když PDF leží na jiném webu.')]) ?>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>PDF anglicky</legend>
+        <div class="form-mrizka">
+          <?= pole_pdf('pdf_en_soubor', 'Nahrát PDF anglicky', $f['pdf_en_soubor'], basename($f['pdf_en_soubor']), ['sirka' => 'cela',
+                'hint' => obsah_chyba($chyby, 'pdf_en_soubor', 'Nepovinné – anglická verze, když vyšla.')]) ?>
+          <?= pole_text('pdf_en', 'Nebo odkaz na PDF jinde', $f['pdf_en'], ['type' => 'url', 'maxlength' => 255, 'placeholder' => 'https://…', 'hint' => obsah_chyba($chyby, 'pdf_en')]) ?>
+        </div>
+      </fieldset>
       <?= pole_check('visible', 'Zobrazit na webu', (bool)$f['visible']) ?>
       <?= tlacitka_formulare($z ? 'Uložit změny' : 'Přidat newsletter', $seznamUrl, 'Zpět bez uložení') ?>
     </form>

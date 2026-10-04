@@ -695,7 +695,7 @@ $clenskyList = static function (string $jmeno, string $druh, string $typ, string
       $obsahCeniku .= '</div>';
       if ($nahore !== '' || $dole !== '') $obsahCeniku .= '<div class="cenik-clenstvi__pozn drobne">' . paragraphs(trim($nahore . "\n\n" . $dole)) . '</div>';
       $pdf = bezpecny_odkaz((string)$cenik['list']['pdf_url']);
-      if ($pdf !== '') $obsahCeniku .= '<p class="cenik-clenstvi__pozn">' . tlacitko($pdf, 'Ceník v PDF', 'odkaz') . '</p>';
+      if ($pdf !== '') $obsahCeniku .= '<p class="cenik-clenstvi__pozn">' . tlacitko($pdf, cenik_odkaz_text($pdf), 'odkaz') . '</p>';
       ?>
       <?php if ($model['lze_konfigurovat']): ?>
       <details class="rozbal cenik-clenstvi" id="cenik-clenstvi">

@@ -47,6 +47,41 @@
     });
   });
 
+  /* ---------- příliš velké PDF: upozornit hned po výběru ----------
+     pole_pdf() dává data-max-bajtu (menší z limitů serveru upload_max_filesize / post_max_size
+     a pojistky webu). Větší soubor by se nahrával dlouho a server by ho stejně odmítl. */
+  document.querySelectorAll('input[type="file"][data-max-bajtu]').forEach(function (vstup) {
+    var max = parseInt(vstup.getAttribute('data-max-bajtu'), 10) || 0;
+    var hlaska = document.createElement('div');
+    hlaska.className = 'hint hint--varovani';
+    hlaska.setAttribute('role', 'alert');
+    hlaska.hidden = true;
+    vstup.insertAdjacentElement('afterend', hlaska);
+    vstup.addEventListener('change', function () {
+      var f = vstup.files && vstup.files[0];
+      hlaska.hidden = true;
+      if (!f || !max || f.size <= max) return;
+      var mb = (f.size / 1048576).toFixed(1).replace('.', ',');
+      hlaska.textContent = 'Soubor „' + f.name + '“ má ' + mb + ' MB, server přijme nejvýš ' + (vstup.getAttribute('data-max-text') || '') +
+        '. Zmenšete prosím PDF (v Acrobatu „Uložit jako jiný → Zmenšený soubor PDF“, z InDesignu export „pro web“) a vyberte ho znovu.';
+      hlaska.hidden = false;
+      vstup.value = '';
+    });
+  });
+
+  /* ---------- odesílání formuláře se souborem: tlačítko ukáže, že se nahrává ---------- */
+  document.addEventListener('submit', function (e) {
+    var f = e.target;
+    if (e.defaultPrevented || !f || !f.querySelector) return;
+    var maSoubor = Array.prototype.some.call(f.querySelectorAll('input[type="file"]'), function (v) { return v.files && v.files.length; });
+    var tl = f.querySelector('.form-actions button[type="submit"]');
+    if (!maSoubor || !tl) return;
+    var puvodni = tl.textContent;
+    window.setTimeout(function () { tl.disabled = true; tl.textContent = 'Nahrávám soubor…'; }, 0);
+    // návrat zpět v prohlížeči (stránka z mezipaměti) – tlačítko zase povolit
+    window.addEventListener('pageshow', function () { tl.disabled = false; tl.textContent = puvodni; }, { once: true });
+  });
+
   /* ---------- ohnisko fotky: klepnutí do náhledu nastaví „x% y%“ ---------- */
   document.querySelectorAll('[data-fokus]').forEach(function (obal) {
     var obraz = obal.querySelector('.fokus__obraz');

@@ -65,6 +65,10 @@ function hist_pramen_cast(string $c, array &$jmena = []): string {
     if (preg_match('~^(.+?)\s*\((https?://[^\s()]+(?:\([^\s()]*\)[^\s()]*)*)\)\s*(.*)$~u', $c, $m)) {
         return $odkaz($m[2], trim($m[1])) . ($m[3] !== '' ? ' ' . typo($m[3]) : '');
     }
+    // „I. ČLTK Revue 02/2013 – 120 let (uploads/revue/pdf/revue-2013-2.pdf) s. 8“ → odkaz na PDF na tomto webu
+    if (preg_match('~^(.+?)\s*\((uploads/[a-z0-9][a-z0-9\-_/]*\.pdf)\)\s*(.*)$~iu', $c, $m) && ($u = bezpecny_odkaz($m[2])) !== '') {
+        return '<a href="' . e($u) . '">' . typo(trim($m[1])) . '<span class="vh"> (PDF)</span></a>' . ($m[3] !== '' ? ' ' . typo($m[3]) : '');
+    }
     // holá adresa → odkaz s čitelným názvem webu (Wikipedie i s názvem článku)
     if (preg_match('~^(.*?)(https?://\S+)\s*(.*)$~u', $c, $m)) {
         $u = rtrim($m[2], '.,;');
@@ -121,6 +125,9 @@ $bOsobnosti = klub_blok('historie', 'osobnosti');
 
 $triptych  = triptych();
 $linka     = hist_polozky((string)$bLinka['text']);
+/* jubilejní Revue 1893–2023 (speciální číslo = cislo 0) – „kompletní historie klubu“ u kroniky */
+$jubilejni = null;
+foreach (revue_cisla() as $c) { if ((int)$c['cislo'] === 0 && (string)$c['pdf'] !== '') { $jubilejni = $c; break; } }
 $milniky   = milniky();
 $osobnosti = osobnosti();
 
@@ -167,6 +174,7 @@ foreach ($deska['grandslam']['hlavni'] ?? [] as $r) {
 $kotvy = [];
 if ($triptych) $kotvy[] = [trim((string)$bTriptych['stitek']) ?: 'Tři wimbledonské trávy', '#triptych'];
 if ($epochy) $kotvy[] = [trim((string)$bKronika['stitek']) ?: 'Kronika', '#kronika'];
+if ($epochy && $jubilejni) $kotvy[] = ['Jubilejní Revue', '#jubilejni-revue'];
 if ($deska) $kotvy[] = ['Zlatá deska', '#sin-slavy'];
 if ($osobnosti) $kotvy[] = [trim((string)$bOsobnosti['stitek']) ?: 'Osobnosti klubu', '#osobnosti'];
 
@@ -273,6 +281,20 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
   <section class="sekce kronika-sekce" id="kronika" aria-labelledby="kronika-nadpis">
     <div class="wrap">
       <?= hlava_sekce($bKronika, ['cislo' => ++$cislo, 'id' => 'kronika-nadpis', 'radek' => true, 'nadpis' => 'Kronika']) ?>
+      <?php if ($jubilejni): $jPdf = (string)$jubilejni['pdf']; $jObalka = obr((string)$jubilejni['obalka'], ''); ?>
+      <aside class="jubilejni-revue" id="jubilejni-revue" aria-labelledby="jubilejni-revue-nadpis">
+        <?php if ($jObalka !== ''): ?><a class="jubilejni-revue__obalka" href="<?= e($jPdf) ?>"<?= odkaz_attr($jPdf) ?> tabindex="-1" aria-hidden="true"><?= $jObalka ?></a><?php endif; ?>
+        <div class="jubilejni-revue__text">
+          <p class="stitek">I.ČLTK Revue · speciální číslo</p>
+          <p class="jubilejni-revue__nadpis" id="jubilejni-revue-nadpis">Kompletní historie klubu v&nbsp;jubilejní Revue <span class="nowrap"><?= e((string)$jubilejni['oznaceni']) ?></span></p>
+          <p class="drobne"><?= (int)$jubilejni['stran'] > 0 ? (int)$jubilejni['stran'] . '&nbsp;stran · ' : '' ?>vydáno ke 130. výročí klubu<?= trim((string)$jubilejni['naklad']) !== '' ? ' · náklad ' . typo((string)$jubilejni['naklad']) : '' ?></p>
+          <p class="jubilejni-revue__akce">
+            <a class="odkaz" href="<?= e($jPdf) ?>"<?= odkaz_attr($jPdf) ?> type="application/pdf">Číst PDF<?= trim((string)$jubilejni['pdf_mb']) !== '' ? ' <span class="cislice">(' . e(str_replace('.', ',', (string)$jubilejni['pdf_mb'])) . '&nbsp;MB)</span>' : '' ?> <?= sipka() ?><span class="vh"> – jubilejní I.ČLTK Revue <?= e((string)$jubilejni['oznaceni']) ?></span></a>
+            <?= tlacitko('revue.php#kiosek', 'Všechna čísla Revue', 'odkaz') ?>
+          </p>
+        </div>
+      </aside>
+      <?php endif; ?>
       <div class="kronika" data-kronika>
         <aside class="kronika__bok" aria-label="Kapitoly kroniky">
           <div class="kronika__razitko" aria-hidden="true">

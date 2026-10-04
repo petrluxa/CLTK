@@ -1,0 +1,274 @@
+/* ==========================================================================
+   Stránka dokumentu (dokument.php?d=…) – stanovy, pravidla, provozní řády,
+   osobní údaje členů, ceník, plán areálu. Klubový hlavičkový papír ve stylu webu:
+   list papíru se znakem a jménem klubu, velký nadpis, oddíly zlatými kapitálkami
+   s vlasovou linkou, číslované body s visícím číslem, závěrečné upozornění
+   v rámečku, patička s adresou. Tisk (Vytisknout) = list na A4 – nahrazuje PDF.
+   Třídy sazby doplňuje dokument_sazba() v dokument.php (v databázi holé HTML).
+   Pozor: .dokument je položka seznamu dokumentů (styl.css) – tady .dokument-list.
+   ========================================================================== */
+
+/* ── Stůl a list ─────────────────────────────────────────────────────────── */
+.dokument-stul {
+  padding-block: clamp(1.25rem, .8rem + 1.8vw, 2.6rem) clamp(3rem, 2rem + 4vw, 6rem);
+  background: var(--zrno), var(--paper-2);
+  border-bottom: 1px solid var(--line);
+}
+.dokument-stul__wrap { max-width: calc(46rem + 2 * var(--okraj)); }
+.dokument-stul__wrap--siroky { max-width: calc(54rem + 2 * var(--okraj)); }
+
+.dokument-lista { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: .6rem 2rem; margin-bottom: clamp(1rem, .7rem + 1vw, 1.6rem); }
+.dokument-lista .drobky { margin: 0; }
+.dokument-lista__akce { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem 1.8rem; }
+.dokument-lista__akce .odkaz { min-height: 44px; padding-top: .55em; }
+/* tiskárna kreslená linkou */
+.dokument-lista__ikona { position: relative; display: inline-block; width: 1.05em; height: .78em; border: 1px solid currentColor; border-radius: 1px; }
+.dokument-lista__ikona::before { content: ''; position: absolute; left: 18%; right: 18%; top: -38%; height: 38%; border: 1px solid currentColor; border-bottom: 0; }
+.dokument-lista__ikona::after { content: ''; position: absolute; left: 18%; right: 18%; bottom: -30%; height: 55%; border: 1px solid currentColor; background: var(--paper-2); }
+.dokument__skryty { margin: 0 0 1rem; font-size: var(--t-male); color: var(--ink-2); }
+.dokument__skryty .doplni { margin-right: .6rem; }
+
+.dokument-list {
+  position: relative;
+  padding: clamp(1.7rem, .9rem + 3.6vw, 4.4rem) clamp(1.2rem, .4rem + 3.8vw, 4.6rem) clamp(1.6rem, 1rem + 2.6vw, 3.4rem);
+  background: var(--zrno), linear-gradient(180deg, #fdfcf9, var(--paper) 55%, #f9f6ef);
+  border: 1px solid var(--line);
+  box-shadow: var(--stin-velky);
+  color: var(--ink);
+}
+.dokument-list::before { content: ''; position: absolute; inset: clamp(6px, .5vw, 10px); border: 1px solid var(--line-gold); pointer-events: none; }
+
+/* ── Záhlaví listu: znak, jméno klubu, nadpis ─────────────────────────────── */
+.dokument-list__hlava { position: relative; text-align: center; }
+.dokument-list__znak { width: clamp(46px, 40px + 1.2vw, 58px); height: auto; margin: 0 auto .95rem; }
+.dokument-list__klub { margin: 0; display: flex; flex-direction: column; align-items: center; gap: .45rem; }
+.dokument-list__klub .sc { font-size: clamp(.98rem, .9rem + .4vw, 1.2rem); letter-spacing: .13em; color: var(--navy); line-height: 1.25; }
+.dokument-list__zalozen { font: 500 .6rem/1 var(--sans); letter-spacing: .34em; text-transform: uppercase; color: var(--gold-text); }
+.dokument-list__ozdoba { margin: 1.35rem auto 1.55rem; max-width: 10rem; }
+.dokument-list__kategorie { margin-bottom: .85rem; }
+.dokument-list__nadpis {
+  margin: 0 auto; max-width: 34ch; padding-top: .08em;
+  font: 300 clamp(2rem, 1.35rem + 2.7vw, 3.3rem)/1.06 var(--serif); letter-spacing: -.006em; color: var(--navy); text-wrap: balance;
+}
+.dokument-list__popis { margin: .95rem auto 0; max-width: 36rem; font: italic 400 clamp(1.06rem, 1rem + .3vw, 1.24rem)/1.42 var(--serif); color: var(--ink-2); text-wrap: balance; }
+/* dvojitá vlasová linka pod záhlavím */
+.dokument-list__hlava::after {
+  content: ''; display: block; height: 4px; margin-top: clamp(1.7rem, 1.3rem + 1.2vw, 2.4rem);
+  background: linear-gradient(var(--gold), var(--gold)) 0 0 / 100% 1px no-repeat, linear-gradient(var(--line-gold), var(--line-gold)) 0 100% / 100% 1px no-repeat;
+}
+
+/* ── Text dokumentu ──────────────────────────────────────────────────────── */
+.dokument-text { max-width: none; margin-top: clamp(1.7rem, 1.3rem + 1.2vw, 2.5rem); font-size: clamp(1rem, .97rem + .12vw, 1.07rem); line-height: 1.68; }
+.dokument-text p { margin: 0 0 .8em; }
+.dokument-text strong { font-weight: 500; color: var(--navy); }
+
+/* formální nadpis uvnitř textu („PROVOZNÍ ŘÁD VENKOVNÍHO BAZÉNU“) a vydavatel nad ním */
+.dokument-text > h2 { margin: 1.5em auto 1.3em; max-width: 32rem; text-align: center; font: 600 clamp(1.08rem, 1rem + .35vw, 1.32rem)/1.35 var(--sc); letter-spacing: .13em; color: var(--navy); }
+.dokument-text > h2:first-child { margin-top: 0; }
+.dokument__vydavatel { max-width: 34rem; margin: 0 auto 1.2em !important; text-align: center; font-size: var(--t-male); line-height: 1.6; color: var(--ink-2); }
+.dokument__vydavatel strong { font: 600 1.05rem/1.4 var(--sc); letter-spacing: .06em; }
+.dokument__vydavatel em { font-style: normal; color: var(--muted); }
+
+/* oddíly: zlaté kapitálky s vlasovou linkou */
+.dokument-text h3 {
+  display: flex; align-items: baseline; gap: .9rem; margin: 2.3em 0 .95em;
+  font: 600 clamp(1.02rem, .98rem + .2vw, 1.12rem)/1.3 var(--sc); letter-spacing: .085em; text-transform: none; color: var(--gold-text);
+}
+.dokument-text h3::after { content: ''; flex: 1 1 2rem; min-width: 2rem; height: 1px; background: var(--line-gold); transform: translateY(-.3em); }
+.dokument-text > h3:first-child, .dokument-text > h2 + h3 { margin-top: .4em; }
+.dokument__cislo { font-variant-numeric: lining-nums; }
+.dokument-text h3 .dokument__cislo { margin-right: -.35rem; }
+/* článek stanov: „—— ČLÁNEK I. ——“ a pod ním název článku */
+.dokument-text h3.s-clankem { display: block; margin: 2.8em 0 1.1em; text-align: center; }
+.dokument-text h3.s-clankem::after { display: none; }
+.dokument__clanek { display: flex; align-items: center; gap: .9rem; font: 600 .86rem/1.2 var(--sc); letter-spacing: .22em; color: var(--gold-text); }
+.dokument__clanek::before, .dokument__clanek::after { content: ''; flex: 1; height: 1px; background: var(--line-gold); }
+.dokument__h3 { display: block; margin-top: .6rem; font: 400 clamp(1.45rem, 1.2rem + .9vw, 1.9rem)/1.2 var(--serif); letter-spacing: 0; color: var(--navy); text-wrap: balance; }
+/* pododdíl („3.1. Druhy členství“) */
+.dokument-text h4 { margin: 1.9em 0 .7em; font: italic 500 clamp(1.16rem, 1.08rem + .3vw, 1.3rem)/1.3 var(--serif); letter-spacing: 0; text-transform: none; color: var(--navy); }
+.dokument-text h4 .dokument__cislo { margin-right: .15em; font-style: normal; color: var(--gold-text); }
+
+/* odrážky: drobné zlaté kosočtverce */
+.dokument-text ul { list-style: none; margin: 0 0 1.3em; padding: 0; }
+.dokument-text ul li { position: relative; margin-bottom: .5em; padding-left: 1.55em; }
+.dokument-text ul li::before { content: ''; position: absolute; left: .3em; top: .74em; width: 5px; height: 5px; border: 1px solid var(--gold); transform: rotate(45deg); }
+.dokument-text ol { padding-left: 1.6em; }
+
+/* číslované body s visícím číslem; úroveň podle čísla (1. · 2.1. · 3.1.1. · a) · ii)) */
+.dokument-text .bod { display: grid; grid-template-columns: var(--bod-c, 1.9em) minmax(0, 1fr); column-gap: .6em; }
+.bod__c { font: italic 500 1.1em/1.53 var(--serif); color: var(--gold-text); font-variant-numeric: lining-nums tabular-nums; white-space: nowrap; }
+.bod--c2 { --bod-c: 2.7em; }
+.bod--c3 { --bod-c: 3.5em; }
+.dokument-text .bod--p { --bod-c: 1.35em; margin-left: 2.5em; }
+.dokument-text .bod--r { --bod-c: 1.9em; margin-left: 4.45em; }
+.dokument-text .bod + .bod--p, .dokument-text .bod--p + .bod--r { margin-top: -.15em; }
+/* poznámky pod čarou ceníku („* Zvýhodněná cena…“) */
+.dokument-text .dokument__pozn { display: grid; grid-template-columns: 1.6em minmax(0, 1fr); margin: 0 0 .5em; font-size: var(--t-male); line-height: 1.55; color: var(--ink-2); }
+.dokument__pozn .bod__c { font-style: normal; font-size: 1em; line-height: 1.55; }
+.dokument-text .tabulka-box + .dokument__pozn, .dokument-text .tabulka-box + p { margin-top: 1.4em; }
+
+/* závěrečné upozornění („Jakékoli změny či výjimky…“) – zlatý rámeček */
+.dokument-text .dokument__zaver {
+  position: relative; margin: 2.4em 0 .4em; padding: clamp(1.1rem, .9rem + .8vw, 1.6rem) clamp(1.1rem, .8rem + 1.4vw, 2rem);
+  border: 1px solid var(--gold); text-align: center; text-wrap: balance;
+  font: italic 400 clamp(1.14rem, 1.04rem + .4vw, 1.36rem)/1.45 var(--serif); color: var(--navy);
+}
+.dokument-text .dokument__zaver::before { content: ''; position: absolute; inset: 4px; border: 1px solid var(--line-gold); pointer-events: none; }
+
+/* tabulky (ceník) a obrázky (plán, znak ve stanovách) */
+.dokument-text .tabulka-box { margin: 1em 0 2.2em; }
+.dokument-text .tabulka { font-size: var(--t-male); }
+.dokument-text .tabulka thead th { padding: .7rem .8rem .7rem 0; font-size: .62rem; letter-spacing: .14em; line-height: 1.45; vertical-align: bottom; white-space: normal; min-width: 6.4rem; }
+.dokument-text .tabulka thead th:first-child { min-width: 9.5rem; }
+.dokument-text .tabulka td { padding: .85rem .8rem .85rem 0; vertical-align: top; line-height: 1.4; white-space: nowrap; }
+.dokument-text .tabulka td:first-child { font: 400 1.08rem/1.3 var(--serif); color: var(--navy); white-space: nowrap; }
+.dokument-text .tabulka td:not(:first-child), .dokument-text .tabulka thead th:not(:first-child) { text-align: right; }
+.dokument-text .tabulka td:nth-child(3), .dokument-text .tabulka td:nth-child(5) { color: var(--gold-text); }
+.dokument__za-hod { display: block; font-size: .86em; color: var(--muted); }
+.dokument-text .tabulka td:nth-child(3) .dokument__za-hod, .dokument-text .tabulka td:nth-child(5) .dokument__za-hod { color: inherit; opacity: .8; }
+/* podpis na konci dokumentu (stanovy: funkce a jméno) */
+.dokument-text .dokument__podpis { display: flex; flex-direction: column; align-items: center; width: max-content; max-width: 100%; margin: 2.6em 0 0 auto; padding-top: .75em; border-top: 1px solid var(--line-gold); text-align: center; }
+.dokument__podpis-funkce { font: italic 400 1.06rem/1.35 var(--serif); color: var(--ink-2); }
+.dokument__podpis-jmeno { margin-top: .15rem; font: 600 1.02rem/1.35 var(--sc); letter-spacing: .06em; color: var(--navy); }
+.dokument-text .dokument__vyhlaseni { margin: 1.6em 0 .4em; text-align: center; font: 600 1.06rem/1.3 var(--sc); letter-spacing: .3em; color: var(--navy); }
+.dokument-text h3 + p > em:only-child { font-family: var(--serif); font-size: 1.08rem; color: var(--ink-2); }
+.dokument-text img { margin: 0 auto; box-shadow: none; max-width: 100%; height: auto; }
+.dokument-text figure { margin: 1.6em 0 2em; text-align: center; }
+.dokument-text figure img { display: block; margin-inline: auto; border: 1px solid var(--line); background: #fff; }
+/* obrázek uprostřed textu (znak klubu ve stanovách): menší, bez rámečku, bílé pozadí splyne s papírem */
+.dokument-text > figure:not(:first-child) img { width: auto; max-width: min(100%, 9.5rem); border: 0; background: none; mix-blend-mode: multiply; }
+.dokument-text figcaption { margin-top: .8rem; font-size: var(--t-drobne); color: var(--muted); }
+.dokument-text .dokument__sloupce { columns: 3 11rem; column-gap: var(--mezera); }
+.dokument-text .dokument__sloupce li { break-inside: avoid; }
+
+/* ── Patička listu ───────────────────────────────────────────────────────── */
+.dokument-list__pata { margin-top: clamp(2.2rem, 1.6rem + 2vw, 3.4rem); padding-top: 1.1rem; border-top: 1px solid var(--line-gold); text-align: center; font-size: var(--t-drobne); line-height: 1.6; color: var(--muted); }
+.dokument-list__pata p { margin: 0; }
+.dokument-list__pata .sc { font-size: 1.06em; letter-spacing: .06em; color: var(--ink-2); }
+.dokument-list__pata a { color: inherit; text-decoration: none; }
+.dokument-list__pata a:hover { color: var(--navy); text-decoration: underline; text-decoration-color: var(--gold); text-underline-offset: .25em; }
+
+/* další dokumenty pod listem */
+.dokument__dalsi .hlava { margin-bottom: var(--s-5); }
+.dokument__vse { margin: 0; }
+
+@media (max-width: 599.98px) {
+  .dokument-lista { flex-direction: column; align-items: flex-start; }
+  .dokument-text .bod--p { margin-left: 1.2em; }
+  .dokument-text .bod--r { margin-left: 2.6em; }
+  /* nadpis oddílu na víc řádků: zlatá linka pod ním, ne vedle prvního řádku */
+  .dokument-text h3:not(.s-clankem) { display: block; }
+  .dokument-text h3:not(.s-clankem)::after { display: block; width: 2.6rem; min-width: 0; margin-top: .55rem; transform: none; }
+  /* tabulka ceníku: řádek = karta, popisky sloupců z hlavičky (data-label z dokument_tabulky()) */
+  .dokument-text .tabulka--karty, .dokument-text .tabulka--karty tbody, .dokument-text .tabulka--karty tr, .dokument-text .tabulka--karty td { display: block; width: 100%; }
+  .dokument-text .tabulka--karty thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .dokument-text .tabulka--karty tr { padding: .9rem 0 .75rem; border-bottom: 1px solid var(--line); }
+  .dokument-text .tabulka--karty tr:first-child { border-top: 1px solid var(--navy); }
+  .dokument-text .tabulka--karty td { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; padding: .22rem 0; border: 0; white-space: normal; text-align: right !important; }
+  .dokument-text .tabulka--karty td::before { content: attr(data-label); flex: 0 1 11rem; text-align: left; font: 500 .6rem/1.45 var(--sans); letter-spacing: .13em; text-transform: uppercase; color: var(--muted); }
+  .dokument-text .tabulka--karty td:first-child { display: block; padding-bottom: .45rem; text-align: left !important; font-size: 1.16rem; }
+  .dokument-text .tabulka--karty td:first-child::before { content: none; }
+  .dokument-text .tabulka--karty .dokument__hodnota { flex: 0 0 auto; }
+  .dokument-text .tabulka--karty .dokument__za-hod { display: block; }
+}
+
+/* ── Tisk: list na A4 místo PDF ──────────────────────────────────────────── */
+@media print {
+  @page { size: A4; margin: 18mm 18mm 20mm; }
+  @page {
+    @bottom-center { content: counter(page) " / " counter(pages); font: 8pt 'Jost', sans-serif; color: #6b6f7e; }
+  }
+  html, body, main { background: #fff !important; }
+  body { font-size: 10.5pt; }
+  .paticka, .drobky, .netisknout, .lista-mobil, .rezim-pruh, .hlavicka, .lista-info { display: none !important; }
+  .stranka-dokument main { padding: 0; }
+  .dokument-stul { padding: 0; background: none; border: 0; }
+  .dokument-stul__wrap, .dokument-stul__wrap--siroky { max-width: none; padding: 0; }
+  .dokument-list { padding: 0; border: 0; background: none; box-shadow: none; color: #111; }
+  .dokument-list::before { display: none; }
+  .dokument-list__hlava { break-inside: avoid; page-break-inside: avoid; break-after: avoid; page-break-after: avoid; }
+  .dokument-list__znak { width: 12mm; margin-bottom: 2.2mm; }
+  .dokument-list__klub { gap: 1.2mm; }
+  .dokument-list__klub .sc { font-size: 11pt; }
+  .dokument-list__zalozen { font-size: 6pt; }
+  .dokument-list__ozdoba { margin: 2.8mm auto 3mm; max-width: 30mm; }
+  .dokument-list__kategorie { font-size: 6.5pt; margin-bottom: 1.8mm; }
+  .dokument-list__nadpis { font-size: 21pt; max-width: none; }
+  .dokument-list__popis { font-size: 11pt; margin-top: 1.8mm; }
+  .dokument-list__hlava::after { margin-top: 4.5mm; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .dokument-text { margin-top: 5mm; font-size: 10pt; line-height: 1.42; color: #111; }
+  .dokument-text p { margin-bottom: 1.6mm; }
+  .dokument-text p, .dokument-text li { orphans: 3; widows: 3; }
+  .dokument-text > h2 { font-size: 11pt; margin: 3mm auto 3mm; }
+  .dokument__vydavatel { margin-bottom: 2mm !important; font-size: 9pt; line-height: 1.45; }
+  .dokument-text h3 { font-size: 10.5pt; margin: 5mm 0 2mm; break-after: avoid; page-break-after: avoid; }
+  .dokument-text h3.s-clankem { margin: 7mm 0 2.5mm; break-inside: avoid; page-break-inside: avoid; break-after: avoid; page-break-after: avoid; }
+  .dokument__clanek { font-size: 8.5pt; }
+  .dokument__h3 { font-size: 14.5pt; margin-top: 1.2mm; }
+  .dokument-text h4 { font-size: 11.5pt; margin: 4mm 0 1.2mm; break-after: avoid; page-break-after: avoid; }
+  .dokument-text h3 + p, .dokument-text h4 + p.bod { break-after: avoid; page-break-after: avoid; }
+  .dokument-text ul { margin-bottom: 2.5mm; }
+  .dokument-text ul li { margin-bottom: 1mm; }
+  .dokument-text ul li::before { top: .62em; }
+  .dokument-text .bod { margin-bottom: 1.4mm; }
+  .dokument-text .bod, .dokument-text ul li, .dokument-text tr, .dokument-text figure, .dokument__pozn { break-inside: avoid; page-break-inside: avoid; }
+  .bod__c { font-size: 1.08em; line-height: 1.42; }
+  .dokument-text .dokument__zaver { font-size: 12pt; margin: 5mm 0 0; padding: 3.5mm 6mm; break-inside: avoid; page-break-inside: avoid; }
+  .dokument-text .dokument__vyhlaseni { font-size: 10pt; margin: 4mm 0 1mm; }
+  .dokument-text .dokument__podpis { margin-top: 8mm; padding-top: 2mm; break-inside: avoid; page-break-inside: avoid; }
+  .dokument__podpis-funkce { font-size: 10.5pt; }
+  .dokument__podpis-jmeno { font-size: 10pt; }
+  /* tabulka ceníku drží pohromadě a s nadpisem; cena za hodinu na stejném řádku */
+  .dokument-text .tabulka-box { overflow: visible; margin: 1.5mm 0 4mm; break-inside: avoid; page-break-inside: avoid; }
+  .dokument-text .tabulka { font-size: 8.8pt; }
+  .dokument-text .tabulka thead th { font-size: 6.2pt; padding: 1.2mm 2mm 1.2mm 0; min-width: 0; }
+  .dokument-text .tabulka td { padding: 1.4mm 2mm 1.4mm 0; }
+  .dokument-text .tabulka td:first-child { font-size: 9.6pt; }
+  .dokument__za-hod { display: inline; margin-left: 1mm; font-size: .9em; }
+  .dokument-text .tabulka-box + p, .dokument-text .tabulka-box + .dokument__pozn { margin-top: 2mm; }
+  .dokument-text .dokument__pozn { font-size: 8.6pt; margin-bottom: 1mm; }
+  .dokument-text h3 + p > em:only-child { font-size: 10.5pt; }
+  .dokument-text .tabulka thead th { line-height: 1.3; }
+  .dokument-text figure { margin: 2mm 0 3mm; }
+  .dokument-text figure img { max-height: 120mm; width: auto; max-width: 100%; }
+  .dokument-text > figure:not(:first-child) img { max-width: 30mm; }
+  .dokument-text figcaption { margin-top: 1.5mm; font-size: 8pt; }
+  .dokument-text .dokument__sloupce { columns: 4; column-gap: 6mm; font-size: 8.8pt; }
+  .dokument-text .dokument__sloupce li { margin-bottom: .6mm; }
+  .dokument-text a { color: inherit; text-decoration: none; }
+  .dokument-list__pata { margin-top: 6mm; padding-top: 2.5mm; font-size: 7.6pt; line-height: 1.5; color: #555; break-inside: avoid; page-break-inside: avoid; }
+  .dokument-list__adresa { margin-top: .6mm !important; letter-spacing: .02em; }
+}
+
+/* ==========================================================================
+   Rozcestník dokumentů (dokumenty.php)
+   ========================================================================== */
+.dokumenty-skupina .hlava { margin-bottom: var(--s-5); }
+.dokumenty-skupina__odkaz { margin: var(--s-5) 0 0; }
+
+/* Archiv klubových turnajů: turnaj → ročníky → PDF */
+.archiv-turnaju .hlava { margin-bottom: var(--s-5); }
+.archiv-turnaju__souhrn { margin: 0 0 clamp(2rem, 1.4rem + 2vw, 3.4rem); letter-spacing: .02em; }
+.archiv-turnaju__mrizka { columns: 1; column-gap: clamp(2rem, 1rem + 4vw, 6rem); }
+@media (min-width: 1000px) { .archiv-turnaju__mrizka { columns: 2; } }
+.archiv-turnaj { break-inside: avoid; page-break-inside: avoid; margin-bottom: clamp(2.2rem, 1.6rem + 2vw, 3.6rem); }
+.archiv-turnaj__nazev { margin: 0; padding-bottom: .75rem; border-bottom: 1px solid var(--gold); font: 400 var(--t-h4)/1.2 var(--serif); color: var(--navy); }
+.archiv-turnaj__roky { list-style: none; margin: 0; padding: 0; }
+.archiv-rocnik { display: grid; grid-template-columns: 4.4rem minmax(0, 1fr); column-gap: 1.1rem; border-bottom: 1px solid var(--line); }
+.archiv-rocnik__rok { padding-top: .78rem; font: 300 1.9rem/1 var(--serif); color: var(--gold-text); font-variant-numeric: lining-nums tabular-nums; }
+.dokumenty--archiv { border-top: 0; }
+.dokumenty--archiv .dokument { padding: .85rem 0; }
+.dokumenty--archiv li:last-child .dokument { border-bottom: 0; }
+.dokumenty--archiv .dokument__nazev { font-size: 1.1rem; }
+@media (max-width: 599.98px) {
+  .archiv-rocnik { grid-template-columns: 3.2rem minmax(0, 1fr); column-gap: .8rem; }
+  .archiv-rocnik__rok { font-size: 1.5rem; }
+}
+
+/* Jubilejní Revue na navy */
+.dokumenty-revue__obalka { display: block; width: min(100%, 16rem); margin-inline: auto; text-decoration: none; transition: transform var(--pohyb); }
+.dokumenty-revue__obalka img { width: 100%; height: auto; box-shadow: 0 30px 60px -28px rgba(0, 0, 0, .7), 0 0 0 1px rgba(202, 172, 121, .35); }
+.dokumenty-revue__obalka:hover { transform: translateY(-4px) rotate(-.6deg); }
+.dokumenty-revue .hlava { margin-bottom: var(--s-6); }
+.dokumenty-revue .btn small { font-size: .92em; letter-spacing: .06em; text-transform: none; font-weight: 400; }
+@media (max-width: 899.98px) { .dokumenty-revue__obalka { width: min(70%, 14rem); margin-inline: 0; } }

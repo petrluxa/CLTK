@@ -142,7 +142,7 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
               </ol>
               <?php endif; ?>
               <?php if ($pdf !== ''): ?>
-              <p class="prave-vyslo-pdf"><a class="odkaz" href="<?= e($pdf) ?>"<?= odkaz_attr($pdf) ?>>Číst PDF<?= revue_mb($posledni['pdf_mb']) !== '' ? ' <span class="cislice">(' . revue_mb($posledni['pdf_mb']) . ')</span>' : '' ?> <?= sipka('ven') ?><?= odkaz_je_externi($pdf) ? '<span class="vh"> (v novém okně)</span>' : '' ?></a></p>
+              <p class="prave-vyslo-pdf"><a class="odkaz" href="<?= e($pdf) ?>"<?= odkaz_attr($pdf) ?>>Číst PDF<?= revue_mb($posledni['pdf_mb']) !== '' ? ' <span class="cislice">(' . revue_mb($posledni['pdf_mb']) . ')</span>' : '' ?> <?= sipka(odkaz_je_externi($pdf) ? 'ven' : '') ?><?= odkaz_je_externi($pdf) ? '<span class="vh"> (v novém okně)</span>' : '' ?></a></p>
               <?php endif; ?>
             </div>
           </div>
@@ -229,8 +229,8 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
           <h3 class="newslettery__rocnik onum" id="nl-<?= (int)$rok ?>"><?= (int)$rok ?></h3>
           <ul class="newslettery__seznam">
             <?php foreach ($cisla2 as $n):
-              $cs = bezpecny_odkaz((string)$n['pdf_cs']);
-              $en = bezpecny_odkaz((string)$n['pdf_en']);
+              $cs = (string)$n['cs_url'];
+              $en = (string)$n['en_url'];
               $nazev = trim((string)$n['oznaceni']) !== '' ? (string)$n['oznaceni'] : (string)$n['cislo']; ?>
             <li class="newsletter">
               <span class="newsletter__cislo"><?= typo($nazev) ?><?php if (trim((string)$n['nazev']) !== ''): ?><small><?= typo((string)$n['nazev']) ?></small><?php endif; ?></span>

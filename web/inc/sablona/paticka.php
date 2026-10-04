@@ -66,6 +66,7 @@ $ptOdkazVen = fn(string $u) => odkaz_je_externi($u) ? ' target="_blank" rel="noo
           <?php foreach ($ptDokumenty as $dk): $dkUrl = dokument_url($dk); if ($dkUrl === '') continue; ?>
           <li><a href="<?= e($dkUrl) ?>"<?= $ptOdkazVen($dkUrl) ?>><?= typo(trim((string)$dk['paticka_text']) ?: (string)$dk['nazev']) ?><?= odkaz_je_externi($dkUrl) ? '<span class="vh"> (v novém okně)</span>' : '' ?></a></li>
           <?php endforeach; ?>
+          <li><a href="<?= e(url('dokumenty.php')) ?>"<?= nav_active('dokumenty.php') ?>>Všechny dokumenty</a></li>
           <?php if ($ptSiteHlavni): ?>
           <li><?= implode(' · ', array_map(fn($s) => '<a href="' . e($s['url']) . '" target="_blank" rel="noopener">' . e($s['nazev']) . '<span class="vh"> (v novém okně)</span></a>', $ptSiteHlavni)) ?></li>
           <?php endif; ?>

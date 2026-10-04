@@ -179,7 +179,7 @@ strany sám, stránka nikdy (app.js mu přidá fokus, když přetéká). `.tabul
 **Římský seznam:** `<ol class="rimsky"><li><b>Nadpis</b>text</li></ol>`.
 **Čísla:** `<ul class="cisla" style="--sloupcu:4"><li class="cisla__polozka"><span class="cisla__hodnota">19<small>kurtů</small></span><span class="cisla__popis">…</span></li></ul>`.
 **Postup:** `<ol class="proces" style="--kroku:4"><li><b>Žádost</b>text</li>…</ol>`.
-**Dokumenty:** `<?= dokumenty_html(dokumenty('klub')) ?>` (PDF / odkaz, nové okno).
+**Dokumenty:** `<?= dokumenty_html(dokumenty('klub')) ?>` – dokument klubu vede na svou stránku `dokument.php?d=…` (šipka), příloha archivu na PDF („PDF · 3 strany · 244 kB“). Dokumenty klubu nejsou PDF (klient 2. 10. 2026) – stránka dokumentu je hlavičkový papír klubu s tiskem na A4 (`dokument.css`); rozcestník všech dokumentů a archivu turnajů je `dokumenty.php`.
 **Rozbalovací blok:** `<details class="rozbal"><summary>Nadpis</summary><div class="rozbal__obsah">…</div></details>` (`rozbal--male`).
 
 ## 8. Lidé (trenéři, vedení)

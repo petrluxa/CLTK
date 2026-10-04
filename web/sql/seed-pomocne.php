@@ -83,6 +83,17 @@ function seed_ma_sloupec(string $tabulka, string $sloupec): bool {
     return (bool)preg_match('/^\s*' . preg_quote($sloupec, '/') . '\s/m', $m[1]);
 }
 
+/** Data ze starého webu (texty dokumentů klubu, PDF Revue a newsletterů v uploads/, archiv turnajů,
+ *  rozvrhy, jubilejní Revue): datový soubor migrace sql/migrace/2026-10-02-dokumenty-archiv.data.json
+ *  (s pamětí). Sada 70-dokumenty z něj bere texty, sada 95-archiv-pdf pouští celou migraci. */
+defined('SEED_ARCHIV_DATA') || define('SEED_ARCHIV_DATA', __DIR__ . '/migrace/2026-10-02-dokumenty-archiv.data.json');
+
+function seed_archiv_data(): array {
+    static $d = null;
+    if ($d === null) $d = is_file(SEED_ARCHIV_DATA) ? (json_decode((string)file_get_contents(SEED_ARCHIV_DATA), true) ?: []) : [];
+    return $d;
+}
+
 /** Převezme obrázek do uploads/<podslozka>/<jmeno>.jpg|png (zmenší, znovu uloží, WebP). Vrací cestu nebo ''. */
 function seed_obrazek(string $zdroj, string $podslozka, string $jmeno, int $maxW = 2400, int $maxH = 2400): string {
     $rel = obrazek_import($zdroj, $podslozka, $jmeno, $maxW, $maxH);

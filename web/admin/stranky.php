@@ -162,6 +162,7 @@ const STRANKY = [
     'letni-kempy'            => ['Letní kempy', 'Tenisová škola'],
     'restaurace'             => ['Restaurace', 'Restaurace a Prague Open'],
     'prague-open'            => ['Prague Open', 'Restaurace a Prague Open'],
+    'dokumenty'              => ['Dokumenty', 'Klub'],
     'kontakt'                => ['Kontakt', 'Ostatní'],
     'formulare'              => ['Společné texty formulářů', 'Ostatní'],
     '404'                    => ['Stránka nenalezena (404)', 'Ostatní'],
@@ -183,10 +184,10 @@ const STRANKY_BLOKY = [
     'historie|deska-zasluzili' => 'Záložka desky Zasloužilí členové', 'historie|deska-prezidenti' => 'Záložka desky Prezidenti',
     'historie|osobnosti' => 'Osobnosti klubu – nadpis',
     'vedeni|dokumenty' => 'Stanovy a dokumenty', 'ctc|rodokmen' => 'Rodokmen stoletých klubů', 'revue|newslettery' => 'Newslettery – nadpis',
-    'areal|kurty' => 'Kurty v létě a v zimě', 'areal|plan' => 'Plán areálu (fotka + odkaz na PDF)', 'areal|prijezd' => 'Jak se k nám dostanete',
+    'areal|kurty' => 'Kurty v létě a v zimě', 'areal|plan' => 'Plán areálu (fotka + odkaz na plán k vytištění)', 'areal|prijezd' => 'Jak se k nám dostanete',
     'cenik-kurtu|pravidla' => 'Pravidla rezervací',
     'zavodni-tenis|pyramida' => 'Od školy po extraligu', 'zavodni-tenis|cisla' => 'Sezóna v číslech', 'zavodni-tenis|extraliga' => 'Extraliga smíšených družstev',
-    'tenisova-skola|kontakt' => 'Kontakt na vedoucího trenéra', 'tenisova-skola-rozvrhy|rozvrhy' => 'Zimní rozvrhy skupin',
+    'tenisova-skola|kontakt' => 'Kontakt na vedoucího trenéra', 'tenisova-skola-rozvrhy|rozvrhy' => 'Rozvrhy tréninků – nadpis a perex nad mřížkou, text pod ní (informace pro rodiče, kontaktní trenéři kurtů). Hodiny rozvrhu jsou v modulu Tenisová škola → Rozvrhy',
     'letni-kempy|informace' => 'Co je dobré vědět', 'restaurace|informace' => 'Terasa a salónek', 'restaurace|kontakt' => 'Otevírací doba a kontakt',
     'prague-open|vitezove' => 'Vítězové ročníku', 'formulare|souhlas' => 'Text souhlasu se zpracováním údajů (perex) u všech přihlášek',
     /* bloky, které čtou šablony podstránek navíc (sady seedu 56-areal, 58-klub, 58-tenis) */
@@ -200,7 +201,10 @@ const STRANKY_BLOKY = [
     'privatni-treneri|treneri' => 'Trenéři pro rekreační hráče – nadpis', 'privatni-treneri|kontakt' => 'Ceny a kontakt',
     'prague-open|rocnik' => 'Ročník 2026 – údaje turnaje', 'prague-open|historie' => 'Historie turnaje',
     'kontakt|lide' => 'Lidé a kontakty – nadpis', 'kontakt|prijezd' => 'Adresa a příjezd', 'kontakt|fakturace' => 'Fakturační údaje a účty',
-    'kontakt|dokumenty' => 'Dokumenty ke stažení – nadpis',
+    'kontakt|dokumenty' => 'Dokumenty – nadpis',
+    'dokumenty|pravidla' => 'Pravidla a provozní řády – nadpis a perex', 'dokumenty|klub' => 'Klub a spolek – nadpis a perex',
+    'dokumenty|ceniky' => 'Ceníky – nadpis a perex', 'dokumenty|archiv' => 'Archiv klubových turnajů – nadpis a perex',
+    'dokumenty|revue' => 'Jubilejní Revue a archiv Revue – nadpis a perex (navy pás dole)',
     'clenstvi|konfigurator' => 'Spočítejte si členství – nadpis konfigurátoru', 'clenstvi|clensky-list' => 'Členský list (náhled vedle konfigurátoru)',
     'clenstvi|dekujeme' => 'Poděkování po odeslání přihlášky',
     'ctc|clenstvi' => 'Členství v CTC', 'ctc|foto' => 'Fotka stránky CTC', 'ctc|utkani' => 'Mezinárodní utkání – nadpis', 'ctc|souteze' => 'Soutěže – nadpis',
@@ -320,12 +324,13 @@ function stranky_obrazky_textu(string $html): array {
     return array_values(array_unique($v));
 }
 
-/** Smaže obrázky z textu, které už žádný blok (ani popis akce) nepoužívá. Volat po zápisu do DB. */
+/** Smaže obrázky z textu, které už žádný blok, popis akce ani text dokumentu nepoužívá. Volat po zápisu do DB. */
 function stranky_smazat_obrazky_textu(array $soubory): void {
     foreach ($soubory as $s) {
         $vzor = '%' . $s . '%';
         $pouzito = (int)val('SELECT COUNT(*) FROM cltk_bloky WHERE text LIKE ?', [$vzor]);
         try { $pouzito += (int)val('SELECT COUNT(*) FROM cltk_akce WHERE popis LIKE ?', [$vzor]); } catch (Throwable $e) { $pouzito++; }
+        try { $pouzito += (int)val('SELECT COUNT(*) FROM cltk_dokumenty WHERE text LIKE ?', [$vzor]); } catch (Throwable $e) { $pouzito++; }   // text dokumentu (modul Dokumenty)
         if ($pouzito === 0) delete_upload($s);
     }
 }
@@ -651,7 +656,7 @@ if ($rezim === 'prehled'):
           <?= pole_text('odkaz2_text', 'Vedlejší odkaz – text', $f['odkaz2_text'], ['maxlength' => 80, 'placeholder' => 'Ceník kurtů', 'id' => 'f-o2t']) ?>
           <?= pole_text('odkaz2', 'Vedlejší odkaz – adresa', $f['odkaz2'], ['maxlength' => 255, 'id' => 'f-o2', 'hint' => obsah_chyba($chyby, 'odkaz2')]) ?>
         </div>
-        <p class="hint">Stránka webu se zapisuje jen názvem souboru (clenstvi.php, areal.php#bazen), odkazy ven celou adresou https://… – otevřou se v novém okně.</p>
+        <p class="hint">Stránka webu se zapisuje jen názvem souboru (clenstvi.php, areal.php#bazen, dokument.php?d=stanovy), odkazy ven celou adresou https://… – otevřou se v novém okně.</p>
       </fieldset>
       <?= pole_check('doplni_klub', 'Obsah zatím chybí (web ukáže štítek „doplní klub“)', (bool)$f['doplni_klub']) ?>
       <?= pole_check('visible', 'Zobrazit na webu', (bool)$f['visible'], ['hint' => 'Skrytý blok se na webu chová, jako by nebyl – šablona ukáže výchozí obsah nebo nic.']) ?>

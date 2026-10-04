@@ -167,7 +167,10 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
       <?php if (setting('paticka_ctc') !== ''): ?><p class="drobne kontakt-ctc"><?= typo(setting('paticka_ctc')) ?></p><?php endif; ?>
     </div>
     <?php if ($doky): ?>
-    <div class="sl-7 od-6"><?= dokumenty_html($doky) ?></div>
+    <div class="sl-7 od-6">
+      <?= dokumenty_html($doky) ?>
+      <p class="kontakt-doky__vse"><?= tlacitko('dokumenty.php', 'Všechny dokumenty a archiv turnajů', 'odkaz') ?></p>
+    </div>
     <?php endif; ?>
   </div>
 </section>

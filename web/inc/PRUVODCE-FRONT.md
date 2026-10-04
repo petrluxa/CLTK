@@ -112,13 +112,15 @@ Nejčastější: `klub_nazev`, `klub_zkratka`, `zalozeno`, `ico`, `adresa_ulice`
 | `blok($stranka, $klic)`, `bloky($stranka)` | texty stránek – §8 |
 | `treneri('zavodni' / 'skola' / 'privatni')` | trenéři týmu (`skupina` = podnadpis, `fakta` *řádky*, `foto`, `fokus`, kontakt) |
 | `sluzby()`, `sluzby(true)` | služby areálu; `true` = jen 12 štítků „Služby v areálu“ na úvod. Odkaz štítku: `url('areal.php') . '#' . $s['kotva']`; `casy` prázdné = „doplní klub“ |
-| `skola('info' / 'harmonogram' / 'rozvrh' / 'kemp')` | tenisová škola |
+| `skola('info' / 'harmonogram' / 'rozvrh' / 'kemp')`, `skola_rozvrhy()` | tenisová škola; `skola_rozvrhy()` = platné rozvrhy po kurtech (řádek = buňka mřížky, `skupina = 'obsazeno'` → `skola_rozvrh_obsazeno()`) |
 | `milniky()`, `osobnosti()`, `deska($kategorie, $skupina)` | historie (`deska('grandslam')`, `deska('cestni', 'jmena')` …) |
-| `revue_cisla()`, `newslettery()` | Revue (+ `titulky_pole`, `obsah_pole`, `pdf` = hotová adresa), newslettery (`pdf_cs`, `pdf_en`) |
+| `revue_cisla()`, `newslettery()` | Revue (+ `titulky_pole`, `obsah_pole`, `pdf` = hotová adresa nahraného PDF; `cislo = 0` = speciální číslo 1893–2023), newslettery (`cs_url`, `en_url` = hotové adresy – nahrané PDF má přednost před odkazem) |
 | `vedeni('vybor' / 'kancelar' / 'kontakt')` | lidé; **`zobrazit_kontakt = 0` → telefon a e-mail nevypisovat** |
 | `ctc('fakt' / 'klub' / 'utkani' / 'soutez' / 'rodokmen')` | Centenary Tennis Clubs (`zvyraznit` = I. ČLTK v rodokmenu) |
 | `partneri()`, `partner_logo_url($p)` | 25 partnerů v pořadí mřížky 5 × 5; logo je už jednobarevné béžové – **nepřebarvovat filtrem** |
-| `dokumenty($kategorie)`, `dokument_url($d)` | dokumenty (`klub, cenik, provoz, clenstvi, skola`) |
+| `dokumenty($kategorie)`, `dokument_url($d)` | dokumenty klubu (`klub, cenik, provoz, clenstvi, skola`) – **stránky `dokument.php?d=slug`, ne PDF**; bez kategorie všechny kromě archivu |
+| `dokumenty_archiv()`, `dokument_archiv_nazev($d)` | archiv klubových turnajů (kategorie `turnaje`, PDF) po turnajích a ročnících |
+| `dokument_podle_slugu($slug)`, `dokument_ma_text($d)`, `dokument_pravidla_hrani()` | stránka dokumentu; pravidla hraní a rezervací (odkaz u rezervací – Ceník kurtů, Areál) |
 
 Úvodní video (ZADANI §4.7): `upload_url(setting('video_720'))` / `video_1080` / `video_poster`
 (WebP plakátu: `webp_vedle(setting('video_poster'))`). `preload="none"`, spustit až při zobrazení a jen bez omezení pohybu.

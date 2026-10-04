@@ -137,7 +137,7 @@
      zahodí, ale to už je pozdě). Zdroj se proto nejdřív rozebere v neaktivním dokumentu
      (DOMParser – nic se nenačte ani nespustí) a nechají se jen značky, které propustí
      i html_ocistit() na serveru, bez atributů (kromě href u odkazu a src/alt u obrázku). */
-  var POVOLENE = ' P BR STRONG B EM I U S H2 H3 H4 UL OL LI BLOCKQUOTE FIGURE FIGCAPTION A IMG HR ';
+  var POVOLENE = ' P BR STRONG B EM I U S H2 H3 H4 UL OL LI BLOCKQUOTE FIGURE FIGCAPTION A IMG HR TABLE CAPTION THEAD TBODY TFOOT TR TH TD ';
   var ZAHODIT = ' SCRIPT STYLE IFRAME OBJECT EMBED FORM INPUT BUTTON SELECT TEXTAREA SVG MATH NOSCRIPT TEMPLATE HEAD TITLE META LINK BASE FRAME FRAMESET APPLET VIDEO AUDIO CANVAS ';
   function nebezpecnaAdresa(v) {
     return /^(javascript|data|vbscript|file):/i.test(String(v).replace(/[\x00-\x20\x7f]+/g, ''));

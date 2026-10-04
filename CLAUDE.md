@@ -9,6 +9,12 @@ Hotovo a ověřeno: všechny stránky z menu (ZADANI §3), úvod podle PDF, 20 m
 seed, instalace (`web/instalace.php`) a přenos obsahu (`web/sql/data.json`). Web zatím není na serveru
 (nasazení dělá jen orchestrátor). Chybějící obsah = štítek „doplní klub“ (README §9) – nevymýšlet.
 
+**4. 10. 2026 – bez starého webu (ZADANI §0b):** dokumenty klubu = stránky `dokument.php?d=slug` (text v
+`cltk_dokumenty.text`, tisk na A4 místo PDF), rozcestník `dokumenty.php`, archiv klubových turnajů (PDF),
+Revue + newslettery jako PDF v `uploads/`, jubilejní Revue 1893–2023 (`cltk_revue.cislo = 0`), rozvrhy
+Tenisové školy (`cltk_skola` typ `rozvrh`). Na cltk.cz / files.cltk.cz se nesmí odkazovat (kromě e-mailů).
+Běžící server se převádí migrací `web/sql/migrace/2026-10-02-dokumenty-archiv.php` (+ `.data.json`).
+
 ## Tvrdá pravidla
 - **Tabulky jen s předponou `cltk_`.** Produkční DB je sdílená s ostrým webem TK Olymp. Do DB jen přes
   `q()/row()/rows()/val()/db_insert()/db_update()` (pojistka `sql_pojistka()` v `web/inc/db.php`).
@@ -68,11 +74,22 @@ seed, instalace (`web/instalace.php`) a přenos obsahu (`web/sql/data.json`). We
   `radky_seznam()` už typografii má. Data proto neopravovat ručně, jen když je to věcná chyba („VITĚZKA [sic]“).
 - Návštěvnost ukládá název stránky (`/`, `/klub.php`), ne adresu; iPhone profil Playwrightu se počítá →
   před `e2e-uvod.mjs` (vkládá vlastní řádky návštěvnosti) smazat dnešní záznamy v testovací DB
-  (`podklady/_raw/qa/fixer/uklid-navstev.php`).
+  (`podklady/_raw/qa/fixer/uklid-navstev.php` má napevno `fixer.sqlite` – pro jinou kopii
+  `CLTK_DB_FILE=web/data/x.sqlite ./_php/php.exe -r 'require "web/inc/functions.php"; q("DELETE FROM cltk_visits WHERE id > 0");'`).
 - Rodné číslo z přihlášky se ukládá jen zašifrované (`citlive_zasifruj()`, klíč `SIFROVACI_KLIC` v `cltk-config.php`,
   lokálně `web/data/sifrovaci-klic.txt`). Bez klíče se pole ve formuláři neukáže.
 - Bloky úvodní stránky v modulu Stránky: pole a popisky podle `STRANKY_UVOD_POLE` (admin/stranky.php), bez šipek
   a bez „Skrýt“; nový blok úvodu = přidat i sem a do `STRANKY_UVOD_MAPA`.
+- **Dokumenty:** žádné PDF dokumentů klubu (ani „Stáhnout PDF“) – jen text a tisk stránky. Sazbu (číslované body,
+  „Článek I.“, závěrečný rámeček, tabulky ceníku s `data-label` pro mobil) dělá jen výpis `dokument_sazba()` /
+  `dokument_tabulky()` v `dokument.php`; v DB zůstává holé HTML ze sanitizéru (tabulky bez atributů).
+- **Migrace na serveru:** nový sloupec = migrace podle `sql/migrace/2026-10-02-dokumenty-archiv.php` (ADD COLUMN jen
+  když chybí – PRAGMA / information_schema, přepis jen hodnot rovných původním, odmítne běh bez nahraných souborů,
+  token v prohlížeči – v souboru je jen jeho SHA-256, repo je veřejné). `sql/` je zvenku zavřené → na běh se
+  soubor + `.data.json` kopírují do kořene webu a pak se smažou. Nový stav vždy promítnout i do seedu.
+- Snímky dokumentů: `podklady/_raw/qa/dokumenty/render.mjs <base> "dokument.php?d=stanovy" d,m,t,pdf` (desktop,
+  mobil, tisk, `page.pdf` A4) a `kousky.py` (rozřeže snímek / PDF na PNG k prohlédnutí); WebKit neumí snímek
+  delší než 32 767 px (stanovy).
 
 ## Jak ověřit změnu
 ```bash

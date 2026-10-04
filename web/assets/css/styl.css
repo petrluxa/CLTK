@@ -1111,6 +1111,7 @@ html.js-pohyb [data-reveal].in { opacity: 1; transform: none; }
 .prose ul li::marker { color: var(--gold); }
 .prose ol li::marker { color: var(--gold-text); font-family: var(--serif); font-style: italic; }
 .prose a { color: var(--navy); text-decoration: underline; text-decoration-color: var(--gold); text-underline-offset: .22em; text-decoration-thickness: 1px; }
+.prose a[href^="tel:"] { white-space: nowrap; }   /* telefon se nezalomí uprostřed čísla */
 .prose a:hover { color: var(--gold-text); }
 .prose strong { font-weight: 500; color: var(--navy); }
 .prose blockquote { margin: 1.6em 0; padding-left: 1.4rem; border-left: 1px solid var(--gold); font: italic 400 1.35rem/1.4 var(--serif); color: var(--navy); }
@@ -1120,6 +1121,7 @@ html.js-pohyb [data-reveal].in { opacity: 1; transform: none; }
 .prose figure img { margin: 0; }
 .prose figcaption { margin-top: .7rem; font-size: var(--t-drobne); color: var(--muted); }
 .prose hr { margin: 2.4em 0; }
+.prose .tabulka-box { margin: 1.6em 0 2em; }   /* tabulka z editoru (html_tabulky_obal) */
 .prose--siroka { max-width: 52rem; }
 .sekce--navy .prose { color: var(--paper-na-navy); }
 .sekce--navy .prose a { color: var(--paper); }
@@ -1205,13 +1207,22 @@ a.pilulka:hover, button.pilulka:hover { border-color: var(--gold); color: var(--
 }
 @keyframes dialog-in { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
 
-/* Dokumenty ke stažení */
+/* Dokumenty klubu (stránky dokument.php) a přílohy archivu (PDF) – dokumenty_html() */
 .dokumenty { list-style: none; border-top: 1px solid var(--line); }
 .dokument { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: .2rem 1.5rem; align-items: baseline; padding: 1rem 0; border-bottom: 1px solid var(--line); text-decoration: none; color: inherit; }
 .dokument__nazev { font: 400 1.22rem/1.3 var(--serif); color: var(--navy); }
-.dokument__typ { font: 500 .66rem/1 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--gold-text); white-space: nowrap; }
+.dokument__typ { display: inline-flex; align-items: center; gap: .5em; font: 500 .66rem/1 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--gold-text); white-space: nowrap; }
+.dokument__typ small { font-size: 1em; letter-spacing: .06em; text-transform: none; color: var(--muted); font-weight: 400; }
+.dokument__typ--stranka { font-size: .95rem; color: var(--gold); }
+.dokument__typ .sipka { transition: transform var(--pohyb-rychly); }
 .dokument__popis { grid-column: 1 / -1; font-size: var(--t-drobne); color: var(--muted); }
 a.dokument:hover .dokument__nazev { color: var(--gold-text); }
+a.dokument--stranka:hover .sipka { transform: translateX(4px); }
+@media (max-width: 599.98px) {
+  .dokument { grid-template-columns: minmax(0, 1fr); }
+  .dokument--stranka { grid-template-columns: minmax(0, 1fr) auto; }
+  .dokument__typ small { white-space: normal; }
+}
 
 /* Vodorovný pás s posouváním (výsledky, karty) – vysledky.js [data-pas] */
 .pas { position: relative; }
