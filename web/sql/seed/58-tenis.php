@@ -88,7 +88,7 @@ $b('zavodni-tenis', 'zebricky', ['nadpis' => 'Žebříček ČTS', 'perex' => 'Po
             . '<h3>Muži</h3><ul><li><strong>10.</strong> Jonáš Forejtek</li><li><strong>17.</strong> Jakub Nicod</li><li><strong>18.</strong> Tadeáš Paroulek</li><li><strong>19.</strong> Andrew Paulson</li></ul>'
             . '<p>Pramen: žebříčky Českého tenisového svazu, léto 2026.</p>'], 20);
 $b('zavodni-tenis', 'reprezentanti', ['nadpis' => 'Reprezentanti 2026',
-    'perex' => 'Ze 146 reprezentantů České republiky jich 26 hraje za I. ČLTK Praha – víc mají jen TK Prostějov a TK Sparta Praha. Čtyři v kategorii do 14 let, deset do 18 let a dvanáct mezi dospělými.',
+    'perex' => 'Ze 146 reprezentantů České republiky jich 26 hraje za I. ČLTK Praha. Čtyři v kategorii do 14 let, deset do 18 let a dvanáct mezi dospělými.',
     'text' => '<h3>Dospělí</h3><ul><li>Nikola Bartůňková</li><li>Anastasia Detiuc</li><li>Sarah Melany Fajmonová</li><li>Karolína Muchová</li><li>Darja Viďmanová</li><li>Markéta Vondroušová</li>'
             . '<li>Radek Chodora</li><li>Jakub Filip</li><li>Matyáš Kozlovský</li><li>Jakub Nicod</li><li>Oliver Sanders</li><li>Matěj Vocel</li></ul>'], 21);
 
