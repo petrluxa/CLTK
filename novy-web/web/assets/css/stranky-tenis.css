@@ -162,6 +162,15 @@
 .tenis-kategorie__vek { display: block; margin: .3rem 0 .4rem; font: 300 clamp(2.6rem, 2rem + 2vw, 3.8rem)/1 var(--serif); color: var(--navy); font-variant-numeric: lining-nums; letter-spacing: -.01em; }
 .tenis-kategorie__vek small { font-size: .42em; font-style: italic; font-weight: 400; color: var(--gold-text); margin-right: .2em; letter-spacing: 0; }
 .tenis-kategorie__text { margin: 0; font-size: var(--t-male); color: var(--ink-2); }
+/* míček kategorie vpravo v kartě (červený / oranžový / zelený); v úzké kartě (3 vedle sebe na tabletu)
+   by vytlačil text – tam je menší nad názvem (container query podle šířky karty) */
+.tenis-kategorie > li { container-type: inline-size; }
+.tenis-kategorie--s-mickem > :not(.tenis-kategorie__micek) { margin-right: calc(clamp(4.4rem, 3.6rem + 2vw, 5.8rem) + 1rem); }
+.tenis-kategorie__micek { position: absolute; top: 50%; right: clamp(1.4rem, 1rem + 1.5vw, 2.3rem); width: clamp(4.4rem, 3.6rem + 2vw, 5.8rem); height: auto; transform: translateY(-50%) rotate(-8deg); filter: drop-shadow(0 12px 10px rgba(14, 27, 48, .18)); }
+@container (max-width: 14rem) {
+  .tenis-kategorie--s-mickem > :not(.tenis-kategorie__micek) { margin-right: 0; }
+  .tenis-kategorie__micek { position: static; align-self: flex-start; width: 3.6rem; margin: 0 0 .9rem; transform: rotate(-8deg); }
+}
 .tenis-kategorie .karta__nazev { font: 500 1.2rem/1.25 var(--sc); letter-spacing: .05em; color: var(--navy); font-synthesis: none; margin: 0; }
 
 .tenis-proces { margin-top: var(--s-2); }
