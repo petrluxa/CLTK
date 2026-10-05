@@ -99,7 +99,9 @@ zakládá `instalace.php` z formuláře.
 | napoveda | text pod polem |
 | poradi | pořadí v rámci skupiny |
 
-Skupiny `grp` a jejich pořadí v administraci: `kontakt` (Kontakty a adresa) · `paticka`
+Skupiny `grp` a jejich pořadí v administraci: `kontakt` (Kontakty a adresa) · `lide` (Na koho se
+obrátit – karty Recepce a Kancelář na stránce Kontakt; administrace pod nimi ukazuje i lidi z `cltk_vedeni`
+skupin `kancelar` a `kontakt`, od 5. 10. 2026, migrace `sql/migrace/2026-10-05-na-koho-se-obratit.php`) · `paticka`
 (Patička) · `odkazy` (Odkazy a rezervace) · `site` (Sociální sítě) · `uvod` (Úvodní strana – video)
 · `prihlasky` (Přihlášky a e-mail) · `rezim` (Režim přípravy a náhled). Skupina **`system`
 se v administraci nezobrazuje** (tajný klíč, verze schématu) – modul Texty a údaje ji musí přeskočit.
@@ -113,14 +115,14 @@ Přehled klíčů (výchozí hodnoty plní `sql/seed/10-nastaveni.php`):
 | `prijezd_kratce` | kontakt | text do patičky (Hlávkův most, HolKa, parkoviště) |
 | `prijezd_text` | kontakt | podrobný popis příjezdu (kontakt.php, areal.php) |
 | `mapa_url` | kontakt | odkaz „Mapa“ (Google Maps) |
-| `recepce_popis`, `recepce_telefon`, `recepce_email` | kontakt | Recepce – rezervace kurtů |
-| `kancelar_jmeno`, `kancelar_popis`, `kancelar_telefon`, `kancelar_email` | kontakt | Eva Štefková |
+| `recepce_popis`, `recepce_telefon`, `recepce_email` | lide | karta Recepce – rezervace kurtů (telefon i v patičce, mobilní liště a na přípravné stránce) |
+| `obsazenost_url` | lide | odkaz „Obsazenost kurtů“ (karta Recepce, horní lišta, Ceník kurtů) – Roger Online `…/v2/index.php?klub=181` |
+| `kancelar_jmeno`, `kancelar_popis`, `kancelar_telefon`, `kancelar_email` | lide | karta Kancelář – Eva Štefková (v seznamu lidí na Kontaktu se pak neopakuje) |
 | `ucet_clenstvi`, `ucet_iban`, `ucet_skola` | kontakt | bankovní účty |
 | `paticka_ctc` | paticka | „Jediný český člen Centenary Tennis Clubs · …“ |
 | `paticka_pristupnost` | paticka | text u přepínačů přístupnosti |
 | `paticka_pruh` | paticka | text spodního pruhu bez „© rok“ (rok doplní šablona: `'© ' . date('Y') . ' ' . …`) |
 | `rezervace_url` | odkazy | Roger Online (tlačítko Rezervovat kurt, nové okno) |
-| `obsazenost_url` | odkazy | obsazenost kurtů |
 | `restaurace_url` | odkazy | **prázdné = menu vede na `restaurace.php`** |
 | `prague_open_url` | odkazy | **prázdné = menu vede na `prague-open.php`** |
 | `kempy_prihlaska_url` | odkazy | přihláška na letní kempy (Google formulář) |

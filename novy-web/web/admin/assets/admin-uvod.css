@@ -145,6 +145,55 @@ tr.uv-probehla .td-nazev b{color:var(--seda)}
 .uv-heslo input{flex:1;min-width:0}
 .uv-heslo .btn{flex:none}
 
+/* Na koho se obrátit – mezititulky a řádky lidí (cltk_vedeni) v jednom formuláři.
+   Úzko: pole po dvou / pod sebou se štítky; široko (≥ 1241 px): řádek jako tabulka,
+   štítky polí se schovají (zůstanou pro čtečky) a nahoře je záhlaví sloupců. */
+.uv-lide-titul{font-family:var(--serif);font-weight:500;font-size:22px;line-height:1.2;color:var(--navy);margin:34px 0 16px;padding-bottom:8px;border-bottom:1px solid var(--linka2)}
+.uv-lide-titul:first-child{margin-top:0}
+.uv-lide{margin-top:20px}
+.uv-lide + .uv-lide{margin-top:32px}
+.uv-lide__skupina{font:500 12px/1.4 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--zlato-text);margin-bottom:6px}
+.uv-lide__skupina small{font-size:12px;letter-spacing:0;color:var(--seda);margin-left:4px}
+.uv-lide__hlava{display:none}
+.uv-os{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 16px;padding:16px 0 6px;border-top:1px solid var(--linka2);min-width:0}
+.uv-os .field > label.uv-os__stitek{font-size:11px;letter-spacing:.14em;margin-bottom:5px}
+.uv-os__poradi input{max-width:110px;text-align:center;-moz-appearance:textfield}
+.uv-os__poradi input::-webkit-inner-spin-button,.uv-os__poradi input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.uv-os__volby{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:center;gap:0 24px;min-width:0}
+.uv-os__volby .check{padding-top:0;align-items:center;font-size:14.5px}
+.uv-os__volby .check input{margin-top:0}
+.uv-os__smazat{color:var(--err)}
+.uv-os:has(.uv-os__smazat input:checked) .uv-os__pole{opacity:.4}
+.uv-os:has(.uv-os__smazat input:checked) .uv-os__smazat span{font-weight:600}
+.uv-os.je-skryte .uv-os__jmeno input,.uv-os.je-skryte .uv-os__funkce input{color:var(--seda)}
+.uv-os__pozn{display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap;min-height:44px;font-size:13px}
+.uv-os__vedeni{display:inline-flex;align-items:center;min-height:44px;font-size:14px;color:var(--navy)}
+.uv-os--novy{background:var(--papir);border:1px dashed var(--linka);padding:12px 14px 4px;margin-top:12px}
+.uv-os__novy{grid-column:1/-1;font-size:14.5px;font-weight:500;color:var(--navy)}
+.uv-os__novy .uv-tlumene{font-weight:400}
+.uv-lide-pozn{margin:28px 0 0}
+@media (max-width:640px){
+  /* telefon: každá osoba jako karta, jméno a pořadí vedle sebe */
+  .uv-os{grid-template-columns:minmax(0,1fr) 84px;gap:10px 12px;border:1px solid var(--linka);padding:12px 14px 2px;margin-top:12px}
+  .uv-os > .field,.uv-os > .uv-os__volby,.uv-os > .uv-os__novy{grid-column:1/-1}
+  .uv-os > .uv-os__jmeno{grid-column:1}
+  .uv-os > .uv-os__poradi{grid-column:2;grid-row:1}
+  .uv-os--novy > .uv-os__novy{grid-row:1}
+  .uv-os--novy > .uv-os__poradi{grid-row:2}
+  .uv-os__poradi input{max-width:none}
+  .uv-os__volby{gap:0 18px}
+}
+@media (min-width:1241px){
+  .uv-lide__hlava,.uv-os{grid-template-columns:minmax(0,1.15fr) minmax(0,1.6fr) minmax(0,.95fr) minmax(0,1.3fr) 84px;column-gap:14px}
+  .uv-lide__hlava{display:grid;font:500 11px/1.4 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--seda);padding:8px 0}
+  .uv-lide__hlava span:last-child{text-align:center}
+  .uv-os{row-gap:2px;padding:10px 0 2px}
+  .uv-os .field > label.uv-os__stitek{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;margin:0}
+  .uv-os__poradi input{max-width:none}
+  .uv-os--novy{padding:10px 12px 2px}
+  .uv-os__novy{margin-bottom:6px}
+}
+
 /* ---------- návštěvnost ---------- */
 .chart.uv-graf{gap:3px}
 .chart.uv-graf .bar{min-width:0}

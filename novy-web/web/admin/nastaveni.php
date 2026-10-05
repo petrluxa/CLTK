@@ -8,7 +8,16 @@
    a nedá se přepsat. Ukládá se jen přes setting_set() – obnoví i paměť
    setting(). Náhledové heslo se ukládá jen jako hash (nahled_heslo_nastav())
    a pole se nikdy nepředvyplňuje. Všechno se nejdřív ověří; když je někde
-   chyba, neuloží se nic a formulář se vrátí s vyplněnými hodnotami. */
+   chyba, neuloží se nic a formulář se vrátí s vyplněnými hodnotami.
+
+   Skupina „lide“ (Na koho se obrátit) = stránka Kontakt: údaje karet Recepce
+   a Kancelář (nastavení) a pod nimi lidé z cltk_vedeni, skupiny kancelar
+   a kontakt (jméno, funkce, telefon, e-mail, zobrazit kontakt / na webu,
+   pořadí, smazat, jeden prázdný řádek na přidání). Ukládají se stejným
+   tlačítkem a stejně všechno, nebo nic. Upravit / smazat jde jen řádek, který
+   do těchto dvou skupin opravdu patří (výbor ani podvržené id formulář
+   nezmění); fotka smazané osoby zmizí až po zápisu. Fotky a delší texty
+   zůstávají v modulu Vedení (vedeni.php). */
 require __DIR__ . '/inc/layout.php';
 $user = require_login();
 /* nahled_heslo_nastav() je v inc/rezim.php – načíst BEZ jeho automatického
@@ -20,9 +29,10 @@ const NS_STRANKA = 'nastaveni.php';
 
 /** Skupiny v pořadí podle SCHEMA.md: klíč => [nadpis, popis]. Neznámé (kromě system) spadnou do „Ostatní“. */
 const NS_SKUPINY = [
-    'kontakt'   => ['Kontakty a adresa', 'Patička, stránka Kontakt, přípravná stránka a mobilní lišta „Zavolat recepci“.'],
+    'kontakt'   => ['Kontakty a adresa', 'Název, adresa, příjezd a účty klubu – patička, stránka Kontakt a přípravná stránka.'],
+    'lide'      => ['Na koho se obrátit', 'Stránka Kontakt: karty Recepce a Kancelář a lidé pod nadpisem Na koho se obrátit. Telefon recepce se ukazuje i v patičce, v mobilní liště a na přípravné stránce.'],
     'paticka'   => ['Patička', 'Texty v patičce webu.'],
-    'odkazy'    => ['Odkazy a rezervace', 'Tlačítko Rezervovat kurt a položky menu, které mohou vést na samostatný web.'],
+    'odkazy'    => ['Odkazy a rezervace', 'Tlačítko Rezervovat kurt a položky menu, které mohou vést na samostatný web. Odkaz Obsazenost kurtů je ve skupině Na koho se obrátit.'],
     'site'      => ['Sociální sítě', 'Odkazy ve sloupci „Dokumenty a sítě“ v patičce. Prázdné se nezobrazí.'],
     'uvod'      => ['Úvodní strana – video', 'Video v sekci Členství na úvodu. Soubory leží ve složce uploads/.'],
     'prihlasky' => ['Přihlášky a e-mail', 'Přihlášky k akcím a do klubu se vždy uloží do administrace (Přihlášky).'],
@@ -35,6 +45,137 @@ const NS_SKUPINY = [
 const NS_SIROKE = ['paticka_pruh', 'kancelar_popis', 'recepce_popis', 'rezim_nadpis', 'klub_nazev', 'adresa_ulice'];
 const NS_VIDEO = ['mp4', 'webm'];
 const NS_OBRAZEK = ['jpg', 'jpeg', 'png', 'webp'];
+
+/** Skupina „lide“: mezititulky nad nastaveními (klíče, které sem nepatří, spadnou pod poslední). */
+const NS_LIDE_CASTI = [
+    'Recepce'  => ['recepce_popis', 'recepce_telefon', 'recepce_email', 'obsazenost_url'],
+    'Kancelář' => ['kancelar_jmeno', 'kancelar_popis', 'kancelar_telefon', 'kancelar_email'],
+];
+/** Lidé ze stránky Kontakt (cltk_vedeni.skupina => nadpis). Výbor (vybor) se tu needituje. */
+const NS_LIDE_SKUPINY = ['kancelar' => 'Kancelář klubu', 'kontakt' => 'Další kontakty'];
+const NS_LIDE_TEL = '/^[+\d][\d \-\/()]{5,}$/';
+const NS_LIDE_POPISKY = ['jmeno' => 'jméno', 'funkce' => 'funkce', 'telefon' => 'telefon', 'email' => 'e-mail', 'poradi' => 'pořadí'];
+
+if (!function_exists('obsah_prosty')) {
+    /** Prostý text z formuláře bez HTML značek (stejná pomůcka jako v modulech obsahu, např. vedeni.php). */
+    function obsah_prosty(string $s): string {
+        $s = (string)preg_replace('~<\s*(script|style|iframe|object|embed|svg|math|template)\b[^>]*>.*?<\s*/\s*\1\s*>~is', '', $s);
+        $s = (string)preg_replace('~<!--.*?(?:-->|$)~s', '', $s);
+        $s = (string)preg_replace('~</?[a-z!?][^<>]*>~i', '', $s, -1, $pocet);
+        if ($pocet > 0) $s = (string)preg_replace('/[ \t]{2,}/', ' ', $s);
+        return trim($s);
+    }
+}
+
+/** Lidé skupin kancelar a kontakt: skupina => [id => řádek] v pořadí jako na webu. */
+function ns_lide_nacti(): array {
+    $v = array_fill_keys(array_keys(NS_LIDE_SKUPINY), []);
+    foreach (rows("SELECT * FROM cltk_vedeni WHERE skupina IN ('kancelar', 'kontakt') ORDER BY poradi, id") as $r) {
+        $v[(string)$r['skupina']][(int)$r['id']] = $r;
+    }
+    return $v;
+}
+
+/** Hodnoty řádku osoby do formuláře (pořadí = místo v seznamu od 1). */
+function ns_lide_radek_form(array $r, int $misto): array {
+    return ['jmeno' => (string)$r['jmeno'], 'funkce' => (string)$r['funkce'], 'telefon' => (string)$r['telefon'],
+            'email' => (string)$r['email'], 'zobrazit_kontakt' => (int)$r['zobrazit_kontakt'] === 1 ? 1 : 0,
+            'visible' => (int)$r['visible'] === 1 ? 1 : 0, 'poradi' => (string)$misto, 'smazat' => 0];
+}
+
+/** Prázdný řádek „přidat osobu“. */
+function ns_lide_novy_form(): array {
+    return ['jmeno' => '', 'funkce' => '', 'telefon' => '', 'email' => '', 'zobrazit_kontakt' => 1, 'visible' => 1, 'poradi' => '', 'smazat' => 0];
+}
+
+/** Řádek osoby z POST: ořezané hodnoty + chyby [pole => hláška]. */
+function ns_lide_z_postu(array $x): array {
+    $t = static function (string $k, int $max) use ($x): string {
+        $v = $x[$k] ?? '';
+        return is_scalar($v) ? trim(mb_substr(obsah_prosty(str_replace("\r\n", "\n", (string)$v)), 0, $max)) : '';
+    };
+    $b = static fn(string $k): int => (is_scalar($x[$k] ?? null) && (string)$x[$k] === '1') ? 1 : 0;
+    $f = ['jmeno' => $t('jmeno', 120), 'funkce' => $t('funkce', 160), 'telefon' => $t('telefon', 40),
+          'email' => mb_strtolower($t('email', 160)), 'zobrazit_kontakt' => $b('zobrazit_kontakt'), 'visible' => $b('visible'),
+          'poradi' => $t('poradi', 6), 'smazat' => $b('smazat')];
+    $ch = [];
+    if ($f['email'] !== '' && !je_email($f['email'])) $ch['email'] = 'E-mail nevypadá správně (např. kancelar@cltk.cz).';
+    if ($f['telefon'] !== '' && !preg_match(NS_LIDE_TEL, $f['telefon'])) $ch['telefon'] = 'Telefon zapište číslicemi, např. +420 777 123 456.';
+    if ($f['poradi'] !== '' && (!preg_match('/^\d{1,3}$/', $f['poradi']) || (int)$f['poradi'] < 1)) $ch['poradi'] = 'Pořadí je číslo místa v seznamu: 1, 2, 3…';
+    return [$f, $ch];
+}
+
+/**
+ * Nové pořadí skupiny. $radky = [['klic' => id|'novy', 'puvodni' => místo od 1 | null, 'nove' => číslo | null], …]
+ * v dosavadním pořadí. Číslo = místo, kam osoba patří: kdo se posouvá nahoru, předběhne osobu se stejným
+ * číslem, kdo dolů, zařadí se za ni; nová osoba bez čísla jde na konec. Vrací klíče v novém pořadí.
+ */
+function ns_lide_serad(array $radky): array {
+    $klice = [];
+    foreach (array_values($radky) as $i => $r) {
+        $p = $r['puvodni'];
+        $n = $r['nove'] ?? $p;
+        if ($n === null) { $klice[] = [PHP_INT_MAX, 1, $i, $r['klic']]; continue; }        // nová bez čísla
+        $smer = $p === null || $n < $p ? 0 : ($n > $p ? 2 : 1);                         // 0 nahoru, 1 stojí, 2 dolů
+        $klice[] = [$n, $smer, $i, $r['klic']];
+    }
+    usort($klice, static fn($a, $b) => [$a[0], $a[1], $a[2]] <=> [$b[0], $b[1], $b[2]]);
+    return array_column($klice, 3);
+}
+
+/** Smaže fotky smazaných osob z uploads/ – jen když je už žádný řádek cltk_vedeni nepoužívá. Volat AŽ po zápisu. */
+function ns_lide_smazat_fotky(array $fotky): void {
+    foreach (array_unique(array_filter(array_map('strval', $fotky), static fn($s) => $s !== '')) as $f) {
+        if ((int)val('SELECT COUNT(*) FROM cltk_vedeni WHERE foto = ?', [$f]) === 0) delete_upload($f);
+    }
+}
+
+/** Jedno pole řádku osoby (štítek se na širokém displeji schová do záhlaví sloupců). */
+function ns_lide_pole(string $name, string $id, string $label, string $hodnota, string $typ, int $max, ?string $chyba, string $trida, array $attrs = []): string {
+    $a = array_merge(['type' => $typ, 'id' => $id, 'name' => $name, 'value' => $hodnota, 'maxlength' => $typ === 'number' ? null : $max,
+                      'aria-describedby' => $chyba !== null ? $id . '-chyba' : null, 'aria-invalid' => $chyba !== null ? 'true' : null], $attrs);
+    return '<div class="field uv-os__pole ' . e($trida) . ($chyba !== null ? ' je-chyba' : '') . '">'
+         . '<label class="uv-os__stitek" for="' . e($id) . '">' . e($label) . '</label><input' . ui_attrs($a) . '>'
+         . ($chyba !== null ? '<div class="hint" id="' . e($id) . '-chyba"><span class="uv-chyba" role="alert">' . e($chyba) . '</span></div>' : '') . '</div>';
+}
+
+/** Zaškrtávátko řádku osoby (posílá 1; skrytá nula před ním = odškrtnuto). */
+function ns_lide_check(string $name, string $id, string $label, bool $zaskrtnuto, string $trida = ''): string {
+    return '<input type="hidden" name="' . e($name) . '" value="0"><label class="check' . ($trida !== '' ? ' ' . e($trida) : '') . '" for="' . e($id) . '">'
+         . '<input type="checkbox" id="' . e($id) . '" name="' . e($name) . '" value="1"' . ($zaskrtnuto ? ' checked' : '') . '><span>' . e($label) . '</span></label>';
+}
+
+/** Řádek osoby ve formuláři. $klic = id | 'novy-<skupina>'. */
+function ns_lide_radek_html(string $klic, string $skupina, array $f, array $chyby, ?array $db, string $kartaJmeno): string {
+    $novy = $db === null;
+    $base = $novy ? 'on[' . $skupina . ']' : 'o[' . $klic . ']';
+    $idz = 'set-os-' . $klic . '-';
+    $ch = static fn(string $p): ?string => $chyby['os-' . $klic . '-' . $p] ?? null;
+    $tridy = 'uv-os' . ($novy ? ' uv-os--novy' : '') . (!$novy && !(int)$db['visible'] ? ' je-skryte' : '');
+    $popis = $novy ? 'Přidat osobu – ' . NS_LIDE_SKUPINY[$skupina] : ((string)$db['jmeno'] !== '' ? (string)$db['jmeno'] : 'Osoba bez jména');
+    $h = '<div class="' . $tridy . '" role="group" aria-label="' . e($popis) . '"' . ($novy ? '' : ' id="os-' . e($klic) . '"') . '>';
+    if ($novy) $h .= '<p class="uv-os__novy">Přidat osobu <span class="uv-tlumene">– vyplňte aspoň jméno; bez pořadí přijde na konec, prázdný řádek se neuloží.</span></p>';
+    $h .= '<input type="hidden" name="' . e($base) . '[byl]" value="1">';
+    $h .= ns_lide_pole($base . '[jmeno]', $idz . 'jmeno', 'Jméno', $f['jmeno'], 'text', 120, $ch('jmeno'), 'uv-os__jmeno', ['autocomplete' => 'off']);
+    $h .= ns_lide_pole($base . '[funkce]', $idz . 'funkce', 'Funkce', $f['funkce'], 'text', 160, $ch('funkce'), 'uv-os__funkce');
+    $h .= ns_lide_pole($base . '[telefon]', $idz . 'telefon', 'Telefon', $f['telefon'], 'tel', 40, $ch('telefon'), 'uv-os__telefon');
+    $h .= ns_lide_pole($base . '[email]', $idz . 'email', 'E-mail', $f['email'], 'email', 160, $ch('email'), 'uv-os__email', ['autocomplete' => 'off']);
+    $h .= ns_lide_pole($base . '[poradi]', $idz . 'poradi', 'Pořadí', $f['poradi'], 'number', 3, $ch('poradi'), 'uv-os__poradi',
+                       ['min' => '1', 'max' => '999', 'step' => '1', 'inputmode' => 'numeric']);
+    $h .= '<div class="uv-os__volby">'
+        . ns_lide_check($base . '[zobrazit_kontakt]', $idz . 'kontakt', 'Telefon a e-mail zobrazit na webu', (bool)$f['zobrazit_kontakt'])
+        . ns_lide_check($base . '[visible]', $idz . 'visible', 'Zobrazit na webu', (bool)$f['visible']);
+    if (!$novy) {
+        $h .= ns_lide_check($base . '[smazat]', $idz . 'smazat', 'Smazat', (bool)$f['smazat'], 'uv-os__smazat');
+        if ($skupina === 'kancelar' && $kartaJmeno !== '' && mb_strtolower(trim((string)$db['jmeno'])) === $kartaJmeno) {
+            $h .= '<span class="uv-os__pozn">' . badge('karta Kancelář', 'info') . ' <span class="uv-tlumene">na webu je nahoře na kartě, v seznamu se neopakuje</span></span>';
+        }
+        if ((string)$db['foto'] !== '' || trim((string)$db['text']) !== '') {
+            $h .= '<a class="uv-os__vedeni" href="vedeni.php?id=' . (int)$db['id'] . '">Fotka a text ve Vedení</a>';
+        }
+    }
+    return $h . '</div></div>';
+}
 
 /** Odkaz z formuláře: [hodnota pro DB, chyba]. Povolí https://…, mailto:, tel:, #kotvu a stránku webu. */
 function ns_odkaz(string $vstup): array {
@@ -115,8 +256,20 @@ foreach ($vse as $s) {
 }
 
 $chyby = [];          // klíč => hláška
+$chybyNazvy = [];     // klíč chyby => název do souhrnu nahoře (lidé – nejsou v cltk_settings)
 $hodnoty = [];        // hodnoty do formuláře (po chybě odeslané)
 foreach ($vse as $s) $hodnoty[$s['skey']] = (string)$s['sval'];
+
+/* lidé ze stránky Kontakt (skupina „lide“) – jen kancelar a kontakt */
+$lide = ns_lide_nacti();
+$lideForm = [];       // id => hodnoty řádku do formuláře
+$lideNove = [];       // skupina => hodnoty prázdného řádku
+foreach ($lide as $sk => $radky) {
+    $m = 0;
+    foreach ($radky as $rid => $r) $lideForm[$rid] = ns_lide_radek_form($r, ++$m);
+    $lideNove[$sk] = ns_lide_novy_form();
+}
+$kartaJmeno = mb_strtolower(trim(setting('kancelar_jmeno')));
 
 if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
     admin_post_zacatek(NS_STRANKA);
@@ -199,12 +352,83 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
         else $hesloZmena = $hesloNove;
     }
 
+    /* lidé ze stránky Kontakt – řádky se berou jen podle $lide (skupiny kancelar a kontakt
+       z databáze); id z formuláře, které tam není (výbor, cizí, mezitím smazané), se nepoužije */
+    $osPost = is_array($_POST['o'] ?? null) ? $_POST['o'] : [];
+    $osNovePost = is_array($_POST['on'] ?? null) ? $_POST['on'] : [];
+    $osZapis = [];        // id => [skupina, změněné sloupce]
+    $osNove = [];         // skupina => data nové osoby
+    $osSmazat = [];       // id => řádek z databáze
+    $osPoradiSkupin = 0;  // ve kolika skupinách se změnilo pořadí
+    foreach ($lide as $sk => $radky) {
+        $plan = [];
+        $m = 0;
+        foreach ($radky as $rid => $r) {
+            $m++;
+            $x = $osPost[$rid] ?? null;
+            if (!is_array($x) || ($x['byl'] ?? '') !== '1') { $plan[] = ['klic' => $rid, 'puvodni' => $m, 'nove' => null]; continue; }
+            [$f, $ch] = ns_lide_z_postu($x);
+            $lideForm[$rid] = $f;
+            if ($f['smazat']) { $osSmazat[$rid] = $r; continue; }          // mazaný řádek se neověřuje
+            if ($f['jmeno'] === '') $ch['jmeno'] = 'Vyplňte jméno (nebo zaškrtněte Smazat).';
+            $nazev = NS_LIDE_SKUPINY[$sk] . ', ' . ((string)$r['jmeno'] !== '' ? (string)$r['jmeno'] : 'osoba bez jména');
+            foreach ($ch as $pole => $hlaska) {
+                $chyby['os-' . $rid . '-' . $pole] = $hlaska;
+                $chybyNazvy['os-' . $rid . '-' . $pole] = $nazev . ' – ' . NS_LIDE_POPISKY[$pole];
+            }
+            $data = [];
+            foreach (['jmeno', 'funkce', 'telefon', 'email', 'zobrazit_kontakt', 'visible'] as $sl) {
+                if ((string)$f[$sl] !== (string)$r[$sl]) $data[$sl] = $f[$sl];
+            }
+            if ($data) $osZapis[$rid] = [$sk, $data];
+            $plan[] = ['klic' => $rid, 'puvodni' => $m, 'nove' => $f['poradi'] !== '' && !isset($ch['poradi']) ? (int)$f['poradi'] : null];
+        }
+        $x = $osNovePost[$sk] ?? null;
+        if (is_array($x) && ($x['byl'] ?? '') === '1') {
+            [$f, $ch] = ns_lide_z_postu($x);
+            $f['smazat'] = 0;
+            $lideNove[$sk] = $f;
+            if ($f['jmeno'] !== '' || $f['funkce'] !== '' || $f['telefon'] !== '' || $f['email'] !== '') {     // prázdný řádek = nic
+                if ($f['jmeno'] === '') $ch['jmeno'] = 'Vyplňte jméno nové osoby (nebo řádek vymažte).';
+                foreach ($ch as $pole => $hlaska) {
+                    $chyby['os-novy-' . $sk . '-' . $pole] = $hlaska;
+                    $chybyNazvy['os-novy-' . $sk . '-' . $pole] = NS_LIDE_SKUPINY[$sk] . ', nová osoba – ' . NS_LIDE_POPISKY[$pole];
+                }
+                $osNove[$sk] = ['skupina' => $sk, 'jmeno' => $f['jmeno'], 'funkce' => $f['funkce'], 'telefon' => $f['telefon'],
+                                'email' => $f['email'], 'zobrazit_kontakt' => $f['zobrazit_kontakt'], 'foto' => '', 'text' => '',
+                                'visible' => $f['visible'], 'poradi' => 0];
+                $plan[] = ['klic' => 'novy', 'puvodni' => null, 'nove' => $f['poradi'] !== '' && !isset($ch['poradi']) ? (int)$f['poradi'] : null];
+            }
+        }
+        /* pořadí: když zůstává (jen bez smazaných, nová na konci), čísla v databázi se nepřepisují */
+        $serazene = ns_lide_serad($plan);
+        $beze = array_column($plan, 'klic');
+        if ($serazene !== $beze) {
+            $osPoradiSkupin++;
+            foreach ($serazene as $i => $k) {
+                if ($k === 'novy') { $osNove[$sk]['poradi'] = $i; continue; }
+                if ((int)$radky[$k]['poradi'] === $i) continue;
+                $osZapis[$k] = [$sk, ($osZapis[$k][1] ?? []) + ['poradi' => $i]];
+            }
+        } elseif (isset($osNove[$sk])) {
+            $osNove[$sk]['poradi'] = $radky ? max(array_map('intval', array_column($radky, 'poradi'))) + 1 : 0;
+        }
+    }
+
     if (!$chyby) {
         /* všechno, nebo nic – kdyby zápis někde selhal, nezůstane polovina změn */
         db()->beginTransaction();
         try {
             foreach ($nove as $k => $v) setting_set($k, $v);
             if ($hesloZmena !== null) nahled_heslo_nastav($hesloZmena);
+            foreach ($osSmazat as $rid => $r) q('DELETE FROM cltk_vedeni WHERE id = ? AND skupina = ?', [$rid, (string)$r['skupina']]);
+            foreach ($osZapis as $rid => [$sk, $data]) {
+                $sloupce = array_intersect_key($data, array_flip(['jmeno', 'funkce', 'telefon', 'email', 'zobrazit_kontakt', 'visible', 'poradi']));
+                if (!$sloupce) continue;
+                q('UPDATE cltk_vedeni SET ' . implode(', ', array_map(static fn($c) => $c . ' = ?', array_keys($sloupce)))
+                  . ' WHERE id = ? AND skupina = ?', array_merge(array_values($sloupce), [$rid, $sk]));
+            }
+            foreach ($osNove as $data) db_insert('cltk_vedeni', $data);
             db()->commit();
         } catch (Throwable $e) {
             db()->rollBack();
@@ -215,8 +439,10 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
         /* nahrazené soubory pryč – jen když na ně už žádné nastavení neukazuje */
         $pouzite = array_map('strval', array_column(rows("SELECT sval FROM cltk_settings WHERE typ = 'soubor'"), 'sval'));
         admin_smazat_soubory(array_values(array_diff(array_unique($kSmazani), $pouzite)));
+        ns_lide_smazat_fotky(array_column($osSmazat, 'foto'));          // fotky smazaných lidí až po zápisu
 
-        $pocet = count($nove) + ($hesloZmena !== null ? 1 : 0);
+        $osUpraveno = count(array_filter($osZapis, static fn($z) => array_diff(array_keys($z[1]), ['poradi']) !== []));
+        $pocet = count($nove) + ($hesloZmena !== null ? 1 : 0) + $osUpraveno + count($osNove) + count($osSmazat) + $osPoradiSkupin;
         if ($pocet === 0) redirect(NS_STRANKA, 'Nic se nezměnilo – všechny údaje už byly uložené.', 'info');
         $hlaska = 'Uloženo. ' . ($pocet === 1 ? 'Změnil se 1 údaj.' : 'Změnily se ' . $pocet . ' údaje.');
         if ($pocet > 4) $hlaska = 'Uloženo. Změnilo se ' . $pocet . ' údajů.';
@@ -227,7 +453,13 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
         }
         if ($hesloZmena === '') $hlaska .= ' Náhledové heslo je zrušené.';
         elseif ($hesloZmena !== null) $hlaska .= ' Náhledové heslo je nastavené (dřívější náhledy přestaly platit).';
-        redirect(NS_STRANKA, $hlaska);
+        $osDetail = array_filter([
+            $osNove ? 'přidáno: ' . implode(', ', array_column($osNove, 'jmeno')) : '',
+            $osSmazat ? 'smazáno: ' . implode(', ', array_map(static fn($r) => (string)$r['jmeno'], $osSmazat)) : '',
+            $osPoradiSkupin ? 'nové pořadí' : '',
+        ]);
+        if ($osDetail) $hlaska .= ' Na koho se obrátit – ' . implode('; ', $osDetail) . '.';
+        redirect(NS_STRANKA . (($osNove || $osSmazat || $osZapis) && !$nove ? '#sk-lide' : ''), $hlaska);
     }
     admin_smazat_soubory($nahrane);                               // nic se neuložilo → nahrané soubory pryč
 }
@@ -292,14 +524,14 @@ $rezim = ($hodnoty['rezim_pripravy'] ?? setting('rezim_pripravy')) === '1';
 $maHeslo = setting('nahled_heslo_hash') !== '';
 
 admin_head('Texty a údaje', $user, [
-    'podnadpis' => 'Kontakty, adresa, patička, odkazy, sociální sítě, video na úvodu, e-mail pro přihlášky a režim přípravy. Změny se na webu projeví hned po uložení.',
+    'podnadpis' => 'Kontakty, adresa, na koho se obrátit (recepce, kancelář a lidé ze stránky Kontakt), patička, odkazy, sociální sítě, video na úvodu, e-mail pro přihlášky a režim přípravy. Změny se na webu projeví hned po uložení.',
     'akce'      => '<a class="btn btn-ghost" href="' . e(url('')) . '" target="_blank" rel="noopener">Zobrazit web ↗</a>',
 ]);
 echo '<link rel="stylesheet" href="' . e(BASE_PATH . verze('admin/assets/admin-uvod.css')) . '">';
 ?>
 <?php if ($chyby): ?>
   <ul class="uv-chyby" role="alert"><li><b>Nic se neuložilo – opravte prosím <?= count($chyby) === 1 ? 'jeden údaj' : count($chyby) . ' údaje' ?>:</b></li>
-    <?php foreach ($chyby as $k => $ch): ?><li><a href="#set-<?= e(preg_replace('/[^a-z0-9_-]/i', '-', $k)) ?>"><?= e(($k === 'nahled_heslo_hash' ? 'Náhledové heslo' : (array_column($vse, 'label', 'skey')[$k] ?? $k)) . ': ' . $ch) ?></a></li><?php endforeach; ?>
+    <?php foreach ($chyby as $k => $ch): ?><li><a href="#set-<?= e(preg_replace('/[^a-z0-9_-]/i', '-', $k)) ?>"><?= e(($chybyNazvy[$k] ?? ($k === 'nahled_heslo_hash' ? 'Náhledové heslo' : (array_column($vse, 'label', 'skey')[$k] ?? $k))) . ': ' . $ch) ?></a></li><?php endforeach; ?>
   </ul>
 <?php endif; ?>
 
@@ -308,7 +540,7 @@ echo '<link rel="stylesheet" href="' . e(BASE_PATH . verze('admin/assets/admin-u
 <?php else: ?>
 
 <nav class="zalozky" aria-label="Skupiny údajů">
-  <?php foreach (NS_SKUPINY as $g => [$nadpis]): if (empty($podleSkupin[$g])) continue; ?>
+  <?php foreach (NS_SKUPINY as $g => [$nadpis]): if (empty($podleSkupin[$g]) && $g !== 'lide') continue; ?>
     <a href="#<?= $g === 'rezim' ? 'rezim' : 'sk-' . e($g) ?>"><?= e($nadpis) ?></a>
   <?php endforeach; ?>
 </nav>
@@ -317,10 +549,10 @@ echo '<link rel="stylesheet" href="' . e(BASE_PATH . verze('admin/assets/admin-u
   <?= csrf_field() ?>
   <input type="hidden" name="action" value="ulozit">
 
-  <?php foreach (NS_SKUPINY as $g => [$nadpis, $popis]): if (empty($podleSkupin[$g])) continue; ?>
+  <?php foreach (NS_SKUPINY as $g => [$nadpis, $popis]): if (empty($podleSkupin[$g]) && $g !== 'lide') continue; ?>
     <section class="panel uv-nastaveni-skupina" id="<?= $g === 'rezim' ? 'rezim' : 'sk-' . e($g) ?>">
       <div class="panel-head">
-        <h2><?= e($nadpis) ?> <small><?= count($podleSkupin[$g]) ?></small></h2>
+        <h2><?= e($nadpis) ?> <small><?= count($podleSkupin[$g] ?? []) + ($g === 'lide' ? array_sum(array_map('count', $lide)) : 0) ?></small></h2>
         <?php if ($popis !== ''): ?><span class="hint"><?= e($popis) ?></span><?php endif; ?>
       </div>
       <div class="panel-body">
@@ -338,6 +570,35 @@ echo '<link rel="stylesheet" href="' . e(BASE_PATH . verze('admin/assets/admin-u
             <?php endif; ?>
           </div>
         <?php endif; ?>
+        <?php if ($g === 'lide'): ?>
+          <?php /* --- Na koho se obrátit: nastavení pod mezititulky Recepce / Kancelář, pak lidé --- */
+            $casti = [];
+            foreach ($podleSkupin['lide'] ?? [] as $s) {
+                $cast = array_key_last(NS_LIDE_CASTI);
+                foreach (NS_LIDE_CASTI as $nazevCasti => $klice) if (in_array((string)$s['skey'], $klice, true)) { $cast = $nazevCasti; break; }
+                $casti[$cast][] = $s;
+            } ?>
+          <?php foreach (NS_LIDE_CASTI as $nazevCasti => $klice): if (empty($casti[$nazevCasti])) continue; ?>
+            <h3 class="uv-lide-titul"><?= e($nazevCasti) ?></h3>
+            <div class="form-mrizka">
+              <?php foreach ($casti[$nazevCasti] as $s): ?><?= ns_pole($s, $hodnoty[(string)$s['skey']] ?? '', $chyby[(string)$s['skey']] ?? null) ?><?php endforeach; ?>
+            </div>
+          <?php endforeach; ?>
+          <h3 class="uv-lide-titul">Lidé a kontakty</h3>
+          <?php foreach (NS_LIDE_SKUPINY as $sk => $skNazev): ?>
+            <div class="uv-lide" id="lide-<?= e($sk) ?>">
+              <h4 class="uv-lide__skupina"><?= e($skNazev) ?> <small><?= count($lide[$sk]) ?></small></h4>
+              <div class="uv-lide__hlava" aria-hidden="true"><span>Jméno</span><span>Funkce</span><span>Telefon</span><span>E-mail</span><span>Pořadí</span></div>
+              <?php foreach ($lide[$sk] as $rid => $r): ?><?= ns_lide_radek_html((string)$rid, $sk, $lideForm[$rid], $chyby, $r, $kartaJmeno) ?><?php endforeach; ?>
+              <?= ns_lide_radek_html('novy-' . $sk, $sk, $lideNove[$sk], $chyby, null, $kartaJmeno) ?>
+            </div>
+          <?php endforeach; ?>
+          <div class="uv-info uv-lide-pozn">
+            <p>Na webu jsou lidé pod nadpisem „Na koho se obrátit“ – nejdřív Kancelář klubu, pak Další kontakty. Osoba z karty Kancelář<?= setting('kancelar_jmeno') !== '' ? ' (' . e(setting('kancelar_jmeno')) . ')' : '' ?> se v seznamu na webu neopakuje.</p>
+            <p>Pořadí: 1 = nahoře. Osobu přesunete tak, že jí napíšete číslo místa, kam patří – ostatní se posunou.</p>
+            <p>Fotky a delší texty lidí upravíte v modulu <a href="vedeni.php">Vedení klubu</a>, nadpis sekce na stránce Kontakt ve <a href="stranky.php?stranka=kontakt">Stránkách</a>.</p>
+          </div>
+        <?php else: ?>
         <div class="form-mrizka uv-mezera">
           <?php foreach ($podleSkupin[$g] as $s):
               $k = (string)$s['skey'];
@@ -359,6 +620,7 @@ echo '<link rel="stylesheet" href="' . e(BASE_PATH . verze('admin/assets/admin-u
             <?= ns_pole($s, $hodnoty[$k] ?? '', $chyby[$k] ?? null) ?>
           <?php endif; endforeach; ?>
         </div>
+        <?php endif; ?>
       </div>
     </section>
   <?php endforeach; ?>

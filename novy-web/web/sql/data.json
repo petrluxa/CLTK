@@ -1,6 +1,6 @@
 {
     "verze": 1,
-    "vytvoreno": "2026-10-04 12:38:39",
+    "vytvoreno": "2026-10-05 09:35:30",
     "tabulky": {
         "cltk_akce": [
             {
@@ -8321,37 +8321,37 @@
                 "skey": "kancelar_email",
                 "sval": "stefkova@cltk.cz",
                 "label": "Kancelář – e-mail",
-                "grp": "kontakt",
+                "grp": "lide",
                 "typ": "email",
                 "napoveda": "",
-                "poradi": 15
+                "poradi": 16
             },
             {
                 "skey": "kancelar_jmeno",
                 "sval": "Eva Štefková",
                 "label": "Kancelář – jméno",
-                "grp": "kontakt",
+                "grp": "lide",
                 "typ": "text",
-                "napoveda": "",
-                "poradi": 12
+                "napoveda": "Tato osoba má na webu vlastní kartu Kancelář, v seznamu lidí níže se už neopakuje.",
+                "poradi": 13
             },
             {
                 "skey": "kancelar_popis",
                 "sval": "kancelář, členství, stálé rezervace · Po–Pá 9:00–17:00",
                 "label": "Kancelář – popis",
-                "grp": "kontakt",
+                "grp": "lide",
                 "typ": "text",
                 "napoveda": "",
-                "poradi": 13
+                "poradi": 14
             },
             {
                 "skey": "kancelar_telefon",
                 "sval": "+420 737 215 012",
                 "label": "Kancelář – telefon",
-                "grp": "kontakt",
+                "grp": "lide",
                 "typ": "tel",
                 "napoveda": "",
-                "poradi": 14
+                "poradi": 15
             },
             {
                 "skey": "kempy_prihlaska_url",
@@ -8391,12 +8391,12 @@
             },
             {
                 "skey": "obsazenost_url",
-                "sval": "https://onlinehq.cz/r/courtst.php?klub=181",
-                "label": "Obsazenost kurtů",
-                "grp": "odkazy",
+                "sval": "https://www.rogeronline.cz/v2/index.php?klub=181",
+                "label": "Obsazenost kurtů – odkaz",
+                "grp": "lide",
                 "typ": "url",
-                "napoveda": "",
-                "poradi": 23
+                "napoveda": "Ukazuje se na kartě Recepce na stránce Kontakt, v horní liště webu a na stránce Ceník kurtů. Otevírá se v novém okně.",
+                "poradi": 12
             },
             {
                 "skey": "paticka_ctc",
@@ -8474,7 +8474,7 @@
                 "skey": "recepce_email",
                 "sval": "recepce@cltk.cz",
                 "label": "Recepce – e-mail",
-                "grp": "kontakt",
+                "grp": "lide",
                 "typ": "email",
                 "napoveda": "",
                 "poradi": 11
@@ -8483,7 +8483,7 @@
                 "skey": "recepce_popis",
                 "sval": "rezervace kurtů",
                 "label": "Recepce – popis",
-                "grp": "kontakt",
+                "grp": "lide",
                 "typ": "text",
                 "napoveda": "",
                 "poradi": 9
@@ -8492,7 +8492,7 @@
                 "skey": "recepce_telefon",
                 "sval": "+420 608 974 974",
                 "label": "Recepce – telefon",
-                "grp": "kontakt",
+                "grp": "lide",
                 "typ": "tel",
                 "napoveda": "Zobrazuje se v patičce, v mobilní liště „Zavolat recepci“ a na přípravné stránce.",
                 "poradi": 10
@@ -11345,7 +11345,7 @@
                 "foto": "galerie/vondrousova-wimbledon-2023.jpg",
                 "foto_w": 2400,
                 "foto_h": 1600,
-                "fokus": "44% 28%",
+                "fokus": "70% 28%",
                 "alt": "Markéta Vondroušová líbá mísu Venus Rosewater Dish pro vítězku Wimbledonu 2023",
                 "popisek": "<em>Markéta Vondroušová</em> s mísou Venus Rosewater Dish · Wimbledon 2023",
                 "kredit": "foto Martin Sidorják",
@@ -11395,7 +11395,7 @@
                 "foto": "galerie/muchova-mensik-us-open-2026.jpg",
                 "foto_w": 2400,
                 "foto_h": 1600,
-                "fokus": "70% 22%",
+                "fokus": "60% 22%",
                 "alt": "Karolína Muchová a Jakub Menšík s trofejí pro vítěze smíšené čtyřhry US Open 2026",
                 "popisek": "<em>Karolína Muchová a Jakub Menšík</em> · vítězové smíšené čtyřhry US Open 2026",
                 "kredit": "foto Getty Images",

@@ -1,4 +1,4 @@
--- I. ČLTK Praha – obsah webu (export 4. 10. 2026 12:38)
+-- I. ČLTK Praha – obsah webu (export 5. 10. 2026 09:35)
 -- Jen INSERT IGNORE do tabulek cltk_. Nic se nemaže ani nepřepisuje.
 -- Účty, přihlášky, návštěvnost a tajné klíče tu nejsou.
 SET NAMES utf8mb4;
@@ -582,15 +582,15 @@ INSERT IGNORE INTO cltk_settings (skey, sval, label, grp, typ, napoveda, poradi)
 ('fotogalerie_url', 'https://cltk.dphoto.com/albums', 'Fotogalerie klubu', 'site', 'url', '', 30),
 ('ico', '45243077', 'IČO', 'kontakt', 'text', '', 3),
 ('instagram_url', 'https://www.instagram.com/cltk.insta/', 'Instagram', 'site', 'url', '', 28),
-('kancelar_email', 'stefkova@cltk.cz', 'Kancelář – e-mail', 'kontakt', 'email', '', 15),
-('kancelar_jmeno', 'Eva Štefková', 'Kancelář – jméno', 'kontakt', 'text', '', 12),
-('kancelar_popis', 'kancelář, členství, stálé rezervace · Po–Pá 9:00–17:00', 'Kancelář – popis', 'kontakt', 'text', '', 13),
-('kancelar_telefon', '+420 737 215 012', 'Kancelář – telefon', 'kontakt', 'tel', '', 14),
+('kancelar_email', 'stefkova@cltk.cz', 'Kancelář – e-mail', 'lide', 'email', '', 16),
+('kancelar_jmeno', 'Eva Štefková', 'Kancelář – jméno', 'lide', 'text', 'Tato osoba má na webu vlastní kartu Kancelář, v seznamu lidí níže se už neopakuje.', 13),
+('kancelar_popis', 'kancelář, členství, stálé rezervace · Po–Pá 9:00–17:00', 'Kancelář – popis', 'lide', 'text', '', 14),
+('kancelar_telefon', '+420 737 215 012', 'Kancelář – telefon', 'lide', 'tel', '', 15),
 ('kempy_prihlaska_url', 'https://forms.gle/JvMQNKJJmoBareVa7', 'Přihláška na letní kempy', 'odkazy', 'url', '', 26),
 ('klub_nazev', 'I. Český Lawn-Tennis Klub Praha', 'Název klubu', 'kontakt', 'text', '', 0),
 ('klub_zkratka', 'I. ČLTK Praha', 'Zkratka názvu', 'kontakt', 'text', '', 1),
 ('mapa_url', 'https://www.google.com/maps/search/?api=1&query=Ostrov+%C5%A0tvanice+38+Praha', 'Odkaz „Mapa“', 'kontakt', 'url', '', 8),
-('obsazenost_url', 'https://onlinehq.cz/r/courtst.php?klub=181', 'Obsazenost kurtů', 'odkazy', 'url', '', 23),
+('obsazenost_url', 'https://www.rogeronline.cz/v2/index.php?klub=181', 'Obsazenost kurtů – odkaz', 'lide', 'url', 'Ukazuje se na kartě Recepce na stránce Kontakt, v horní liště webu a na stránce Ceník kurtů. Otevírá se v novém okně.', 12),
 ('paticka_ctc', 'Jediný český člen Centenary Tennis Clubs · člen Českého tenisového svazu, klub č. 52', 'Patička – věta pod dokumenty', 'paticka', 'textarea', '', 19),
 ('paticka_pristupnost', 'Web respektuje nastavení vašeho zařízení. Volbu si zapamatujeme.', 'Patička – text u přístupnosti', 'paticka', 'textarea', '', 20),
 ('paticka_pruh', 'I. Český Lawn-Tennis Klub Praha · IČO 45243077', 'Patička – spodní pruh (za „© rok“)', 'paticka', 'text', '„© rok“ se doplní automaticky.', 21),
@@ -599,9 +599,9 @@ INSERT IGNORE INTO cltk_settings (skey, sval, label, grp, typ, napoveda, poradi)
 ('prihlasky_mazat_mesicu', '12', 'Mazat staré přihlášky po (měsících)', 'prihlasky', 'cislo', 'Vyřízené a zamítnuté přihlášky do klubu a všechny přihlášky k akcím starší než tolik měsíců se samy smažou – osobní údaje se nemají držet déle, než je potřeba. Nové přihlášky do klubu zůstávají vždy. 0 = nemazat.', 35),
 ('prijezd_kratce', 'Z Hlávkova mostu (tramvaj č. 14, brána pro pěší) nebo po lávce HolKa z Karlína a Holešovic. Autem na parkoviště u Negrelliho viaduktu, zadním vchodem.', 'Příjezd – krátce (patička)', 'kontakt', 'textarea', '', 6),
 ('prijezd_text', 'Tenisový areál I. ČLTK Praha se nachází na ostrově Štvanice s možným přístupem z Hlávkova mostu nebo z Karlína i Holešovic přes lávku HolKa. Na Hlávkově mostě je zastávka tramvaje č. 14 a stanice metra B i C jsou vzdálené jen několik minut chůze. Brána pro pěší vstup se nachází přímo u příchodu z mostu. Pro příjezd autem je lepší po sjezdu z magistrály areál zprava objet, zaparkovat na vyhrazeném parkovišti a do areálu vejít zadním vchodem.', 'Příjezd – podrobně (kontakt, areál)', 'kontakt', 'textarea', '', 7),
-('recepce_email', 'recepce@cltk.cz', 'Recepce – e-mail', 'kontakt', 'email', '', 11),
-('recepce_popis', 'rezervace kurtů', 'Recepce – popis', 'kontakt', 'text', '', 9),
-('recepce_telefon', '+420 608 974 974', 'Recepce – telefon', 'kontakt', 'tel', 'Zobrazuje se v patičce, v mobilní liště „Zavolat recepci“ a na přípravné stránce.', 10),
+('recepce_email', 'recepce@cltk.cz', 'Recepce – e-mail', 'lide', 'email', '', 11),
+('recepce_popis', 'rezervace kurtů', 'Recepce – popis', 'lide', 'text', '', 9),
+('recepce_telefon', '+420 608 974 974', 'Recepce – telefon', 'lide', 'tel', 'Zobrazuje se v patičce, v mobilní liště „Zavolat recepci“ a na přípravné stránce.', 10),
 ('restaurace_url', '', 'Web restaurace (položka menu Restaurace)', 'odkazy', 'url', 'Prázdné = menu vede na stránku Restaurace na tomto webu („připravujeme“).', 24),
 ('rezervace_url', 'https://www.rogeronline.cz/v2/index.php?klub=181', 'Rezervace kurtů (tlačítko Rezervovat kurt)', 'odkazy', 'url', 'Otevírá se v novém okně.', 22),
 ('rezim_nadpis', 'Připravujeme <em>nový</em> web', 'Přípravná stránka – nadpis', 'rezim', 'inline', '', 37),
@@ -768,9 +768,9 @@ INSERT IGNORE INTO cltk_triptych (id, rok, jmeno, disciplina, foto, fokus, alt, 
 (3, '2023', 'Markéta Vondroušová', 'Wimbledon · dvouhra žen · finále', 'historie/triptych-2023-vondrousova.jpg', '45% 30%', 'Markéta Vondroušová s mísou Venus Rosewater Dish, Wimbledon 2023', 'Vondroušová', 'Jabeurová', '[\"6:4\",\"6:4\"]', 'I. ČLTK Praha', 'Na Štvanici od roku 2006, za klub registrována od sezóny 2011. První nenasazená vítězka Wimbledonu v historii.', 1, 2);
 
 INSERT IGNORE INTO cltk_uvodni_galerie (id, typ, rejstrik, foto, foto_w, foto_h, fokus, alt, popisek, kredit, deska_stitek, deska_titul, deska_tym_a, deska_skore, deska_tym_b, deska_hrac, deska_souper, deska_sety, deska_misto, visible, poradi, created_at, updated_at) VALUES
-(1, 'foto', 'Vondroušová', 'galerie/vondrousova-wimbledon-2023.jpg', 2400, 1600, '44% 28%', 'Markéta Vondroušová líbá mísu Venus Rosewater Dish pro vítězku Wimbledonu 2023', '<em>Markéta Vondroušová</em> s mísou Venus Rosewater Dish · Wimbledon 2023', 'foto Martin Sidorják', '', '', '', '', '', '', '', '', '', 1, 0, '2026-10-04 12:38:30', '2026-10-04 12:38:30'),
+(1, 'foto', 'Vondroušová', 'galerie/vondrousova-wimbledon-2023.jpg', 2400, 1600, '70% 28%', 'Markéta Vondroušová líbá mísu Venus Rosewater Dish pro vítězku Wimbledonu 2023', '<em>Markéta Vondroušová</em> s mísou Venus Rosewater Dish · Wimbledon 2023', 'foto Martin Sidorják', '', '', '', '', '', '', '', '', '', 1, 0, '2026-10-04 12:38:30', '2026-10-04 12:38:30'),
 (2, 'foto', 'Muchová', 'galerie/muchova-wimbledon-2026.jpg', 2400, 1601, '50% 26%', 'Karolína Muchová s talířem pro finalistku Wimbledonu 2026', '<em>Karolína Muchová</em> s talířem pro finalistku · Wimbledon 2026', 'foto Martin Sidorják', '', '', '', '', '', '', '', '', '', 1, 1, '2026-10-04 12:38:30', '2026-10-04 12:38:30'),
-(3, 'foto', 'Muchová & Menšík', 'galerie/muchova-mensik-us-open-2026.jpg', 2400, 1600, '70% 22%', 'Karolína Muchová a Jakub Menšík s trofejí pro vítěze smíšené čtyřhry US Open 2026', '<em>Karolína Muchová a Jakub Menšík</em> · vítězové smíšené čtyřhry US Open 2026', 'foto Getty Images', '', '', '', '', '', '', '', '', '', 1, 2, '2026-10-04 12:38:30', '2026-10-04 12:38:30'),
+(3, 'foto', 'Muchová & Menšík', 'galerie/muchova-mensik-us-open-2026.jpg', 2400, 1600, '60% 22%', 'Karolína Muchová a Jakub Menšík s trofejí pro vítěze smíšené čtyřhry US Open 2026', '<em>Karolína Muchová a Jakub Menšík</em> · vítězové smíšené čtyřhry US Open 2026', 'foto Getty Images', '', '', '', '', '', '', '', '', '', 1, 2, '2026-10-04 12:38:30', '2026-10-04 12:38:30'),
 (4, 'deska', 'BJK Cup 2026', '', 0, 0, '50% 50%', 'Billie Jean King Cup 2026: Česko vyhrálo finále nad Ukrajinou 2:0, Karolína Muchová porazila Anhelinu Kalininovou 6:2, 6:3', '<em>Billie Jean King Cup 2026</em> · finále v Šen-čenu, 27. 9. 2026', 'fotografii z finále doplní klub', 'Billie Jean King Cup · 2026', 'Česko<br><em>šampionem</em>', 'Česko', '2 : 0', 'Ukrajina', 'Karolína Muchová', 'Anhelina Kalininová', '6:2 · 6:3', 'Šen-čen · 27. září 2026 · dvanáctý titul Česka', 1, 3, '2026-10-04 12:38:30', '2026-10-04 12:38:30');
 
 INSERT IGNORE INTO cltk_vedeni (id, skupina, jmeno, funkce, telefon, email, zobrazit_kontakt, foto, text, visible, poradi) VALUES

@@ -227,6 +227,15 @@ if (($_GET['csv'] ?? '') === '1') {                     // před admin_head()!
   nepředvyplňuje; prázdné = beze změny, zaškrtávátko „zrušit náhledové heslo“; nové heslo uložte
   `nahled_heslo_nastav($heslo)` (ukládá jen hash; změna zneplatní stará cookie). `rezim_pripravy` je `bool`
   (kotva `#rezim` – odkazuje na ni pruh i postranní panel). `prihlasky_email` prázdný = jen ukládat.
+  Skupina **`lide` – Na koho se obrátit** (kotva `#sk-lide`, hned za Kontakty a adresa) = stránka Kontakt:
+  mezititulky Recepce (`recepce_*`, `obsazenost_url`) a Kancelář (`kancelar_*`) podle `NS_LIDE_CASTI`, pod nimi
+  „Lidé a kontakty“ – řádky `cltk_vedeni` skupin `kancelar` a `kontakt` (`NS_LIDE_SKUPINY`; výbor ne) s poli jméno,
+  funkce, telefon, e-mail, „Telefon a e-mail zobrazit na webu“, „Zobrazit na webu“, pořadí (číslo místa od 1,
+  **bez šipek** – jsou v jednom formuláři), „Smazat“ a jeden prázdný řádek na přidání (funguje bez JS). Ukládá je
+  stejné „Uložit všechny změny“ ve stejné transakci: nejdřív se ověří vše (e-mail, telefon, jméno), chyba kdekoli =
+  nic se neuloží, hodnoty zůstanou. Upravit/smazat jde jen id, které v těchto dvou skupinách v databázi je
+  (`UPDATE/DELETE … WHERE id = ? AND skupina = ?`); fotka smazané osoby se maže až po zápisu. Fotky a texty lidí
+  zůstávají v modulu Vedení, nadpis sekce na webu je blok `kontakt/lide` ve Stránkách.
 - **Stránky** (`stranky.php`): bloky `cltk_bloky` podle `stranka` + `klic` (seznam ve PRUVODCE-FRONT.md).
   Klíče bloků **nepřejmenovávat** (šablony je čtou natvrdo); nové bloky přidávat smí. Šipky pořadí jsou jen u vlastních
   bloků (pevné řadí šablona). Bloky úvodní stránky (`STRANKY_UVOD_POLE`) nemají šipky ani „Skrýt“ a formulář ukazuje
