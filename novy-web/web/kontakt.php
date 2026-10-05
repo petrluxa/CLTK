@@ -1,6 +1,6 @@
 <?php
-/* Kontakt – recepce a kancelář, lidé a role, adresa a příjezd s plánem
-   areálu, fakturační údaje a dokumenty. Stránka mimo hlavní menu (odkaz
+/* Kontakt – recepce a kancelář, lidé a role, adresa a příjezd s interaktivním
+   plánem areálu (mapa.js, jako na úvodu), fakturační údaje a dokumenty. Stránka mimo hlavní menu (odkaz
    „Všechny kontakty“ v patičce).
    Obsah: Texty a údaje – skupina „Na koho se obrátit“ (karty Recepce a Kancelář:
    recepce_*, kancelar_*, odkaz obsazenost_url – na kartě Recepce je jen „Obsazenost
@@ -9,7 +9,7 @@
    Vladislav Šavrda; osoba z karty Kancelář se v seznamu neopakuje), Texty a údaje –
    Kontakty a adresa (adresa, příjezd, IČO, účty, mapa), Sociální sítě, modul Vedení
    (fotky a texty lidí), Stránky (bloky „kontakt“ – nadpis „Na koho se obrátit“ je blok
-   kontakt/lide; plán z bloku areal/plan) a Dokumenty. */
+   kontakt/lide; statický plán z bloku areal/plan je jen záloha bez JavaScriptu) a Dokumenty. */
 require __DIR__ . '/inc/rezim.php';
 require_once __DIR__ . '/inc/sablona/komponenty.php';
 track_visit();
@@ -36,6 +36,9 @@ $lideDalsi = vedeni('kontakt');
 
 $planFoto = (string)$bPlan['foto'];
 $maPlan = $planFoto !== '' && is_file(UPLOAD_DIR . '/' . $planFoto);
+/* Interaktivní plán areálu (mapa.js, kompaktní rozložení jako na úvodu); „Podrobnosti“ u služby vedou na areal.php#kotva.
+   Statický obrázek plánu zůstává jen jako záloha bez JavaScriptu. */
+$mapaKontakt = mapa_data(null, null, null, url('areal.php'));
 
 /* Fakturační údaje – jen z Textů a údajů; co chybí, „doplní klub“ */
 $fakturace = [
@@ -67,7 +70,8 @@ function kontakt_karta(array $k, string $navic = ''): string {
 $sablona = [
     'titulek' => html_text((string)$uvod['stitek']) ?: 'Kontakt',
     'popis'   => html_text((string)$uvod['perex']) ?: ($nazev . ', ' . $ulice . ', ' . $mesto),
-    'css'     => ['stranky-areal.css'],
+    'css'     => ['stranky-areal.css', 'mapa.css'],
+    'js'      => ['cenik.js', 'mapa.js'],
     'trida'   => 'stranka-kontakt',
 ];
 require __DIR__ . '/inc/sablona/hlavicka.php';
@@ -105,13 +109,15 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
 </section>
 <?php endif; ?>
 
-<!-- III · Adresa a příjezd -->
+<!-- III · Adresa a příjezd – adresa a cesta, pod nimi interaktivní plán areálu přes celou šířku
+     (mapa.js jako na úvodu: plán vlevo, volby vpravo, popis místa pod plánem).
+     Bez JavaScriptu zůstane statický obrázek plánu z bloku areal/plan. -->
 <section class="sekce" id="prijezd" aria-labelledby="prijezd-nadpis">
   <div class="wrap">
     <?= hlava_sekce($bPrijezd, ['cislo' => 2, 'id' => 'prijezd-nadpis', 'nadpis' => 'Adresa a příjezd']) ?>
-    <div class="prijezd">
+    <div class="prijezd prijezd--kontakt">
+      <address class="prijezd__adresa"><?= typo($ulice) ?><br><?= typo($mesto) ?><small><?= typo($nazev) ?></small></address>
       <div>
-        <address class="prijezd__adresa"><?= typo($ulice) ?><br><?= typo($mesto) ?><small><?= typo($nazev) ?></small></address>
         <?php if (setting('prijezd_text') !== ''): ?><div class="prijezd__text"><?= paragraphs(setting('prijezd_text')) ?></div><?php endif; ?>
         <div class="odkazy-radek">
           <?= $mapaUrl !== '' ? tlacitko($mapaUrl, 'Mapa', 'odkaz') : '' ?>
@@ -119,8 +125,10 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
           <?= tlacitko('areal.php#parkoviste', 'Parkoviště', 'odkaz') ?>
         </div>
       </div>
+    </div>
+    <div class="mapa mapa--kompakt prijezd__mapa" data-mapa>
       <?php if ($maPlan): ?>
-      <div>
+      <div class="mapa__zaloha">
         <a class="prijezd__plan" href="<?= e(url('areal.php#plan')) ?>">
           <figure class="ramec ramec--linka">
             <div class="ramec__obraz"><?= obr($planFoto, html_text((string)$bPlan['perex']) ?: 'Plán areálu', ['class' => 'foto']) ?></div>
@@ -130,6 +138,7 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
       </div>
       <?php endif; ?>
     </div>
+    <?= json_skript('mapa-data', $mapaKontakt) ?>
   </div>
 </section>
 
