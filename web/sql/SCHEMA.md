@@ -177,7 +177,8 @@ Načíst: `rows("SELECT * FROM cltk_uvodni_galerie WHERE visible = 1 ORDER BY po
 
 ### `cltk_aktuality` – aktuality z klubu (nejsou to články)
 `nadpis`, `popis` (*text*, krátký), `foto` (uploads/aktuality/), `fokus`, `odkaz` + `odkaz_text`
-(nepovinné; bez odkazu se karta jen zobrazí), `visible`, `poradi`.
+(nepovinné; bez odkazu se karta jen zobrazí), `datum` (*date*, nepovinné – na kartě nad nadpisem „5. října 2026“;
+nová aktualita má předvyplněný dnešek; sloupec přidala migrace `2026-10-05-aktuality-datum.php`), `visible`, `poradi`.
 
 ### `cltk_vysledky` – výsledky hráčů
 | sloupec | význam |

@@ -60,7 +60,7 @@ if (seed_prazdna('cltk_aktuality')) {
     $radky = [];
     foreach ($akt as [$nadpis, $popis, $soubor, $jmeno, $fokus]) {
         $radky[] = ['nadpis' => $nadpis, 'popis' => $popis, 'foto' => seed_obrazek(seed_podklady('klient-pdf/' . $soubor), 'aktuality', $jmeno),
-                    'fokus' => $fokus, 'odkaz' => '', 'odkaz_text' => '', 'visible' => 1, 'created_at' => $ted, 'updated_at' => $ted];
+                    'fokus' => $fokus, 'odkaz' => '', 'odkaz_text' => '', 'datum' => substr($ted, 0, 10), 'visible' => 1, 'created_at' => $ted, 'updated_at' => $ted];
     }
     seed_log('Aktuality: ' . seed_vloz('cltk_aktuality', $radky) . '.');
 }
