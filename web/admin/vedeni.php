@@ -220,7 +220,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
 
 if ($rezim === 'seznam') {
     admin_head('Vedení klubu', $user, [
-        'podnadpis' => 'Výkonný výbor, kancelář a další kontakty na stránce Vedení (a v kontaktech). Prezidenti klubu jsou ve <a href="historie.php?cast=deska&amp;kat=prezidenti">Zlaté desce</a>, úvodní text stránky ve <a href="stranky.php?stranka=vedeni">Stránkách</a>.',
+        'podnadpis' => 'Výkonný výbor, kancelář a další kontakty na stránce Vedení (a v kontaktech). Prezidenti klubu jsou ve <a href="historie.php?cast=deska&amp;kat=prezidenti">Zlaté desce</a>, úvodní text stránky ve <a href="stranky.php?stranka=vedeni">Stránkách</a>. Kancelář a další kontakty jdou rychle upravit i v <a href="nastaveni.php#sk-lide">Textech a údajích → Na koho se obrátit</a>.',
         'akce' => '<a class="btn btn-primary" href="vedeni.php?nova=1">Přidat osobu</a>',
     ]);
 } else {

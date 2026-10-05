@@ -2,10 +2,14 @@
 /* Kontakt – recepce a kancelář, lidé a role, adresa a příjezd s plánem
    areálu, fakturační údaje a dokumenty. Stránka mimo hlavní menu (odkaz
    „Všechny kontakty“ v patičce).
-   Obsah: Texty a údaje (kontakty, adresa, příjezd, IČO, účty, mapa, sítě),
-   modul Vedení (kancelář a další kontakty – u koho je zobrazit_kontakt = 0,
-   telefon ani e-mail se nevypíše: Petr Vaníček, Vladislav Šavrda), Stránky
-   (bloky „kontakt“, plán z bloku areal/plan) a Dokumenty. */
+   Obsah: Texty a údaje – skupina „Na koho se obrátit“ (karty Recepce a Kancelář:
+   recepce_*, kancelar_*, odkaz obsazenost_url – na kartě Recepce je jen „Obsazenost
+   kurtů“, bez odkazu žádný řádek akcí; a lidé z cltk_vedeni, skupiny kancelar a kontakt
+   – u koho je zobrazit_kontakt = 0, telefon ani e-mail se nevypíše: Petr Vaníček,
+   Vladislav Šavrda; osoba z karty Kancelář se v seznamu neopakuje), Texty a údaje –
+   Kontakty a adresa (adresa, příjezd, IČO, účty, mapa), Sociální sítě, modul Vedení
+   (fotky a texty lidí), Stránky (bloky „kontakt“ – nadpis „Na koho se obrátit“ je blok
+   kontakt/lide; plán z bloku areal/plan) a Dokumenty. */
 require __DIR__ . '/inc/rezim.php';
 require_once __DIR__ . '/inc/sablona/komponenty.php';
 track_visit();
@@ -22,8 +26,7 @@ $nazev   = setting('klub_nazev', 'I. Český Lawn-Tennis Klub Praha');
 $ulice   = setting('adresa_ulice');
 $mesto   = setting('adresa_mesto');
 $mapaUrl = bezpecny_odkaz(setting('mapa_url'));
-$rezervace  = rezervace_url();
-$obsazenost = bezpecny_odkaz(setting('obsazenost_url'));
+$obsazenost = bezpecny_odkaz(setting('obsazenost_url'));   // karta Recepce: jen Obsazenost kurtů (Rezervovat kurt je v hlavičce)
 [$recepce, $kancelar] = kontakty_paticka();
 
 /* Lidé: kancelář (bez osoby, která má vlastní kartu nahoře) a další kontakty */
@@ -75,8 +78,7 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
 <!-- I · Recepce a kancelář -->
 <section class="sekce sekce--bez-horni" id="recepce" aria-label="Recepce a kancelář klubu">
   <div class="wrap kontakt-karty">
-    <?= kontakt_karta($recepce, ($rezervace !== '' || $obsazenost !== '')
-        ? '<div class="akce">' . ($rezervace !== '' ? tlacitko($rezervace, 'Rezervovat kurt', 'btn', ['trida' => 'btn--mala']) : '') . ($obsazenost !== '' ? tlacitko($obsazenost, 'Obsazenost kurtů', 'odkaz') : '') . '</div>' : '') ?>
+    <?= kontakt_karta($recepce, $obsazenost !== '' ? '<div class="akce">' . tlacitko($obsazenost, 'Obsazenost kurtů', 'odkaz') . '</div>' : '') ?>
     <?= kontakt_karta($kancelar, '<div class="akce">' . tlacitko('clenstvi.php', 'Členství v klubu', 'odkaz') . '</div>') ?>
   </div>
 </section>

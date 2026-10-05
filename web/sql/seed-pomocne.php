@@ -124,9 +124,10 @@ function seed_nastaveni(array $radky): int {
         [$k, $v, $label, $grp] = $r;
         $typ = $r[4] ?? 'text';
         $napoveda = $r[5] ?? '';
+        $poradi = isset($r[6]) ? (int)$r[6] : $i;          // 7. sloupec = pořadí napevno (jinak místo v seznamu)
         if (row('SELECT skey FROM cltk_settings WHERE skey = ?', [$k])) continue;
         q('INSERT INTO cltk_settings (skey, sval, label, grp, typ, napoveda, poradi) VALUES (?,?,?,?,?,?,?)',
-          [$k, (string)$v, $label, $grp, $typ, $napoveda, $i]);
+          [$k, (string)$v, $label, $grp, $typ, $napoveda, $poradi]);
         $n++;
     }
     setting_cache(null, true);

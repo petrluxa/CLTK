@@ -18,13 +18,13 @@ if (seed_prazdna('cltk_oznameni')) {
 /* ---------- úvodní galerie (4 snímky z Varianty 4) ---------- */
 if (seed_prazdna('cltk_uvodni_galerie')) {
     $snimky = [
-        ['foto', 'Vondroušová', seed_navrhy('assets/foto/hracka-vondrousova-wimbledon-2023-trofej.jpg'), 'vondrousova-wimbledon-2023', '44% 28%',
+        ['foto', 'Vondroušová', seed_navrhy('assets/foto/hracka-vondrousova-wimbledon-2023-trofej.jpg'), 'vondrousova-wimbledon-2023', '70% 28%',
          'Markéta Vondroušová líbá mísu Venus Rosewater Dish pro vítězku Wimbledonu 2023',
          '<em>Markéta Vondroušová</em> s mísou Venus Rosewater Dish · Wimbledon 2023', 'foto Martin Sidorják'],
         ['foto', 'Muchová', seed_navrhy('assets/foto/clanky/karolina-muchova-ve-finale-wimbledonu.jpg'), 'muchova-wimbledon-2026', '50% 26%',
          'Karolína Muchová s talířem pro finalistku Wimbledonu 2026',
          '<em>Karolína Muchová</em> s talířem pro finalistku · Wimbledon 2026', 'foto Martin Sidorják'],
-        ['foto', 'Muchová & Menšík', seed_navrhy('assets/foto/clanky/karolina-muchova-ovladla-smisenou-ctyrhru-na-us-open.jpg'), 'muchova-mensik-us-open-2026', '70% 22%',
+        ['foto', 'Muchová & Menšík', seed_navrhy('assets/foto/clanky/karolina-muchova-ovladla-smisenou-ctyrhru-na-us-open.jpg'), 'muchova-mensik-us-open-2026', '60% 22%',
          'Karolína Muchová a Jakub Menšík s trofejí pro vítěze smíšené čtyřhry US Open 2026',
          '<em>Karolína Muchová a Jakub Menšík</em> · vítězové smíšené čtyřhry US Open 2026', 'foto Getty Images'],
     ];

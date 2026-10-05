@@ -88,6 +88,11 @@ Běžící server se převádí migrací `web/sql/migrace/2026-10-02-dokumenty-a
   když chybí – PRAGMA / information_schema, přepis jen hodnot rovných původním, odmítne běh bez nahraných souborů,
   token v prohlížeči – v souboru je jen jeho SHA-256, repo je veřejné). `sql/` je zvenku zavřené → na běh se
   soubor + `.data.json` kopírují do kořene webu a pak se smažou. Nový stav vždy promítnout i do seedu.
+- **Úvod (hero):** deska s nadpisem (sloupce 1–6) fotku NEpřekrývá, fotka je ve sloupcích 7–12 a deska je stejně
+  vysoká jako fotka (`--uvod-v`). Petr nechce, aby nadpis „lezl do fotky“ (5. 10. 2026). Ohniska fotek galerie
+  jsou nastavená na tento užší rám – nové fotce vybrat ohnisko přes `podklady/_raw/qa/hero/fokus.mjs`
+  (přehled výřezů v 7 velikostech okna), rozvržení ověřit `hero.mjs`. Háčky na ě/ř v Cormorant Garamond
+  jsou posazené vysoko vpravo ve všech zdrojích písma – vlastnost písma, ne chyba webu.
 - Snímky dokumentů: `podklady/_raw/qa/dokumenty/render.mjs <base> "dokument.php?d=stanovy" d,m,t,pdf` (desktop,
   mobil, tisk, `page.pdf` A4) a `kousky.py` (rozřeže snímek / PDF na PNG k prohlédnutí); WebKit neumí snímek
   delší než 32 767 px (stanovy).
@@ -109,7 +114,11 @@ s omezeným pohybem (`RM=1`) musí být vidět všechen obsah. Po změně výcho
 Ověřit i stávající funkce, ne jen novou (admin e2e: `podklady/_raw/qa/integrace/e2e-uvod.mjs` s `UV_BASE=…`, `e2e-obsah.mjs` s `BASE=…` –
 kopie jsou napevno nad `web/data/integrace.sqlite`, originály agentů v `admin-uvod/`, `admin-obsah/`).
 
-## Nasazení na test – stav 4. 10. 2026
+## Nasazení na test – stav 5. 10. 2026
+
+- 5. 10.: na serveru proběhla migrace `2026-10-05-na-koho-se-obratit.php` (Texty a údaje › Na koho se obrátit)
+  a jednorázová ohniska fotek úvodu (`deploy/jednorazove/`). Jednorázové skripty se spouštějí
+  `python deploy/spust_jednorazove.py <php> <soubor s tokenem>` (nanečisto → ostře → znovu → smazání).
 
 - Běží na **https://www.tkolymppraha.cz/cltkv2/** (hosting TK Olymp, Forpsi), **režim přípravy zapnutý**
   (návštěvník vidí přípravnou stránku 503 + noindex, přihlášený správce celý web).
