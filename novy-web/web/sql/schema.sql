@@ -110,6 +110,7 @@ CREATE TABLE cltk_aktuality (
   fokus      VARCHAR(20)  NOT NULL DEFAULT '50% 50%',
   odkaz      VARCHAR(255) NOT NULL DEFAULT '',
   odkaz_text VARCHAR(80)  NOT NULL DEFAULT '',
+  datum      DATE         NULL,
   visible    INTEGER      NOT NULL DEFAULT 1,
   poradi     INTEGER      NOT NULL DEFAULT 0,
   created_at DATETIME     NULL,

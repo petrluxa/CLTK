@@ -1,7 +1,7 @@
 <?php
 /* Aktuality z klubu – tři karty na úvodní stránce (ZADANI §4.4).
-   NEJSOU to články: jen fotka, nadpis, krátký popis a volitelně odkaz,
-   bez stránky s detailem. Na úvodu se ukážou první tři zobrazené
+   NEJSOU to články: jen fotka, datum, nadpis, krátký popis a volitelně odkaz,
+   bez stránky s detailem. Datum je nepovinné (nová aktualita má předvyplněný dnešek). Na úvodu se ukážou první tři zobrazené
    podle pořadí (aktuality(3) v inc/data.php). */
 require __DIR__ . '/inc/layout.php';
 $user = require_login();
@@ -70,16 +70,18 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
         [$odkaz, $chOdkaz] = ak_odkaz(vstup('odkaz', 255));
         $odkazText = vstup('odkaz_text', 80);
         $fokus  = vstup('fokus', 20);
+        $datum  = normalizuj_datum(vstup('datum', 20));
         $visible = vstup_bool('visible');
 
         if ($nadpis === '') $chyby[] = 'Vyplňte nadpis.';
         if ($popis === '') $chyby[] = 'Vyplňte krátký popis – jedna nebo dvě věty.';
         if ($chOdkaz !== '') $chyby[] = $chOdkaz;
+        if ($datum === false) { $chyby[] = 'Datum nedává smysl – vyberte ho v kalendáři nebo napište např. 5. 10. 2026.'; $datum = null; }
         if ($fokus === '') $fokus = '50% 50%';
         if (!preg_match('/^\d{1,3}(\.\d+)?%\s+\d{1,3}(\.\d+)?%$/', $fokus)) $chyby[] = 'Ohnisko fotky zapište jako dvě procenta, např. 50% 40%.';
 
         $form = ['id' => $id, 'nadpis' => $nadpis, 'popis' => $popis, 'odkaz' => $odkaz, 'odkaz_text' => $odkazText,
-                 'fokus' => $fokus, 'visible' => $visible, 'foto' => (string)($stary['foto'] ?? '')];
+                 'fokus' => $fokus, 'datum' => $datum ?? vstup('datum', 20), 'visible' => $visible, 'foto' => (string)($stary['foto'] ?? '')];
 
         $foto = null;
         if (!$chyby) {
@@ -87,7 +89,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
             if ($foto['chyba'] !== '') $chyby[] = $foto['chyba'] . ' Vyberte prosím fotku znovu.';
         }
         if (!$chyby) {
-            $data = ['nadpis' => $nadpis, 'popis' => $popis, 'foto' => $foto['soubor'], 'fokus' => $fokus,
+            $data = ['nadpis' => $nadpis, 'popis' => $popis, 'foto' => $foto['soubor'], 'fokus' => $fokus, 'datum' => $datum,
                      'odkaz' => $odkaz, 'odkaz_text' => $odkaz !== '' ? $odkazText : '', 'visible' => $visible, 'updated_at' => ted()];
             try {
                 if ($stary) {
@@ -117,7 +119,7 @@ if ($form === null && $upravit > 0) {
     if (!$form) redirect(AK_STRANKA, 'Aktualita nebyla nalezena.', 'err');
 }
 if ($form === null && isset($_GET['nova'])) {
-    $form = ['id' => 0, 'nadpis' => '', 'popis' => '', 'odkaz' => '', 'odkaz_text' => '', 'fokus' => '50% 50%', 'visible' => 1, 'foto' => ''];
+    $form = ['id' => 0, 'nadpis' => '', 'popis' => '', 'odkaz' => '', 'odkaz_text' => '', 'fokus' => '50% 50%', 'datum' => dnes(), 'visible' => 1, 'foto' => ''];
 }
 
 $css = '<link rel="stylesheet" href="' . e(BASE_PATH . verze('admin/assets/admin-uvod.css')) . '">';
@@ -127,7 +129,7 @@ if ($form !== null):
     $nova = (int)$form['id'] === 0;
     admin_head($nova ? 'Nová aktualita' : 'Úprava aktuality', $user, [
         'zpet' => [AK_STRANKA, 'Aktuality z klubu'], 'sirka' => 'uzka',
-        'podnadpis' => 'Fotka, nadpis a krátký popis. Na webu nemá aktualita vlastní stránku – kdo chce víc, klikne na odkaz.',
+        'podnadpis' => 'Fotka, datum, nadpis a krátký popis. Na webu nemá aktualita vlastní stránku – kdo chce víc, klikne na odkaz.',
     ]);
     echo $css;
 ?>
@@ -141,6 +143,7 @@ if ($form !== null):
       <?= csrf_field() ?>
       <input type="hidden" name="action" value="ulozit">
       <input type="hidden" name="id" value="<?= (int)$form['id'] ?>">
+      <?= pole_datum('datum', 'Datum', (string)($form['datum'] ?? ''), ['hint' => 'Ukáže se na kartě nad nadpisem, např. „5. října 2026“. Prázdné = bez data.']) ?>
       <?= pole_text('nadpis', 'Nadpis', $form['nadpis'], ['required' => true, 'maxlength' => 160, 'placeholder' => 'Hrajeme v hale',
             'attrs' => ['data-pocitadlo' => '40'], 'hint' => 'Dvě až čtyři slova – na webu je nadpis velkým písmem.']) ?>
       <?= pole_textarea('popis', 'Krátký popis', $form['popis'], ['required' => true, 'rows' => 3, 'maxlength' => 600,
@@ -171,7 +174,7 @@ $radky = rows('SELECT * FROM cltk_aktuality ORDER BY poradi, id');
 $naUvodu = ak_na_uvodu($radky);
 
 admin_head('Aktuality z klubu', $user, [
-    'podnadpis' => 'Tři karty na úvodní stránce – fotka, nadpis a krátký popis. Nejsou to články.',
+    'podnadpis' => 'Tři karty na úvodní stránce – fotka, datum, nadpis a krátký popis. Nejsou to články.',
     'akce'      => '<a class="btn btn-primary" href="' . AK_STRANKA . '?nova=1">Přidat aktualitu</a>',
 ]);
 echo $css;
@@ -202,7 +205,7 @@ echo $css;
             <td data-label="Foto"><?= (string)$r['foto'] !== ''
                 ? '<img class="thumb-sm" src="' . e(upload_url($r['foto'])) . '" alt="" style="object-position:' . e($r['fokus']) . '">'
                 : '<span class="thumb-ph">bez fotky</span>' ?></td>
-            <td data-label="Nadpis a popis" class="td-nazev"><b><?= e($r['nadpis']) ?></b><small><?= e(uryvek($r['popis'], 110)) ?></small></td>
+            <td data-label="Nadpis a popis" class="td-nazev"><b><?= e($r['nadpis']) ?></b><small><?= !empty($r['datum']) ? e(cz_date_dlouze((string)$r['datum'])) . ' · ' : '' ?><?= e(uryvek($r['popis'], 110)) ?></small></td>
             <td data-label="Odkaz" class="tlumene"><?= (string)$r['odkaz'] !== '' ? e(($r['odkaz_text'] !== '' ? $r['odkaz_text'] . ' · ' : '') . $r['odkaz']) : '–' ?></td>
             <td data-label="Stav"><?= stav_badge($r['visible']) ?><?= $uvod ? ' ' . badge('Na úvodu', 'zlato') : ((int)$r['visible'] === 1 ? ' ' . badge('Mimo úvod', 'info') : '') ?></td>
             <td data-label="Akce" class="right"><div class="akce-radku">

@@ -134,7 +134,7 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
   </section>
 
   <?php if ($aktuality): ?>
-  <!-- 2 · Aktuality z klubu (nejsou to články – fotka, nadpis, krátký popis) -->
+  <!-- 2 · Aktuality z klubu (nejsou to články – fotka, datum, nadpis, krátký popis) -->
   <section class="sekce sekce--papir2 aktuality" id="aktuality" aria-labelledby="aktuality-nadpis">
     <div class="aktuality__vodoznak" aria-hidden="true"><img src="<?= e(logo_url('svg')) ?>" width="224" height="256" alt="" loading="lazy" decoding="async"></div>
     <div class="wrap wrap--uzky">
@@ -147,6 +147,7 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
           <?php if ($aFoto !== ''): ?>
           <div class="aktualita__foto ramec ramec--linka"><div class="ramec__obraz"><?= $aFoto ?></div></div>
           <?php endif; ?>
+          <?php $aDatum = normalizuj_datum((string)($a['datum'] ?? '')); if (is_string($aDatum)): ?><p class="aktualita__datum"><time datetime="<?= e($aDatum) ?>"><?= e(cz_date_dlouze($aDatum)) ?></time></p><?php endif; ?>
           <h3 class="aktualita__nadpis"><?php if ($aOdkaz !== ''): ?><a href="<?= e($aOdkaz) ?>"<?= odkaz_attr($aOdkaz) ?>><?= typo((string)$a['nadpis']) ?><?= odkaz_je_externi($aOdkaz) ? '<span class="vh"> (v novém okně)</span>' : '' ?></a><?php else: ?><?= typo((string)$a['nadpis']) ?><?php endif; ?></h3>
           <?php if (trim((string)$a['popis']) !== ''): ?><div class="aktualita__popis"><?= paragraphs((string)$a['popis']) ?></div><?php endif; ?>
           <?php if ($aOdkaz !== '' && trim((string)$a['odkaz_text']) !== ''): ?><p class="aktualita__odkaz"><span class="odkaz" aria-hidden="true"><?= typo((string)$a['odkaz_text']) ?> <?= sipka(odkaz_je_externi($aOdkaz) ? 'ven' : '') ?></span></p><?php endif; ?>

@@ -17,10 +17,10 @@ INSERT IGNORE INTO cltk_akce (id, nazev, rok, mesic, datum_od, datum_do, termin_
 (11, 'Večer talentů a Vánoční večírek v Letenském zámečku', 2026, 12, NULL, NULL, '', '', 'Letenský zámeček', 'Klubová akce', 'Ocenění mladých hráčů klubu, shrnutí sezóny a předání Cen ankety Jaroslava Drobného.', '', '', '', '', 1, '', NULL, NULL, 'Termín doplnit. Loni Večer talentů 11. 12. 2025 a Vánoční večírek 12. 12. 2025 od 19:00.', 1, 10, '2026-10-04 12:38:30', '2026-10-04 12:38:30'),
 (12, 'OSTRA Tenisová extraliga', 2026, 12, NULL, NULL, '', '', '', 'Závodní tenis', 'Mistrovství republiky smíšených družstev. I. ČLTK Praha hraje semifinálovou skupinu.', '', '', '', '', 0, '', NULL, NULL, 'Termín doplnit.', 1, 11, '2026-10-04 12:38:30', '2026-10-04 12:38:30');
 
-INSERT IGNORE INTO cltk_aktuality (id, nadpis, popis, foto, fokus, odkaz, odkaz_text, visible, poradi, created_at, updated_at) VALUES
-(1, 'Hrajeme v hale', 'Halová sezóna začíná od 5. 10.', 'aktuality/hrajeme-v-hale.jpg', '50% 55%', '', '', 1, 0, '2026-10-04 12:38:30', '2026-10-04 12:38:30'),
-(2, 'Nová restaurace', 'Od 1. 11. se můžete těšit na novou klubovou restauraci Tiebreak.', 'aktuality/nova-restaurace-tiebreak.jpg', '50% 45%', '', '', 1, 1, '2026-10-04 12:38:30', '2026-10-04 12:38:30'),
-(3, 'Terasa v novém', 'Venkovní terasa restaurace prošla rekonstrukcí.', 'aktuality/terasa-v-novem.jpg', '50% 50%', '', '', 1, 2, '2026-10-04 12:38:30', '2026-10-04 12:38:30');
+INSERT IGNORE INTO cltk_aktuality (id, nadpis, popis, foto, fokus, odkaz, odkaz_text, datum, visible, poradi, created_at, updated_at) VALUES
+(1, 'Hrajeme v hale', 'Halová sezóna začíná od 5. 10.', 'aktuality/hrajeme-v-hale.jpg', '50% 55%', '', '', '2026-10-04', 1, 0, '2026-10-04 12:38:30', '2026-10-04 12:38:30'),
+(2, 'Nová restaurace', 'Od 1. 11. se můžete těšit na novou klubovou restauraci Tiebreak.', 'aktuality/nova-restaurace-tiebreak.jpg', '50% 45%', '', '', '2026-10-04', 1, 1, '2026-10-04 12:38:30', '2026-10-04 12:38:30'),
+(3, 'Terasa v novém', 'Venkovní terasa restaurace prošla rekonstrukcí.', 'aktuality/terasa-v-novem.jpg', '50% 50%', '', '', '2026-10-04', 1, 2, '2026-10-04 12:38:30', '2026-10-04 12:38:30');
 
 INSERT IGNORE INTO cltk_bloky (id, stranka, klic, stitek, nadpis, perex, text, foto, foto_popisek, odkaz, odkaz_text, odkaz2, odkaz2_text, doplni_klub, visible, poradi, updated_at) VALUES
 (1, 'areal', 'casy', 'Provoz', 'Otevírací <em>doby</em>', 'Časy jednotlivých služeb. Další doplní klub.', '', '', '', '', '', '', '', 0, 1, 10, '2026-10-04 12:38:36'),
