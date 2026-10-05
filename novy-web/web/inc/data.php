@@ -44,7 +44,8 @@ function rezervace_url(): string {
  * Hlavní menu podle ZADANI §3. Každá položka:
  *   nazev, url, soubor (hlavní stránka), soubory (všechny stránky větve – pro zvýraznění),
  *   strana ('l' vlevo od znaku / 'p' vpravo), externi (bool), aktivni (bool),
- *   podmenu: [ [nazev, url, soubor, aktivni], … ] (u Restaurace a Prague Open prázdné)
+ *   podmenu: [ [nazev, url, soubor, aktivni], … ] (u Revue, Restaurace a Prague Open prázdné)
+ * Vpravo od znaku: Revue (i v podmenu Klub), Restaurace, Prague Open.
  */
 function menu_hlavni(): array {
     $definice = [
@@ -67,10 +68,13 @@ function menu_hlavni(): array {
     ];
     // stránky větve mimo podmenu (zvýrazní položku menu): dokumenty klubu patří pod Klub
     $navic = ['klub.php' => ['dokumenty.php', 'dokument.php']];
+    // Revue má i vlastní položku vpravo (Petr 5. 10. 2026: „chceme tomu dát prioritu“) – v podmenu Klub
+    // zůstává, ale na revue.php se zvýrazní jen ta vlastní položka, ne Klub
+    $vlastniPolozka = ['revue.php'];
     $tady = here();
     $menu = [];
     foreach ($definice as [$nazev, $soubor, $strana, $pod]) {
-        $soubory = array_merge([$soubor], array_column($pod, 1), $navic[$soubor] ?? []);
+        $soubory = array_values(array_diff(array_merge([$soubor], array_column($pod, 1), $navic[$soubor] ?? []), $vlastniPolozka));
         $podmenu = [];
         foreach ($pod as [$pn, $ps]) {
             $podmenu[] = ['nazev' => $pn, 'url' => url($ps), 'soubor' => $ps, 'aktivni' => $tady === $ps];
@@ -81,7 +85,8 @@ function menu_hlavni(): array {
             'podmenu' => $podmenu,
         ];
     }
-    foreach ([['Restaurace', odkaz_restaurace(), 'restaurace.php'], ['Prague Open', odkaz_prague_open(), 'prague-open.php']] as [$nazev, $o, $soubor]) {
+    $revue = ['url' => url('revue.php'), 'externi' => false];
+    foreach ([['Revue', $revue, 'revue.php'], ['Restaurace', odkaz_restaurace(), 'restaurace.php'], ['Prague Open', odkaz_prague_open(), 'prague-open.php']] as [$nazev, $o, $soubor]) {
         $menu[] = [
             'nazev' => $nazev, 'url' => $o['url'], 'soubor' => $o['externi'] ? '' : $soubor, 'soubory' => [$soubor],
             'strana' => 'p', 'externi' => $o['externi'], 'aktivni' => !$o['externi'] && $tady === $soubor,
