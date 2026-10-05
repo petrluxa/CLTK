@@ -57,7 +57,8 @@ $b('privatni-treneri', 'treneri', ['stitek' => 'Trenéři', 'nadpis' => 'Trené�
 $b('privatni-treneri', 'kontakt', ['nadpis' => 'Ceny a <em>kontakt</em>',
     'perex' => 'Ceny hodin a kontakty na jednotlivé trenéry doplní klub.', 'doplni_klub' => 1], 11);
 $b('body-solution', 'kontakt', ['nadpis' => 'Kontakt a <em>objednání</em>',
-    'perex' => 'Kontakt, ordinační hodiny a způsob objednání doplní klub.', 'doplni_klub' => 1], 10);
+    'perex' => 'Kontakt, ordinační hodiny a způsob objednání doplní klub.', 'doplni_klub' => 1,
+    'odkaz' => 'https://www.bodysolutionclinic.cz/', 'odkaz_text' => 'Web Body Solution Clinic'], 10);   // web kliniky (Petr 5. 10. 2026)
 $b('sportovni-lekarstvi', 'kontakt', ['nadpis' => 'Kontakt a <em>objednání</em>',
     'perex' => 'Kontakt, ordinační hodiny a způsob objednání doplní klub.', 'doplni_klub' => 1], 10);
 
