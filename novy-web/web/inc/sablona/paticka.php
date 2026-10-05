@@ -115,6 +115,15 @@ $ptOdkazVen = fn(string $u) => odkaz_je_externi($u) ? ' target="_blank" rel="noo
         <feFuncB type="table" tableValues="0.267 0.965"/>
       </feComponentTransfer>
     </filter>
+    <!-- míčky v kartách Tenisové školy v klidu: tmavá → tmavomodrá, střed → zlatá, světlá → světle zlatá -->
+    <filter id="micek-zlato" color-interpolation-filters="sRGB">
+      <feColorMatrix type="matrix" values="0.2126 0.7152 0.0722 0 0  0.2126 0.7152 0.0722 0 0  0.2126 0.7152 0.0722 0 0  0 0 0 1 0"/>
+      <feComponentTransfer>
+        <feFuncR type="table" tableValues="0.082 0.62 0.86"/>
+        <feFuncG type="table" tableValues="0.153 0.5 0.78"/>
+        <feFuncB type="table" tableValues="0.267 0.31 0.6"/>
+      </feComponentTransfer>
+    </filter>
   </defs>
 </svg>
 </body>

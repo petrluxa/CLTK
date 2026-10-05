@@ -166,10 +166,32 @@
    by vytlačil text – tam je menší nad názvem (container query podle šířky karty) */
 .tenis-kategorie > li { container-type: inline-size; }
 .tenis-kategorie--s-mickem > :not(.tenis-kategorie__micek) { margin-right: calc(clamp(4.4rem, 3.6rem + 2vw, 5.8rem) + 1rem); }
-.tenis-kategorie__micek { position: absolute; top: 50%; right: clamp(1.4rem, 1rem + 1.5vw, 2.3rem); width: clamp(4.4rem, 3.6rem + 2vw, 5.8rem); height: auto; transform: translateY(-50%) rotate(-8deg); filter: drop-shadow(0 12px 10px rgba(14, 27, 48, .18)); }
+.tenis-kategorie__micek {
+  --micek-y: -50%; --micek-r: -8deg; --micek-s: 1;
+  position: absolute; display: block; top: 50%; right: clamp(1.4rem, 1rem + 1.5vw, 2.3rem); width: clamp(4.4rem, 3.6rem + 2vw, 5.8rem);
+  transform: translateY(var(--micek-y)) rotate(var(--micek-r)) scale(var(--micek-s));
+  filter: drop-shadow(0 12px 10px rgba(14, 27, 48, .18));
+}
+.tenis-kategorie__micek img { display: block; width: 100%; height: auto; }
+/* zlatavá kopie: duotón tmavomodrá → zlatá webu (filtr #micek-zlato v patičce) */
+.tenis-kategorie__micek-ton { position: absolute; inset: 0; filter: url(#micek-zlato); opacity: 0; pointer-events: none; }
 @container (max-width: 14rem) {
   .tenis-kategorie--s-mickem > :not(.tenis-kategorie__micek) { margin-right: 0; }
-  .tenis-kategorie__micek { position: static; align-self: flex-start; width: 3.6rem; margin: 0 0 .9rem; transform: rotate(-8deg); }
+  .tenis-kategorie__micek { --micek-y: 0; position: relative; top: auto; right: auto; align-self: flex-start; width: 3.6rem; margin: 0 0 .9rem; }
+}
+/* S myší: míček v klidu v barvách webu (zlatavý), po najetí na kartu se plynule vybarví a pootočí
+   (Petr 5. 10. 2026). Na dotykových zařízeních bez najetí zůstává barevný. */
+@media (hover: hover) and (pointer: fine) {
+  .tenis-kategorie__micek { transition: transform var(--pohyb), filter var(--pohyb); }
+  .tenis-kategorie__micek-ton { opacity: 1; transition: opacity var(--pohyb); }
+  .tenis-kategorie--s-mickem:hover .tenis-kategorie__micek,
+  .tenis-kategorie--s-mickem:focus-within .tenis-kategorie__micek { --micek-r: -18deg; --micek-s: 1.06; filter: drop-shadow(0 16px 12px rgba(14, 27, 48, .22)); }
+  .tenis-kategorie--s-mickem:hover .tenis-kategorie__micek-ton,
+  .tenis-kategorie--s-mickem:focus-within .tenis-kategorie__micek-ton { opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tenis-kategorie__micek, .tenis-kategorie__micek-ton { transition: none; }
+  .tenis-kategorie--s-mickem:hover .tenis-kategorie__micek { --micek-r: -8deg; --micek-s: 1; }
 }
 .tenis-kategorie .karta__nazev { font: 500 1.2rem/1.25 var(--sc); letter-spacing: .05em; color: var(--navy); font-synthesis: none; margin: 0; }
 
