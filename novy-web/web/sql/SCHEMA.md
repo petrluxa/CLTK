@@ -112,14 +112,14 @@ Přehled klíčů (výchozí hodnoty plní `sql/seed/10-nastaveni.php`):
 |---|---|---|
 | `klub_nazev`, `klub_zkratka`, `zalozeno`, `ico` | kontakt | I. Český Lawn-Tennis Klub Praha · I. ČLTK Praha · 1893 · 45243077 |
 | `adresa_ulice`, `adresa_mesto` | kontakt | Ostrov Štvanice 38 · 170 00 Praha 7 |
-| `prijezd_kratce` | kontakt | text do patičky (Hlávkův most, HolKa, parkoviště) |
+| `prijezd_kratce` | kontakt | krátký popis příjezdu – od 5. 10. 2026 se nikde nezobrazuje (z patičky odebrán), v administraci skrytý (`NS_SKRYTE`) |
 | `prijezd_text` | kontakt | podrobný popis příjezdu (kontakt.php, areal.php) |
 | `mapa_url` | kontakt | odkaz „Mapa“ (Google Maps) |
 | `recepce_popis`, `recepce_telefon`, `recepce_email` | lide | karta Recepce – rezervace kurtů (telefon i v patičce, mobilní liště a na přípravné stránce) |
 | `obsazenost_url` | lide | odkaz „Obsazenost kurtů“ (karta Recepce, horní lišta, Ceník kurtů) – Roger Online `…/v2/index.php?klub=181` |
 | `kancelar_jmeno`, `kancelar_popis`, `kancelar_telefon`, `kancelar_email` | lide | karta Kancelář – Eva Štefková (v seznamu lidí na Kontaktu se pak neopakuje) |
 | `ucet_clenstvi`, `ucet_iban`, `ucet_skola` | kontakt | bankovní účty |
-| `paticka_ctc` | paticka | „Jediný český člen Centenary Tennis Clubs · …“ |
+| `paticka_ctc` | paticka | „Jediný český člen Centenary Tennis Clubs · …“ – jen u dokumentů na stránce Kontakt (z patičky odebráno 5. 10. 2026) |
 | `paticka_pristupnost` | paticka | text u přepínačů přístupnosti |
 | `paticka_pruh` | paticka | text spodního pruhu bez „© rok“ (rok doplní šablona: `'© ' . date('Y') . ' ' . …`) |
 | `rezervace_url` | odkazy | Roger Online (tlačítko Rezervovat kurt, nové okno) |
