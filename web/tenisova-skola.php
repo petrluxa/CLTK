@@ -119,6 +119,17 @@ $jenHlava = static fn(array $b): array => $b['existuje'] ? $b : ['doplni_klub' =
 $info      = skola('info');
 $kategorie = [];
 foreach (tenis_polozky((string)$bKategorie['text']) as $sk) foreach ($sk['polozky'] as $p) $kategorie[] = $p;
+
+/** Míček kategorie (Petr 5. 10. 2026): minitenis červený (HEAD Stage 3), střední kurt oranžový (Stage 2),
+    babytenis zelený (Stage 1). Podle názvu kategorie, když ho klub přejmenuje, tak podle věku 7 / 8 / 9 let. */
+function tenis_micek(string $nazev, string $vek): ?array {
+    $micky = ['cerveny' => ['Červený míček', 'Stage 3'], 'oranzovy' => ['Oranžový míček', 'Stage 2'], 'zeleny' => ['Zelený míček', 'Stage 1']];
+    $n = mb_strtolower(html_text($nazev));
+    $barva = str_contains($n, 'mini') ? 'cerveny' : (str_contains($n, 'střed') ? 'oranzovy' : (str_contains($n, 'baby') ? 'zeleny' : ''));
+    if ($barva === '' && preg_match('/([789])/u', html_text($vek), $m)) $barva = ['7' => 'cerveny', '8' => 'oranzovy', '9' => 'zeleny'][$m[1]];
+    if ($barva === '' || !is_file(WEB_ROOT . '/assets/img/micek-' . $barva . '.png')) return null;
+    return ['src' => asset('img/micek-' . $barva . '.png'), 'alt' => $micky[$barva][0] . ' (' . $micky[$barva][1] . ')'];
+}
 $kroky = [];
 foreach (tenis_polozky((string)$bPrihlaska['text']) as $sk) foreach ($sk['polozky'] as $p) $kroky[] = $p;
 
@@ -193,7 +204,9 @@ $sekce = 0;
             $vek = (string)preg_replace('/^(do|od)(?:\s|&nbsp;|\x{00A0})+/u', '<small>$1</small>', $m[1]);
             $zbytek = trim((string)preg_replace('/^[\s,]*\((.*)\)\s*$/us', '$1', trim($m[2])));
         } ?>
-      <li class="karta karta--zlata">
+      <?php $micek = tenis_micek((string)$k['stitek'], $vek); ?>
+      <li class="karta karta--zlata<?= $micek ? ' tenis-kategorie--s-mickem' : '' ?>">
+        <?php if ($micek): ?><img class="tenis-kategorie__micek" src="<?= e($micek['src']) ?>" width="120" height="120" alt="<?= e($micek['alt']) ?>" title="<?= e($micek['alt']) ?>" loading="lazy" decoding="async"><?php endif; ?>
         <?php if ($k['stitek'] !== ''): ?><h3 class="karta__nazev"><?= $k['stitek'] ?></h3><?php endif; ?>
         <?php if ($vek !== ''): ?><span class="tenis-kategorie__vek"><?= $vek ?></span><?php endif; ?>
         <?php if ($zbytek !== ''): ?><p class="tenis-kategorie__text"><?= $zbytek ?></p><?php endif; ?>
