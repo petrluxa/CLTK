@@ -29,7 +29,6 @@ $obrazekSdileni = preg_match('~^https?://~i', $obrazekSdileni) ? $obrazekSdileni
 <meta name="theme-color" content="#fbfaf6">
 <meta name="format-detection" content="telephone=no">
 <link rel="icon" href="<?= e(logo_url('favicon')) ?>" type="image/png" sizes="64x64">
-<link rel="icon" href="<?= e(logo_url('svg')) ?>" type="image/svg+xml">
 <link rel="apple-touch-icon" href="<?= e(logo_url('256')) ?>">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="cs_CZ">

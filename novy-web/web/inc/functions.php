@@ -249,8 +249,10 @@ function img_url(?string $rel, string $prefix = ''): string {
 
 /**
  * LOGO KLUBU – JEDINÉ místo, odkud se logo odkazuje.
- * Výměna loga = přepsat soubory ve web/assets/img/ (logo.svg, logo-256.png,
- * logo-512.png, logo-128.png, logo-64.png, logo.png). Varianty: svg | 128 | 256 | 512 | 64 | favicon | png.
+ * Od 5. 10. 2026 nové logo od Petra (podklady/klient-loga/logo-2026-10/, připraví pripravit.py):
+ * na stránkách průhledné logo.webp (448 px), PNG pro ikony (64 favicon, 256 apple-touch) a náhled sdílení (512).
+ * Výměna loga = přepsat soubory ve web/assets/img/ (logo.webp, logo.png, logo-512/256/128/64.png).
+ * Varianty: svg (= hlavní obrázek na stránky, název zůstal z doby vektoru) | 128 | 256 | 512 | 64 | favicon | png.
  */
 function logo_url(string $varianta = 'svg'): string {
     $soubor = match ($varianta) {
@@ -259,7 +261,7 @@ function logo_url(string $varianta = 'svg'): string {
         '512'            => 'img/logo-512.png',
         '64', 'favicon'  => 'img/logo-64.png',
         'png'            => 'img/logo.png',
-        default          => 'img/logo.svg',
+        default          => 'img/logo.webp',
     };
     return asset($soubor);
 }
