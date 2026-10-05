@@ -42,7 +42,9 @@ Běžící server se převádí migrací `web/sql/migrace/2026-10-02-dokumenty-a
   `obr()`, `cenik_html()`, `osoba_html()`, `tlacitko()`, `doplni_klub()`…).
 - Design: `web/assets/css/styl.css` (Varianta 4 – tokeny, komponenty), `index.css` (úvod), `v2.css`
   (kiosek, medailony), `stranky-klub/areal/tenis.css`; JS `app.js` (menu, záložky, dialog, zámek rolování
-  na `<html>`, přístupnost) + skripty sekcí. Logo jen přes `logo_url()` (`web/assets/img/logo*`).
+  na `<html>`, přístupnost) + skripty sekcí. Logo jen přes `logo_url()` (`web/assets/img/logo*`). Od 5. 10. 2026 nové logo od Petra (jen PNG 436×396 –
+  `podklady/klient-loga/logo-2026-10/`, `pripravit.py` udělá průhledné logo.webp + PNG ikony; bílý pruh trikolóry
+  nesmí zmizet → pozadí se maže jen od okraje). Ve větší kvalitě (SVG/PDF) zatím není – kdyby přišlo, vyměnit.
 - Admin `web/admin/` (`inc/layout.php` – pořadí modulů `admin_moduly()`, `inc/ui.php` – pole a tlačítka).
   Modul Stránky: známé bloky v `STRANKY_BLOKY` (nejdou smazat/přejmenovat), bloky podle předpony v `STRANKY_PREDPONY`.
 - Data: `web/sql/schema.sql` + `SCHEMA.md` (měnit obojí), sady `web/sql/seed/NN-*.php`

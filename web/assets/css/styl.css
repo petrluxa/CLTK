@@ -292,7 +292,7 @@ h1 em, h2 em, h3 em, .display em, .h1 em, .h2 em, .h3 em {
 
 .hlavicka__hlavni { position: relative; height: 82px; display: flex; align-items: center; transition: height var(--pohyb); }
 
-/* Znak – logo ke 130 letům (soubor jen přes logo_url()) */
+/* Znak – logo klubu (soubor jen přes logo_url(), od 5. 10. 2026 nové logo) */
 .znak { position: absolute; left: 50%; top: -28px; z-index: 2; display: block; transform: translateX(-50%); text-decoration: none; transition: top var(--pohyb); }
 .znak img { display: block; height: 96px; width: auto; transition: height var(--pohyb); }
 .znak__text { display: none; }
