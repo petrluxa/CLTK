@@ -506,14 +506,11 @@ html:not(.js) .ma-podmenu:hover > .podmenu, html:not(.js) .ma-podmenu:focus-with
 .paticka li + li { margin-top: .6rem; }
 .paticka a { color: var(--navy); text-decoration: none; }
 .paticka a:hover { text-decoration: underline; text-decoration-color: var(--gold); text-underline-offset: .25em; }
-.paticka address p { margin: 0 0 .5rem; }
-.paticka address b { font-weight: 500; color: var(--navy); }
-.paticka__prijezd { line-height: 1.75; }
-.paticka__kontakt { margin-bottom: 1.1rem; }
-.paticka__kontakt b { display: block; font: 400 1.22rem/1.25 var(--serif); color: var(--navy); }
-.paticka__kontakt span { display: block; margin-top: .1rem; color: var(--muted); font-size: var(--t-drobne); }
-.paticka__kontakt a { display: block; width: fit-content; margin-top: .3rem; }
-.paticka__ctc { margin-top: var(--s-4); }
+/* sloupce: všechno stejně – co položka, to řádek, stejné písmo, velikost a barva (text i odkazy) */
+.paticka__mrizka li { line-height: 1.45; color: var(--navy); }
+.paticka__mrizka address { font-style: normal; }
+.paticka__mrizka address + ul { margin-top: .6rem; }
+.paticka__kontakt + .paticka__kontakt { margin-top: 1.25rem; }
 .paticka__pristupnost { display: flex; flex-direction: column; align-items: flex-start; gap: .6rem; margin-top: var(--s-3); }
 .prepinac-pristupnost {
   display: inline-flex; align-items: center; gap: .75rem; min-height: 48px; padding: .6rem 1.1rem .6rem .8rem;

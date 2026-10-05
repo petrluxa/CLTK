@@ -46,6 +46,14 @@ const NS_SIROKE = ['paticka_pruh', 'kancelar_popis', 'recepce_popis', 'rezim_nad
 const NS_VIDEO = ['mp4', 'webm'];
 const NS_OBRAZEK = ['jpg', 'jpeg', 'png', 'webp'];
 
+/** Údaje, které web už nikde nezobrazuje – v administraci se neukazují (hodnota v databázi zůstává).
+    prijezd_kratce: krátký popis příjezdu býval v patičce, Petr ho 5. 10. 2026 z patičky odebral. */
+const NS_SKRYTE = ['prijezd_kratce'];
+/** Popisky, které se od uložených v databázi liší (údaj změnil místo na webu). */
+const NS_POPISKY = [
+    'paticka_ctc' => ['Věta u dokumentů na stránce Kontakt', 'Např. členství v Centenary Tennis Clubs a v ČTS. V patičce se už nezobrazuje.'],
+];
+
 /** Skupina „lide“: mezititulky nad nastaveními (klíče, které sem nepatří, spadnou pod poslední). */
 const NS_LIDE_CASTI = [
     'Recepce'  => ['recepce_popis', 'recepce_telefon', 'recepce_email', 'obsazenost_url'],
@@ -248,7 +256,12 @@ function ns_nahraj_video(array $f, string $podslozka, string $jmeno): array {
 }
 
 /* --- načtení nastavení (bez skupiny system) --- */
-$vse = rows("SELECT * FROM cltk_settings WHERE grp <> 'system' ORDER BY poradi, skey");
+$vse = array_values(array_filter(rows("SELECT * FROM cltk_settings WHERE grp <> 'system' ORDER BY poradi, skey"),
+    fn($s) => !in_array((string)$s['skey'], NS_SKRYTE, true)));
+foreach ($vse as &$s) {
+    if (isset(NS_POPISKY[$s['skey']])) [$s['label'], $s['napoveda']] = NS_POPISKY[$s['skey']];
+}
+unset($s);
 $podleSkupin = [];
 foreach ($vse as $s) {
     $g = isset(NS_SKUPINY[$s['grp']]) ? $s['grp'] : 'obecne';

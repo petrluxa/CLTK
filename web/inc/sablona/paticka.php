@@ -2,6 +2,8 @@
 /* Patička veřejného webu podle PDF klienta (stranka-05/06): slepotisk znaku,
    název klubu, „Založen 1893“, čtyři sloupce (Adresa a příjezd · Kontakty ·
    Důležité informace · Dokumenty a sítě), Přístupnost a tmavý spodní pruh.
+   Ve sloupcích je VŠE STEJNĚ: co položka, to řádek, jedno písmo a velikost (Petr 5. 10. 2026 –
+   bez popisu příjezdu, bez popisů recepce a kanceláře, bez věty o Centenary Tennis Clubs).
    Všechny texty a kontakty jsou z Textů a údajů (setting(), data.php).
    Uzavírá <main> otevřený v hlavicka.php a končí </html>. */
 
@@ -32,23 +34,29 @@ $ptOdkazVen = fn(string $u) => odkaz_je_externi($u) ? ' target="_blank" rel="noo
       <section aria-labelledby="pat-adresa">
         <h2 id="pat-adresa">Adresa a&nbsp;příjezd</h2>
         <address>
-          <p><b><?= typo($ptUlice) ?></b><br><?= typo($ptMesto) ?></p>
+          <ul>
+            <li><?= typo($ptUlice) ?></li>
+            <li><?= typo($ptMesto) ?></li>
+          </ul>
         </address>
-        <?php if (setting('prijezd_kratce') !== ''): ?><p class="paticka__prijezd"><?= typo(setting('prijezd_kratce')) ?></p><?php endif; ?>
-        <p><a href="<?= e(url('areal.php#plan')) ?>">Plánek areálu</a><?php if ($ptMapa !== ''): ?> · <a href="<?= e($ptMapa) ?>"<?= $ptOdkazVen($ptMapa) ?>>Mapa<span class="vh"> (v novém okně)</span></a><?php endif; ?></p>
+        <ul>
+          <li><a href="<?= e(url('areal.php#plan')) ?>">Plánek areálu</a></li>
+          <?php if ($ptMapa !== ''): ?><li><a href="<?= e($ptMapa) ?>"<?= $ptOdkazVen($ptMapa) ?>>Mapa<span class="vh"> (v novém okně)</span></a></li><?php endif; ?>
+        </ul>
       </section>
 
       <section aria-labelledby="pat-kontakty">
         <h2 id="pat-kontakty">Kontakty</h2>
         <?php foreach ($ptKontakty as $k): if (trim((string)$k['nazev']) === '') continue; ?>
-        <p class="paticka__kontakt">
-          <b><?= typo((string)$k['nazev']) ?></b>
-          <?php if (trim((string)$k['popis']) !== ''): ?><span><?= typo((string)$k['popis']) ?></span><?php endif; ?>
-          <?php if (trim((string)$k['telefon']) !== ''): ?><a href="<?= e(tel_href((string)$k['telefon'])) ?>"><?= str_replace(' ', '&nbsp;', e((string)$k['telefon'])) ?></a><?php endif; ?>
-          <?php if (je_email((string)$k['email'])): ?><a href="mailto:<?= e((string)$k['email']) ?>"><?= e((string)$k['email']) ?></a><?php endif; ?>
-        </p>
+        <ul class="paticka__kontakt">
+          <li><?= typo((string)$k['nazev']) ?></li>
+          <?php if (trim((string)$k['telefon']) !== ''): ?><li><a href="<?= e(tel_href((string)$k['telefon'])) ?>"><?= str_replace(' ', '&nbsp;', e((string)$k['telefon'])) ?></a></li><?php endif; ?>
+          <?php if (je_email((string)$k['email'])): ?><li><a href="mailto:<?= e((string)$k['email']) ?>"><?= e((string)$k['email']) ?></a></li><?php endif; ?>
+        </ul>
         <?php endforeach; ?>
-        <p><a href="<?= e(url('kontakt.php')) ?>">Všechny kontakty</a></p>
+        <ul class="paticka__kontakt">
+          <li><a href="<?= e(url('kontakt.php')) ?>">Všechny kontakty</a></li>
+        </ul>
       </section>
 
       <section aria-labelledby="pat-informace">
@@ -67,14 +75,10 @@ $ptOdkazVen = fn(string $u) => odkaz_je_externi($u) ? ' target="_blank" rel="noo
           <li><a href="<?= e($dkUrl) ?>"<?= $ptOdkazVen($dkUrl) ?>><?= typo(trim((string)$dk['paticka_text']) ?: (string)$dk['nazev']) ?><?= odkaz_je_externi($dkUrl) ? '<span class="vh"> (v novém okně)</span>' : '' ?></a></li>
           <?php endforeach; ?>
           <li><a href="<?= e(url('dokumenty.php')) ?>"<?= nav_active('dokumenty.php') ?>>Všechny dokumenty</a></li>
-          <?php if ($ptSiteHlavni): ?>
-          <li><?= implode(' · ', array_map(fn($s) => '<a href="' . e($s['url']) . '" target="_blank" rel="noopener">' . e($s['nazev']) . '<span class="vh"> (v novém okně)</span></a>', $ptSiteHlavni)) ?></li>
-          <?php endif; ?>
-          <?php foreach ($ptGalerie as $s): ?>
+          <?php foreach (array_merge($ptSiteHlavni, $ptGalerie) as $s): ?>
           <li><a href="<?= e($s['url']) ?>" target="_blank" rel="noopener"><?= e($s['nazev']) ?><span class="vh"> (v novém okně)</span></a></li>
           <?php endforeach; ?>
         </ul>
-        <?php if (setting('paticka_ctc') !== ''): ?><p class="paticka__ctc drobne"><?= typo(setting('paticka_ctc')) ?></p><?php endif; ?>
       </section>
     </div>
 
