@@ -206,7 +206,7 @@ $sekce = 0;
         } ?>
       <?php $micek = tenis_micek((string)$k['stitek'], $vek); ?>
       <li class="karta karta--zlata<?= $micek ? ' tenis-kategorie--s-mickem' : '' ?>">
-        <?php if ($micek): ?><img class="tenis-kategorie__micek" src="<?= e($micek['src']) ?>" width="120" height="120" alt="<?= e($micek['alt']) ?>" title="<?= e($micek['alt']) ?>" loading="lazy" decoding="async"><?php endif; ?>
+        <?php if ($micek): /* barevný míček + zlatavá kopie navrchu (s myší v klidu vidět ta, po najetí zmizí) */ ?><span class="tenis-kategorie__micek"><img src="<?= e($micek['src']) ?>" width="120" height="120" alt="<?= e($micek['alt']) ?>" title="<?= e($micek['alt']) ?>" loading="lazy" decoding="async"><img class="tenis-kategorie__micek-ton" src="<?= e($micek['src']) ?>" width="120" height="120" alt="" aria-hidden="true" loading="lazy" decoding="async"></span><?php endif; ?>
         <?php if ($k['stitek'] !== ''): ?><h3 class="karta__nazev"><?= $k['stitek'] ?></h3><?php endif; ?>
         <?php if ($vek !== ''): ?><span class="tenis-kategorie__vek"><?= $vek ?></span><?php endif; ?>
         <?php if ($zbytek !== ''): ?><p class="tenis-kategorie__text"><?= $zbytek ?></p><?php endif; ?>
