@@ -20,8 +20,9 @@ import ftplib, io, os, sys, time, fnmatch, posixpath
 KOREN = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 WEB = os.path.join(KOREN, 'web')
 CIL = '/www/cltkv2'
+# instalace.php: po instalaci se ze serveru maže – plné nahrání ho nesmí poslat znovu (stalo se 4. a 5. 10. 2026)
 ZAKAZANO = ['inc/config.local.php', 'data/*', '*.sqlite', '*.sqlite-journal', '*.log', '*.md',
-            'cltk-config.php', '*/_qa*', '_qa*', '*.bak', '.DS_Store', 'Thumbs.db']
+            'cltk-config.php', '*/_qa*', '_qa*', '*.bak', '.DS_Store', 'Thumbs.db', 'instalace.php']
 POVOLENO_V_DATA = {'data/.htaccess'}
 
 
