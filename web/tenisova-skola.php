@@ -120,15 +120,16 @@ $info      = skola('info');
 $kategorie = [];
 foreach (tenis_polozky((string)$bKategorie['text']) as $sk) foreach ($sk['polozky'] as $p) $kategorie[] = $p;
 
-/** Míček kategorie (Petr 5. 10. 2026): minitenis červený (HEAD Stage 3), střední kurt oranžový (Stage 2),
-    babytenis zelený (Stage 1). Podle názvu kategorie, když ho klub přejmenuje, tak podle věku 7 / 8 / 9 let. */
+/** Míček kategorie – Babolat, sponzor Tenisové školy (Petr 6. 10. 2026; do 5. 10. HEAD): minitenis červený
+    (Babolat Red), střední kurt oranžový (Orange), babytenis zelený (Green). Podle názvu kategorie, když ho klub
+    přejmenuje, tak podle věku 7 / 8 / 9 let. Obrázky: podklady/klient-micky/babolat/vyrez.py → assets/img/micek-*.webp */
 function tenis_micek(string $nazev, string $vek): ?array {
-    $micky = ['cerveny' => ['Červený míček', 'Stage 3'], 'oranzovy' => ['Oranžový míček', 'Stage 2'], 'zeleny' => ['Zelený míček', 'Stage 1']];
+    $micky = ['cerveny' => 'Červený míček Babolat Red', 'oranzovy' => 'Oranžový míček Babolat Orange', 'zeleny' => 'Zelený míček Babolat Green'];
     $n = mb_strtolower(html_text($nazev));
     $barva = str_contains($n, 'mini') ? 'cerveny' : (str_contains($n, 'střed') ? 'oranzovy' : (str_contains($n, 'baby') ? 'zeleny' : ''));
-    if ($barva === '' && preg_match('/([789])/u', html_text($vek), $m)) $barva = ['7' => 'cerveny', '8' => 'oranzovy', '9' => 'zeleny'][$m[1]];
-    if ($barva === '' || !is_file(WEB_ROOT . '/assets/img/micek-' . $barva . '.png')) return null;
-    return ['src' => asset('img/micek-' . $barva . '.png'), 'alt' => $micky[$barva][0] . ' (' . $micky[$barva][1] . ')'];
+    if ($barva === '' && preg_match('/\b([789])\b/u', html_text($vek), $m)) $barva = ['7' => 'cerveny', '8' => 'oranzovy', '9' => 'zeleny'][$m[1]];
+    if ($barva === '' || !is_file(WEB_ROOT . '/assets/img/micek-' . $barva . '.webp')) return null;
+    return ['src' => asset('img/micek-' . $barva . '.webp'), 'alt' => $micky[$barva]];
 }
 $kroky = [];
 foreach (tenis_polozky((string)$bPrihlaska['text']) as $sk) foreach ($sk['polozky'] as $p) $kroky[] = $p;
