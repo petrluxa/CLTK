@@ -135,7 +135,8 @@ kopie jsou napevno nad `web/data/integrace.sqlite`, originály agentů v `admin-
 - Archiv (Revue 40 PDF vč. jubilejní, 78 newsletterů, 23 PDF turnajů, obrázky dokumentů) je na serveru v `uploads/`
   (`--soubory $(cat podklady/_raw/migrace-uploads.txt)`, 612 MB). Spuštění migrace z kořene webu:
   `python deploy/migrace_archiv.py nahrat|nanecisto|ostre|smazat`.
-- `instalace.php` po instalaci ze serveru smazána, `INSTALL_KEY` z `cltk-config.php` odebrán.
+- `instalace.php` po instalaci ze serveru smazána, `INSTALL_KEY` z `cltk-config.php` odebrán. `nahrat.py` ji
+  nenahrává (ZAKAZANO) – plné nahrání 4. a 5. 10. ji tam omylem vrátilo, 6. 10. znovu smazána.
   Účet správce: petr.luxa@gmail.com (heslo v `deploy/ucet-admin.txt`).
 - Ověření po nasazení: `node podklady/_raw/qa/server/prochazka.mjs` (přihlásí se a projde 45 stránek)
   a stažení `/www/cltkv2/data/chyby.log` přes FTP – musí být prázdný.
