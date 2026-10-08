@@ -202,7 +202,7 @@ Výchozí bloky (`*` = doplni_klub, `+foto` = má fotku). Klíč `uvod` = hlavi�
 | `index` | `uvod` (štítek „Ostrov Štvanice, Praha 7“, nadpis, Stát se členem, Ceník kurtů), `aktuality`, `vysledky`, `kalendar`, `clenstvi+foto`, `sluzby`, `historie` (tlačítko Kompletní historie), `partneri` |
 | `klub` | `uvod`, `o-klubu`, `jmena` |
 | `clenstvi` | `uvod`, `v-cene`, `zvyhodneni`, `postup`, `druhy`, `prihlaska` |
-| `historie` | `uvod`, `triptych`, `kronika`, `deska`, `deska-grandslam`, `deska-cestni*`, `deska-mistri`, `deska-oh`, `deska-zasluzili*`, `deska-prezidenti*`, `osobnosti` |
+| `historie` | `uvod`, `triptych`, `kronika`, `deska`, `deska-grandslam`, `deska-cestni`, `deska-mistri`, `deska-oh`, `deska-zasluzili`, `deska-prezidenti`, `osobnosti` |
 | `vedeni` | `uvod`, `dokumenty` |
 | `ctc` | `uvod`, `rodokmen` |
 | `revue` | `uvod`, `newslettery` |

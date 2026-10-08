@@ -1,8 +1,12 @@
 <?php
 /* Historie klubu – Tři wimbledonské trávy (triptych se skóre a wimbledonská
    linka), kronika po epochách s razítkem dobového jména (návrh 2 „Ostrov
-   v čase“), Zlatá deska se záložkami a dvojím metrem (Varianta 4, sekce 9)
-   a medailony „Od Žemly po Muchovou“ (Varianta 4, sekce 9b).
+   v čase“), Zlatá deska se záložkami (Varianta 4, sekce 9) a medailony
+   „Od Žemly po Muchovou“ (Varianta 4, sekce 9b).
+   Postřehy klienta 8. 10. 2026: karty triptychu bez „V den titulu hrál za“
+   a Grand Slam bez dvojího metru – jeden seznam všech, kdo na Štvanici
+   vyrostli, bez ohledu na klub v den titulu (sloupce hral_za a metr zůstávají
+   v databázi, web je nečte).
    Všechno z databáze: modul Historie (milníky, triptych, osobnosti, Zlatá
    deska) a bloky stránky „historie“ (modul Stránky). */
 require __DIR__ . '/inc/rezim.php';
@@ -39,6 +43,12 @@ function hist_polozky(?string $html): array {
                 'prosty' => trim(str_replace("\u{00A0}", ' ', $li->textContent))];
     }
     return $v;
+}
+
+/** Prostý text pole bloku jako html_text(), jen nezlomitelné mezery z uloženého textu („20 titulů“) zůstanou –
+ *  html_text() je slévá s obyčejnými mezerami (\s s příznakem u bere i U+00A0). Typografii doplní typo(). */
+function hist_text(string $s): string {
+    return str_replace("\u{E000}", "\u{00A0}", html_text(str_replace(["\u{00A0}", '&nbsp;'], "\u{E000}", $s)));
 }
 
 /** „… doplní klub“ v už escapovaném textu → decentní štítek (jako ve Variantě 4). */
@@ -163,12 +173,6 @@ foreach ($deskaKategorie as $kat => $vychozi) {
     if (!$hlavni && !$jmena) continue;
     $deska[$kat] = ['nazev' => trim(html_text((string)$b['nadpis'])) ?: $vychozi, 'blok' => $b, 'hlavni' => $hlavni, 'jmena' => $jmena];
 }
-$gsStvanice = $gsKlub = 0;
-foreach ($deska['grandslam']['hlavni'] ?? [] as $r) {
-    $metr = preg_split('/\s+/', trim((string)$r['metr'])) ?: [];
-    if (in_array('stvanice', $metr, true)) $gsStvanice++;
-    if (in_array('klub', $metr, true)) $gsKlub++;
-}
 
 /* Kotvy pod hlavou stránky */
 $kotvy = [];
@@ -203,12 +207,9 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
       <?= hlava_sekce($bTriptych, ['cislo' => ++$cislo, 'id' => 'travy-nadpis', 'radek' => true, 'nadpis' => 'Tři wimbledonské trávy']) ?>
 
       <div class="triptych">
-        <?php foreach ($triptych as $i => $t):
-          $id = 'trava-' . preg_replace('/[^0-9a-z]/', '', strtolower((string)$t['rok'])) . '-' . $i;
-          $zaKlub = str_contains(mb_strtolower((string)$t['hral_za']), 'čltk');
-          $zena = (bool)preg_match('/(ová|á)$/u', trim((string)$t['jmeno']));
+        <?php foreach ($triptych as $t):
           $sety = $t['sety_pole']; ?>
-        <article class="trava<?= $zaKlub ? ' trava--barva' : '' ?>" data-trava>
+        <article class="trava">
           <div class="trava__obraz"><?= obr((string)$t['foto'], (string)$t['alt'], ['fokus' => (string)$t['fokus']]) ?></div>
           <p class="trava__rok"><?= e((string)$t['rok']) ?></p>
           <h3 class="trava__jmeno"><?= typo((string)$t['jmeno']) ?></h3>
@@ -232,15 +233,6 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
               <?php endforeach; ?>
             </tbody>
           </table>
-          <?php endif; ?>
-          <?php if (trim((string)$t['hral_za']) !== ''): ?>
-          <div class="trava__za">
-            <button class="trava__tl" type="button" data-trava-prepinac aria-expanded="false" aria-controls="<?= e($id) ?>">V&nbsp;den titulu <?= $zena ? 'hrála' : 'hrál' ?> za</button>
-            <div class="trava__detail" id="<?= e($id) ?>" hidden>
-              <b><?= typo((string)$t['hral_za']) ?></b>
-              <?= paragraphs((string)$t['hral_za_text']) ?>
-            </div>
-          </div>
           <?php endif; ?>
         </article>
         <?php endforeach; ?>
@@ -351,7 +343,7 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
 <?php endif; ?>
 
 <?php if ($deska): ?>
-  <!-- Zlatá deska se záložkami a dvojím metrem (V4 sekce 9) -->
+  <!-- Zlatá deska se záložkami (V4 sekce 9) -->
   <section class="sekce sekce--papir2 deska-sekce" id="sin-slavy" aria-labelledby="deska-nadpis">
     <div class="wrap">
       <?= hlava_sekce($bDeska, ['cislo' => ++$cislo, 'id' => 'deska-nadpis', 'stred' => true, 'nadpis' => 'Zlatá deska']) ?>
@@ -378,31 +370,17 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
             $poznHtml = $text !== '' ? ($doplni && preg_match('~doplní(\s|&nbsp;)+klub~u', $text) ? hist_doplni($text) : $text . ($doplni ? ' ' . doplni_klub() : '')) : ($doplni ? doplni_klub() : '');
             $poznHtml = (string)preg_replace('~</?p>~', ' ', $poznHtml); ?>
           <div class="zalozky__panel" role="tabpanel" id="zd-p-<?= e($kat) ?>" aria-labelledby="zd-t-<?= e($kat) ?>" tabindex="0"<?= $prvni ? '' : ' hidden' ?>>
-            <?php if ($kat === 'grandslam'): ?>
-            <div class="metr" data-metr="stvanice">
-              <fieldset>
-                <legend class="vh">Jak počítat grandslamové tituly</legend>
-                <div class="metr__volby">
-                  <label class="metr__volba"><input type="radio" name="metr-gs" value="stvanice" data-metr-volba checked><span><b><?= $gsStvanice ?></b><strong>Vyrostli na Štvanici</strong><small>klubová definice · podle klubu</small></span></label>
-                  <label class="metr__volba"><input type="radio" name="metr-gs" value="klub" data-metr-volba><span><b><?= $gsKlub ?></b><strong>V&nbsp;barvách klubu</strong><small>v&nbsp;den triumfu · registr ČTS</small></span></label>
-                </div>
-              </fieldset>
-              <?php $tStv = html_text($perex); $tKlub = html_text($text); ?>
-              <p class="metr__vysvetleni" data-metr-vystup aria-live="polite" data-text-stvanice="<?= e($tStv) ?>" data-text-klub="<?= e($tKlub !== '' ? $tKlub : $tStv) ?>"><?= typo($tStv) ?></p>
-              <ol class="deska__radky">
+              <?php if ($perex !== ''): ?><p class="metr__vysvetleni"><?= typo(hist_text($perex)) ?></p><?php endif; ?>
+              <?php if ($d['hlavni']):
+                $sRoky = (bool)array_filter($d['hlavni'], fn($r) => trim((string)$r['rok']) !== '');
+                // delší roky („2011–2022“, „1966, 1968“) potřebují širší sloupec
+                $dlouheRoky = (bool)array_filter($d['hlavni'], fn($r) => mb_strlen(trim((string)$r['rok'])) > 4); ?>
+              <ol class="deska__radky<?= $dlouheRoky ? ' deska__radky--roky' : '' ?>">
                 <?php foreach ($d['hlavni'] as $r):
-                  $metr = trim((string)$r['metr']);
                   $pramen = trim((string)$r['pramen']);
-                  $jenMimo = $pramen !== '' && !in_array('klub', preg_split('/\s+/', $metr) ?: [], true) && mb_strtolower($pramen) === 'pravděpodobně'; ?>
-                <li class="deska__radek<?= (int)$r['historie'] === 1 ? ' deska__radek--historie' : '' ?>"<?= $metr !== '' ? ' data-metr-patri="' . e($metr) . '"' : '' ?>><span class="deska__rok"><?= e((string)$r['rok']) ?></span><span class="deska__jmeno"><?= typo((string)$r['jmeno']) ?></span><span class="deska__vodici" aria-hidden="true"></span><span class="deska__cin"><?= hist_doplni(typo((string)$r['cin'])) ?><?= $pramen !== '' ? '<span class="pramen' . ($jenMimo ? ' metr__pozn' : '') . '">' . e($pramen) . '</span>' : '' ?></span></li>
-                <?php endforeach; ?>
-              </ol>
-            </div>
-            <?php else: ?>
-              <?php if ($perex !== ''): ?><p class="metr__vysvetleni"><?= typo(html_text($perex)) ?></p><?php endif; ?>
-              <?php if ($d['hlavni']): $sRoky = (bool)array_filter($d['hlavni'], fn($r) => trim((string)$r['rok']) !== ''); ?>
-              <ol class="deska__radky<?= $kat === 'prezidenti' ? ' deska__radky--roky' : '' ?>">
-                <?php foreach ($d['hlavni'] as $r): $pramen = trim((string)$r['pramen']); ?>
+                  // „pravděpodobně“ u Grand Slamu = titul jen pravděpodobně v barvách klubu (dřívější dvojí metr);
+                  // deska ukazuje všechny ze Štvanice bez ohledu na klub, taková poznámka na ni nepatří
+                  if ($kat === 'grandslam' && mb_strtolower($pramen) === 'pravděpodobně') $pramen = ''; ?>
                 <li class="deska__radek<?= $sRoky ? '' : ' deska__radek--bez-roku' ?><?= (int)$r['historie'] === 1 ? ' deska__radek--historie' : '' ?>"><?php if ($sRoky): ?><span class="deska__rok"><?= e((string)$r['rok']) ?></span><?php endif; ?><span class="deska__jmeno"><?= typo((string)$r['jmeno']) ?></span><span class="deska__vodici" aria-hidden="true"></span><span class="deska__cin"><?= hist_doplni(typo((string)$r['cin'])) ?><?= $pramen !== '' ? '<span class="pramen">' . e($pramen) . '</span>' : '' ?></span></li>
                 <?php endforeach; ?>
               </ol>
@@ -414,7 +392,6 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
                   $jm = (string)preg_replace('~\s+in(\s|&nbsp;)+memoriam$~u', ' <small>in&nbsp;memoriam</small>', $jm); ?><span><?= $jm ?></span> <?php endforeach; ?></p>
               <?php endif; ?>
               <?php if (trim($poznHtml) !== ''): ?><p class="deska__pozn drobne stred"><?= trim($poznHtml) ?></p><?php endif; ?>
-            <?php endif; ?>
           </div>
           <?php $prvni = false; endforeach; ?>
         </div>

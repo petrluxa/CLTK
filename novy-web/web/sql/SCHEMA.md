@@ -349,7 +349,8 @@ Dvě buňky se stejným dnem, časem a kurtem = dvě souběžné skupiny (kurt 5
 ### `cltk_triptych` – tři wimbledonské trávy
 `rok` („1954“), `jmeno`, `disciplina` („Wimbledon · dvouhra mužů · finále“), `foto` (černobílá
 z PDF klienta), `fokus`, `alt`, `vitez` a `souper` (příjmení do tabulky skóre), `sety` (JSON),
-`hral_za` („Egypt“), `hral_za_text` (*text*), `visible`, `poradi`.
+`hral_za` („Egypt“), `hral_za_text` (*text*) – od 8. 10. 2026 je web ani administrace neukazují (údaj zůstává
+uložený), `visible`, `poradi`.
 
 ### `cltk_osobnosti` – medailony
 `jmeno`, `kategorie` („Čestný člen“), `roky` („1921–2001“), `cin` (*inline*), `foto`, `fokus`, `alt`,
@@ -360,10 +361,10 @@ z PDF klienta), `fokus`, `alt`, `vitez` a `souper` (příjmení do tabulky skór
 |---|---|
 | kategorie | `grandslam` · `cestni` · `mistri` · `oh` · `zasluzili` · `prezidenti` |
 | skupina | `hlavni` = řádek desky (rok · jméno · čin) · `jmena` = jen jméno do výčtu (historičtí čestní členové, zasloužilí, prvních 36 let prezidentů) |
-| rok | text („1948“, „2011–2022“, „12×“, „2022–“) |
+| rok | text („1948“, „2011–2022“, „1966, 1968“, „2022–“) |
 | jmeno, cin | |
-| pramen | drobná poznámka („pravděpodobně“, „podle klubu“, „ve štvanické historii“) |
-| metr | jen grandslam: `stvanice` nebo `stvanice klub` (dvojí metr – klubová definice / v barvách klubu) |
+| pramen | drobná poznámka („pravděpodobně“, „podle klubu“, „ve štvanické historii“); u Grand Slamu se „pravděpodobně“ (= jen pravděpodobně v barvách klubu) na webu neukazuje |
+| metr | jen grandslam: `stvanice` nebo `stvanice klub` (dřívější dvojí metr – klubová definice / v barvách klubu); od 8. 10. 2026 ho web ani administrace nepoužívají, hodnota zůstává uložená |
 | historie | 1 = tlumený řádek ze štvanické historie |
 
 Texty desky (perexy záložek, poznámky) jsou v `cltk_bloky` se `stranka = 'historie'`.

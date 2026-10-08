@@ -814,6 +814,8 @@ legend { padding: 0; }
 .deska__jmeno { font: 500 1.34rem/1.25 var(--sc); letter-spacing: .035em; color: var(--navy); text-shadow: var(--rytina); font-synthesis: none; }
 .deska__vodici { align-self: end; margin-bottom: .42em; border-bottom: 1px dotted rgba(138, 109, 59, .55); }
 .deska__cin { font: italic 400 1.14rem/1.3 var(--serif); color: var(--ink-2); text-align: right; max-width: 42ch; justify-self: end; }
+/* Grand Slam: delší čin („Roland Garros · mix, s Renátou Tomanovou“) i se štítkem na jeden řádek; ostatní záložky beze změny */
+@media (min-width: 700px) { #zd-p-grandslam .deska__cin { max-width: 58ch; } }
 .deska__cin .pramen { font-style: normal; margin-left: .4rem; }
 .deska__radek--bez-roku { grid-template-columns: minmax(0, auto) minmax(1.5rem, 1fr) minmax(0, auto); }
 .deska__radek--historie .deska__jmeno { color: var(--ink-2); }
@@ -842,49 +844,22 @@ legend { padding: 0; }
   .deska__radky--roky .deska__rok { font-size: 1rem; }
 }
 
-/* Dvojí metr: přepínač a zešednutí řádků, které do metru nepatří */
-.metr__volby { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--line-gold); margin: 0 auto var(--s-6); max-width: 44rem; background: rgba(251, 250, 246, .6); }
-.metr__volba { position: relative; cursor: pointer; }
-.metr__volba input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
-.metr__volba span { display: grid; grid-template-columns: auto 1fr; align-items: center; column-gap: 1rem; height: 100%; padding: 1rem 1.3rem; transition: background-color var(--pohyb-rychly), color var(--pohyb-rychly); }
-.metr__volba + .metr__volba span { border-left: 1px solid var(--line-gold); }
-.metr__volba b { grid-row: span 2; font: 300 clamp(2.4rem, 1.8rem + 1.8vw, 3.4rem)/1 var(--serif); font-variant-numeric: lining-nums; color: var(--navy); }
-.metr__volba strong { font: 500 .74rem/1.3 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--navy); }
-.metr__volba small { font-size: var(--t-drobne); color: var(--muted); line-height: 1.35; }
-.metr__volba input:checked + span { background: var(--navy); }
-.metr__volba input:checked + span b, .metr__volba input:checked + span strong { color: var(--paper); }
-.metr__volba input:checked + span small { color: var(--gold-soft); }
-.metr__volba input:focus-visible + span { outline: 2px solid var(--navy); outline-offset: 3px; }
+/* Úvodní věta záložky Zlaté desky (třída z Varianty 4; přepínač dvojího metru od 8. 10. 2026 není) */
 .metr__vysvetleni { max-width: 44rem; margin: 0 auto var(--s-6); text-align: center; font: italic 400 1.12rem/1.45 var(--serif); color: var(--ink-2); }
-.metr[data-metr="klub"] [data-metr-patri]:not([data-metr-patri~="klub"]),
-.metr[data-metr="stvanice"] [data-metr-patri]:not([data-metr-patri~="stvanice"]) { opacity: .3; filter: grayscale(1); }
-.metr__pozn { display: none; }
-.metr[data-metr="klub"] .metr__pozn { display: inline-flex; }
-@media (max-width: 599.98px) { .metr__volba span { grid-template-columns: 1fr; padding: .9rem .8rem; } .metr__volba b { grid-row: auto; margin-bottom: .3rem; } }
 
 /* Tři wimbledonské trávy – triptych (interaktivní, historie.php) */
 .triptych { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(1rem, .4rem + 2vw, 2.75rem); }
 @media (max-width: 899.98px) { .triptych { grid-template-columns: 1fr; gap: var(--s-8); max-width: 30rem; margin-inline: auto; } }
 .trava { position: relative; display: flex; flex-direction: column; }
-.trava__obraz { position: relative; aspect-ratio: 2 / 3; overflow: hidden; background: var(--paper-3); cursor: pointer; }
+.trava__obraz { position: relative; aspect-ratio: 2 / 3; overflow: hidden; background: var(--paper-3); }
 .trava__obraz img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) contrast(1.04) brightness(1.02); transition: filter 600ms ease, transform 1200ms cubic-bezier(.2, .7, .2, 1); }
 .trava__obraz::after { content: ''; position: absolute; inset: 12px; border: 1px solid rgba(251, 250, 246, .55); pointer-events: none; }
-.trava.je-aktivni .trava__obraz img { filter: sepia(.28) saturate(1.05) contrast(1.02); transform: scale(1.02); }
-.trava--barva.je-aktivni .trava__obraz img { filter: var(--foto-filtr); }
 @media (hover: hover) and (pointer: fine) {
   .trava:hover .trava__obraz img { filter: sepia(.28) saturate(1.05) contrast(1.02); }
-  .trava--barva:hover .trava__obraz img { filter: var(--foto-filtr); }
 }
 .trava__rok { margin: 1.2rem 0 0; font: 300 clamp(5rem, 3.6rem + 4vw, 7.5rem)/.9 var(--serif); color: var(--navy); letter-spacing: -.02em; font-variant-numeric: oldstyle-nums; }
 .trava__jmeno { margin: .8rem 0 .15rem; font: 500 1.5rem/1.2 var(--sc); letter-spacing: .05em; color: var(--navy); }
 .trava__disciplina { margin: 0 0 1rem; font-size: var(--t-drobne); color: var(--muted); letter-spacing: .02em; }
-.trava__za { margin-top: auto; border-top: 1px solid var(--line-gold); }
-.trava__tl { display: flex; width: 100%; justify-content: space-between; align-items: center; gap: 1rem; padding: .95rem 0; min-height: 44px; border: 0; background: none; text-align: left; font: 500 .72rem/1.3 var(--sans); letter-spacing: .17em; text-transform: uppercase; color: var(--navy); }
-.trava__tl::after { content: '+'; font: 300 1.45rem/1 var(--serif); letter-spacing: 0; color: var(--gold-text); }
-.trava__tl[aria-expanded="true"]::after { content: '–'; }
-.trava__detail { padding: 0 0 1rem; font-size: var(--t-male); color: var(--ink-2); }
-.trava__detail b { display: block; margin-bottom: .3rem; font: 400 1.6rem/1.1 var(--serif); color: var(--gold-text); }
-.trava__detail p { margin: 0; }
 
 /* Ryté skóre finále: dva řádky, sety ve sloupcích, vyhrané sety navy */
 .skore { width: 100%; border-collapse: collapse; font-variant-numeric: lining-nums tabular-nums; }
@@ -1272,9 +1247,6 @@ html[data-pohyb="omezit"] *, html[data-pohyb="omezit"] *::before, html[data-pohy
 }
 :root[data-kontrast="vyssi"] .foto, :root[data-kontrast="vyssi"] .osoba__foto img { filter: none; }
 :root[data-kontrast="vyssi"] .skore td, :root[data-kontrast="vyssi"] .vysledek__skore .p { color: #5c606c; }
-:root[data-kontrast="vyssi"] .metr[data-metr] [data-metr-patri] { filter: none; }
-:root[data-kontrast="vyssi"] .metr[data-metr="klub"] [data-metr-patri]:not([data-metr-patri~="klub"]),
-:root[data-kontrast="vyssi"] .metr[data-metr="stvanice"] [data-metr-patri]:not([data-metr-patri~="stvanice"]) { opacity: .45; text-decoration: line-through; text-decoration-color: var(--muted); }
 :root[data-kontrast="vyssi"] .pilulka, :root[data-kontrast="vyssi"] .prepinac-pristupnost { border-color: var(--line-2); }
 
 /* 20 ─ TISK ──────────────────────────────────────────────────────────────── */

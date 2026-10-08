@@ -152,7 +152,8 @@ const HIST_DESKA = [
     'prezidenti' => 'Prezidenti',
 ];
 const HIST_SKUPINY = ['hlavni' => 'Řádek desky (rok · jméno · čin)', 'jmena' => 'Jen jméno do souvislého výčtu'];
-const HIST_METR = ['' => '–', 'stvanice' => 'Jen štvanická historie (klubová definice)', 'stvanice klub' => 'Štvanice i v barvách klubu (registr ČTS)'];
+/* Od 8. 10. 2026 (postřehy klienta) web neukazuje „V den titulu hrál/a za“ u triptychu (hral_za, hral_za_text)
+   ani dvojí metr u Grand Slamu (metr). Formuláře tato pole nemají a při uložení nechávají uloženou hodnotu. */
 const HIST_JISTOTA_OSOB = ['overeno' => 'Ověřeno', 'klub' => 'Podle klubu'];
 /** Soubory fotek mohou ležet v téže složce – před smazáním hlídat všechny tři tabulky. */
 const HIST_FOTKY = [['cltk_milniky', 'foto'], ['cltk_triptych', 'foto'], ['cltk_osobnosti', 'foto']];
@@ -209,8 +210,9 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
         } elseif ($cast === 'triptych') {
             $f = ['rok' => obsah_pole('rok', 10), 'jmeno' => obsah_pole('jmeno', 120), 'disciplina' => obsah_pole('disciplina', 160),
                   'foto' => $f['foto'], 'fokus' => vstup('fokus', 20), 'alt' => obsah_pole('alt', 255), 'vitez' => obsah_pole('vitez', 80),
-                  'souper' => obsah_pole('souper', 80), 'sety' => obsah_pole('sety', 200), 'hral_za' => obsah_pole('hral_za', 80),
-                  'hral_za_text' => obsah_pole('hral_za_text', 2000), 'visible' => vstup_bool('visible')];
+                  'souper' => obsah_pole('souper', 80), 'sety' => obsah_pole('sety', 200),
+                  'hral_za' => $f['hral_za'], 'hral_za_text' => $f['hral_za_text'],        // ve formuláři nejsou – uložená hodnota zůstává
+                  'visible' => vstup_bool('visible')];
             if ($f['rok'] === '') $chyby['rok'] = 'Vyplňte rok (např. 1954).';
             if ($f['jmeno'] === '') $chyby['jmeno'] = 'Vyplňte jméno vítěze.';
             $sety = sety_z_textu($f['sety']);
@@ -238,10 +240,10 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
         } else {
             $f = ['kategorie' => vstup('kategorie', 20), 'skupina' => vstup('skupina', 20), 'rok' => obsah_pole('rok', 30),
                   'jmeno' => obsah_pole('jmeno', 160), 'cin' => obsah_pole('cin', 255), 'pramen' => obsah_pole('pramen', 120),
-                  'metr' => vstup('metr', 40), 'historie' => vstup_bool('historie'), 'visible' => vstup_bool('visible')];
+                  'metr' => $f['metr'], 'historie' => vstup_bool('historie'), 'visible' => vstup_bool('visible')];   // metr ve formuláři není
             if (!isset(HIST_DESKA[$f['kategorie']])) { $chyby['kategorie'] = 'Vyberte kategorii desky.'; $f['kategorie'] = $kat; }
             if (!isset(HIST_SKUPINY[$f['skupina']])) $f['skupina'] = 'hlavni';
-            if (!isset(HIST_METR[$f['metr']]) || $f['kategorie'] !== 'grandslam') $f['metr'] = '';
+            if ($f['kategorie'] !== 'grandslam') $f['metr'] = '';
             if ($f['jmeno'] === '') $chyby['jmeno'] = 'Vyplňte jméno.';
             $data = $f;
         }
@@ -384,8 +386,7 @@ if ($rezim === 'seznam'):
           <td data-label="Foto"><?= obsah_nahled_foto($r['foto'], 'thumb-portret', (string)$r['fokus']) ?></td>
           <?php if ($cast === 'triptych'): ?>
             <td data-label="Rok a vítěz" class="td-nazev"><span class="td-rok"><?= e($r['rok']) ?></span><b><a href="historie.php?cast=triptych&amp;id=<?= $rid ?>"><?= e($r['jmeno']) ?></a></b><small><?= e($r['disciplina']) ?></small></td>
-            <td data-label="Finále" class="td-mala"><b><?= e($r['vitez']) ?></b> – <?= e($r['souper']) ?><br><?= e(implode(' ', array_map('strval', json_pole((string)$r['sety'])))) ?>
-              <?php if ($r['hral_za'] !== ''): ?><br>hrál/a za: <?= e($r['hral_za']) ?><?php endif; ?></td>
+            <td data-label="Finále" class="td-mala"><b><?= e($r['vitez']) ?></b> – <?= e($r['souper']) ?><br><?= e(implode(' ', array_map('strval', json_pole((string)$r['sety'])))) ?></td>
           <?php else: ?>
             <td data-label="Osobnost" class="td-nazev"><b><a href="historie.php?cast=osobnosti&amp;id=<?= $rid ?>"><?= e($r['jmeno']) ?></a></b><small><?= e(implode(' · ', array_filter([(string)$r['kategorie'], (string)$r['roky']], static fn($x) => $x !== ''))) ?></small></td>
             <td data-label="Čin" class="td-mala"><?= html_inline($r['cin']) ?><br><?= badge($r['jistota_text'] !== '' ? $r['jistota_text'] : $r['jistota'], $r['jistota'] === 'overeno' ? 'ok' : 'warn') ?></td>
@@ -436,7 +437,6 @@ if ($rezim === 'seznam'):
             <?php if ($r['pramen'] !== ''): ?><small><?= e($r['pramen']) ?></small><?php endif; ?></td>
           <?php if ($sk === 'hlavni'): ?>
             <td data-label="Čin" class="td-mala"><?= e($r['cin']) ?>
-              <?php if ($r['metr'] !== ''): ?><br><?= $r['metr'] === 'stvanice klub' ? badge('i v barvách klubu', 'navy') : badge('štvanická historie', 'zlato') ?><?php endif; ?>
               <?php if ((int)$r['historie']): ?><br><?= badge('tlumený řádek', 'off') ?><?php endif; ?></td>
           <?php endif; ?>
           <td data-label="Stav"><?= stav_badge($r['visible']) ?></td>
@@ -455,7 +455,7 @@ if ($rezim === 'seznam'):
 </section>
 <?php endforeach; ?>
 <p class="hint">Text nad záložkou (perex) upravíte ve <a href="stranky.php?stranka=historie">Stránkách</a> – blok „deska-<?= e($kat) ?>“.
-  <?php if ($kat === 'grandslam'): ?> Dvojí metr: „štvanická historie“ = klubová definice, „i v barvách klubu“ = titul hráče, který v den triumfu hrál za I. ČLTK (registr ČTS).<?php endif; ?></p>
+  <?php if ($kat === 'grandslam'): ?> Na webu je jeden seznam všech, kdo na Štvanici vyrostli, bez ohledu na klub v den titulu. Poznámka „pravděpodobně“ (dřív: titul jen pravděpodobně v barvách klubu) se u Grand Slamu na webu neukazuje.<?php endif; ?></p>
 <?php endif; ?>
 
 <?php else: /* ---------- formulář ---------- */ ?>
@@ -500,8 +500,6 @@ if ($rezim === 'seznam'):
               pole_text('souper', 'Soupeř', $f['souper'], ['maxlength' => 80, 'placeholder' => 'Rosewall']),
             ]) ?>
         <?= pole_text('sety', 'Sety', $f['sety'], ['maxlength' => 200, 'placeholder' => '13:11 4:6 6:2 9:7', 'hint' => obsah_chyba($chyby, 'sety', 'Oddělte mezerou; tiebreak v závorce „9:8 (7:5)“.')]) ?>
-        <?= pole_text('hral_za', 'V den titulu hrál/a za', $f['hral_za'], ['maxlength' => 80, 'placeholder' => 'Egypt / Sparta / I. ČLTK Praha']) ?>
-        <?= pole_textarea('hral_za_text', 'Text k panelu', $f['hral_za_text'], ['rows' => 3]) ?>
 
       <?php elseif ($cast === 'osobnosti'): ?>
         <?= pole_radek([
@@ -525,14 +523,11 @@ if ($rezim === 'seznam'):
               pole_select('skupina', 'Druh', $f['skupina'], HIST_SKUPINY),
             ]) ?>
         <?= pole_radek([
-              pole_text('rok', 'Rok', $f['rok'], ['maxlength' => 30, 'placeholder' => '1954 / 2011–2022 / 12×', 'hint' => 'U výčtu jmen nechte prázdné.']),
+              pole_text('rok', 'Rok', $f['rok'], ['maxlength' => 30, 'placeholder' => '1954 / 2011–2022 / 1966, 1968', 'hint' => 'U výčtu jmen nechte prázdné.']),
               pole_text('jmeno', 'Jméno', $f['jmeno'], ['required' => true, 'maxlength' => 160, 'hint' => obsah_chyba($chyby, 'jmeno')]),
             ]) ?>
         <?= pole_text('cin', 'Čin', $f['cin'], ['maxlength' => 255, 'sirka' => 'cela', 'placeholder' => 'Wimbledon · dvouhra']) ?>
         <?= pole_text('pramen', 'Drobná poznámka', $f['pramen'], ['maxlength' => 120, 'placeholder' => 'pravděpodobně / podle klubu']) ?>
-        <?php if ($f['kategorie'] === 'grandslam'): ?>
-          <?= pole_select('metr', 'Dvojí metr (jen Grand Slam)', $f['metr'], HIST_METR) ?>
-        <?php endif; ?>
         <?= pole_check('historie', 'Tlumený řádek ze štvanické historie', (bool)$f['historie'], ['hint' => 'Úspěch, který nepatří do barev klubu (např. medaile v jiném sportu).']) ?>
       <?php endif; ?>
 

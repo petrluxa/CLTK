@@ -4,7 +4,7 @@
    – přístupnost (Omezit pohyb / Vyšší kontrast, jen localStorage)
    – hlavička: kompaktní stav, podmenu (najetí, kliknutí, klávesnice),
      mobilní menu se skupinami a zámkem rolování (Safari: tělo se zafixuje)
-   – dialogy, záložky, rozbalování, dvojí metr, triptych, krokovač,
+   – dialogy, záložky, rozbalování, krokovač,
      konfigurátor členství, rolovací boxy tabulek, reveal
    Stránky mohou na nový obsah zavolat CLTK.init(koren).
    ========================================================================== */
@@ -427,44 +427,6 @@
     });
   }
 
-  /* ── Dvojí metr [data-metr] + radio [data-metr-volba] ─────────────────── */
-  function initMetr(koren) {
-    $$('[data-metr]', koren).forEach(function (m) {
-      if (!jednou(m, 'metr')) return;
-      var vystup = $('[data-metr-vystup]', m);
-      function prepni(hodnota) {
-        m.setAttribute('data-metr', hodnota);
-        if (vystup) {
-          var t = vystup.getAttribute('data-text-' + hodnota);
-          if (t) vystup.textContent = t;
-        }
-      }
-      $$('input[type="radio"][data-metr-volba]', m).forEach(function (r) {
-        r.addEventListener('change', function () { if (r.checked) prepni(r.value); });
-        if (r.checked) prepni(r.value);
-      });
-    });
-  }
-
-  /* ── Tři wimbledonské trávy [data-trava] ─────────────────────────────── */
-  function initTravy(koren) {
-    $$('[data-trava]', koren).forEach(function (t) {
-      if (!jednou(t, 'trava')) return;
-      var tl = $('[data-trava-prepinac]', t);
-      var detail = tl && d.getElementById(tl.getAttribute('aria-controls'));
-      function nastav(otevreno) {
-        tl.setAttribute('aria-expanded', String(otevreno));
-        if (detail) detail.hidden = !otevreno;
-        t.classList.toggle('je-aktivni', otevreno);
-      }
-      if (tl) {
-        tl.addEventListener('click', function () { nastav(tl.getAttribute('aria-expanded') !== 'true'); });
-        var obraz = $('.trava__obraz', t);
-        if (obraz) obraz.addEventListener('click', function (e) { if (!e.target.closest('button')) tl.click(); });
-      }
-    });
-  }
-
   /* ── Krokovač [data-krokovac]: − [n] + ───────────────────────────────── */
   function initKrokovace(koren) {
     $$('[data-krokovac]', koren).forEach(function (k) {
@@ -643,8 +605,6 @@
   CLTK.init = function (koren) {
     koren = koren || d;
     initZalozky(koren);
-    initMetr(koren);
-    initTravy(koren);
     initKonfiguratory(koren);
     initKrokovace(koren);
     initBoxy(koren);

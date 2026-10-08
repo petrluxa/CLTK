@@ -36,7 +36,7 @@
 .klub-mesto__text { padding-top: .4rem; }
 .klub-mesto__text .akce { margin-top: var(--s-6); }
 
-/* Pět jmen, cesta na ostrov, rodokmen stoletých (V4 sekce 3b) */
+/* Sedm jmen, cesta na ostrov, rodokmen stoletých (V4 sekce 3b) */
 .klub-rod { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--s-8) clamp(2rem, 1rem + 4vw, 6rem); }
 .klub-rod .hlava { margin-bottom: var(--s-6); }
 .jmena-klubu { list-style: none; position: relative; margin: 0 0 var(--s-4); padding-left: 1.6rem; }
@@ -83,7 +83,7 @@
   .rodokmen__klub--my { box-shadow: -.6rem 0 0 var(--paper-2), .6rem 0 0 var(--paper-2); }
   .sekce--papir2 .rodokmen__klub--my { box-shadow: -.6rem 0 0 var(--paper), .6rem 0 0 var(--paper); }
   .rodokmen__klub--my::before { left: -.6rem; }
-  .jmena-klubu li { grid-template-columns: 4.4rem minmax(0, 1fr); }
+  .jmena-klubu li { grid-template-columns: 5rem minmax(0, 1fr); }   /* „1948–1950“, „kolem 1969“ na jeden řádek */
   .cesta-ostrov__trasa > span { white-space: normal; }
 }
 
@@ -118,7 +118,6 @@
 .travy .hlava--radek { align-items: flex-end; }
 .travy .hlava--radek .perex { max-width: 26rem; margin: 0; font-size: clamp(1.15rem, 1.05rem + .35vw, 1.35rem); }
 .travy .hlava--radek .perex p { margin: 0; }
-.trava__detail p { margin: 0; }
 .wimbledonska-linka { margin-top: clamp(3.5rem, 2.5rem + 3vw, 5.5rem); padding-top: var(--s-6); border-top: 1px solid var(--line-2); }
 .wimbledonska-linka .linka-let { margin-top: var(--s-4); }
 .wimbledonska-linka__legenda { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; margin: 0; }

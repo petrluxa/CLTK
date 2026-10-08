@@ -255,9 +255,9 @@ Karta výsledku do pásu: `vysledek_karta_html($v)` (viz úvod), řádek výsled
 Zavře Esc, tlačítko i klik mimo okno; rolování stránky se zamkne (správně i v Safari) a fokus se vrátí.
 Z JS: `CLTK.dialog.otevri(dlg, obsahHtmlNeboUzel, 'Titulek')`, `CLTK.dialog.zavri(dlg)`.
 
-**Další:** `[data-otevrit="id"]` otevře `<details id>`; dvojí metr `[data-metr]`; triptych
-`[data-trava]` (V4 historie: `.triptych > article.trava` s `.skore` a tlačítkem „V den titulu hrál za“);
-krokovač `[data-krokovac]`; konfigurátor členství `form[data-konfigurator]` – ceny si přečte
+**Další:** `[data-otevrit="id"]` otevře `<details id>`; triptych historie `.triptych > article.trava`
+s `.skore` je bez skriptu (přepínač „V den titulu hrál za“ a dvojí metr `[data-metr]` Zlaté desky
+klient 8. 10. 2026 zrušil); krokovač `[data-krokovac]`; konfigurátor členství `form[data-konfigurator]` – ceny si přečte
 z `<?= json_skript('clenstvi-ceny', […]) ?>` (tvar v komentáři v `app.js`), jinak ceník 2026;
 vodorovný pás karet `[data-pas]` (`vysledky.js`, viz úvod); video `[data-video]` (`video.js`).
 Po vložení nového HTML zavolejte `CLTK.init(koren)`. Zámek rolování: `CLTK.zamek.zamkni()/odemkni()`.
@@ -268,8 +268,8 @@ Ukládat do prohlížeče jen přes `CLTK.uloziste` (localStorage v try/catch, �
 v hlavičce `assets/js/kiosek.js` a ve Variantě 4 (`index.html`, sekce 8 a 9b – obal `.v2`).
 Příběh v obálkách: `<button class="cip" data-kiosek-pribeh="muchova" data-kmen="muchov" aria-pressed="false">`.
 
-**Zlatá deska** (`.deska`, `.deska__radky`, `.deska__radek`, `.deska__jmena`, `.metr`) a **členský list**
-(`.clensky-list`) jsou ve `styl.css` beze změny z Varianty 4. Erb / pečeť = logo s filtrem:
+**Zlatá deska** (`.deska`, `.deska__radky`, `.deska__radek`, `.deska__jmena`, `.metr__vysvetleni`) a **členský list**
+(`.clensky-list`) jsou ve `styl.css` z Varianty 4 (bez přepínače dvojího metru). Erb / pečeť = logo s filtrem:
 `<span class="deska__erb"><img src="<?= e(logo_url('svg')) ?>" alt=""></span>`,
 `<div class="clensky-list__pecet"><img src="<?= e(logo_url('svg')) ?>" alt=""></div>`.
 

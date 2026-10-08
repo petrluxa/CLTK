@@ -116,7 +116,12 @@ s omezeným pohybem (`RM=1`) musí být vidět všechen obsah. Po změně výcho
 Ověřit i stávající funkce, ne jen novou (admin e2e: `podklady/_raw/qa/integrace/e2e-uvod.mjs` s `UV_BASE=…`, `e2e-obsah.mjs` s `BASE=…` –
 kopie jsou napevno nad `web/data/integrace.sqlite`, originály agentů v `admin-uvod/`, `admin-obsah/`).
 
-## Nasazení na test – stav 5. 10. 2026
+## Nasazení na test – stav 8. 10. 2026
+
+- 8. 10.: postřehy klubu k Historii (triptych bez „hrál za“, Wimbledonská linka, Kronika 1949/1956/1978/2006/2011,
+  Zlatá deska jako jeden seznam, Mistři 10× Spartak + 2× Motorlet, Šimek mezi prezidenty, Klub „Sedm jmen“) –
+  migrace `2026-10-08-historie-postrehy.php` na testu proběhla (34 změn, bez POZOR). Ponecháno k rozhodnutí Petra:
+  perex Osobností a OH a fakt Klubu „v barvách klubu“, jméno Ludvík × Ladislav Šimek (čestní × prezidenti).
 
 - 5. 10.: na serveru proběhla migrace `2026-10-05-na-koho-se-obratit.php` (Texty a údaje › Na koho se obrátit)
   a jednorázová ohniska fotek úvodu (`deploy/jednorazove/`). Jednorázové skripty se spouštějí

@@ -175,7 +175,7 @@ const STRANKY_BLOKY = [
     'index|kalendar' => 'Klubový kalendář – nadpis a perex', 'index|clenstvi' => 'Členství – nadpis a tlačítko nad videem',
     'index|sluzby' => 'Nadpis štítků Služby v areálu', 'index|historie' => 'Naše historie – tlačítko Kompletní historie',
     'index|partneri' => 'Nadpis sekce Partneři',
-    'klub|o-klubu' => 'Klub uprostřed města', 'klub|jmena' => 'Pět jmen, jeden klub',
+    'klub|o-klubu' => 'Klub uprostřed města', 'klub|jmena' => 'Sedm jmen, jeden klub',
     'clenstvi|v-cene' => 'Co je v ceně členství', 'clenstvi|zvyhodneni' => 'Výhody členů v zimě', 'clenstvi|postup' => 'Jak se stát členem',
     'clenstvi|druhy' => 'Druhy členství podle stanov', 'clenstvi|prihlaska' => 'Nadpis a perex přihlášky do klubu',
     'historie|triptych' => 'Tři wimbledonské trávy – nadpis', 'historie|kronika' => 'Kronika – nadpis', 'historie|deska' => 'Zlatá deska – nadpis',

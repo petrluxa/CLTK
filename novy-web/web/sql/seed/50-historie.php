@@ -1,14 +1,39 @@
 <?php
 defined('SEED_DATA_JSON') || exit;   // jen přes sql/seed.php nebo instalace.php, nikdy přímo
-/* Historie: kronika (38 milníků), triptych „Tři wimbledonské trávy“, medailony
+/* Historie: kronika (40 milníků), triptych „Tři wimbledonské trávy“, medailony
    „Od Žemly po Muchovou“ a Zlatá deska. Zdroj: obsah.json → kronika,
    Varianta 4 (triptych, medailony, záložky desky), PDF klienta (fotky triptychu).
-   Texty k záložkám desky jsou v bloky (60-bloky.php, stránka historie). */
+   Texty k záložkám desky jsou v bloky (60-bloky.php, stránka historie).
+   Postřehy klienta 8. 10. 2026 (jména klubu 1948–1969, tituly Motorletu, Složil, Damm, Benešová,
+   Šimek mezi prezidenty) jsou zapsané tady; server je dostal migrací
+   sql/migrace/2026-10-08-historie-postrehy.php. Řádky, které přibyly, se vkládají až za ostatní,
+   aby id dřívějších řádků zůstala stejná jako na serveru (migrace je přidala na konec) –
+   na webu řadí rok (kronika) a poradi (deska), ne id. */
 
 $ted = ted();
 
 /* ---------- kronika ---------- */
 if (seed_prazdna('cltk_milniky')) {
+    /* Opravy podle klubu nad podklady průzkumu – obsah.json (cltk-navrhy) zůstává, jak byl. */
+    $eraOprava = ['Motorlet (od 1949)' => 'Spartak a Motorlet (1949–1969)'];
+    $opravy = [   // „rok|původní titulek“ => nové hodnoty
+        '1949|Emigrace a nové jméno' => [
+            'text' => 'V červenci 1949 zůstává Drobný ve švýcarském Gstaadu. Klub je začleněn jako oddíl pod tělovýchovnou jednotu, která postupně nese jména DSO Spartak (1948–1950), Sokol Šverma Jinonice (1951–1953), Spartak Praha Motorlet (1954–1966) a Motorlet Praha (1966–1969).'],
+        '1966|Mistři ligy s Kodešem' => [   // rok 1956: řadí se mezi 1954 a 1962, velký rok 1956 a pod ním „1956–1968“
+            'rok' => 1956, 'rok_text' => '1956–1968', 'titulek' => 'Dvanáct titulů mistra republiky',
+            'text' => 'Spartak Praha Motorlet je v letech 1956–1965 desetkrát mistrem republiky smíšených družstev, Motorlet Praha přidává tituly v letech 1966 a 1968. Od roku 1963 hraje v prvním týmu mladý Jan Kodeš.',
+            'foto_popisek' => 'Mistři ligy 1966'],
+        '2011|Lucie Hradecká a Fed Cup' => [
+            'titulek' => 'Hradecká, Benešová a Fed Cup',
+            'text' => 'Hradecká vyhrává s Hlaváčkovou Roland Garros a rozhodující čtyřhrou finále Fed Cup; Iveta Benešová vyhrává s Jürgenem Melzerem mix ve Wimbledonu. V roce 2012 Hradecká přiváží olympijské stříbro, Ivo Minář vyhrává Davis Cup a ve foyer je 14. 6. 2012 odhalena deska Jaroslava Drobného.'],
+    ];
+    $nove = [     // nové milníky (rok, doba, titulek, text, pramen, jistota) – až za ostatní
+        [1978, 'TJ Dopravní podnik (kolem 1970–1990)', 'Složil vítězem mixu na Roland Garros', 'Pavel Složil vyhrává s Renátou Tomanovou mix na Roland Garros.',
+         'en.wikipedia 1978 French Open – Mixed doubles', 'titul ověřen; vazba na Štvanici podle klubu'],
+        [2006, 'I. ČLTK Praha (1990–dnes)', 'Damm vítězem čtyřhry na US Open', 'Martin Damm vyhrává s Leanderem Paesem čtyřhru na US Open.',
+         "en.wikipedia 2006 US Open – Men's doubles", 'ověřeno'],
+    ];
+
     $radky = [];
     $poradiRoku = [];
     foreach (seed_json('obsah.json')['kronika'] ?? [] as $k) {
@@ -16,15 +41,24 @@ if (seed_prazdna('cltk_milniky')) {
         if (!empty($k['foto_file'])) {
             $foto = seed_obrazek(seed_navrhy($k['foto_file']), 'historie', pathinfo($k['foto_file'], PATHINFO_FILENAME), 1800, 1800);
         }
-        $rok = (int)$k['rok'];
+        $oprava = $opravy[(int)$k['rok'] . '|' . $k['titulek']] ?? [];
+        $rok = (int)($oprava['rok'] ?? $k['rok']);       // opravený rok – pořadí se počítá v něm
         $poradiRoku[$rok] = ($poradiRoku[$rok] ?? -1) + 1;
-        $radky[] = [
-            'rok' => $rok, 'rok_text' => (string)($k['rok_text'] ?? ''), 'era' => (string)($k['era'] ?? ''),
+        $era = (string)($k['era'] ?? '');
+        $radky[] = array_merge([
+            'rok' => $rok, 'rok_text' => (string)($k['rok_text'] ?? ''), 'era' => $eraOprava[$era] ?? $era,
             'titulek' => (string)$k['titulek'], 'text' => (string)$k['text'], 'foto' => $foto,
             'foto_popisek' => $rok === 1979 ? 'Davis Cup ČSSR – Švédsko na starém centrkurtu, 1979' : '',
             'zdroj' => (string)($k['zdroj'] ?? ''), 'jistota' => (string)($k['jistota'] ?? ''),
             'visible' => 1, 'poradi' => $poradiRoku[$rok],
-        ];
+        ], $oprava);
+    }
+    if ($radky) {                 // bez podkladů průzkumu (server) kronika nevznikne vůbec – ani jen ze dvou nových řádků
+        foreach ($nove as [$rok, $era, $titulek, $text, $zdroj, $jistota]) {
+            $poradiRoku[$rok] = ($poradiRoku[$rok] ?? -1) + 1;
+            $radky[] = ['rok' => $rok, 'rok_text' => '', 'era' => $era, 'titulek' => $titulek, 'text' => $text, 'foto' => '',
+                        'foto_popisek' => '', 'zdroj' => $zdroj, 'jistota' => $jistota, 'visible' => 1, 'poradi' => $poradiRoku[$rok]];
+        }
     }
     seed_log('Kronika: ' . seed_vloz('cltk_milniky', $radky) . ' milníků.');
 }
@@ -85,12 +119,14 @@ if (seed_prazdna('cltk_osobnosti')) {
 /* ---------- Zlatá deska (záložky Varianty 4) ---------- */
 if (seed_prazdna('cltk_deska_zaznamy')) {
     $d = [];
-    $add = static function (string $kat, string $skup, string $rok, string $jmeno, string $cin = '', string $pramen = '', string $metr = '', int $hist = 0) use (&$d): void {
+    // $pozdeji = řádek přibyl 8. 10. 2026 – vloží se až za ostatní (viz hlavička), pořadí na desce určuje poradi
+    $add = static function (string $kat, string $skup, string $rok, string $jmeno, string $cin = '', string $pramen = '', string $metr = '', int $hist = 0, bool $pozdeji = false) use (&$d): void {
         $d[] = ['kategorie' => $kat, 'skupina' => $skup, 'rok' => $rok, 'jmeno' => $jmeno, 'cin' => $cin,
-                'pramen' => $pramen, 'metr' => $metr, 'historie' => $hist, 'visible' => 1];
+                'pramen' => $pramen, 'metr' => $metr, 'historie' => $hist, 'visible' => 1, '_pozdeji' => $pozdeji];
     };
 
-    // Grand Slam – dvojí metr (stvanice = klubová definice, klub = v barvách klubu v den triumfu)
+    // Grand Slam – všichni, kdo na Štvanici vyrostli (sloupec metr = dřívější dvojí metr, web ho od 8. 10. 2026 nečte;
+    // stvanice = klubová definice, klub = v barvách klubu v den triumfu)
     foreach ([
         ['1948', 'Jaroslav Drobný', 'Roland Garros · čtyřhra, s Bergelinem', 'pravděpodobně', 'stvanice'],
         ['1948', 'Jaroslav Drobný', 'Roland Garros · mix, s Canning Toddovou', 'pravděpodobně', 'stvanice'],
@@ -101,7 +137,7 @@ if (seed_prazdna('cltk_deska_zaznamy')) {
         ['1970', 'Jan Kodeš', 'Roland Garros · dvouhra', '', 'stvanice'],
         ['1971', 'Jan Kodeš', 'Roland Garros · dvouhra', '', 'stvanice'],
         ['1973', 'Jan Kodeš', 'Wimbledon · dvouhra', '', 'stvanice'],
-        ['1978', 'Pavel Složil', 'Roland Garros · mix', 'vazba podle klubu', 'stvanice'],
+        ['1978', 'Pavel Složil', 'Roland Garros · mix, s Renátou Tomanovou', 'vazba podle klubu', 'stvanice'],
         ['1996', 'Daniel Vacek', 'Roland Garros · čtyřhra, s Kafelnikovem', '', 'stvanice klub'],
         ['1997', 'Daniel Vacek', 'Roland Garros · čtyřhra, s Kafelnikovem', '', 'stvanice klub'],
         ['1997', 'Daniel Vacek', 'US Open · čtyřhra, s Kafelnikovem', '', 'stvanice klub'],
@@ -129,7 +165,8 @@ if (seed_prazdna('cltk_deska_zaznamy')) {
     $add('mistri', 'hlavni', '2018', 'I. ČLTK Praha', 'extraliga · finále 19. 12. v Říčanech, Prostějov 5:4 – první titul po 28 letech');
     $add('mistri', 'hlavni', '1990', 'I. ČLTK Praha', 'mistrovský titul v roce návratu ke jménu klubu');
     $add('mistri', 'hlavni', '1975', 'TJ Dopravní podnik', 'mistrovský titul');
-    $add('mistri', 'hlavni', '12×', 'Spartak Praha Motorlet', 'roky titulů doplní klub', 'podle klubu');
+    $add('mistri', 'hlavni', '1966, 1968', 'Motorlet Praha', '2 tituly', 'podle klubu', '', 0, true);
+    $add('mistri', 'hlavni', '1956–1965', 'Spartak Praha Motorlet', '10 titulů', 'podle klubu');
 
     // Olympijské hry
     $add('oh', 'hlavni', '2021', 'Markéta Vondroušová', 'olympijské stříbro · dvouhra, Tokio');
@@ -163,13 +200,16 @@ if (seed_prazdna('cltk_deska_zaznamy')) {
         ['1938–1948', 'Ing. Jaromír Bečka', '10 let'],
         ['1929–1938', 'Karel Robětín', '9 let'],
     ] as [$rok, $jm, $cin]) $add('prezidenti', 'hlavni', $rok, $jm, $cin);
-    foreach (['Karel Cífka', 'Josef Rössler-Ořovský', 'Mag. Pharm. Antonín Toman', 'JUDr. Václav Důras',
+    foreach (['Karel Cífka', 'Josef Rössler-Ořovský', 'Prof. Ing. Ladislav Šimek', 'Mag. Pharm. Antonín Toman', 'JUDr. Václav Důras',
               'Marian Rombald z Hochinfelsen', 'Adolf Solnář', 'PhDr. Jaroslav Just', 'JUDr. Eduard Just'] as $jm) {
-        $add('prezidenti', 'jmena', '', $jm);
+        $add('prezidenti', 'jmena', '', $jm, '', '', '', 0, $jm === 'Prof. Ing. Ladislav Šimek');
     }
 
     $poradi = [];
     foreach ($d as &$x) { $k = $x['kategorie'] . '|' . $x['skupina']; $poradi[$k] = ($poradi[$k] ?? -1) + 1; $x['poradi'] = $poradi[$k]; }
     unset($x);
+    // řádky z 8. 10. 2026 až na konec (id ostatních jako na serveru), pořadí zůstává podle poradi
+    usort($d, static fn(array $a, array $b): int => (int)$a['_pozdeji'] <=> (int)$b['_pozdeji']);
+    $d = array_map(static function (array $x): array { unset($x['_pozdeji']); return $x; }, $d);
     seed_log('Zlatá deska: ' . seed_vloz('cltk_deska_zaznamy', $d) . ' záznamů.');
 }
