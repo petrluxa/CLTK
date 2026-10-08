@@ -30,8 +30,9 @@ $b('klub', 'uvod', ['stitek' => 'Klub', 'nadpis' => 'Nejstarší tenisový klub 
 $b('klub', 'o-klubu', ['nadpis' => 'Klub uprostřed <em>města</em>',
     'text' => '<p>Areál na ostrově Štvanice nabízí 19 tenisových kurtů – v létě 13 venkovních antukových a 3 s tvrdým povrchem, k tomu 2 kurty v pevné hale a velký centrální dvorec. V zimě je pod halami 12 krytých kurtů.</p>'
             . '<p>Klub je jediným českým členem sdružení Centenary Tennis Clubs, které spojuje tenisové kluby starší 100 let, a v adresáři Českého tenisového svazu je veden jako klub č. 52.</p>'], 1);
-$b('klub', 'jmena', ['stitek' => 'Pět jmen, jeden klub', 'nadpis' => 'Pět jmen, jeden <em>klub</em>.',
-    'text' => '<ul><li><strong>1893</strong> I. Český Lawn-Tennis Klub</li><li><strong>1949</strong> oddíl pod Sokol Jinonice, později TJ Motorlet</li><li><strong>kolem 1956</strong> Spartak Praha Motorlet</li><li><strong>kolem 1969</strong> TJ Dopravní podnik</li><li><strong>1990</strong> I. ČLTK Praha</li></ul><p>Roky změn jmen uvádíme podle klubu, prameny se v nich liší.</p>'], 2);
+/* jména a roky klubu podle klubu (postřehy klienta 8. 10. 2026) */
+$b('klub', 'jmena', ['stitek' => 'Sedm jmen, jeden klub', 'nadpis' => 'Sedm jmen, jeden <em>klub</em>.',
+    'text' => '<ul><li><strong>1893</strong> I. Český Lawn-Tennis Klub</li><li><strong>1948–1950</strong> DSO Spartak</li><li><strong>1951–1953</strong> Sokol Šverma Jinonice</li><li><strong>1954–1966</strong> Spartak Praha Motorlet</li><li><strong>1966–1969</strong> Motorlet Praha</li><li><strong>kolem 1969</strong> TJ Dopravní podnik</li><li><strong>1990</strong> I. ČLTK Praha</li></ul><p>Roky změn jmen uvádíme podle klubu, prameny se v nich liší.</p>'], 2);
 
 /* ================= ČLENSTVÍ ================= */
 $b('clenstvi', 'uvod', ['stitek' => 'Členství 2026', 'nadpis' => 'Členem se může stát <em>každý</em>.',
@@ -52,25 +53,26 @@ $b('clenstvi', 'prihlaska', ['stitek' => 'Přihláška', 'nadpis' => 'Přihláš
 $b('historie', 'uvod', ['stitek' => 'Historie', 'nadpis' => 'Od roku 1893 na ostrovech <em>Prahy</em>.',
     'perex' => 'Založení v roce 1893, od roku 1901 Štvanice, tři wimbledonští vítězové, kteří tu vyrostli, a jména, která zůstávají. Co tvrdí jen klubové prameny, označujeme „podle klubu“.'], 0);
 $b('historie', 'triptych', ['stitek' => 'Tři wimbledonské trávy', 'nadpis' => 'Tři vítězové Wimbledonu vyrostli <em>na Štvanici</em>.',
-    'perex' => '1954, 1973 a 2023. V den titulu hrála v barvách klubu jen vítězka posledního z nich – i to patří k poctivé historii.'], 1);
+    'perex' => '1954, 1973 a 2023.'], 1);
 $b('historie', 'kronika', ['stitek' => 'Kronika', 'nadpis' => 'Kronika <em>Štvanice</em>.',
     'perex' => 'Epochy nesou přibližné roky – data změn názvu klubu se v pramenech liší.'], 2);
+/* Zlatá deska podle postřehů klienta 8. 10. 2026: úspěchy všech, kdo na Štvanici vyrostli, bez dvojího
+   metru; roky udělení čestného a zasloužilého členství ani roky úřadu prvních prezidentů se doplňovat nebudou */
 $b('historie', 'deska', ['stitek' => 'Síň slávy', 'nadpis' => 'Jména, která <em>zůstávají</em>.',
-    'perex' => 'Klubové texty počítají úspěchy všech, kdo na Štvanici vyrostli. Registr Českého tenisového svazu jen tituly v barvách klubu. Na desce ukazujeme obojí.'], 3);
+    'perex' => 'Na desce jsou úspěchy všech, kdo na Štvanici vyrostli – bez ohledu na to, za který klub zrovna hráli.'], 3);
+/* perex je prostý text – nezlomitelná mezera jako znak U+00A0 („20 titulů“, „7 ve dvouhře“), v HTML textu jako &nbsp; */
 $b('historie', 'deska-grandslam', ['nadpis' => 'Grand Slam',
-    'perex' => 'Klub počítá tituly všech, kdo na Štvanici vyrostli, kdykoli za klub hráli nebo jsou čestnými či zasloužilými členy: 20 titulů, z toho 7 ve dvouhře.',
-    'text' => '<p>Registr ČTS: jen tituly hráčů, kteří v den triumfu hráli za I. ČLTK Praha – 10 titulů. Registr začíná rokem 1996, starší tituly v barvách klubu jsou jen pravděpodobné.</p>'], 4);
+    'perex' => "Všichni, kdo na Štvanici vyrostli – bez ohledu na to, za který klub v době vítězství hráli nebo kde žili: 20\u{00A0}titulů, z toho 7\u{00A0}ve dvouhře."], 4);
 $b('historie', 'deska-cestni', ['nadpis' => 'Čestní členové',
     'perex' => 'Čestné členství uděluje Valná hromada – za vítězství v grandslamové či olympijské dvouhře, prezidentu a premiérovi ČR a primátorovi Prahy.',
-    'text' => '<p>Historičtí čestní členové od roku 1893. Roky udělení doplní klub.</p>', 'doplni_klub' => 1], 5);
+    'text' => '<p>Historičtí čestní členové od roku 1893.</p>'], 5);
 $b('historie', 'deska-mistri', ['nadpis' => 'Mistři republiky',
     'perex' => '16 titulů mistra republiky ve smíšených družstvech (podle klubu).',
-    'text' => '<p>Rozpis: 12× Spartak Praha Motorlet, 1975, 1990, 2018 a 2019. Nezávisle jsou doloženy tituly 1975, 1990, 2018 a 2019.</p>'], 6);
+    'text' => '<p>Rozpis: 10×&nbsp;Spartak Praha Motorlet (1956–1965), 2×&nbsp;Motorlet Praha (1966, 1968), 1975, 1990, 2018 a 2019. Nezávisle jsou doloženy tituly 1975, 1990, 2018 a 2019.</p>'], 6);
 $b('historie', 'deska-oh', ['nadpis' => 'Olympijské hry', 'perex' => 'Tři olympijské medaile v barvách klubu a dvě ze štvanické historie.'], 7);
-$b('historie', 'deska-zasluzili', ['nadpis' => 'Zasloužilí členové', 'perex' => '34 zasloužilých členů podle seznamu klubu.',
-    'text' => '<p>Roky udělení a medailony doplní klub.</p>', 'doplni_klub' => 1], 8);
+$b('historie', 'deska-zasluzili', ['nadpis' => 'Zasloužilí členové', 'perex' => '34 zasloužilých členů podle seznamu klubu.'], 8);
 $b('historie', 'deska-prezidenti', ['nadpis' => 'Prezidenti', 'perex' => 'Prezidenti klubu od roku 1893 (podle klubu).',
-    'text' => '<p>Prvních 36 let – roky úřadu doplní klub.</p>', 'doplni_klub' => 1], 9);
+    'text' => '<p>Prvních 36 let – roky úřadu neznáme.</p>'], 9);
 $b('historie', 'osobnosti', ['stitek' => 'Osobnosti klubu', 'nadpis' => 'Od Žemly po <em>Muchovou</em>.',
     'perex' => 'Jen osobnosti s doloženou vazbou na klub. Podle registru ČTS získali hráči v barvách klubu v den triumfu 10 grandslamových titulů; tituly Drobného a Kodeše patří do štvanické historie.'], 10);
 

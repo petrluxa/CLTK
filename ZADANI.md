@@ -44,6 +44,19 @@ Když se něco v zadání změní, upraví se tady.
    editovatelné v modulu Tenisová škola.
 6. Prameny kroniky a CTC: staré články a stránky jako prostý text s názvem; karta výsledku bez odkazu.
 
+## 0c. ZMĚNY 8. 10. 2026 – postřehy klienta k historii (mají přednost)
+
+1. **Tři wimbledonské trávy:** karty bez „V den titulu hrál/a za“ (údaj `hral_za` v databázi zůstává, web ani
+   administrace ho neukazují), perex jen „1954, 1973 a 2023.“; Wimbledonská linka: Muchová 2026 bez výsledku finále.
+2. **Zlatá deska bez dvojího metru:** Grand Slam = jeden seznam všech, kdo na Štvanici vyrostli, bez ohledu na to,
+   za který klub v době vítězství hráli nebo kde žili. Čestní členové a prvních 36 let prezidentů bez roků (nedoplní se),
+   zasloužilí členové jen jmenný seznam – nikde „doplní klub“. Mistři republiky: 10× Spartak Praha Motorlet (1956–1965),
+   2× Motorlet Praha (1966, 1968). Mezi prvními prezidenty Prof. Ing. Ladislav Šimek (po J. Rössler-Ořovském).
+3. **Jména klubu** (Klub, kronika): 1893 I. Český Lawn-Tennis Klub · 1948–1950 DSO Spartak · 1951–1953 Sokol Šverma
+   Jinonice · 1954–1966 Spartak Praha Motorlet · 1966–1969 Motorlet Praha · kolem 1969 TJ Dopravní podnik · 1990 I. ČLTK Praha.
+   Kronika navíc: 1978 Složil (Roland Garros, mix s Renátou Tomanovou), 2006 Damm (US Open, čtyřhra s Leanderem Paesem),
+   2011 Benešová (Wimbledon, mix s Jürgenem Melzerem) v milníku s Hradeckou.
+
 ## 1. Co stavíme
 
 Kompletní nový web klubu **I. Český Lawn-Tennis Klub Praha** (cltk.cz) s administrací.

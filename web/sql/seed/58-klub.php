@@ -61,7 +61,7 @@ $b('historie', 'linka', ['stitek' => 'Wimbledonská linka · finále dvouhry hr�
         . '<li><strong>1962</strong> Věra Suková-Pužejová · finále, první československá finalistka</li>'
         . '<li><strong>1973</strong> Jan Kodeš · vítěz</li>'
         . '<li><strong>2023</strong> Markéta Vondroušová · vítězka</li>'
-        . '<li><strong>2026</strong> Karolína Muchová · finále s Lindou Noskovou 2:6, 7:5, 3:6</li>'
+        . '<li><strong>2026</strong> Karolína Muchová · finále s Lindou Noskovou</li>'
         . '</ul>'], 11);
 $b('historie', 'deska-prameny', ['perex' => 'Prameny: seznamy klubu, registr ČTS, Revue 01/2023. Co tvrdí jen klub, nese štítek „podle klubu“.'], 12);
 

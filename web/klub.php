@@ -1,5 +1,5 @@
 <?php
-/* Klub – o klubu: ověřená čísla s prameny, klub uprostřed města, pět jmen
+/* Klub – o klubu: ověřená čísla s prameny, klub uprostřed města, sedm jmen
    a cesta na Štvanici, rodokmen stoletých klubů a rozcestník na podstránky
    (Členství, Historie, Vedení, CTC, Revue). Jazyk Varianty 4 (sekce 3 a 3b).
    Všechen obsah je z databáze: bloky stránky „klub“ (modul Stránky),
@@ -56,7 +56,7 @@ function klub_polozky(?string $html): array {
     return $v;
 }
 
-/** Štítek bloku, který jen opakuje nadpis („Pět jmen, jeden klub“), nahradí obecným. */
+/** Štítek bloku, který jen opakuje nadpis („Sedm jmen, jeden klub“), nahradí obecným. */
 function klub_stitek(array $b, string $nahradni): array {
     $s = mb_strtolower(trim((string)$b['stitek']), 'UTF-8');
     $n = mb_strtolower(rtrim(html_text((string)$b['nadpis']), ' .'), 'UTF-8');
@@ -162,11 +162,11 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
 <?php endif; ?>
 
 <?php if ($jmena || $rodokmen): ?>
-  <!-- III · Pět jmen, cesta na ostrov, rodokmen stoletých (V4 sekce 3b) -->
+  <!-- III · Sedm jmen, cesta na ostrov, rodokmen stoletých (V4 sekce 3b) -->
   <section class="sekce klub-rod-sekce" id="jmena" aria-labelledby="jmena-nadpis">
     <div class="wrap klub-rod">
       <div class="klub-rod__jmena">
-        <?= hlava_sekce(klub_stitek($bJmena, 'Klub'), ['cislo' => 2, 'id' => 'jmena-nadpis', 'nadpis' => 'Pět jmen, jeden klub.']) ?>
+        <?= hlava_sekce(klub_stitek($bJmena, 'Klub'), ['cislo' => 2, 'id' => 'jmena-nadpis', 'nadpis' => 'Sedm jmen, jeden klub.']) ?>
         <?php if ($jmena): ?>
         <ol class="jmena-klubu">
           <?php foreach ($jmena as $i => $j):

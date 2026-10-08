@@ -1,6 +1,6 @@
 {
     "verze": 1,
-    "vytvoreno": "2026-10-05 09:35:30",
+    "vytvoreno": "2026-10-08 14:12:39",
     "tabulky": {
         "cltk_akce": [
             {
@@ -881,7 +881,7 @@
                 "stitek": "Wimbledonská linka · finále dvouhry hráčů Štvanice",
                 "nadpis": "",
                 "perex": "ve štvanické historii, bez ohledu na klub v den finále",
-                "text": "<ul><li><strong>1954</strong> Jaroslav Drobný · vítěz</li><li><strong>1962</strong> Věra Suková-Pužejová · finále, první československá finalistka</li><li><strong>1973</strong> Jan Kodeš · vítěz</li><li><strong>2023</strong> Markéta Vondroušová · vítězka</li><li><strong>2026</strong> Karolína Muchová · finále s&nbsp;Lindou Noskovou 2:6, 7:5, 3:6</li></ul>",
+                "text": "<ul><li><strong>1954</strong> Jaroslav Drobný · vítěz</li><li><strong>1962</strong> Věra Suková-Pužejová · finále, první československá finalistka</li><li><strong>1973</strong> Jan Kodeš · vítěz</li><li><strong>2023</strong> Markéta Vondroušová · vítězka</li><li><strong>2026</strong> Karolína Muchová · finále s&nbsp;Lindou Noskovou</li></ul>",
                 "foto": "",
                 "foto_popisek": "",
                 "odkaz": "",
@@ -1771,10 +1771,10 @@
                 "id": 75,
                 "stranka": "klub",
                 "klic": "jmena",
-                "stitek": "Pět jmen, jeden klub",
-                "nadpis": "Pět jmen, jeden <em>klub</em>.",
+                "stitek": "Sedm jmen, jeden klub",
+                "nadpis": "Sedm jmen, jeden <em>klub</em>.",
                 "perex": "",
-                "text": "<ul><li><strong>1893</strong> I.&nbsp;Český Lawn-Tennis Klub</li><li><strong>1949</strong> oddíl pod Sokol Jinonice, později TJ Motorlet</li><li><strong>kolem 1956</strong> Spartak Praha Motorlet</li><li><strong>kolem 1969</strong> TJ Dopravní podnik</li><li><strong>1990</strong> I.&nbsp;ČLTK Praha</li></ul><p>Roky změn jmen uvádíme podle klubu, prameny se v&nbsp;nich liší.</p>",
+                "text": "<ul><li><strong>1893</strong> I.&nbsp;Český Lawn-Tennis Klub</li><li><strong>1948–1950</strong> DSO Spartak</li><li><strong>1951–1953</strong> Sokol Šverma Jinonice</li><li><strong>1954–1966</strong> Spartak Praha Motorlet</li><li><strong>1966–1969</strong> Motorlet Praha</li><li><strong>kolem 1969</strong> TJ Dopravní podnik</li><li><strong>1990</strong> I.&nbsp;ČLTK Praha</li></ul><p>Roky změn jmen uvádíme podle klubu, prameny se v&nbsp;nich liší.</p>",
                 "foto": "",
                 "foto_popisek": "",
                 "odkaz": "",
@@ -1925,7 +1925,7 @@
                 "klic": "triptych",
                 "stitek": "Tři wimbledonské trávy",
                 "nadpis": "Tři vítězové Wimbledonu vyrostli <em>na Štvanici</em>.",
-                "perex": "1954, 1973 a 2023. V den titulu hrála v barvách klubu jen vítězka posledního z nich – i to patří k poctivé historii.",
+                "perex": "1954, 1973 a 2023.",
                 "text": "",
                 "foto": "",
                 "foto_popisek": "",
@@ -1963,7 +1963,7 @@
                 "klic": "deska",
                 "stitek": "Síň slávy",
                 "nadpis": "Jména, která <em>zůstávají</em>.",
-                "perex": "Klubové texty počítají úspěchy všech, kdo na Štvanici vyrostli. Registr Českého tenisového svazu jen tituly v barvách klubu. Na desce ukazujeme obojí.",
+                "perex": "Na desce jsou úspěchy všech, kdo na Štvanici vyrostli – bez ohledu na to, za který klub zrovna hráli.",
                 "text": "",
                 "foto": "",
                 "foto_popisek": "",
@@ -1982,8 +1982,8 @@
                 "klic": "deska-grandslam",
                 "stitek": "",
                 "nadpis": "Grand Slam",
-                "perex": "Klub počítá tituly všech, kdo na Štvanici vyrostli, kdykoli za klub hráli nebo jsou čestnými či zasloužilými členy: 20 titulů, z toho 7 ve dvouhře.",
-                "text": "<p>Registr ČTS: jen tituly hráčů, kteří v&nbsp;den triumfu hráli za I.&nbsp;ČLTK Praha – 10 titulů. Registr začíná rokem 1996, starší tituly v&nbsp;barvách klubu jsou jen pravděpodobné.</p>",
+                "perex": "Všichni, kdo na Štvanici vyrostli – bez ohledu na to, za který klub v době vítězství hráli nebo kde žili: 20 titulů, z toho 7 ve dvouhře.",
+                "text": "",
                 "foto": "",
                 "foto_popisek": "",
                 "odkaz": "",
@@ -2002,14 +2002,14 @@
                 "stitek": "",
                 "nadpis": "Čestní členové",
                 "perex": "Čestné členství uděluje Valná hromada – za vítězství v grandslamové či olympijské dvouhře, prezidentu a premiérovi ČR a primátorovi Prahy.",
-                "text": "<p>Historičtí čestní členové od roku 1893. Roky udělení doplní klub.</p>",
+                "text": "<p>Historičtí čestní členové od roku 1893.</p>",
                 "foto": "",
                 "foto_popisek": "",
                 "odkaz": "",
                 "odkaz_text": "",
                 "odkaz2": "",
                 "odkaz2_text": "",
-                "doplni_klub": 1,
+                "doplni_klub": 0,
                 "visible": 1,
                 "poradi": 5,
                 "updated_at": "2026-10-04 12:38:38"
@@ -2021,7 +2021,7 @@
                 "stitek": "",
                 "nadpis": "Mistři republiky",
                 "perex": "16 titulů mistra republiky ve smíšených družstvech (podle klubu).",
-                "text": "<p>Rozpis: 12× Spartak Praha Motorlet, 1975, 1990, 2018 a&nbsp;2019. Nezávisle jsou doloženy tituly 1975, 1990, 2018 a&nbsp;2019.</p>",
+                "text": "<p>Rozpis: 10×&nbsp;Spartak Praha Motorlet (1956–1965), 2×&nbsp;Motorlet Praha (1966, 1968), 1975, 1990, 2018 a&nbsp;2019. Nezávisle jsou doloženy tituly 1975, 1990, 2018 a&nbsp;2019.</p>",
                 "foto": "",
                 "foto_popisek": "",
                 "odkaz": "",
@@ -2059,14 +2059,14 @@
                 "stitek": "",
                 "nadpis": "Zasloužilí členové",
                 "perex": "34 zasloužilých členů podle seznamu klubu.",
-                "text": "<p>Roky udělení a&nbsp;medailony doplní klub.</p>",
+                "text": "",
                 "foto": "",
                 "foto_popisek": "",
                 "odkaz": "",
                 "odkaz_text": "",
                 "odkaz2": "",
                 "odkaz2_text": "",
-                "doplni_klub": 1,
+                "doplni_klub": 0,
                 "visible": 1,
                 "poradi": 8,
                 "updated_at": "2026-10-04 12:38:38"
@@ -2078,14 +2078,14 @@
                 "stitek": "",
                 "nadpis": "Prezidenti",
                 "perex": "Prezidenti klubu od roku 1893 (podle klubu).",
-                "text": "<p>Prvních 36&nbsp;let – roky úřadu doplní klub.</p>",
+                "text": "<p>Prvních 36&nbsp;let – roky úřadu neznáme.</p>",
                 "foto": "",
                 "foto_popisek": "",
                 "odkaz": "",
                 "odkaz_text": "",
                 "odkaz2": "",
                 "odkaz2_text": "",
-                "doplni_klub": 1,
+                "doplni_klub": 0,
                 "visible": 1,
                 "poradi": 9,
                 "updated_at": "2026-10-04 12:38:38"
@@ -3346,7 +3346,7 @@
                 "skupina": "hlavni",
                 "rok": "1978",
                 "jmeno": "Pavel Složil",
-                "cin": "Roland Garros · mix",
+                "cin": "Roland Garros · mix, s Renátou Tomanovou",
                 "pramen": "vazba podle klubu",
                 "metr": "stvanice",
                 "historie": 0,
@@ -3708,14 +3708,14 @@
                 "id": 38,
                 "kategorie": "mistri",
                 "skupina": "hlavni",
-                "rok": "12×",
+                "rok": "1956–1965",
                 "jmeno": "Spartak Praha Motorlet",
-                "cin": "roky titulů doplní klub",
+                "cin": "10 titulů",
                 "pramen": "podle klubu",
                 "metr": "",
                 "historie": 0,
                 "visible": 1,
-                "poradi": 4
+                "poradi": 5
             },
             {
                 "id": 39,
@@ -4417,7 +4417,7 @@
                 "metr": "",
                 "historie": 0,
                 "visible": 1,
-                "poradi": 2
+                "poradi": 3
             },
             {
                 "id": 93,
@@ -4430,7 +4430,7 @@
                 "metr": "",
                 "historie": 0,
                 "visible": 1,
-                "poradi": 3
+                "poradi": 4
             },
             {
                 "id": 94,
@@ -4443,7 +4443,7 @@
                 "metr": "",
                 "historie": 0,
                 "visible": 1,
-                "poradi": 4
+                "poradi": 5
             },
             {
                 "id": 95,
@@ -4456,7 +4456,7 @@
                 "metr": "",
                 "historie": 0,
                 "visible": 1,
-                "poradi": 5
+                "poradi": 6
             },
             {
                 "id": 96,
@@ -4469,7 +4469,7 @@
                 "metr": "",
                 "historie": 0,
                 "visible": 1,
-                "poradi": 6
+                "poradi": 7
             },
             {
                 "id": 97,
@@ -4482,7 +4482,33 @@
                 "metr": "",
                 "historie": 0,
                 "visible": 1,
-                "poradi": 7
+                "poradi": 8
+            },
+            {
+                "id": 98,
+                "kategorie": "mistri",
+                "skupina": "hlavni",
+                "rok": "1966, 1968",
+                "jmeno": "Motorlet Praha",
+                "cin": "2 tituly",
+                "pramen": "podle klubu",
+                "metr": "",
+                "historie": 0,
+                "visible": 1,
+                "poradi": 4
+            },
+            {
+                "id": 99,
+                "kategorie": "prezidenti",
+                "skupina": "jmena",
+                "rok": "",
+                "jmeno": "Prof. Ing. Ladislav Šimek",
+                "cin": "",
+                "pramen": "",
+                "metr": "",
+                "historie": 0,
+                "visible": 1,
+                "poradi": 2
             }
         ],
         "cltk_dokumenty": [
@@ -5350,9 +5376,9 @@
                 "id": 18,
                 "rok": 1949,
                 "rok_text": "",
-                "era": "Motorlet (od 1949)",
+                "era": "Spartak a Motorlet (1949–1969)",
                 "titulek": "Emigrace a nové jméno",
-                "text": "V červenci 1949 zůstává Drobný ve švýcarském Gstaadu. Klub je začleněn jako oddíl pod Sokol Jinonice a později TJ Motorlet.",
+                "text": "V červenci 1949 zůstává Drobný ve švýcarském Gstaadu. Klub je začleněn jako oddíl pod tělovýchovnou jednotu, která postupně nese jména DSO Spartak (1948–1950), Sokol Šverma Jinonice (1951–1953), Spartak Praha Motorlet (1954–1966) a Motorlet Praha (1966–1969).",
                 "foto": "historie/hist-1949-milan-drobny-becka-straubeova.jpg",
                 "foto_popisek": "",
                 "zdroj": "I.ČLTK Revue 02/2013 – 120 let (uploads/revue/pdf/revue-2013-2.pdf) s. 11; cs.wikipedia Drobný",
@@ -5364,7 +5390,7 @@
                 "id": 19,
                 "rok": 1954,
                 "rok_text": "",
-                "era": "Motorlet (od 1949)",
+                "era": "Spartak a Motorlet (1949–1969)",
                 "titulek": "Drobný vítězem Wimbledonu",
                 "text": "Ve finále porazil Kena Rosewalla 13-11, 4-6, 6-2, 9-7 – jako občan Egypta a jako jediný muž v brýlích v historii Wimbledonu.",
                 "foto": "historie/hist-1954-drobny-na-wimbledonske-trave.jpg",
@@ -5378,7 +5404,7 @@
                 "id": 20,
                 "rok": 1962,
                 "rok_text": "",
-                "era": "Motorlet (od 1949)",
+                "era": "Spartak a Motorlet (1949–1969)",
                 "titulek": "Pužejová ve finále Wimbledonu",
                 "text": "Věra Suková-Pužejová (mix RG 1957 s Javorským) jako první Čechoslovačka hraje finále Wimbledonu (Hantze Susmanová 4:6, 4:6).",
                 "foto": "historie/hist-1950s-vera-sukova-puzejova.jpg",
@@ -5390,13 +5416,13 @@
             },
             {
                 "id": 21,
-                "rok": 1966,
-                "rok_text": "1963–1966",
-                "era": "Motorlet (od 1949)",
-                "titulek": "Mistři ligy s Kodešem",
-                "text": "Spartak Praha Motorlet s mladým Janem Kodešem vyhrává ligu smíšených družstev (1966 doloženo, 1963–1965 pravděpodobně). Pod jménem Motorlet klub podle svých pramenů získal 12 titulů.",
+                "rok": 1956,
+                "rok_text": "1956–1968",
+                "era": "Spartak a Motorlet (1949–1969)",
+                "titulek": "Dvanáct titulů mistra republiky",
+                "text": "Spartak Praha Motorlet je v letech 1956–1965 desetkrát mistrem republiky smíšených družstev, Motorlet Praha přidává tituly v letech 1966 a 1968. Od roku 1963 hraje v prvním týmu mladý Jan Kodeš.",
                 "foto": "historie/hist-1966-mistri-ligy.jpg",
-                "foto_popisek": "",
+                "foto_popisek": "Mistři ligy 1966",
                 "zdroj": "cs.wikipedia Jan Kodeš; I.ČLTK Revue 02/2013 – 120 let (uploads/revue/pdf/revue-2013-2.pdf) s. 11",
                 "jistota": "podle klubu (foto „Mistr ligy 1966“, R13/2 s. 11) a cs Wikipedie; nezávisle NEOVĚŘENO – roky 12 titulů Motorletu nikde nezávisle vypsané nejsou",
                 "visible": 1,
@@ -5547,8 +5573,8 @@
                 "rok": 2011,
                 "rok_text": "2011–2012",
                 "era": "I. ČLTK Praha (1990–dnes)",
-                "titulek": "Lucie Hradecká a Fed Cup",
-                "text": "Hradecká vyhrává s Hlaváčkovou Roland Garros a rozhodující čtyřhrou finále Fed Cup; Benešová vyhrává mix ve Wimbledonu. V roce 2012 Hradecká přiváží olympijské stříbro, Ivo Minář vyhrává Davis Cup a ve foyer je 14. 6. 2012 odhalena deska Jaroslava Drobného.",
+                "titulek": "Hradecká, Benešová a Fed Cup",
+                "text": "Hradecká vyhrává s Hlaváčkovou Roland Garros a rozhodující čtyřhrou finále Fed Cup; Iveta Benešová vyhrává s Jürgenem Melzerem mix ve Wimbledonu. V roce 2012 Hradecká přiváží olympijské stříbro, Ivo Minář vyhrává Davis Cup a ve foyer je 14. 6. 2012 odhalena deska Jaroslava Drobného.",
                 "foto": "historie/hist-2011-hradecka-pohar-roland-garros.jpg",
                 "foto_popisek": "",
                 "zdroj": "en.wikipedia Lucie Hradecká, 2011 Fed Cup, Ivo Minář; cs.wikipedia Drobný",
@@ -5637,6 +5663,34 @@
                 "foto_popisek": "",
                 "zdroj": "usopen.org; olympics.com; I. ČLTK Praha, článek „Karolína Muchová ovládla smíšenou čtyřhru na US Open“ (2026); newsletter 3/2026",
                 "jistota": "ověřeno (Síň slávy podle klubu)",
+                "visible": 1,
+                "poradi": 0
+            },
+            {
+                "id": 39,
+                "rok": 1978,
+                "rok_text": "",
+                "era": "TJ Dopravní podnik (kolem 1970–1990)",
+                "titulek": "Složil vítězem mixu na Roland Garros",
+                "text": "Pavel Složil vyhrává s Renátou Tomanovou mix na Roland Garros.",
+                "foto": "",
+                "foto_popisek": "",
+                "zdroj": "en.wikipedia 1978 French Open – Mixed doubles",
+                "jistota": "titul ověřen; vazba na Štvanici podle klubu",
+                "visible": 1,
+                "poradi": 0
+            },
+            {
+                "id": 40,
+                "rok": 2006,
+                "rok_text": "",
+                "era": "I. ČLTK Praha (1990–dnes)",
+                "titulek": "Damm vítězem čtyřhry na US Open",
+                "text": "Martin Damm vyhrává s Leanderem Paesem čtyřhru na US Open.",
+                "foto": "",
+                "foto_popisek": "",
+                "zdroj": "en.wikipedia 2006 US Open – Men's doubles",
+                "jistota": "ověřeno",
                 "visible": 1,
                 "poradi": 0
             }
