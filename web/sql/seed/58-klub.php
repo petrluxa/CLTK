@@ -79,7 +79,7 @@ $b('ctc', 'foto', [
     'foto' => seed_obrazek(seed_navrhy('assets/foto/ctc-senior-2025-centenary-banner.jpg'), 'bloky', 'ctc-senior-2025'),
     'foto_popisek' => 'CTC Senior Competition 2025'], 3);
 $b('ctc', 'utkani', ['stitek' => 'Na Štvanici', 'nadpis' => 'Mezinárodní <em>utkání</em>.',
-    'perex' => 'Kluby sdružené v Centenary Tennis Clubs se navzájem zvou k přátelským utkáním.'], 4);
+    'perex' => 'Kluby sdružené v Centenary Tennis Clubs se navzájem zvou k přátelským utkáním a účastní se soutěží pořádaných CTC.'], 4);
 $b('ctc', 'souteze', ['stitek' => 'Soutěže', 'nadpis' => 'Poháry pro děti i <em>seniory</em>.'], 5);
 
 /* ================= REVUE ================= */

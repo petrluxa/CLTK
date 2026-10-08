@@ -122,6 +122,9 @@ kopie jsou napevno nad `web/data/integrace.sqlite`, originály agentů v `admin-
   Zlatá deska jako jeden seznam, Mistři 10× Spartak + 2× Motorlet, Šimek mezi prezidenty, Klub „Sedm jmen“) –
   migrace `2026-10-08-historie-postrehy.php` na testu proběhla (34 změn, bez POZOR). Ponecháno k rozhodnutí Petra:
   perex Osobností a OH a fakt Klubu „v barvách klubu“, jméno Ludvík × Ladislav Šimek (čestní × prezidenti).
+- 8. 10.: připomínky ke stránce CTC (bez „zdarma“, Šimůnek viceprezident od 2011, bez akcí International Clubs,
+  CTC Senior Competition 2025, 10 klubů ze Senior Competition, bez Hurlinghamu v rodokmenu) – migrace
+  `2026-10-08-ctc-postrehy.php` na testu proběhla (17 změn). Seed CTC dává stejná id jako server (11, 12, 16 volná).
 
 - 5. 10.: na serveru proběhla migrace `2026-10-05-na-koho-se-obratit.php` (Texty a údaje › Na koho se obrátit)
   a jednorázová ohniska fotek úvodu (`deploy/jednorazove/`). Jednorázové skripty se spouštějí
