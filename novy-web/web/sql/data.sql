@@ -1,4 +1,4 @@
--- I. ČLTK Praha – obsah webu (export 8. 10. 2026 14:12)
+-- I. ČLTK Praha – obsah webu (export 8. 10. 2026 22:17)
 -- Jen INSERT IGNORE do tabulek cltk_. Nic se nemaže ani nepřepisuje.
 -- Účty, přihlášky, návštěvnost a tajné klíče tu nejsou.
 SET NAMES utf8mb4;
@@ -59,7 +59,7 @@ INSERT IGNORE INTO cltk_bloky (id, stranka, klic, stitek, nadpis, perex, text, f
 (34, 'vedeni', 'prezidenti', 'Od roku 1893', 'Prezidenti <em>klubu</em>', '', '', '', '', '', '', '', '', 0, 1, 6, '2026-10-04 12:38:37'),
 (35, 'ctc', 'clenstvi', 'Členství v CTC', 'Sdružení klubů starších <em>sta let</em>.', '', '', '', '', '', '', '', '', 0, 1, 2, '2026-10-04 12:38:37'),
 (36, 'ctc', 'foto', '', '', '', '', 'bloky/ctc-senior-2025.jpg', 'CTC Senior Competition 2025', '', '', '', '', 0, 1, 3, '2026-10-04 12:38:37'),
-(37, 'ctc', 'utkani', 'Na Štvanici', 'Mezinárodní <em>utkání</em>.', 'Kluby sdružené v Centenary Tennis Clubs se navzájem zvou k přátelským utkáním.', '', '', '', '', '', '', '', 0, 1, 4, '2026-10-04 12:38:37'),
+(37, 'ctc', 'utkani', 'Na Štvanici', 'Mezinárodní <em>utkání</em>.', 'Kluby sdružené v Centenary Tennis Clubs se navzájem zvou k přátelským utkáním a účastní se soutěží pořádaných CTC.', '', '', '', '', '', '', '', 0, 1, 4, '2026-10-04 12:38:37'),
 (38, 'ctc', 'souteze', 'Soutěže', 'Poháry pro děti i <em>seniory</em>.', '', '', '', '', '', '', '', '', 0, 1, 5, '2026-10-04 12:38:37'),
 (39, 'revue', 'kiosek', 'Kiosek', '', 'Hledejte v titulcích obálek a v obsazích čísel, nebo sledujte příběh v obálkách.', '', '', '', '', '', '', '', 0, 1, 2, '2026-10-04 12:38:37'),
 (40, 'revue', 'pribehy', '', 'Příběh v obálkách', '', '<ul><li>Karolína Muchová</li><li>Lucie Hradecká</li><li>Jan Kodeš</li><li>Nikola Bartůňková</li><li>Markéta Vondroušová</li></ul>', '', '', '', '', '', '', 0, 1, 3, '2026-10-04 12:38:37');
@@ -164,28 +164,36 @@ INSERT IGNORE INTO cltk_bloky (id, stranka, klic, stitek, nadpis, perex, text, f
 INSERT IGNORE INTO cltk_ctc (id, typ, nazev, rok, misto, text, odkaz, zdroj, zvyraznit, visible, poradi) VALUES
 (1, 'fakt', 'Sdružení stoletých klubů', '', '', 'Centenary Tennis Clubs sdružuje tenisové kluby starší 100 let. Vzniklo v roce 1996 pod patronací J. A. Samaranche se sídlem v Olympijském muzeu v Lausanne a dnes má 98 klubů.', 'http://www.centenarytennisclubs.com/members.htm', 'web klubu 2026; seznam členů CTC', 0, 1, 0),
 (2, 'fakt', 'Jediný český člen', '2000', '', 'I. ČLTK Praha je členem od roku 2000 a jediným klubem z České republiky.', '', 'seznam členů CTC; web klubu', 0, 1, 1),
-(3, 'fakt', 'Hra v klubech CTC', '', '', 'Členové klubu mohou po doporučení generálního manažera hrát zdarma v klubech sdružených v Centenary Tennis Clubs.', '', 'web klubu', 0, 1, 2),
-(4, 'fakt', 'Klub ve vedení CTC', '2005', '', 'Ing. Petr Šimůnek zastupuje klub v řídícím výboru CTC od roku 2005.', '', 'web klubu', 0, 1, 3),
+(3, 'fakt', 'Hra v klubech CTC', '', '', 'Členové klubu mohou po doporučení generálního manažera hrát v klubech sdružených v Centenary Tennis Clubs.', '', 'web klubu', 0, 1, 2),
+(4, 'fakt', 'Klub ve vedení CTC', '2005', '', 'Ing. Petr Šimůnek je členem řídicího výboru CTC od roku 2005, od roku 2011 ve funkci viceprezidenta.', '', 'web klubu', 0, 1, 3),
 (5, 'klub', 'Real Club de Tenis Barcelona-1899', '', 'Barcelona', 'přátelské utkání na Štvanici', '', 'I. ČLTK Praha, stránka „CTC – Centenary Tennis Clubs“', 0, 1, 0),
 (6, 'klub', 'Villa Primrose', '', 'Bordeaux', 'přátelské utkání na Štvanici', '', 'I. ČLTK Praha, stránka „CTC – Centenary Tennis Clubs“', 0, 1, 1),
 (7, 'klub', 'Fitzwilliam LTC', '', 'Dublin', 'přátelské utkání na Štvanici', '', 'I. ČLTK Praha, stránka „CTC – Centenary Tennis Clubs“', 0, 1, 2),
 (8, 'klub', 'H.L.T.C. Leimonias', '', 'Haag', 'přátelské utkání na Štvanici', '', 'I. ČLTK Praha, stránka „CTC – Centenary Tennis Clubs“', 0, 1, 3),
 (9, 'klub', 'Carrickmines Croquet & LTC', '', 'Dublin', 'přátelské utkání na Štvanici', '', 'I. ČLTK Praha, stránka „CTC – Centenary Tennis Clubs“', 0, 1, 4),
 (10, 'utkani', 'All England Lawn Tennis Club na Štvanici', '2025', '', '6.–8. 6. 2025', '', 'klubový kalendář; newsletter 5/2025', 0, 1, 0),
-(11, 'utkani', 'International Clubs', '2025', '', '12.–13. 6. 2025, hráči z osmi států', '', 'klubový kalendář; Revue 02/2025', 0, 1, 1),
-(12, 'utkani', 'The International Lawn Tennis Club', '2026', '', '11.–12. 6. 2026', '', 'klubový kalendář', 0, 1, 2),
 (13, 'soutez', 'Carrickmines Cup (U12)', '2007', '', 'Od roku 2007; soupeři z Dublinu, Barcelony, Londýna, Santanderu a Stockholmu.', '', 'web klubu', 0, 1, 0),
 (14, 'soutez', 'I. ČLTK Praha Cup (U14)', '2008', '', 'Od roku 2008 mezinárodní přátelské utkání dětí U14 na Štvanici, tradičně první listopadový víkend.', 'akce.php', 'web klubu', 0, 1, 1),
 (15, 'soutez', 'CTC Senior Competition', '', '', 'Seniorské týmy klubu vyhrály finálovou skupinu v letech 2016–2019. Klub pořádal skupinu čtyřikrát, naposledy 30.–31. 8. 2025 – trojzápas s Padovou a Cumberlandem (I. ČLTK – Padova 4:5, I. ČLTK – Cumberland 6:3).', '', 'Revue 02/2025', 0, 1, 2),
-(16, 'rodokmen', 'The Hurlingham Club', '1869', 'Londýn', 'otevřen 1869', '', 'https://www.hurlinghamclub.org.uk/ (09 kap. 1.3)', 0, 1, 0),
-(17, 'rodokmen', 'Longwood Cricket Club', '1878', 'Boston', 'první lawn-tenisový dvorec 1878', '', 'https://www.longwoodcricket.com/ About_Us (09 kap. 1.11)', 0, 1, 1),
-(18, 'rodokmen', 'The Queen\'s Club', '1886', 'Londýn', 'založen 1886', '', 'https://www.queensclub.co.uk/About_the_Club (09 kap. 1.2)', 0, 1, 2),
-(19, 'rodokmen', 'West Side Tennis Club', '1892', 'Forest Hills', 'založen 1892', '', 'https://thewestsidetennisclub.com/ Our_History (09 kap. 1.10)', 0, 1, 3),
-(20, 'rodokmen', 'I. Český Lawn-Tennis Klub Praha', '1893', 'Praha', 'založen 1893 · jediný český člen Centenary Tennis Clubs', '', 'klub.zalozeno', 1, 1, 4),
-(21, 'rodokmen', 'Lawn Tennis de Monte-Carlo', '1893', '', 'otevřen 2. 4. 1893', '', 'https://www.mccc.mc/en/history-57 (09 kap. 1.5)', 0, 1, 5),
-(22, 'rodokmen', 'LTTC Rot-Weiß Berlin', '1897', '', 'první rok klubové kroniky', '', 'https://www.rot-weiss-berlin.de/lttc-rot-weiss/chronik-des-clubs (09 kap. 1.7)', 0, 1, 6),
-(23, 'rodokmen', 'Real Club de Tenis Barcelona-1899', '1899', '', 'rok v názvu klubu', '', 'https://www.rctb1899.es/ (09 kap. 1.6)', 0, 1, 7),
-(24, 'rodokmen', 'Tennis Club Parioli', '1906', 'Řím', 'založen 1906 jako Lawn Tennis Club Parioli', '', 'https://tcparioli.it/la-storia-del-tennis-club-parioli/ (09 kap. 1.9)', 0, 1, 8);
+(17, 'rodokmen', 'Longwood Cricket Club', '1878', 'Boston', 'první lawn-tenisový dvorec 1878', '', 'https://www.longwoodcricket.com/ About_Us (09 kap. 1.11)', 0, 1, 0),
+(18, 'rodokmen', 'The Queen\'s Club', '1886', 'Londýn', 'založen 1886', '', 'https://www.queensclub.co.uk/About_the_Club (09 kap. 1.2)', 0, 1, 1),
+(19, 'rodokmen', 'West Side Tennis Club', '1892', 'Forest Hills', 'založen 1892', '', 'https://thewestsidetennisclub.com/ Our_History (09 kap. 1.10)', 0, 1, 2),
+(20, 'rodokmen', 'I. Český Lawn-Tennis Klub Praha', '1893', 'Praha', 'založen 1893 · jediný český člen Centenary Tennis Clubs', '', 'klub.zalozeno', 1, 1, 3),
+(21, 'rodokmen', 'Lawn Tennis de Monte-Carlo', '1893', '', 'otevřen 2. 4. 1893', '', 'https://www.mccc.mc/en/history-57 (09 kap. 1.5)', 0, 1, 4),
+(22, 'rodokmen', 'LTTC Rot-Weiß Berlin', '1897', '', 'první rok klubové kroniky', '', 'https://www.rot-weiss-berlin.de/lttc-rot-weiss/chronik-des-clubs (09 kap. 1.7)', 0, 1, 5),
+(23, 'rodokmen', 'Real Club de Tenis Barcelona-1899', '1899', '', 'rok v názvu klubu', '', 'https://www.rctb1899.es/ (09 kap. 1.6)', 0, 1, 6),
+(24, 'rodokmen', 'Tennis Club Parioli', '1906', 'Řím', 'založen 1906 jako Lawn Tennis Club Parioli', '', 'https://tcparioli.it/la-storia-del-tennis-club-parioli/ (09 kap. 1.9)', 0, 1, 7),
+(25, 'utkani', 'CTC Senior Competition 35+/45+ · Winners Group', '2025', 'TC Padova, Cumberland LTC', '30.–31. 8. 2025', '', 'Revue 02/2025', 0, 1, 1),
+(26, 'klub', 'Tennis Club Parioli', '', 'Řím', 'CTC Senior Competition na Štvanici', '', 'I. ČLTK Praha, seznam klubů CTC Senior Competition (10/2026)', 0, 1, 5),
+(27, 'klub', 'Tennis Club de Genève', '', 'Ženeva', 'CTC Senior Competition na Štvanici', '', 'I. ČLTK Praha, seznam klubů CTC Senior Competition (10/2026)', 0, 1, 6),
+(28, 'klub', 'Edgbaston Priory Club', '', 'Birmingham', 'CTC Senior Competition na Štvanici', '', 'I. ČLTK Praha, seznam klubů CTC Senior Competition (10/2026)', 0, 1, 7),
+(29, 'klub', 'Real Club de Polo de Barcelona', '', 'Barcelona', 'CTC Senior Competition na Štvanici', '', 'I. ČLTK Praha, seznam klubů CTC Senior Competition (10/2026)', 0, 1, 8),
+(30, 'klub', 'Wiener Parkclub', '', 'Vídeň', 'CTC Senior Competition na Štvanici', '', 'I. ČLTK Praha, seznam klubů CTC Senior Competition (10/2026)', 0, 1, 9),
+(31, 'klub', 'Kungliga LTK', '', 'Stockholm', 'CTC Senior Competition na Štvanici', '', 'I. ČLTK Praha, seznam klubů CTC Senior Competition (10/2026)', 0, 1, 10),
+(32, 'klub', 'Real Sociedad de Tenis de La Magdalena', '', 'Santander', 'CTC Senior Competition na Štvanici', '', 'I. ČLTK Praha, seznam klubů CTC Senior Competition (10/2026)', 0, 1, 11),
+(33, 'klub', 'TC Padova', '', 'Padova', 'CTC Senior Competition na Štvanici', '', 'I. ČLTK Praha, seznam klubů CTC Senior Competition (10/2026)', 0, 1, 12),
+(34, 'klub', 'SALK', '', 'Stockholm', 'CTC Senior Competition na Štvanici', '', 'I. ČLTK Praha, seznam klubů CTC Senior Competition (10/2026)', 0, 1, 13),
+(35, 'klub', 'Cumberland LTC', '', 'Londýn', 'CTC Senior Competition na Štvanici', '', 'I. ČLTK Praha, seznam klubů CTC Senior Competition (10/2026)', 0, 1, 14);
 
 INSERT IGNORE INTO cltk_deska_zaznamy (id, kategorie, skupina, rok, jmeno, cin, pramen, metr, historie, visible, poradi) VALUES
 (1, 'grandslam', 'hlavni', '1948', 'Jaroslav Drobný', 'Roland Garros · čtyřhra, s Bergelinem', 'pravděpodobně', 'stvanice', 0, 1, 0),

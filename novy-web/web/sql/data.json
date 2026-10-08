@@ -1,6 +1,6 @@
 {
     "verze": 1,
-    "vytvoreno": "2026-10-08 14:12:39",
+    "vytvoreno": "2026-10-08 22:17:17",
     "tabulky": {
         "cltk_akce": [
             {
@@ -1051,7 +1051,7 @@
                 "klic": "utkani",
                 "stitek": "Na Štvanici",
                 "nadpis": "Mezinárodní <em>utkání</em>.",
-                "perex": "Kluby sdružené v Centenary Tennis Clubs se navzájem zvou k přátelským utkáním.",
+                "perex": "Kluby sdružené v Centenary Tennis Clubs se navzájem zvou k přátelským utkáním a účastní se soutěží pořádaných CTC.",
                 "text": "",
                 "foto": "",
                 "foto_popisek": "",
@@ -2941,7 +2941,7 @@
                 "nazev": "Hra v klubech CTC",
                 "rok": "",
                 "misto": "",
-                "text": "Členové klubu mohou po doporučení generálního manažera hrát zdarma v klubech sdružených v Centenary Tennis Clubs.",
+                "text": "Členové klubu mohou po doporučení generálního manažera hrát v klubech sdružených v Centenary Tennis Clubs.",
                 "odkaz": "",
                 "zdroj": "web klubu",
                 "zvyraznit": 0,
@@ -2954,7 +2954,7 @@
                 "nazev": "Klub ve vedení CTC",
                 "rok": "2005",
                 "misto": "",
-                "text": "Ing. Petr Šimůnek zastupuje klub v řídícím výboru CTC od roku 2005.",
+                "text": "Ing. Petr Šimůnek je členem řídicího výboru CTC od roku 2005, od roku 2011 ve funkci viceprezidenta.",
                 "odkaz": "",
                 "zdroj": "web klubu",
                 "zvyraznit": 0,
@@ -3040,32 +3040,6 @@
                 "poradi": 0
             },
             {
-                "id": 11,
-                "typ": "utkani",
-                "nazev": "International Clubs",
-                "rok": "2025",
-                "misto": "",
-                "text": "12.–13. 6. 2025, hráči z osmi států",
-                "odkaz": "",
-                "zdroj": "klubový kalendář; Revue 02/2025",
-                "zvyraznit": 0,
-                "visible": 1,
-                "poradi": 1
-            },
-            {
-                "id": 12,
-                "typ": "utkani",
-                "nazev": "The International Lawn Tennis Club",
-                "rok": "2026",
-                "misto": "",
-                "text": "11.–12. 6. 2026",
-                "odkaz": "",
-                "zdroj": "klubový kalendář",
-                "zvyraznit": 0,
-                "visible": 1,
-                "poradi": 2
-            },
-            {
                 "id": 13,
                 "typ": "soutez",
                 "nazev": "Carrickmines Cup (U12)",
@@ -3105,19 +3079,6 @@
                 "poradi": 2
             },
             {
-                "id": 16,
-                "typ": "rodokmen",
-                "nazev": "The Hurlingham Club",
-                "rok": "1869",
-                "misto": "Londýn",
-                "text": "otevřen 1869",
-                "odkaz": "",
-                "zdroj": "https://www.hurlinghamclub.org.uk/ (09 kap. 1.3)",
-                "zvyraznit": 0,
-                "visible": 1,
-                "poradi": 0
-            },
-            {
                 "id": 17,
                 "typ": "rodokmen",
                 "nazev": "Longwood Cricket Club",
@@ -3128,7 +3089,7 @@
                 "zdroj": "https://www.longwoodcricket.com/ About_Us (09 kap. 1.11)",
                 "zvyraznit": 0,
                 "visible": 1,
-                "poradi": 1
+                "poradi": 0
             },
             {
                 "id": 18,
@@ -3141,7 +3102,7 @@
                 "zdroj": "https://www.queensclub.co.uk/About_the_Club (09 kap. 1.2)",
                 "zvyraznit": 0,
                 "visible": 1,
-                "poradi": 2
+                "poradi": 1
             },
             {
                 "id": 19,
@@ -3154,7 +3115,7 @@
                 "zdroj": "https://thewestsidetennisclub.com/ Our_History (09 kap. 1.10)",
                 "zvyraznit": 0,
                 "visible": 1,
-                "poradi": 3
+                "poradi": 2
             },
             {
                 "id": 20,
@@ -3167,7 +3128,7 @@
                 "zdroj": "klub.zalozeno",
                 "zvyraznit": 1,
                 "visible": 1,
-                "poradi": 4
+                "poradi": 3
             },
             {
                 "id": 21,
@@ -3180,7 +3141,7 @@
                 "zdroj": "https://www.mccc.mc/en/history-57 (09 kap. 1.5)",
                 "zvyraznit": 0,
                 "visible": 1,
-                "poradi": 5
+                "poradi": 4
             },
             {
                 "id": 22,
@@ -3193,7 +3154,7 @@
                 "zdroj": "https://www.rot-weiss-berlin.de/lttc-rot-weiss/chronik-des-clubs (09 kap. 1.7)",
                 "zvyraznit": 0,
                 "visible": 1,
-                "poradi": 6
+                "poradi": 5
             },
             {
                 "id": 23,
@@ -3206,7 +3167,7 @@
                 "zdroj": "https://www.rctb1899.es/ (09 kap. 1.6)",
                 "zvyraznit": 0,
                 "visible": 1,
-                "poradi": 7
+                "poradi": 6
             },
             {
                 "id": 24,
@@ -3219,7 +3180,150 @@
                 "zdroj": "https://tcparioli.it/la-storia-del-tennis-club-parioli/ (09 kap. 1.9)",
                 "zvyraznit": 0,
                 "visible": 1,
+                "poradi": 7
+            },
+            {
+                "id": 25,
+                "typ": "utkani",
+                "nazev": "CTC Senior Competition 35+/45+ · Winners Group",
+                "rok": "2025",
+                "misto": "TC Padova, Cumberland LTC",
+                "text": "30.–31. 8. 2025",
+                "odkaz": "",
+                "zdroj": "Revue 02/2025",
+                "zvyraznit": 0,
+                "visible": 1,
+                "poradi": 1
+            },
+            {
+                "id": 26,
+                "typ": "klub",
+                "nazev": "Tennis Club Parioli",
+                "rok": "",
+                "misto": "Řím",
+                "text": "CTC Senior Competition na Štvanici",
+                "odkaz": "",
+                "zdroj": "I. ČLTK Praha, seznam klubů CTC Senior Competition (10/2026)",
+                "zvyraznit": 0,
+                "visible": 1,
+                "poradi": 5
+            },
+            {
+                "id": 27,
+                "typ": "klub",
+                "nazev": "Tennis Club de Genève",
+                "rok": "",
+                "misto": "Ženeva",
+                "text": "CTC Senior Competition na Štvanici",
+                "odkaz": "",
+                "zdroj": "I. ČLTK Praha, seznam klubů CTC Senior Competition (10/2026)",
+                "zvyraznit": 0,
+                "visible": 1,
+                "poradi": 6
+            },
+            {
+                "id": 28,
+                "typ": "klub",
+                "nazev": "Edgbaston Priory Club",
+                "rok": "",
+                "misto": "Birmingham",
+                "text": "CTC Senior Competition na Štvanici",
+                "odkaz": "",
+                "zdroj": "I. ČLTK Praha, seznam klubů CTC Senior Competition (10/2026)",
+                "zvyraznit": 0,
+                "visible": 1,
+                "poradi": 7
+            },
+            {
+                "id": 29,
+                "typ": "klub",
+                "nazev": "Real Club de Polo de Barcelona",
+                "rok": "",
+                "misto": "Barcelona",
+                "text": "CTC Senior Competition na Štvanici",
+                "odkaz": "",
+                "zdroj": "I. ČLTK Praha, seznam klubů CTC Senior Competition (10/2026)",
+                "zvyraznit": 0,
+                "visible": 1,
                 "poradi": 8
+            },
+            {
+                "id": 30,
+                "typ": "klub",
+                "nazev": "Wiener Parkclub",
+                "rok": "",
+                "misto": "Vídeň",
+                "text": "CTC Senior Competition na Štvanici",
+                "odkaz": "",
+                "zdroj": "I. ČLTK Praha, seznam klubů CTC Senior Competition (10/2026)",
+                "zvyraznit": 0,
+                "visible": 1,
+                "poradi": 9
+            },
+            {
+                "id": 31,
+                "typ": "klub",
+                "nazev": "Kungliga LTK",
+                "rok": "",
+                "misto": "Stockholm",
+                "text": "CTC Senior Competition na Štvanici",
+                "odkaz": "",
+                "zdroj": "I. ČLTK Praha, seznam klubů CTC Senior Competition (10/2026)",
+                "zvyraznit": 0,
+                "visible": 1,
+                "poradi": 10
+            },
+            {
+                "id": 32,
+                "typ": "klub",
+                "nazev": "Real Sociedad de Tenis de La Magdalena",
+                "rok": "",
+                "misto": "Santander",
+                "text": "CTC Senior Competition na Štvanici",
+                "odkaz": "",
+                "zdroj": "I. ČLTK Praha, seznam klubů CTC Senior Competition (10/2026)",
+                "zvyraznit": 0,
+                "visible": 1,
+                "poradi": 11
+            },
+            {
+                "id": 33,
+                "typ": "klub",
+                "nazev": "TC Padova",
+                "rok": "",
+                "misto": "Padova",
+                "text": "CTC Senior Competition na Štvanici",
+                "odkaz": "",
+                "zdroj": "I. ČLTK Praha, seznam klubů CTC Senior Competition (10/2026)",
+                "zvyraznit": 0,
+                "visible": 1,
+                "poradi": 12
+            },
+            {
+                "id": 34,
+                "typ": "klub",
+                "nazev": "SALK",
+                "rok": "",
+                "misto": "Stockholm",
+                "text": "CTC Senior Competition na Štvanici",
+                "odkaz": "",
+                "zdroj": "I. ČLTK Praha, seznam klubů CTC Senior Competition (10/2026)",
+                "zvyraznit": 0,
+                "visible": 1,
+                "poradi": 13
+            },
+            {
+                "id": 35,
+                "typ": "klub",
+                "nazev": "Cumberland LTC",
+                "rok": "",
+                "misto": "Londýn",
+                "text": "CTC Senior Competition na Štvanici",
+                "odkaz": "",
+                "zdroj": "I. ČLTK Praha, seznam klubů CTC Senior Competition (10/2026)",
+                "zvyraznit": 0,
+                "visible": 1,
+                "poradi": 14
             }
         ],
         "cltk_deska_zaznamy": [
