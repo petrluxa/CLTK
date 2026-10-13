@@ -239,7 +239,11 @@ function upload_url(?string $rel): string {
     $rel = ltrim((string)$rel, '/');
     if ($rel === '') return '';
     if (preg_match('~^https?://~i', $rel)) return $rel;
-    return BASE_PATH . 'uploads/' . str_replace('%2F', '/', rawurlencode($rel));
+    $url = BASE_PATH . 'uploads/' . str_replace('%2F', '/', rawurlencode($rel));
+    /* ?v= podle času změny: obrázky mají v .htaccess mezipaměť 30 dní a nové nahrání může dostat stejné jméno
+       (obrazek_volne_jmeno střídá ctc-uvod / ctc-uvod-2) – bez verze by prohlížeč ukazoval starý obrázek (13. 10. 2026) */
+    $soubor = UPLOAD_DIR . '/' . $rel;
+    return is_file($soubor) ? $url . '?v=' . filemtime($soubor) : $url;
 }
 
 /** Kompatibilita se vzory z Liberce (druhý argument se ignoruje – BASE_PATH platí i v adminu). */
