@@ -810,3 +810,4 @@ function citlive_desifruj(string $s): ?string {
 require_once __DIR__ . '/html.php';      // čištění HTML z editoru, html_inline()
 require_once __DIR__ . '/soubory.php';   // nahrávání obrázků a PDF, WebP, loga partnerů
 require_once __DIR__ . '/data.php';      // datové pomůcky pro stránky (oznámení, akce, ceníky, menu…)
+require_once __DIR__ . '/pointeks.php';  // výsledky hráčů ze služby Pointeks (příjem i výpis)

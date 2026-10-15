@@ -25,9 +25,10 @@ if (DB_DRIVER === 'sqlite') {
 /** Soubor s obsahem připraveným lokálně (vyrábí sql/export-dat.php, čte instalace.php). */
 defined('SEED_DATA_JSON') || define('SEED_DATA_JSON', __DIR__ . '/data.json');
 
-/** Tabulky, které se mezi databázemi NIKDY nepřenášejí (účty, osobní údaje, statistika). */
+/** Tabulky, které se mezi databázemi NIKDY nepřenášejí (účty, osobní údaje, statistika,
+ *  živá data – výsledky ze služby Pointeks přicházejí na každý web samy). */
 const SEED_NEPRENASET = ['cltk_users', 'cltk_login_attempts', 'cltk_visits', 'cltk_visit_log',
-                         'cltk_signups', 'cltk_prihlasky_clenstvi'];
+                         'cltk_signups', 'cltk_prihlasky_clenstvi', 'cltk_pointeks_vysledky'];
 
 /** Nastavení, která se nepřenášejí (tajný klíč a náhledové heslo má každá instalace vlastní,
  *  režim přípravy nastavuje instalace). */

@@ -1,9 +1,13 @@
 <?php
 /* Výsledky hráčů – úprava jednoho výsledku. Seznam: vysledky.php.
    Sety se zapisují jedním polem („6:3 1:6 10:6“, „9:8 (7:5)“, „6:1 1:0 skr.“)
-   a ukládají jako JSON pole přes sety_z_textu(). */
+   a ukládají jako JSON pole přes sety_z_textu().
+   VYPNUTO 15. 10. 2026 (rozhodnutí Petra: na webu jen výsledky ze služby Pointeks): stránka
+   přesměruje na modul Výsledky (Pointeks). Kód, tabulka cltk_vysledky i data zůstávají. */
 require __DIR__ . '/inc/layout.php';
 $user = require_login();
+if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') admin_post_zacatek('pointeks.php');   // POST bez platného tokenu = 400 jako dřív
+redirect('pointeks.php', 'Ruční výsledky hráčů se na webu už neukazují – výsledky teď přicházejí automaticky ze služby Pointeks.', 'info');
 
 const VE_SEZNAM = 'vysledky.php';
 const VE_VERDIKTY = ['Titul', 'Finále', 'Semifinále', 'Čtvrtfinále', 'Osmifinále', 'Výhra', 'Postup', 'Bronz'];

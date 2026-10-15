@@ -3,9 +3,13 @@
    zlatý štítek turnaje, jméno, krátký text, velké sety, verdikt.
    Řadí se podle data (nejnovější první); na úvodu je posledních osm
    zobrazených (posledni_vysledky(8)). Šipky mění pořadí jen u výsledků
-   se stejným datem. Úprava výsledku: vysledky-edit.php. */
+   se stejným datem. Úprava výsledku: vysledky-edit.php.
+   VYPNUTO 15. 10. 2026 (rozhodnutí Petra: na webu jen výsledky ze služby Pointeks): modul je mimo
+   menu administrace a přesměruje na Výsledky (Pointeks). Kód, tabulka cltk_vysledky i data zůstávají. */
 require __DIR__ . '/inc/layout.php';
 $user = require_login();
+if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') admin_post_zacatek('pointeks.php');   // POST bez platného tokenu = 400 jako dřív
+redirect('pointeks.php', 'Ruční výsledky hráčů se na webu už neukazují – výsledky teď přicházejí automaticky ze služby Pointeks.', 'info');
 
 const VY_STRANKA = 'vysledky.php';
 const VY_NA_UVODU = 8;

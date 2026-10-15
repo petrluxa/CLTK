@@ -20,7 +20,9 @@ $bPartneri  = blok('index', 'partneri');
 
 $galerie   = uvodni_galerie();
 $aktuality = aktuality(3);
-$vysledky  = posledni_vysledky(8);
+/* Výsledky hráčů jen ze služby Pointeks (Petr 15. 10. 2026): 10 nejnovějších podle konce zápasu
+   v pražském čase, živé zápasy první; ruční modul Výsledky hráčů se na webu neukazuje. */
+$vysledky  = pointeks_seznam(['limit' => POINTEKS_NA_UVODU])['zapasy'];
 $sluzbyUvod = sluzby(true);
 /* Plán areálu pod videem (mapa.js, kompaktní rozložení); „Podrobnosti“ u služby vedou na areal.php#kotva */
 $mapaUvod = mapa_data(null, null, null, url('areal.php'));
@@ -61,8 +63,8 @@ $sablona = [
     'titulek' => '',
     'popis'   => 'I. Český Lawn-Tennis Klub Praha – tenis na ostrově Štvanice uprostřed Prahy od roku ' . setting('zalozeno', '1893')
                . '. Členství, ceník kurtů, tenisová škola, závodní tenis, klubový kalendář a historie klubu.',
-    'css'     => ['index.css', 'mapa.css'],
-    'js'      => ['galerie.js', 'vysledky.js', 'kalendar.js', 'video.js', 'cenik.js', 'mapa.js'],
+    'css'     => ['index.css', 'mapa.css', 'vysledky.css'],
+    'js'      => ['galerie.js', 'kalendar.js', 'video.js', 'cenik.js', 'mapa.js'],
     'trida'   => 'stranka-uvod',
     'obrazek' => $galerie && $galerie[0]['typ'] === 'foto' ? $galerie[0]['foto'] : '',
     'predpripojit' => $predpripojit,
@@ -159,22 +161,11 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
   <?php endif; ?>
 
   <?php if ($vysledky): ?>
-  <!-- 3 · Aktuální výsledky našich hráčů – vodorovný pás se šipkami -->
+  <!-- 3 · Aktuální výsledky našich hráčů – výsledková tabule ze služby Pointeks (návrh 3, styl Varianty 4) -->
   <section class="sekce vysledky-sekce" id="vysledky" aria-labelledby="vysledky-nadpis">
     <div class="wrap wrap--uzky">
-      <div class="pas" data-pas>
-        <div class="pas__hlava">
-          <h2 class="stitek stitek--velky vysledky-sekce__stitek" id="vysledky-nadpis"><?= typo(trim((string)$bVysledky['stitek']) ?: 'Aktuální výsledky našich hráčů') ?></h2>
-          <div class="pas__sipky">
-            <button class="pas__sipka" type="button" data-pas-zpet aria-controls="vysledky-pas" aria-label="Předchozí výsledky"><?= sipka('zpet') ?></button>
-            <button class="pas__sipka" type="button" data-pas-dal aria-controls="vysledky-pas" aria-label="Další výsledky"><?= sipka() ?></button>
-          </div>
-        </div>
-        <ul class="pas__drazka" id="vysledky-pas" tabindex="0" role="region" aria-label="Výsledky hráčů klubu – posunujte do strany">
-          <?php foreach ($vysledky as $v) echo vysledek_karta_html($v); ?>
-        </ul>
-        <div class="pas__stav" aria-hidden="true"><span></span></div>
-      </div>
+      <h2 class="stitek stitek--velky vysledky-sekce__stitek" id="vysledky-nadpis"><?= typo(trim((string)$bVysledky['stitek']) ?: 'Aktuální výsledky našich hráčů') ?></h2>
+      <?= pointeks_tabule_html($vysledky, ['nadpis' => 'Poslední výsledky', 'vsechny' => true]) ?>
     </div>
   </section>
   <?php endif; ?>

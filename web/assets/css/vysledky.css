@@ -1,0 +1,166 @@
+/* ==========================================================================
+   I. ČLTK Praha – výsledková tabule (výsledky hráčů ze služby Pointeks)
+   Rozvržení podle návrhu 3 „Živá Štvanice“ (cltk-navrhy/03-ziva-stvanice, tabule „Poslední
+   výsledky“: datum · město a soutěž · hráči nad soupeři · sety pod sebou · štítek), převedené
+   do Varianty 4 (papír, navy, zlatá linka, Cormorant Garamond / Cormorant SC / Jost).
+   HTML: pointeks_tabule_html() a pointeks_zapas_html() v inc/sablona/komponenty.php.
+   Používá úvod (index.php), stránka Výsledky (vysledky.php) a Závodní tenis.
+   ========================================================================== */
+
+/* Tabule: papír s vlasovou linkou a vnitřní zlatou linkou (jako Zlatá deska, bez textury) */
+.tabule {
+  position: relative;
+  padding: clamp(1.4rem, .9rem + 2.2vw, 3.2rem) clamp(1rem, .4rem + 2.6vw, 3.2rem) clamp(1rem, .7rem + 1.2vw, 2rem);
+  background: var(--paper);
+  border: 1px solid var(--line-2);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, .8) inset, var(--stin);
+}
+.tabule::before { content: ''; position: absolute; inset: 6px; border: 1px solid var(--line-gold); pointer-events: none; }
+.tabule--bez-hlavy { padding-top: clamp(1rem, .7rem + 1.2vw, 2rem); }       /* bez hlavy (Závodní tenis): bez prázdného pruhu nad první linkou */
+.tabule__hlava { display: grid; justify-items: center; gap: .55rem; padding-bottom: clamp(1.1rem, .8rem + 1vw, 1.6rem); text-align: center; border-bottom: 1px solid var(--navy); }
+.tabule__hlava .stitek { margin: 0; }
+.tabule__nadpis { margin: 0; padding-top: .1em; font: 300 clamp(2rem, 1.45rem + 1.7vw, 3.1rem)/1 var(--serif); letter-spacing: -.01em; color: var(--navy); }
+.tabule__stav { margin: 0; font-size: var(--t-drobne); color: var(--muted); font-variant-numeric: lining-nums tabular-nums; }
+.tabule__seznam { list-style: none; margin: 0; padding: 0; }
+.tabule__seznam:first-child { border-top: 1px solid var(--navy); }          /* tabule bez hlavy (Závodní tenis) */
+.tabule__pata {
+  display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: .4rem 2rem;
+  padding-top: .9rem; border-top: 1px solid var(--navy); font-size: var(--t-drobne); color: var(--muted);
+}
+.tabule__pata .odkaz { min-height: 44px; padding-top: .55em; }
+.tabule__kredit {
+  display: inline-flex; align-items: center; min-height: 44px; margin-left: auto;
+  font: 400 .8rem/1.3 var(--sans); letter-spacing: .02em; color: var(--muted);
+  text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: .28em; text-decoration-thickness: 1px;
+}
+.tabule__kredit:hover { color: var(--navy); text-decoration-color: var(--gold); }
+
+/* Řádek zápasu – mřížka: datum | město + soutěž | hráči / soupeři | sety (nahoře naši, dole soupeř) | štítek.
+   Město a hráči si volné místo dělí 1 : 1,6 (město nejméně 8rem) – těsně nad 800 px a s pěti sety
+   by pevný sloupec města (dřív až 15rem) nechal jménům jen pár desítek px a lámala by se uprostřed slova. */
+.zapas { border-bottom: 1px solid var(--line); }
+.zapas:last-child { border-bottom: 0; }
+.zapas__mrizka {
+  display: grid;
+  grid-template-columns: 4.4rem minmax(8rem, 1fr) minmax(0, 1.6fr) repeat(var(--sety, 3), 2.6ch) 5.6rem;
+  grid-template-rows: auto auto;
+  column-gap: clamp(.7rem, .3rem + 1vw, 1.5rem); row-gap: .15rem; align-items: baseline;
+  padding: 1.05rem 0;
+}
+/* datum přes oba řádky, ale na účaří prvního (s městem, jménem a prvním setem – jako v návrhu 3) */
+.zapas__datum { grid-column: 1; grid-row: 1 / span 2; font: 400 1.08rem/1.3 var(--serif); color: var(--ink-2); font-variant-numeric: lining-nums tabular-nums; white-space: nowrap; }
+.zapas__rok { display: block; font: 500 .64rem/1.5 var(--sans); letter-spacing: .14em; color: var(--muted); }
+.zapas__mesto { grid-column: 2; grid-row: 1; min-width: 0; font: 600 1rem/1.3 var(--sc); letter-spacing: .06em; color: var(--navy); font-synthesis: none; }
+.zapas__soutez { grid-column: 2; grid-row: 2; min-width: 0; font-size: var(--t-drobne); line-height: 1.4; color: var(--muted); }
+.zapas__hraci { grid-column: 3; grid-row: 1; min-width: 0; font: 400 clamp(1.14rem, 1.05rem + .28vw, 1.3rem)/1.25 var(--serif); color: var(--navy); }
+.zapas__hraci b { font-weight: 600; }
+.zapas__hraci .zapas__jmeno { color: var(--ink-2); }
+.zapas__souperi { grid-column: 3; grid-row: 2; min-width: 0; font-size: var(--t-male); line-height: 1.4; color: var(--ink-2); }
+.zapas__zeme { font: 500 .62rem/1 var(--sans); letter-spacing: .12em; color: var(--muted); vertical-align: .12em; white-space: nowrap; }
+.zapas__lomitko { color: var(--muted); }
+
+/* Sety: číslo uprostřed sloupce, tiebreak horním indexem vedle čísla (sloupce pod sebou nerozhodí) */
+.zapas__set { text-align: center; font: 400 1.32rem/1.25 var(--serif); font-variant-numeric: lining-nums tabular-nums; color: var(--muted); }
+.zapas__set--vyhra { color: var(--navy); font-weight: 600; }
+.zapas__gemy { position: relative; display: inline-block; }
+.zapas__gemy sup { position: absolute; left: 100%; top: -.12em; margin-left: .06em; font: 500 .54em/1 var(--serif); color: var(--gold-text); }
+.zapas__set[data-r="1"] { grid-row: 1; }
+.zapas__set[data-r="2"] { grid-row: 2; }
+.zapas__set[data-s="1"] { grid-column: 4; }
+.zapas__set[data-s="2"] { grid-column: 5; }
+.zapas__set[data-s="3"] { grid-column: 6; }
+.zapas__set[data-s="4"] { grid-column: 7; }
+.zapas__set[data-s="5"] { grid-column: 8; }
+/* bez setů: „výhra / prohra bez boje“ v řádku hráčů klubu (data-r 1), jinak („začíná“, „bez skóre“) uprostřed;
+   na jeden řádek – delší nápis smí přesahovat do mezer kolem sloupců setů */
+.zapas__bez-setu { grid-column: 4 / -2; grid-row: 1 / span 2; justify-self: center; align-self: center; text-align: center; white-space: nowrap; font: 500 .66rem/1.3 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--ink-2); }
+.zapas__bez-setu[data-r="1"] { grid-row: 1; align-self: baseline; }
+.zapas__stav { grid-column: -2 / -1; grid-row: 1 / span 2; justify-self: end; align-self: center; }
+
+/* Štítky: Titul (zlatý), Finále; živý zápas = červená tečka + „živě“ */
+.zapas-stitek {
+  display: inline-block; padding: .42em .85em .38em; border: 1px solid var(--line-2); border-radius: 999px;
+  font: 500 .62rem/1 var(--sans); letter-spacing: .17em; text-transform: uppercase; color: var(--navy); white-space: nowrap;
+}
+.zapas-stitek--titul { border-color: var(--gold); color: var(--gold-text); background: rgba(179, 147, 90, .08); }
+.zapas-zive { display: inline-flex; align-items: center; gap: .5em; font: 600 .64rem/1 var(--sans); letter-spacing: .17em; text-transform: uppercase; color: var(--chyba); white-space: nowrap; }
+.zapas-zive__bod { position: relative; flex: none; width: .56rem; height: .56rem; border-radius: 50%; background: var(--tri-cervena); }
+.zapas-zive__bod::after { content: ''; position: absolute; inset: 0; border-radius: 50%; background: var(--tri-cervena); opacity: 0; animation: zapas-pulz 1.7s cubic-bezier(.2, .7, .2, 1) infinite; }
+@keyframes zapas-pulz {
+  0% { transform: scale(1); opacity: .5; }
+  80%, 100% { transform: scale(2.9); opacity: 0; }
+}
+/* omezený pohyb (systém nebo přepínač „Omezit pohyb“ v patičce) = tečka stojí */
+@media (prefers-reduced-motion: reduce) {
+  html:not([data-pohyb="plny"]) .zapas-zive__bod::after { animation: none; }
+}
+html[data-pohyb="omezit"] .zapas-zive__bod::after { animation: none; }
+.zapas--zive { background: linear-gradient(90deg, rgba(237, 28, 36, .05), rgba(237, 28, 36, .015) 70%, rgba(237, 28, 36, 0)); }
+
+/* Tablet a mobil: datum + štítek, město, soutěž, pak hráči a soupeři se sety jen tolika sloupců, kolik zápas měl */
+@media (max-width: 799.98px) {
+  .zapas__mrizka {
+    grid-template-columns: minmax(0, 1fr) repeat(var(--sety-r, 3), 2.5ch);
+    grid-template-rows: none;
+    column-gap: .6rem; row-gap: .12rem; padding: 1rem 0 1.05rem;
+  }
+  .zapas--bez-setu .zapas__mrizka { grid-template-columns: minmax(0, 1fr) auto; }
+  .zapas__datum { grid-column: 1 / -1; grid-row: 1; justify-self: start; align-self: center; font-size: 1rem; }
+  .zapas__rok { display: inline; margin-left: .45rem; }
+  .zapas__stav { grid-column: 1 / -1; grid-row: 1; justify-self: end; align-self: center; }
+  .zapas__mesto { grid-column: 1 / -1; grid-row: 2; margin-top: .35rem; }
+  .zapas__soutez { grid-column: 1 / -1; grid-row: 3; margin-bottom: .5rem; }
+  .zapas__hraci { grid-column: 1; grid-row: 4; }
+  .zapas__souperi { grid-column: 1; grid-row: 5; }
+  .zapas__set[data-r="1"] { grid-row: 4; }
+  .zapas__set[data-r="2"] { grid-row: 5; }
+  .zapas__set[data-s="1"] { grid-column: 2; }
+  .zapas__set[data-s="2"] { grid-column: 3; }
+  .zapas__set[data-s="3"] { grid-column: 4; }
+  .zapas__set[data-s="4"] { grid-column: 5; }
+  .zapas__set[data-s="5"] { grid-column: 6; }
+  .zapas__set { font-size: 1.22rem; }
+  .zapas__bez-setu { grid-column: 2; grid-row: 4 / span 2; justify-self: end; text-align: right; }
+  .zapas__bez-setu[data-r="1"] { grid-row: 4; }
+  .tabule__pata { flex-direction: column; align-items: flex-start; gap: 0; }
+  .tabule__kredit { margin-left: 0; }
+}
+@media (max-width: 379.98px) {
+  .zapas__mrizka { column-gap: .45rem; }
+  .zapas__hraci { font-size: 1.08rem; }
+  .zapas__set { font-size: 1.12rem; }
+}
+
+/* Stránka Výsledky (vysledky.php): filtr a stránkování */
+.vysl-filtr { display: grid; gap: var(--s-4) var(--mezera); align-items: end; margin: 0 0 clamp(1.8rem, 1.2rem + 1.6vw, 2.8rem); }
+@media (min-width: 700px) { .vysl-filtr { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) auto; } }
+.vysl-filtr .pole + .pole { margin-top: 0; }
+.vysl-filtr__akce { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1.6rem; }
+.vysl-filtr__akce .odkaz { min-height: 44px; padding-top: .55em; }
+.vysl-pocet { margin: 0 0 var(--s-4); font-size: var(--t-drobne); color: var(--muted); }
+.vysl-prazdne { padding: clamp(2rem, 1.4rem + 2vw, 3.4rem) clamp(1rem, .5rem + 2vw, 2.4rem); text-align: center; border: 1px solid var(--line); background: var(--paper-2); }
+.vysl-prazdne p { margin: 0; font: 400 clamp(1.25rem, 1.1rem + .5vw, 1.55rem)/1.35 var(--serif); color: var(--navy); }
+.vysl-prazdne p + p { margin-top: .9rem; font: 400 var(--t-male)/1.5 var(--sans); color: var(--ink-2); }
+.strankovani { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: .45rem; margin-top: clamp(1.6rem, 1.2rem + 1.2vw, 2.4rem); list-style: none; padding: 0; }
+.strankovani > li > a, .strankovani > li > span {
+  display: inline-flex; align-items: center; justify-content: center; gap: .6em; min-width: 44px; min-height: 44px; padding: 0 .85rem;
+  border: 1px solid var(--line-2); background: var(--paper); color: var(--navy); text-decoration: none;
+  font: 500 .74rem/1 var(--sans); letter-spacing: .12em; font-variant-numeric: lining-nums tabular-nums;
+  transition: border-color var(--pohyb-rychly), background-color var(--pohyb-rychly), color var(--pohyb-rychly);
+}
+.strankovani > li > a:hover { border-color: var(--navy); }
+.strankovani > li > a:hover .sipka { transform: translateX(3px); }
+.strankovani > li > a:hover .sipka--zpet { transform: rotate(180deg) translateX(3px); }
+.strankovani [aria-current="page"] { background: var(--navy); border-color: var(--navy); color: var(--paper); }
+.strankovani > li > .strankovani__mezera { border-color: transparent; background: transparent; color: var(--muted); min-width: 0; padding: 0 .2rem; }
+.strankovani__smer { text-transform: uppercase; }
+
+:root[data-kontrast="vyssi"] .zapas__set, :root[data-kontrast="vyssi"] .zapas__soutez, :root[data-kontrast="vyssi"] .zapas__zeme { color: var(--ink-2); }
+:root[data-kontrast="vyssi"] .zapas__set--vyhra { color: var(--navy); }
+
+@media print {
+  .tabule { box-shadow: none; border-color: #999; }
+  .tabule::before { display: none; }
+  .zapas-zive__bod::after { display: none; }
+  .strankovani, .vysl-filtr { display: none; }
+}

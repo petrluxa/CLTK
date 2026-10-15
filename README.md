@@ -74,7 +74,7 @@ Podrobné návody: `web/inc/PRUVODCE-FRONT.md` (jádro pro stránky), `web/PRUVO
 |---|---|
 | Klub | `klub.php` · Členství `clenstvi.php` (konfigurátor ceny + přihláška do klubu) · Historie `historie.php` (triptych, kronika, Zlatá deska, medailony, jubilejní Revue 1893–2023) · Vedení `vedeni.php` · CTC `ctc.php` · Revue `revue.php` (kiosek 41 čísel + speciál 1893–2023, newslettery – vše PDF na webu) |
 | Areál a služby | `areal.php` (služby s kotvami, plán areálu léto/zima, uzávěrky, příjezd) · Ceník kurtů `cenik-kurtu.php` (léto/zima, kalkulačka) · Privátní trenéři · Body Solution · Sportovní lékařství |
-| Závodní tenis | `zavodni-tenis.php` (pyramida, hráči, extraliga, výsledky) · Trenérský tým `zavodni-tenis-treneri.php` |
+| Závodní tenis | `zavodni-tenis.php` (pyramida, hráči, extraliga, výsledky) · Trenérský tým `zavodni-tenis-treneri.php` · Výsledky `vysledky.php` (všechny výsledky ze služby Pointeks, filtr hráč / junioři–dospělí, 30 na stránku) |
 | Tenisová škola | `tenisova-skola.php` · Ceníky · Rozvrhy · Trenérský tým · Letní kempy `letni-kempy.php` |
 | Restaurace | nastavení `restaurace_url` (vlastní web), prázdné → `restaurace.php` |
 | Prague Open | nastavení `prague_open_url`, prázdné → `prague-open.php` |
@@ -83,7 +83,8 @@ Mimo menu: `kontakt.php` (z patičky), `akce.php?id=…` (detail akce s přihlá
 `dokumenty.php` (Klub › Dokumenty – rozcestník dokumentů, archiv klubových turnajů, jubilejní Revue; odkaz
 v patičce, na Kontaktu a v Klubu), `dokument.php?d=…` (dokument klubu jako stránka – viz §5),
 přípravná stránka (režim přípravy). Úvodní stránka `index.php`: informační lišta, galerie se štítovým
-přechodem, aktuality (ne články), pás výsledků, klubový kalendář s přihláškou v okně, video
+přechodem, aktuality (ne články), výsledková tabule (10 nejnovějších výsledků ze služby Pointeks – od 15. 10. 2026
+jediné výsledky na webu, přicházejí samy na `pointeks/feed`), klubový kalendář s přihláškou v okně, video
 a Služby v areálu, triptych historie, partneři 5 × 5, patička podle PDF.
 
 **Logo** (ke 130 letům) je jen ve `web/assets/img/` (`logo.svg`, `logo-64/128/256/512.png`, `logo.png`)
@@ -92,7 +93,8 @@ a odkazuje se jen přes `logo_url()` ve `web/inc/functions.php` → výměna log
 ## 4. Administrace (`/admin/`)
 
 Moduly v pořadí postranního panelu: Přehled · Návštěvnost · Informační lišta · Úvodní galerie · Aktuality
-z klubu · Výsledky hráčů · Kalendář akcí (u každé akce vlastní formulář přihlášky, seznam přihlášených, CSV) ·
+z klubu · Výsledky (Pointeks) (přijaté výsledky, Skrýt / Zobrazit, adresa pro Pointeks, protokol příjmu – nic se nezadává
+ručně) · Kalendář akcí (u každé akce vlastní formulář přihlášky, seznam přihlášených, CSV) ·
 Přihlášky (k akcím + do klubu, stav, poznámka, CSV) · Trenéři · Ceníky · Tenisová škola · Areál a služby ·
 Historie · Revue a newslettery · Vedení a CTC · Stránky (textové bloky všech podstránek) · Partneři ·
 Dokumenty · Texty a údaje (kontakty, odkazy, sítě, video, e-mail pro přihlášky, **režim přípravy

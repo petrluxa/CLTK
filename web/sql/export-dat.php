@@ -11,8 +11,10 @@
    jen do tabulek cltk_, nic nemaže.
 
    NEPŘENÁŠÍ SE: účty správců, pokusy o přihlášení, návštěvnost, přihlášky
-   k akcím a do klubu (osobní údaje) a tajné klíče (system_klic, náhledové
-   heslo, režim přípravy). Soubory z uploads/ se nahrávají zvlášť.
+   k akcím a do klubu (osobní údaje), výsledky ze služby Pointeks (živá data –
+   na server chodí samy) a tajné klíče (system_klic, náhledové heslo, režim
+   přípravy). Seznam tabulek: SEED_NEPRENASET v seed-pomocne.php.
+   Soubory z uploads/ se nahrávají zvlášť.
 
    Před exportem se ověří, že se texty vejdou do sloupců na MySQL
    (SQLite délku VARCHAR nehlídá, MySQL ve striktním režimu ano). */

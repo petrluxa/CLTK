@@ -105,7 +105,9 @@ Nejčastější: `klub_nazev`, `klub_zkratka`, `zalozeno`, `ico`, `adresa_ulice`
 | `aktivni_oznameni()` | zprávy informační lišty platné dnes – **prázdné pole = lištu vůbec nevypisovat** (`text`, `odkaz`) |
 | `uvodni_galerie()` | snímky galerie (`typ` foto/deska, `foto`, `foto_w/h`, `fokus`, `alt`, `popisek`*inline*, `kredit`, `rejstrik`, `deska_*`) |
 | `aktuality(3)` | karty aktualit (`nadpis`, `popis`, `foto`, `fokus`, `odkaz`, `odkaz_text`) – nejsou to články, bez detailu |
-| `posledni_vysledky(8)` | výsledky od nejnovějšího + `sety_pole` = `[[text, hlavni '6:3', doplnek '(7:5)', vyhra bool], …]` |
+| `pointeks_seznam(['limit' => 10])` | **výsledky hráčů – od 15. 10. 2026 jen ze služby Pointeks** (`inc/pointeks.php`): `['zapasy', 'celkem', 'stran', 'strana']`, zápas = `pointeks_zapas()` (hraci, souperi, sety `[h, s, th, ts]`, cas v Praze, zive, vysledek, prubeh, kolo česky, finale, kvalifikace, turnaj, kategorie, mesto, url); filtr `'hrac' => slug`, `'kategorie' => 'juniori' / 'dospeli'`, `'strana'`. Výpis **`pointeks_tabule_html($zapasy, ['nadpis' => …, 'vsechny' => true])`** + `vysledky.css` |
+| `pointeks_hraci()` | hráči s výsledkem `[slug => jméno]` (filtr stránky Výsledky) |
+| `posledni_vysledky(8)` | RUČNÍ výsledky (cltk_vysledky) – **na webu se od 15. 10. 2026 nepoužívají**; `sety_pole` = `[[text, hlavni '6:3', doplnek '(7:5)', vyhra bool], …]` |
 | `triptych()` | tři wimbledonské trávy + `sety_pole` |
 | `akce_rok($rok)`, `nejblizsi_akce()`, `akce_detail($id)`, `kalendar_data()` | kalendář – §7 |
 | `cenik('kurty-leto')` | `['list' => …, 'sekce' => [[…, 'radky' => […]], …]]`; klíče `kurty-leto, kurty-zima, clenstvi, skola, kempy, doplnkove`; prázdná hlavička sekce (`hl_*`) = sloupec nezobrazovat |

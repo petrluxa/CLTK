@@ -29,7 +29,9 @@ function admin_moduly(): array {
         ['oznameni.php',    'Informační lišta',     []],
         ['galerie.php',     'Úvodní galerie',       []],
         ['aktuality.php',   'Aktuality z klubu',    []],
-        ['vysledky.php',    'Výsledky hráčů',       []],
+        /* od 15. 10. 2026 jen výsledky ze služby Pointeks; ruční „Výsledky hráčů“ (vysledky.php,
+           vysledky-edit.php) zůstaly na disku, ale přesměrují sem */
+        ['pointeks.php',    'Výsledky (Pointeks)',  ['vysledky.php', 'vysledky-edit.php']],
         ['akce.php',        'Kalendář akcí',        ['akce-edit.php']],
         ['prihlasky.php',   'Přihlášky',            []],
         ['treneri.php',     'Trenéři',              []],

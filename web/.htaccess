@@ -26,6 +26,13 @@ AcceptPathInfo Off
   #RewriteCond %{HTTP:X-Forwarded-Proto} !https
   #RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=302,L]
 
+  # --- příjem výsledků ze služby Pointeks: POST na pointeks/feed (i s lomítkem) ---
+  # Vnitřní přepsání, ŽÁDNÉ přesměrování (Pointeks přesměrování nesleduje a bere je jako chybu).
+  # Složka pointeks/ ani feed/ neexistuje, takže DirectorySlash nemá co přesměrovat (301).
+  # Na testu https://www.tkolymppraha.cz/cltkv2/pointeks/feed, po přestěhování https://cltk.cz/pointeks/feed.
+  # Stejné pravidlo má lokální server v nastroje/router.php.
+  RewriteRule ^pointeks/feed/?$ pointeks-feed.php [L]
+
   # --- neexistující adresa → 404.php (relativně, funguje v podsložce) ---
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
