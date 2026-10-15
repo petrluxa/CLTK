@@ -51,6 +51,15 @@ Běžící server se převádí migrací `web/sql/migrace/2026-10-02-dokumenty-a
   (dvojice stránka+klíč bloku se mezi sadami nesmí opakovat), export `web/sql/export-dat.php`.
 - Návody: `web/inc/PRUVODCE-FRONT.md`, `web/PRUVODCE-STRANKY.md`, `web/admin/PRUVODCE.md`.
 - Testovací skripty: `podklady/_raw/qa/<agent>/` (mimo git), integrační v `podklady/_raw/qa/integrace/`.
+- **Výsledky hráčů = jen služba Pointeks (Petr 15. 10. 2026).** Příjem `pointeks/feed` (POST, podpis HMAC-SHA256
+  klíčem `POINTEKS_SECRET` – na serveru jen v `cltk-config.php`, lokálně z proměnné prostředí) → `web/pointeks-feed.php`
+  (bez `rezim.php`, bez relace; `.htaccess` i `nastroje/router.php` přepíší bez přesměrování), logika `inc/pointeks.php`,
+  tabulka `cltk_pointeks_vysledky` (migrace `sql/migrace/2026-10-15-pointeks.php`, export dat ji nepřenáší), protokol
+  `data/pointeks.log`. Výpis `pointeks_tabule_html()` + `vysledky.css` (úvod, `vysledky.php`, závodní tenis), správa
+  `admin/pointeks.php`. Ruční `cltk_vysledky` zůstala, ale web ji neukazuje. Živé zápasy zatím nechodí – místo je
+  v `pointeks_prijmi()`, web stav `zive` umí. Testy a naplnění kopie DB: `podklady/_raw/qa/pointeks/`.
+  Klíč uložení = `id` z **podepsaného těla** (hlavičku `X-Pointeks-Delivery` podpis nekryje – jen se porovná do protokolu).
+  Skrytí platí pro celou `skupina` (spojená čtyřhra dvou hráčů klubu = dva záznamy, na webu jeden řádek).
 
 ## Pasti (z Liberce, Olympu a z této stavby)
 - `strip_tags` nechává atributy → `html_ocistit()` skládá HTML z holých značek. Text z editoru ukládat

@@ -209,7 +209,9 @@ Patička odkazuje na **`areal.php#plan`** (plán areálu). Kotvy nesmí zmizet p
 
 `<div class="karta [karta--zlata] [karta--papir2]"><p class="stitek karta__stitek">…</p><h3 class="karta__nazev">…</h3>…</div>`,
 mřížka `<div class="karty">`. Karta turnaje (Prague Open) = `karta karta--zlata` + `.tabulka`.
-Karta výsledku do pásu: `vysledek_karta_html($v)` (viz úvod), řádek výsledku pod sebou: `.vysledek` (V4).
+Výsledky hráčů (jen ze služby Pointeks, od 15. 10. 2026): výsledková tabule `pointeks_tabule_html(pointeks_seznam([…])['zapasy'], […])`
+(styl `vysledky.css` do `$sablona['css']`; úvod, `vysledky.php`, závodní tenis). Ruční karta do pásu `vysledek_karta_html($v)`
+se na webu už nepoužívá; řádek výsledku pod sebou `.vysledek` (V4) zůstal ve stylu.
 
 ## 11. Časové osy
 
@@ -259,7 +261,7 @@ Z JS: `CLTK.dialog.otevri(dlg, obsahHtmlNeboUzel, 'Titulek')`, `CLTK.dialog.zavr
 s `.skore` je bez skriptu (přepínač „V den titulu hrál za“ a dvojí metr `[data-metr]` Zlaté desky
 klient 8. 10. 2026 zrušil); krokovač `[data-krokovac]`; konfigurátor členství `form[data-konfigurator]` – ceny si přečte
 z `<?= json_skript('clenstvi-ceny', […]) ?>` (tvar v komentáři v `app.js`), jinak ceník 2026;
-vodorovný pás karet `[data-pas]` (`vysledky.js`, viz úvod); video `[data-video]` (`video.js`).
+vodorovný pás karet `[data-pas]` (`vysledky.js` – od 15. 10. 2026 ho žádná stránka nenačítá); video `[data-video]` (`video.js`).
 Po vložení nového HTML zavolejte `CLTK.init(koren)`. Zámek rolování: `CLTK.zamek.zamkni()/odemkni()`.
 Ukládat do prohlížeče jen přes `CLTK.uloziste` (localStorage v try/catch, žádné cookies).
 

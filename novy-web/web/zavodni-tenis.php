@@ -4,7 +4,8 @@
    výsledky, extraliga (ročníky, soupiska), družstva mládeže a trenérský tým.
 
    Všechno z databáze: bloky stránky „zavodni-tenis“ (modul Stránky – klíče popisuje
-   sql/seed/58-tenis.php), výsledky hráčů (modul Výsledky hráčů) a trenéři (modul
+   sql/seed/58-tenis.php), výsledky hráčů (jen ze služby Pointeks – inc/pointeks.php, všechny
+   na stránce vysledky.php; ruční modul Výsledky hráčů se od 15. 10. 2026 neukazuje) a trenéři (modul
    Trenéři, zařazení „závodní tenis“). Bloky s předponou „pyramida-“ jsou stupně
    pyramidy, „hrac-“ karty hráčů – nový blok s takovým klíčem se na stránce ukáže sám
    (pořadí = šipky v modulu Stránky). Jména dětí (TSM, SVT) se tu neuvádějí. */
@@ -160,14 +161,14 @@ $rocniky  = tenis_polozky((string)$bRocniky['text']);
 $soupiska = tenis_polozky((string)$bSoupiska['text']);
 $druzstva = tenis_polozky((string)$bDruzstva['text']);
 
-$vysledky = posledni_vysledky(4);
+$vysledky = pointeks_seznam(['limit' => 5])['zapasy'];      // výsledky ze služby Pointeks (5 nejnovějších)
 $treneriNahled = array_slice(array_values(array_filter(treneri('zavodni'),
     fn($t) => trim((string)$t['foto']) !== '' && is_file(UPLOAD_DIR . '/' . ltrim((string)$t['foto'], '/')))), 0, 6);
 
 $sablona = [
     'titulek' => 'Závodní tenis',
     'popis'   => html_text((string)$uvod['perex']),
-    'css'     => ['stranky-tenis.css'],
+    'css'     => ['stranky-tenis.css', 'vysledky.css'],
     'obrazek' => (string)$bSoupiska['foto'],
     'trida'   => 'stranka-tenis stranka-zavodni-tenis',
 ];
@@ -279,7 +280,7 @@ $sekce = 0;
 <?php endif; ?>
 
 <?php if ($hraci || $vysledky): $sekce++; ?>
-<!-- Naši hráči: karty hráčů (bloky hrac-*) a poslední výsledky (modul Výsledky hráčů) -->
+<!-- Naši hráči: karty hráčů (bloky hrac-*) a poslední výsledky (služba Pointeks, všechny na vysledky.php) -->
 <section class="sekce" id="hraci" aria-labelledby="hraci-nadpis">
   <div class="wrap">
     <?= hlava_sekce($jenHlava($bHraci), ['cislo' => $sekce, 'id' => 'hraci-nadpis', 'radek' => true, 'stitek' => 'Naši hráči', 'nadpis' => 'Naši hráči']) ?>
@@ -293,26 +294,9 @@ $sekce = 0;
     <div class="tenis-vysledky">
       <div class="tenis-vysledky__hlava">
         <h3 class="stitek stitek--velky" id="vysledky-nadpis">Poslední výsledky</h3>
-        <a class="odkaz" href="<?= e(url('index.php#vysledky')) ?>">Další výsledky na úvodní stránce <?= sipka() ?></a>
+        <a class="odkaz" href="<?= e(url('vysledky.php')) ?>">Všechny výsledky <?= sipka() ?></a>
       </div>
-      <div class="tenis-vysledky__seznam">
-        <?php foreach ($vysledky as $v):
-          $vOdkaz = bezpecny_odkaz((string)$v['odkaz']);
-          $vTag = $vOdkaz !== '' ? 'a' : 'div'; ?>
-          <<?= $vTag ?> class="vysledek"<?= $vOdkaz !== '' ? ' href="' . e($vOdkaz) . '"' . odkaz_attr($vOdkaz) : '' ?>>
-            <p class="vysledek__kdy"><?php if (cz_date((string)$v['datum']) !== ''): ?><time datetime="<?= e(substr((string)$v['datum'], 0, 10)) ?>"><?= str_replace(' ', '&nbsp;', e(cz_date((string)$v['datum']))) ?></time><?php endif; ?><?= typo((string)$v['misto']) ?></p>
-            <div>
-              <?php if (trim((string)$v['stitek']) !== ''): ?><p class="vysledek__kolo"><?= typo((string)$v['stitek']) ?></p><?php endif; ?>
-              <p class="vysledek__kdo"><?= typo((string)$v['hraci']) ?><?= $vOdkaz !== '' && odkaz_je_externi($vOdkaz) ? '<span class="vh"> – zpráva v&nbsp;novém okně</span>' : '' ?></p>
-              <?php if (trim((string)$v['text']) !== ''): ?><p class="vysledek__text"><?= typo((string)$v['text']) ?></p><?php endif; ?>
-            </div>
-            <?php if ($v['sety_pole']): ?>
-            <p class="vysledek__skore"><span class="vh">Výsledek <?= e(sety_text($v['sety_pole'])) ?></span><?php foreach ($v['sety_pole'] as $set): ?><span<?= $set['vyhra'] ? '' : ' class="p"' ?> aria-hidden="true"><?= e((string)$set['hlavni']) ?><?php if (trim((string)$set['doplnek']) !== ''): ?><small><?= e(trim((string)$set['doplnek'], '()')) ?></small><?php endif; ?></span><?php endforeach; ?></p>
-            <?php endif; ?>
-            <?php if (trim((string)$v['verdikt']) !== ''): ?><span class="vysledek__verdikt"><?= typo((string)$v['verdikt']) ?></span><?php endif; ?>
-          </<?= $vTag ?>>
-        <?php endforeach; ?>
-      </div>
+      <?= pointeks_tabule_html($vysledky, ['nadpis' => '']) ?>
     </div>
     <?php endif; ?>
   </div>

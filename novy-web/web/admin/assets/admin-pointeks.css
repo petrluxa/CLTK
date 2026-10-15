@@ -1,0 +1,29 @@
+/* Administrace – modul Výsledky (Pointeks) (admin/pointeks.php): napojení, přijaté výsledky, protokol příjmu. */
+.pk-stat-cas{font-size:38px!important;font-variant-numeric:lining-nums tabular-nums}
+.pk-tabulka .td-nazev small.pk-spojeno{display:block;margin-top:6px;font-size:13px;line-height:1.4;color:var(--seda)}
+.pk-napojeni{display:grid;grid-template-columns:minmax(0,13rem) minmax(0,1fr);gap:14px 22px;align-items:baseline}
+.pk-napojeni dt{font-size:12px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--navy)}
+.pk-napojeni dd{min-width:0}
+.pk-adresa{display:inline-block;max-width:100%;padding:8px 12px;border:1px solid var(--linka);background:var(--papir);
+  font:15px/1.45 ui-monospace,Consolas,'Courier New',monospace;color:var(--navy);word-break:break-all;user-select:all}
+.pk-filtr{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.pk-filtr select{width:auto;min-width:14rem;max-width:100%}
+.pk-tabulka td{vertical-align:top}
+.pk-tabulka td:first-child{min-width:12rem}
+.pk-tabulka .td-nazev small + small{margin-top:0}
+.pk-nowrap{white-space:nowrap}
+.pk-tabulka .pk-klic{display:block;margin-top:2px}
+.pk-cas{font-weight:400;color:var(--seda);margin-left:4px}
+.pk-klic{font-family:ui-monospace,Consolas,'Courier New',monospace;font-size:12px;color:var(--seda);word-break:break-all}
+.pk-vysledek .badge{margin-right:6px}
+.pk-sety{font-family:var(--serif);font-size:19px;font-weight:500;color:var(--navy);font-variant-numeric:lining-nums tabular-nums;white-space:nowrap}
+.pk-tlumene{display:block;color:var(--seda);font-size:13px}
+.pk-strankovani{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:center;padding:14px 22px;border-top:1px solid var(--linka2);font-size:14px;color:var(--seda)}
+.pk-log{max-height:28rem;overflow:auto;margin:0;padding:14px 16px;background:var(--navy2);color:#e8e4da;
+  font:12.5px/1.65 ui-monospace,Consolas,'Courier New',monospace;white-space:pre-wrap;word-break:break-word;tab-size:2}
+@media (max-width:760px){
+  .pk-napojeni{grid-template-columns:minmax(0,1fr);gap:4px 0}
+  .pk-napojeni dd + dt{margin-top:14px}
+  .pk-filtr{width:100%}
+  .pk-filtr select{flex:1;min-width:0}
+}

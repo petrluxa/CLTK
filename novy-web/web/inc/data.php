@@ -58,7 +58,7 @@ function menu_hlavni(): array {
             ['Body Solution', 'body-solution.php'], ['Sportovní lékařství', 'sportovni-lekarstvi.php'],
         ]],
         ['Závodní tenis', 'zavodni-tenis.php', 'l', [
-            ['Trenérský tým', 'zavodni-tenis-treneri.php'],
+            ['Trenérský tým', 'zavodni-tenis-treneri.php'], ['Výsledky', 'vysledky.php'],
         ]],
         ['Tenisová škola', 'tenisova-skola.php', 'l', [
             ['Informace', 'tenisova-skola.php'], ['Ceníky', 'tenisova-skola-ceniky.php'],
@@ -151,7 +151,9 @@ function aktuality(int $limit = 3): array {
     return data_rows('SELECT * FROM cltk_aktuality WHERE visible = 1 ORDER BY poradi, id LIMIT ' . max(1, $limit));
 }
 
-/** Poslední výsledky (nejnovější první); každý řádek má navíc 'sety_pole' ze sety_rozloz(). */
+/** Poslední RUČNÍ výsledky (cltk_vysledky, nejnovější první); každý řádek má navíc 'sety_pole' ze sety_rozloz().
+ *  Od 15. 10. 2026 je web nevypisuje (výsledky jen ze služby Pointeks – pointeks_seznam() v inc/pointeks.php);
+ *  tabulka i data zůstávají. */
 function posledni_vysledky(int $limit = 8): array {
     $r = data_rows('SELECT * FROM cltk_vysledky WHERE visible = 1 ORDER BY datum DESC, poradi, id LIMIT ' . max(1, $limit));
     foreach ($r as &$v) $v['sety_pole'] = sety_rozloz((string)$v['sety']);

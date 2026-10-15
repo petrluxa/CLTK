@@ -14,7 +14,7 @@ $od7  = date('Y-m-d', strtotime($dnes . ' -6 days'));
 $noveAkce    = prehled_pocet('SELECT COUNT(*) FROM cltk_signups WHERE vyrizeno = 0');
 $noveClen    = prehled_pocet("SELECT COUNT(*) FROM cltk_prihlasky_clenstvi WHERE stav = 'nova'");
 $pocAktualit = prehled_pocet('SELECT COUNT(*) FROM cltk_aktuality WHERE visible = 1');
-$pocVysl     = prehled_pocet('SELECT COUNT(*) FROM cltk_vysledky WHERE visible = 1');
+$pocVysl     = prehled_pocet('SELECT COUNT(*) FROM cltk_pointeks_vysledky WHERE ' . POINTEKS_NA_WEBU_SQL);   // výsledky ze služby Pointeks na webu (stejně jako modul)
 $pocPartneru = prehled_pocet('SELECT COUNT(*) FROM cltk_partneri WHERE visible = 1');
 $pocTreneru  = prehled_pocet('SELECT COUNT(*) FROM cltk_treneri WHERE visible = 1');
 $hits7       = prehled_pocet('SELECT COALESCE(SUM(hits), 0) FROM cltk_visits WHERE day >= ?', [$od7]);
@@ -68,7 +68,7 @@ admin_head('Přehled', $user, ['podnadpis' => 'Vítejte zpět, ' . e($jmeno) . '
   </a>
   <a class="stat" href="akce.php"><b><?= cislo($nadchazejici) ?></b><span>Nadcházející akce</span><small>v kalendáři <?= e(substr($dnes, 0, 4)) ?></small></a>
   <a class="stat" href="aktuality.php"><b><?= cislo($pocAktualit) ?></b><span>Aktuality na webu</span></a>
-  <a class="stat" href="vysledky.php"><b><?= cislo($pocVysl) ?></b><span>Výsledky hráčů</span></a>
+  <a class="stat" href="pointeks.php"><b><?= cislo($pocVysl) ?></b><span>Výsledky (Pointeks)</span><small>na webu</small></a>
   <a class="stat" href="treneri.php"><b><?= cislo($pocTreneru) ?></b><span>Trenéři</span></a>
   <a class="stat" href="partneri.php"><b><?= cislo($pocPartneru) ?></b><span>Partneři</span></a>
 </div>

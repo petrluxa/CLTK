@@ -4,6 +4,7 @@
    Napodobuje to, co na serveru dělají soubory .htaccess:
      – inc/, data/, sql/, admin/inc/ a citlivé přípony (.sqlite, .sql, .md, .log …) → 403,
      – v uploads/ se nic nespouští (.php, .html, .svg, .js → 403),
+     – pointeks/feed (i s lomítkem) → pointeks-feed.php bez přesměrování (příjem výsledků Pointeks),
      – neexistující adresa → 404.php (jako RewriteRule ^ 404.php).
    Volitelně napodobí i běh v PODSLOŽCE (na testu /cltkv2/): proměnná
    prostředí CLTK_PODSLOZKA=/cltkv2 → web je k vidění na
@@ -51,6 +52,18 @@ if (preg_match('~^/(inc|data|sql|admin/inc)(/|$)~i', $__rCesta)
     http_response_code(403);
     header('Content-Type: text/plain; charset=UTF-8');
     echo '403 – zakázáno (stejně jako na serveru přes .htaccess)';
+    return true;
+}
+
+/* příjem výsledků Pointeks: stejné vnitřní přepsání jako v .htaccess (pointeks/feed i s lomítkem
+   → pointeks-feed.php), bez přesměrování a bez ohledu na metodu */
+if (preg_match('~^/pointeks/feed/?$~', $__rCesta) && is_file($__rKoren . '/pointeks-feed.php')) {
+    $_SERVER['SCRIPT_NAME'] = $__rPodslozka . '/pointeks-feed.php';
+    $_SERVER['PHP_SELF'] = $__rPodslozka . '/pointeks-feed.php';
+    $_SERVER['SCRIPT_FILENAME'] = $__rKoren . '/pointeks-feed.php';
+    chdir($__rKoren);
+    unset($__rKoren, $__rPodslozka, $__rCesta);
+    require $_SERVER['SCRIPT_FILENAME'];
     return true;
 }
 

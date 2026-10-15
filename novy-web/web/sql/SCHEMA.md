@@ -54,7 +54,8 @@ je potřeba migrace – `instalace.php` doplní jen chybějící tabulky, ne slo
 | `cltk_oznameni` | Informační lišta | pruh pod menu |
 | `cltk_uvodni_galerie` | Úvodní galerie | úvod – galerie se štítem |
 | `cltk_aktuality` | Aktuality z klubu | úvod |
-| `cltk_vysledky` | Výsledky hráčů | úvod (vodorovný pás), případně závodní tenis |
+| `cltk_vysledky` | (Výsledky hráčů – od 15. 10. 2026 mimo menu) | nikde – web ukazuje jen výsledky z Pointeks |
+| `cltk_pointeks_vysledky` | Výsledky (Pointeks) | úvod (tabule 10 nejnovějších), `vysledky.php`, závodní tenis |
 | `cltk_akce`, `cltk_signups` | Kalendář akcí | úvod (kalendář), `akce.php?id=` |
 | `cltk_prihlasky_clenstvi` | Přihlášky | `clenstvi.php` (formulář) |
 | `cltk_treneri` | Trenéři | trenérské týmy, privátní trenéři |
@@ -195,6 +196,49 @@ nová aktualita má předvyplněný dnešek; sloupec přidala migrace `2026-10-0
 | foto | volitelná fotka (uploads/vysledky/) |
 
 Načíst: `posledni_vysledky(8)` (viditelné, `ORDER BY datum DESC, poradi, id`).
+**Od 15. 10. 2026 se ruční výsledky na webu neukazují** (rozhodnutí Petra: jen výsledky ze služby Pointeks,
+viz `cltk_pointeks_vysledky`). Tabulka i data zůstávají, moduly `admin/vysledky.php` a `vysledky-edit.php`
+jsou mimo menu a přesměrují na Výsledky (Pointeks).
+
+### `cltk_pointeks_vysledky` – výsledky hráčů ze služby Pointeks
+Pointeks po každém dohraném zápase hráče klubu pošle POST s JSON na `pointeks/feed` (`pointeks-feed.php`,
+logika `inc/pointeks.php`). Jeden řádek = **jeden výsledek jednoho hráče klubu** (čtyřhra dvou hráčů klubu =
+dva řádky se stejnou `skupina`, web je ukáže jako jeden řádek „A / B“). Všechno z těla je nedůvěryhodný text:
+ukládá se oříznuté (bez řídicích znaků, délky podle sloupců), vypisuje jen přes `e()` / `typo()`, jména
+**přesně, jak přišla**. Sloupce s časem (`completed_at`, `received_at`, `updated_at`) jsou v **UTC**
+(na webu se převádí na Prahu – `pointeks_cas_praha()`). Tabulka se **nepřenáší** exportem dat
+(`SEED_NEPRENASET` – živá data, na server chodí sama). Na běžící server ji zakládá migrace
+`sql/migrace/2026-10-15-pointeks.php`.
+
+| sloupec | význam (pole v JSON od Pointeks) |
+|---|---|
+| delivery_id | **unikátní** – `id` z **podepsaného těla** (`[A-Za-z0-9._:-]`, max. 100 znaků; hlavička `X-Pointeks-Delivery` má stejnou hodnotu, ale podpis ji nekryje – jen se porovná do protokolu). Ukládá se jednou, opakování = 204 bez změny |
+| event | `match.result` (u budoucích živých zápasů `match.live`) |
+| stav | `dohrano` \| `zive` – živý řádek se přepisuje stejným id, konečný `match.result` ho nahradí; živé jsou na webu první s červenou tečkou „živě“ |
+| skupina | SHA-1 klíč řádku na webu: čtyřhra = konec zápasu + turnaj + kolo + disciplína + soupeři + skóre (spojí oba hráče klubu), jinak id doručení |
+| player_name, player_slug | hráč klubu (`player.name` přesně, jak přišel; `playerSlug` – filtr na `vysledky.php`) |
+| partner_name, partner_country | spoluhráč ve čtyřhře (`partner`), jinak '' |
+| opponents_json | JSON `[{"name": …, "country": "SVK"}, …]` (`opponents`, nejvýš 4) |
+| result | `WIN` \| `LOSS` \| '' (bez vítěze) |
+| outcome | `FINISHED` \| `RETIRED` (skreč) \| `WALKOVER` (bez boje) \| jiný kód \| '' |
+| score | skóre z pohledu hráče klubu, např. `6-3 4-6 7-6(4)`; '' = žádné (bez boje) |
+| sets_json | JSON `[{"player": 6, "opponent": 3}, {"player": 7, "opponent": 6, "tiebreak": {"player": 7, "opponent": 4}}]` |
+| discipline | `SINGLES` \| `DOUBLES` (když chybí, odvodí se z partnera / počtu soupeřů) |
+| round | kolo, jak ho turnaj pojmenoval (`Quarter-final`, `R32`) – na webu přeložené `pointeks_kolo()`; '' = neuvedeno |
+| qualifying | 1 = kvalifikace (finále kvalifikace není titul) |
+| tournament_name, tournament_category | název turnaje, kategorie („ITF Juniors J200“, „Tennis Europe U14“, „Challenger“) |
+| age_category | `U14`, `U18` … nebo **NULL = dospělí** (filtr junioři / dospělí) |
+| tournament_city, tournament_country, tournament_surface | město ('' = neuvedeno – na webu místo něj název turnaje), země, povrch |
+| tournament_start | DATE, první den turnaje, nebo NULL |
+| completed_at | konec zápasu v UTC (podle něj se řadí; NULL = řadí se podle `received_at`) |
+| url | odkaz pro poděkování „Výsledky: Pointeks“ (jen http(s), jinak '') |
+| raw_json | celé přijaté tělo (MEDIUMTEXT, až 256 kB) – pro pozdější úpravy, na web se nikdy nevypisuje |
+| visible | 1 = na webu, 0 = skryl správce (modul Výsledky (Pointeks)); skrytí platí pro celou `skupina` (spojená čtyřhra se přepíná celá, výpis vynechá skupinu se skrytým záznamem, nové doručení do skryté skupiny přijde skryté) |
+| received_at, updated_at | kdy výsledek přišel / naposledy se změnil (UTC) |
+
+Načíst: `pointeks_seznam(['limit' => 10])` (zápasy = skupiny, viditelné, živé první, pak `COALESCE(completed_at, received_at) DESC`),
+filtr `'hrac' => slug`, `'kategorie' => 'juniori' | 'dospeli'`, `'strana' => n`; vypsat `pointeks_tabule_html()`.
+Protokol příjmu: `data/pointeks.log` (čas, kód, událost, id, důvod – bez těl, hlaviček a klíče; nad 512 kB → `pointeks-stare.log`).
 
 ---
 

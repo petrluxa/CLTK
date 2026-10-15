@@ -136,6 +136,46 @@ CREATE TABLE cltk_vysledky (
   updated_at DATETIME     NULL
 );
 
+-- Výsledky hráčů ze služby Pointeks (od 15. 10. 2026 jediné výsledky na webu).
+-- Jeden řádek = jeden výsledek jednoho hráče klubu (POST na pointeks/feed, inc/pointeks.php).
+-- delivery_id = „id“ z podepsaného těla (= X-Pointeks-Delivery; ukládá se jednou); stav: dohrano | zive;
+-- skupina = klíč, podle kterého se čtyřhra dvou hráčů klubu spojí do jednoho řádku;
+-- completed_at, received_at, updated_at jsou v UTC; raw_json = celé přijaté tělo (až 256 kB).
+-- Na běžící server tabulku zakládá migrace sql/migrace/2026-10-15-pointeks.php (stejné sloupce).
+CREATE TABLE cltk_pointeks_vysledky (
+  id                  INTEGER PRIMARY KEY AUTO_INCREMENT,
+  delivery_id         VARCHAR(100) NOT NULL,
+  event               VARCHAR(40)  NOT NULL DEFAULT 'match.result',
+  stav                VARCHAR(10)  NOT NULL DEFAULT 'dohrano',
+  skupina             VARCHAR(40)  NOT NULL DEFAULT '',
+  player_name         VARCHAR(160) NOT NULL DEFAULT '',
+  player_slug         VARCHAR(120) NOT NULL DEFAULT '',
+  partner_name        VARCHAR(160) NOT NULL DEFAULT '',
+  partner_country     VARCHAR(8)   NOT NULL DEFAULT '',
+  opponents_json      TEXT         NOT NULL DEFAULT '',
+  result              VARCHAR(8)   NOT NULL DEFAULT '',
+  outcome             VARCHAR(12)  NOT NULL DEFAULT '',
+  score               VARCHAR(120) NOT NULL DEFAULT '',
+  sets_json           TEXT         NOT NULL DEFAULT '',
+  discipline          VARCHAR(10)  NOT NULL DEFAULT '',
+  round               VARCHAR(60)  NOT NULL DEFAULT '',
+  qualifying          INTEGER      NOT NULL DEFAULT 0,
+  tournament_name     VARCHAR(200) NOT NULL DEFAULT '',
+  tournament_category VARCHAR(120) NOT NULL DEFAULT '',
+  age_category        VARCHAR(20)  NULL,
+  tournament_city     VARCHAR(120) NOT NULL DEFAULT '',
+  tournament_country  VARCHAR(8)   NOT NULL DEFAULT '',
+  tournament_surface  VARCHAR(12)  NOT NULL DEFAULT '',
+  tournament_start    DATE         NULL,
+  completed_at        DATETIME     NULL,
+  url                 VARCHAR(255) NOT NULL DEFAULT '',
+  raw_json            MEDIUMTEXT   NULL,
+  visible             INTEGER      NOT NULL DEFAULT 1,
+  received_at         DATETIME     NULL,
+  updated_at          DATETIME     NULL,
+  UNIQUE (delivery_id)
+);
+
 -- ================================================================
 -- KALENDÁŘ AKCÍ A PŘIHLÁŠKY
 -- ================================================================

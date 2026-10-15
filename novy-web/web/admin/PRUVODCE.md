@@ -53,7 +53,7 @@ Pravidla, která platí bez výjimky:
   `ON DUPLICATE KEY`, `||` – musí to běžet v SQLite i MySQL (viz SCHEMA.md).
 - **Vypínat, ne mazat.** Položky mají `visible`; mazání až jako poslední možnost, vždy s potvrzením.
 - Moduly jsou v postranním panelu v pořadí ZADANI §6 (`admin_moduly()` v `inc/layout.php`).
-  Soubory: `navstevnost.php, oznameni.php, galerie.php, aktuality.php, vysledky.php, akce.php
+  Soubory: `navstevnost.php, oznameni.php, galerie.php, aktuality.php, pointeks.php, akce.php
   (+ akce-edit.php), prihlasky.php, treneri.php, ceniky.php, skola.php, sluzby.php, historie.php,
   revue.php, vedeni.php (+ ctc.php jako podpoložka), stranky.php, partneri.php, dokumenty.php,
   nastaveni.php, ucet.php`. Kdo potřebuje další soubor pod stejnou položkou (zvýraznění v menu),
@@ -242,7 +242,13 @@ if (($_GET['csv'] ?? '') === '1') {                     // před admin_head()!
   jen pole, která sekce používá; nad nimi je mapa „Co se kde mění na úvodní stránce“ (`STRANKY_UVOD_MAPA`). `nadpis` je *inline*
   (smí `<em>`), `text` z editoru (`html_ocistit`), `doplni_klub` = zaškrtávátko „obsah zatím chybí“.
 - **Ceníky**: list → sekce → řádky (jako Liberec `cenik-edit.php`). Hlavička sloupce prázdná = sloupec se skryje.
-- **Výsledky**: sety z jednoho pole „6:3 1:6 10:6“ → `sety_z_textu()`; zpět do pole `implode(' ', json_pole($r['sety']))`.
+- **Výsledky (Pointeks)** (`pointeks.php`, od 15. 10. 2026 místo ručních Výsledků hráčů): nic se nezadává – výsledky
+  posílá služba Pointeks na `pointeks/feed` (`inc/pointeks.php`). Modul ukazuje přijaté výsledky (filtr podle hráče,
+  30 na stránku), přepínač Skrýt / Zobrazit (vlastní formulář, CSRF; u spojené čtyřhry dvou hráčů klubu přepne oba
+  záznamy skupiny – na webu je to jeden řádek), počty, čas posledního výsledku, adresu pro Pointeks
+  (`site_url('pointeks/feed')`), jestli je nastavený klíč `POINTEKS_SECRET` (jen ano/ne) a posledních 20 řádků
+  `data/pointeks.log`. Staré `vysledky.php` / `vysledky-edit.php` zůstaly na disku, ale přesměrují sem.
+- **Výsledky hráčů (ruční, vypnuté)**: sety z jednoho pole „6:3 1:6 10:6“ → `sety_z_textu()`; zpět do pole `implode(' ', json_pole($r['sety']))`.
 - **Úvodní galerie**: typ `foto` / `deska`; u desky pole `deska_*` (titul je *inline*), u fotky `foto`, `fokus`,
   `alt`, `kredit`; `popisek` je *inline*.
 - **Návštěvnost**: `cltk_visits` (zobrazení po dnech a cestách), `cltk_visit_log` (unikátní denní otisky).

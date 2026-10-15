@@ -24,6 +24,7 @@
        define('SIFROVACI_KLIC', '…64 náhodných znaků…');   // šifruje rodná čísla z přihlášek;
                                                           // bez něj se rodné číslo nesbírá. NIKDY neměnit
                                                           // (stará rodná čísla by nešla přečíst).
+       define('POINTEKS_SECRET', '…');                     // podpis výsledků ze služby Pointeks (dá Pointeks)
 
    Lokální config.local.php se NIKDY nenahrává na server – agenti si ho
    přepisují na SQLite a na serveru by to shodilo web.
@@ -73,6 +74,13 @@ if (!defined('DB_FILE')) {
    Lokálně (jen SQLite) ho lze pro vyzkoušení instalace zadat proměnnou
    prostředí CLTK_INSTALL_KEY; na serveru platí jen cltk-config.php. */
 defined('INSTALL_KEY') || define('INSTALL_KEY', DB_DRIVER === 'sqlite' ? (string)getenv('CLTK_INSTALL_KEY') : '');
+
+/* Pointeks (výsledky hráčů, příjem na pointeks/feed – inc/pointeks.php): sdílený tajný klíč,
+   kterým Pointeks podepisuje každý požadavek (HMAC-SHA256). Na serveru JEN v cltk-config.php:
+       define('POINTEKS_SECRET', '…řetězec, který Pointeks dá klubu soukromě…');
+   Lokálně (SQLite) i z proměnné prostředí POINTEKS_SECRET (zkušební klíč pro testy).
+   Prázdný = příjem odpovídá 500 a nic neukládá. Klíč se nikdy nevypisuje ani nezapisuje do protokolu. */
+defined('POINTEKS_SECRET') || define('POINTEKS_SECRET', DB_DRIVER === 'sqlite' ? (string)getenv('POINTEKS_SECRET') : '');
 
 defined('SITE_NAME')  || define('SITE_NAME', 'I. ČLTK Praha');
 defined('SITE_URL')   || define('SITE_URL', '');      // bez lomítka na konci; prázdné = jen lokálně (zjistí se z požadavku),
