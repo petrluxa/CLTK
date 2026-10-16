@@ -23,7 +23,27 @@
 .blok-sekce .prose + .akce, .blok-sekce .ramec + .prose { margin-top: var(--s-6); }
 .stav-stranky { margin-top: var(--s-5); }
 
-/* 2 ─ AREÁL: ROZCESTNÍK, ČASY, UZÁVĚRKY ──────────────────────────────────── */
+/* 2 ─ AREÁL: PLÁN NAHOŘE, ÚVOD, ROZCESTNÍK, ČASY, UZÁVĚRKY ──────────────────── */
+/* Plán areálu je úplně nahoře místo hlavičky stránky (16. 10. 2026) – málo místa nad mapou,
+   aby byla vidět hned po kliknutí na Areál a služby (i v nízkém širokém okně a na mobilu). */
+.areal-plan { padding-top: clamp(1.4rem, .9rem + 1.6vw, 2.8rem); }
+.areal-plan .drobky { margin-bottom: var(--s-4); }
+.areal-plan__hlava { margin-bottom: var(--s-5); max-width: none; }
+.areal-plan__nadpis { font-size: clamp(2.2rem, 1.6rem + 2vw, 3.5rem); }
+.areal-plan__hlava .perex { max-width: 44rem; font-size: clamp(1.05rem, .98rem + .3vw, 1.25rem); }
+@media (max-width: 899.98px) {
+  /* mobil: popis plánu až pod mapu, bez legendy povrchů (povrchy říká karta pod plánem), ovládání
+     sevřené do jedné řady – mapa začne o ~200 px výš */
+  .areal-plan > .wrap { display: flex; flex-direction: column; }
+  .areal-plan__hlava { display: contents; }
+  .areal-plan__hlava > div { margin-bottom: var(--s-4); }
+  .areal-plan__hlava .perex { order: 2; margin: var(--s-6) 0 0; }
+  .areal-plan .plan-pod { order: 3; }
+  .areal-plan .mapa__legenda { display: none; }
+  .areal-plan .mapa__listy { justify-content: flex-start; gap: .3rem 1.2rem; margin-bottom: .3rem; }
+  .areal-plan .mapa__vrstvy { gap: 0 1.1rem; }
+}
+.areal-uvod .hlava { margin-bottom: var(--s-6); }
 .rozcestnik { padding-block: clamp(1.6rem, 1rem + 2vw, 2.6rem); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
 .rozcestnik__vnitrek { display: grid; gap: var(--s-4) var(--s-6); align-items: center; }
 @media (min-width: 900px) { .rozcestnik__vnitrek { grid-template-columns: auto minmax(0, 1fr); } }
