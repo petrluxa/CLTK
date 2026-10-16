@@ -76,7 +76,7 @@ Když něco chybí ve společném systému, napište požadavek – nepřepisujt
 ## 2. Hlava stránky a hlavy sekcí
 
 ### `hlava_stranky($blok, $volby)` – úvod podstránky (blok `uvod` z modulu Stránky)
-Vypíše drobečkovou navigaci, štítek s trikolorou, `<h1>` (s `<em>` zlatou kurzívou), perex,
+Vypíše drobečkovou navigaci, `<h1>` (s `<em>` zlatou kurzívou; bez nadpisu štítek), perex,
 tlačítka (`odkaz` = navy tlačítko, `odkaz2` = podtržený odkaz), štítek „obsah doplní klub“ při
 `doplni_klub = 1` a fotku vpravo, když ji blok má.
 
@@ -91,12 +91,15 @@ fotky), `trida`, `navic` (HTML pod perex – už escapované!). Chybějící blo
 
 ### `hlava_sekce($blok, $volby)` – hlava sekce
 ```php
-<?= hlava_sekce(blok('zavodni-tenis', 'pyramida'), ['cislo' => 2, 'id' => 'pyramida-nadpis']) ?>
+<?= hlava_sekce(blok('zavodni-tenis', 'pyramida'), ['id' => 'pyramida-nadpis']) ?>
 <?= hlava_sekce(['stitek' => 'Trenérský tým', 'nadpis' => 'Trenéři <em>závodního tenisu</em>.'], ['radek' => true]) ?>
 ```
-Volby: `cislo` (římská číslice), `id` (pro `aria-labelledby`), `tag` (`h2`/`h3`), `stred` (na střed),
-`radek` (perex vpravo vedle nadpisu), `bez_znacky`, `nadpis`/`stitek` náhradní.
-Ručně: `<header class="hlava"><p class="hlava__znacka"><span class="hlava__cislo">II</span><span class="stitek">Štítek</span></p><h2 class="h2">Nadpis <em>kurzívou</em>.</h2><div class="perex">…</div></header>`.
+Volby: `id` (pro `aria-labelledby`), `tag` (`h2`/`h3`), `stred` (na střed), `radek` (perex vpravo vedle
+nadpisu), `nadpis`/`stitek` náhradní (bez nadpisu se jako nadpis použije štítek).
+**Štítek s trikolorou a římskou číslicí nad nadpisy je od 16. 10. 2026 zrušený na celém webu** (Petr:
+„zbytečně to zabírá místo“, opakoval drobečkovou navigaci a nadpis) – nevracet. Volby `cislo` a
+`bez_znacky` ze starších volání se ignorují.
+Ručně: `<header class="hlava"><h2 class="h2">Nadpis <em>kurzívou</em>.</h2><div class="perex">…</div></header>`.
 
 ### Ostatní pomůcky bloků
 | pomůcka | co vypíše |

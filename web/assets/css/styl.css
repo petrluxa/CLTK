@@ -213,7 +213,7 @@ h1 em, h2 em, h3 em, .display em, .h1 em, .h2 em, .h3 em {
 .sekce--navy h1, .sekce--navy h2, .sekce--navy h3, .sekce--navy h4, .sekce--navy .display { color: var(--paper); }
 .sekce--navy h2 em, .sekce--navy h3 em, .sekce--navy .h2 em { color: var(--gold-soft); }
 .sekce--navy .perex { color: var(--paper-na-navy); }
-.sekce--navy .stitek, .sekce--navy .hlava__cislo { color: var(--gold-soft); }
+.sekce--navy .stitek { color: var(--gold-soft); }
 .sekce--navy .drobne, .sekce--navy .tlumene { color: rgba(251, 250, 246, .62); }
 .sekce--navy .odkaz { color: var(--paper); background-image: linear-gradient(var(--gold-soft), var(--gold-soft)); }
 .sekce--navy .odkaz:hover { color: var(--gold-soft); }
@@ -576,15 +576,9 @@ button.odkaz { background-color: transparent; }
 .stitek--tlumeny { color: var(--muted); }
 .stitek--velky { font-size: .8rem; letter-spacing: .28em; }
 
-/* Hlava sekce: trikolora 3 px · římská číslice · štítek, pod tím h2 a perex */
+/* Hlava sekce: h2 a perex (trikolora · římská číslice · štítek nad nadpisem zrušené 16. 10. 2026) */
 .hlava { margin-bottom: clamp(2.5rem, 1.5rem + 3vw, 4.5rem); max-width: 50rem; }
 .hlava.stred { margin-inline: auto; }
-.hlava__znacka { display: flex; align-items: center; gap: .85rem; margin: 0 0 var(--s-5); }
-.hlava.stred .hlava__znacka { justify-content: center; }
-.hlava__znacka::before { content: ''; flex: none; width: 3px; height: 2.1rem; background: var(--trikolora); box-shadow: 0 0 0 .5px var(--line-2); }
-.hlava__znacka--bez::before { display: none; }
-.hlava__cislo { font: italic 400 1.3rem/1 var(--serif); color: var(--gold-text); }
-.hlava__cislo::after { content: ''; display: inline-block; width: 1.6rem; height: 1px; margin-left: .85rem; vertical-align: middle; background: var(--gold); }
 .hlava .perex { margin-top: var(--s-5); }
 .hlava--radek { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: var(--s-5) var(--s-7); max-width: none; }
 .hlava--radek > div { max-width: 50rem; }
@@ -1042,7 +1036,6 @@ html.js-pohyb [data-reveal].in { opacity: 1; transform: none; }
 .hlava-stranky { position: relative; padding-block: clamp(2.2rem, 1.2rem + 3.4vw, 5rem) clamp(3rem, 2rem + 4vw, 6.5rem); }
 .hlava-stranky__plocha { display: grid; gap: var(--s-7) var(--mezera); align-items: end; }
 .hlava-stranky__text { min-width: 0; max-width: 52rem; }
-.hlava-stranky__text .hlava__znacka { margin-bottom: var(--s-5); }
 .hlava-stranky__nadpis { font-size: var(--t-h1); line-height: 1.02; }
 .hlava-stranky__perex { margin-top: var(--s-5); }
 .hlava-stranky .akce { margin-top: var(--s-6); }

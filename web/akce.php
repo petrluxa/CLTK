@@ -90,7 +90,6 @@ $navic = ($meta !== '' ? '<p class="kal-detail__meta" style="margin-top:1rem">' 
   <section class="sekce sekce--papir2 akce-prihlaska" id="prihlaska" aria-labelledby="prihlaska-nadpis">
     <div class="wrap wrap--text">
       <header class="hlava">
-        <p class="hlava__znacka"><span class="stitek">Přihláška</span></p>
         <h2 class="h2" id="prihlaska-nadpis"><?= $odeslano ? 'Děkujeme, <em>jste přihlášeni</em>.' : 'Přihlaste se na <em>akci</em>.' ?></h2>
       </header>
       <?php if ($odeslano): ?>

@@ -131,8 +131,9 @@ function hlava_stranky(array $b, array $volby = []): string {
 
     $h = '<header class="' . e($trida) . '"><div class="wrap hlava-stranky__plocha"><div class="hlava-stranky__text">';
     if (($volby['drobky'] ?? []) !== false) $h .= drobky((array)($volby['drobky'] ?? []));
-    if ($stitek !== '') $h .= '<p class="hlava__znacka"><span class="stitek">' . typo($stitek) . '</span></p>';
-    $h .= '<h1 class="h1 hlava-stranky__nadpis">' . $nadpisHtml . '</h1>';
+    /* Štítek s trikolorou nad nadpisem se od 16. 10. 2026 nevypisuje (Petr: „zbytečně to zabírá místo“ –
+       opakoval drobečkovou navigaci i nadpis). Štítek dál slouží jako titulek stránky a jako nadpis, když chybí. */
+    $h .= '<h1 class="h1 hlava-stranky__nadpis">' . ($nadpisHtml !== '' ? $nadpisHtml : typo($stitek)) . '</h1>';
     if (trim((string)($b['perex'] ?? '')) !== '') $h .= '<div class="perex hlava-stranky__perex">' . paragraphs((string)$b['perex']) . '</div>';
     if ((int)($b['doplni_klub'] ?? 0) === 1) $h .= '<p class="hlava-stranky__doplni">' . doplni_klub('obsah doplní klub') . '</p>';
     if (!empty($volby['navic'])) $h .= (string)$volby['navic'];
@@ -162,11 +163,13 @@ function drobky(array $cesta): string {
 }
 
 /**
- * Hlava sekce (trikolora · římská číslice · štítek, h2, perex) z bloku.
- *   <?= hlava_sekce(blok('areal', 'kurty'), ['cislo' => 2, 'id' => 'kurty-nadpis']) ?>
- * Volby: 'cislo' (int → římská číslice), 'id' (id nadpisu pro aria-labelledby), 'tag' (h2),
- *        'stred' (bool), 'radek' (bool – perex vpravo vedle nadpisu), 'nadpis'/'stitek' náhradní,
- *        'bez_znacky' (bool – bez trikolory)
+ * Hlava sekce (h2, perex) z bloku.
+ *   <?= hlava_sekce(blok('areal', 'kurty'), ['id' => 'kurty-nadpis']) ?>
+ * Volby: 'id' (id nadpisu pro aria-labelledby), 'tag' (h2), 'stred' (bool), 'radek' (bool – perex vpravo
+ *        vedle nadpisu), 'nadpis'/'stitek' náhradní.
+ * Trikolora · římská číslice · štítek nad nadpisem se od 16. 10. 2026 nevypisuje (Petr: „zbytečně to zabírá
+ * místo“); volby 'cislo' a 'bez_znacky' ze starších volání se tiše ignorují. Bez nadpisu se jako nadpis
+ * použije štítek, aby sekce nezůstala bez nadpisu.
  */
 function hlava_sekce(array $b, array $volby = []): string {
     $tag = in_array($volby['tag'] ?? 'h2', ['h2', 'h3'], true) ? ($volby['tag'] ?? 'h2') : 'h2';
@@ -178,17 +181,12 @@ function hlava_sekce(array $b, array $volby = []): string {
     $radek = !empty($volby['radek']) && $perex !== '';
     $trida = 'hlava' . (!empty($volby['stred']) ? ' stred' : '') . ($radek ? ' hlava--radek' : '');
 
-    $znacka = '';
-    if ($stitek !== '' || isset($volby['cislo'])) {
-        $znacka = '<p class="hlava__znacka' . (!empty($volby['bez_znacky']) ? ' hlava__znacka--bez' : '') . '">'
-                . (isset($volby['cislo']) ? '<span class="hlava__cislo">' . e(rimske((int)$volby['cislo'])) . '</span>' : '')
-                . ($stitek !== '' ? '<span class="stitek">' . typo($stitek) . '</span>' : '') . '</p>';
-    }
+    if ($nadpisHtml === '' && $stitek !== '') $nadpisHtml = typo($stitek);
     $nad = $nadpisHtml !== '' ? '<' . $tag . ' class="h2"' . $id . '>' . $nadpisHtml . '</' . $tag . '>' : '';
     $per = $perex !== '' ? '<div class="perex">' . paragraphs($perex) . '</div>' : '';
     $dopl = (int)($b['doplni_klub'] ?? 0) === 1 ? '<p class="hlava__doplni">' . doplni_klub() . '</p>' : '';
-    if ($radek) return '<header class="' . $trida . '"><div>' . $znacka . $nad . '</div>' . $per . $dopl . '</header>';
-    return '<header class="' . $trida . '">' . $znacka . $nad . $per . $dopl . '</header>';
+    if ($radek) return '<header class="' . $trida . '"><div>' . $nad . '</div>' . $per . $dopl . '</header>';
+    return '<header class="' . $trida . '">' . $nad . $per . $dopl . '</header>';
 }
 
 /**

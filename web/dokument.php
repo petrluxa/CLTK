@@ -219,7 +219,6 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
   <div class="wrap mrizka">
     <div class="sl-4">
       <header class="hlava">
-        <p class="hlava__znacka"><span class="stitek">Dokumenty</span></p>
         <h2 class="h2" id="dalsi-nadpis">Další dokumenty <em>klubu</em></h2>
       </header>
       <p class="dokument__vse"><?= tlacitko('dokumenty.php', 'Všechny dokumenty a archiv turnajů', 'odkaz') ?></p>
