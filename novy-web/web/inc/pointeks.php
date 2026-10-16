@@ -415,6 +415,16 @@ function pointeks_uloz(string $dorucenka, array $radek, string $raw, string $sta
  *  v poli partner druhého záznamu). Poddotaz jen nad cltk_ – projde pojistkou (sql_pojistka). */
 const POINTEKS_NA_WEBU_SQL = 'visible = 1 AND skupina NOT IN (SELECT skupina FROM cltk_pointeks_vysledky WHERE visible = 0)';
 
+/** Čas zápasu pro řazení (v PHP totéž pointeks_cas_zapasu()): konec zápasu, ale nikdy pozdější než přijetí –
+ *  zápas nemůže skončit až po odeslání výsledku. Pointeks u výsledků bez času posílá půlnoc a u některých
+ *  den v budoucnu (16. 10. 2026: La Paz s completedAt 2026-10-17T00:00Z, přijato 16. 10.). Bez konce čas přijetí. */
+const POINTEKS_CAS_SQL = 'CASE WHEN completed_at IS NULL THEN received_at WHEN received_at IS NOT NULL AND completed_at > received_at THEN received_at ELSE completed_at END';
+
+/** Junioři: věková kategorie z Pointeks, nebo juniorský okruh podle kategorie turnaje – Pointeks posílá
+ *  ageCategory jen u Tennis Europe (U14 …), u ITF Juniors (J30–J500) ji nechává prázdnou (16. 10. 2026).
+ *  LIKE nerozlišuje velikost písmen (SQLite u ASCII, MySQL utf8mb4_czech_ci). */
+const POINTEKS_JUNIORI_SQL = "(age_category IS NOT NULL OR tournament_category LIKE '%junior%' OR tournament_category LIKE 'tennis europe%')";
+
 /** Podmínka WHERE podle filtru: 'hrac' (slug), 'kategorie' 'juniori' (ageCategory vyplněná) | 'dospeli' (null),
  *  'i_skryte' (admin) – jinak jen záznamy na webu (POINTEKS_NA_WEBU_SQL). */
 function pointeks_filtr_sql(array $f): array {
@@ -423,8 +433,8 @@ function pointeks_filtr_sql(array $f): array {
     $hrac = (string)($f['hrac'] ?? '');
     if ($hrac !== '') { $kde[] = 'player_slug = ?'; $p[] = $hrac; }
     $kat = (string)($f['kategorie'] ?? '');
-    if ($kat === 'juniori') $kde[] = 'age_category IS NOT NULL';
-    elseif ($kat === 'dospeli') $kde[] = 'age_category IS NULL';
+    if ($kat === 'juniori') $kde[] = POINTEKS_JUNIORI_SQL;
+    elseif ($kat === 'dospeli') $kde[] = 'NOT ' . POINTEKS_JUNIORI_SQL;
     return [implode(' AND ', $kde), $p];
 }
 
@@ -450,7 +460,7 @@ function pointeks_seznam(array $f = []): array {
     $stran = (int)ceil($celkem / $limit);
     $strana = max(1, min($stran, (int)($f['strana'] ?? 1)));
     $skupiny = data_rows("SELECT skupina, MAX(CASE WHEN stav = 'zive' THEN 1 ELSE 0 END) AS zive,
-                                 MAX(COALESCE(completed_at, received_at)) AS cas, MAX(id) AS posledni
+                                 MAX(" . POINTEKS_CAS_SQL . ") AS cas, MAX(id) AS posledni
                             FROM cltk_pointeks_vysledky WHERE " . $kde . '
                         GROUP BY skupina
                         ORDER BY zive DESC, cas DESC, posledni DESC
@@ -616,7 +626,7 @@ function pointeks_zapas(array $radky): array {
     return [
         'ids'         => array_map(static fn(array $x): int => (int)$x['id'], $radky),
         'zive'        => $zive,
-        'cas'         => pointeks_cas_praha((string)($r['completed_at'] ?? '') !== '' ? (string)$r['completed_at'] : (string)$r['received_at']),
+        'cas'         => pointeks_cas_praha(pointeks_cas_zapasu($r)),
         'hraci'       => $hraci,
         'souperi'     => $souperi,
         'sety'        => pointeks_sety_pro_vypis(json_pole((string)$r['sets_json']), (string)$r['score']),
@@ -636,6 +646,14 @@ function pointeks_zapas(array $radky): array {
     ];
 }
 
+/** Čas zápasu (UTC 'RRRR-MM-DD HH:MM:SS') jako POINTEKS_CAS_SQL: konec zápasu, nejvýš čas přijetí; bez konce přijetí. */
+function pointeks_cas_zapasu(array $r): string {
+    $konec = trim((string)($r['completed_at'] ?? ''));
+    $prijato = trim((string)($r['received_at'] ?? ''));
+    if ($konec === '') return $prijato;
+    return $prijato !== '' && strcmp($konec, $prijato) > 0 ? $prijato : $konec;
+}
+
 /** Odkaz poděkování „Výsledky: Pointeks“: url nejnovějšího výsledku na webu (podle konce zápasu – stejný
  *  na každé stránce výpisu i s filtrem), bez něj url prvního zápasu výpisu; jen http(s) přes
  *  bezpecny_odkaz, jinak pointeks.com. */
@@ -643,7 +661,7 @@ function pointeks_kredit_url(array $zapasy = []): string {
     $u = '';
     try {
         $u = (string)val("SELECT url FROM cltk_pointeks_vysledky WHERE visible = 1 AND url <> ''
-                           ORDER BY COALESCE(completed_at, received_at) DESC, id DESC LIMIT 1");
+                           ORDER BY " . POINTEKS_CAS_SQL . " DESC, id DESC LIMIT 1");
     } catch (Throwable $e) {
         pointeks_chyba_db($e, 'poděkování');
     }
