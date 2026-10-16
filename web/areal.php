@@ -1,7 +1,7 @@
 <?php
-/* Areál a služby – rozcestník služeb, otevírací doby a uzávěrky, plán areálu
-   Léto / Zima (mapa.js podle návrhu 3), všechny služby s kotvami pro štítky
-   „Služby v areálu“ z úvodu (areal.php#bazen …) a příjezd.
+/* Areál a služby – rozcestník služeb, jako první sekce plán areálu Léto / Zima (mapa.js podle návrhu 3;
+   Petr 16. 10. 2026 chce plán na prvním místě), otevírací doby a uzávěrky, všechny služby s kotvami
+   pro štítky „Služby v areálu“ z úvodu (areal.php#bazen …) a příjezd.
    Obsah: moduly Areál a služby (cltk_sluzby), Stránky (bloky „areal“),
    Ceníky (kurty léto / zima – ceny a zimní haly na plánu), Dokumenty (provoz – stránky dokumentů,
    u kurtů odkaz na pravidla hraní a rezervací)
@@ -131,61 +131,10 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
 </nav>
 <?php endif; ?>
 
-<!-- I · Otevírací doby a uzávěrky -->
-<section class="sekce" id="provoz" aria-labelledby="casy-nadpis">
-  <div class="wrap provoz">
-    <div>
-      <?= hlava_sekce($bCasy, ['cislo' => 1, 'id' => 'casy-nadpis', 'tag' => 'h2', 'nadpis' => 'Otevírací doby']) ?>
-      <?php if ($sCasy): ?>
-      <ul class="radky">
-        <?php foreach ($sCasy as $s): ?>
-        <li class="radek radek--vodici"><span class="radek__nazev"><a href="#<?= e($s['kotva']) ?>"><?= typo((string)$s['nazev']) ?></a></span><span class="radek__hodnota"><?= typo((string)$s['casy']) ?></span></li>
-        <?php endforeach; ?>
-      </ul>
-      <?php endif; ?>
-      <?php if ($bezCasu > 0): ?>
-      <p class="provoz__dalsi">Časy dalších služeb <?= doplni_klub() ?></p>
-      <?php endif; ?>
-    </div>
-
-    <div>
-      <?= hlava_sekce($bUzav, ['id' => 'uzavirky-nadpis', 'tag' => 'h2', 'nadpis' => 'Plánované uzávěrky', 'bez_znacky' => true]) ?>
-      <?php if ($uzavirky): ?>
-        <?php if ($uzavAktualni): ?>
-        <ul class="uzavirky" aria-labelledby="uzavirky-nadpis">
-          <?php foreach ($uzavAktualni as $u): ?>
-          <li class="uzavirka<?= $u['stav'] === 'ted' ? ' uzavirka--ted' : '' ?>">
-            <p class="uzavirka__kdy"><?= $u['kdy'] ?><?php if ($u['stav'] === 'ted'): ?><span class="stitek">právě teď</span><?php endif; ?></p>
-            <div class="uzavirka__co"><?= $u['co'] ?></div>
-          </li>
-          <?php endforeach; ?>
-        </ul>
-        <?php else: ?>
-        <p class="drobne tlumene">Další uzávěrky zatím nejsou zveřejněné.</p>
-        <?php endif; ?>
-        <?php if ($uzavProbehle): ?>
-        <details class="rozbal rozbal--male uzavirky-probehle">
-          <summary>Proběhlé uzávěrky (<?= count($uzavProbehle) ?>)</summary>
-          <div class="rozbal__obsah">
-            <ul class="uzavirky">
-              <?php foreach ($uzavProbehle as $u): ?>
-              <li class="uzavirka uzavirka--probehla"><p class="uzavirka__kdy"><?= $u['kdy'] ?></p><div class="uzavirka__co"><?= $u['co'] ?></div></li>
-              <?php endforeach; ?>
-            </ul>
-          </div>
-        </details>
-        <?php endif; ?>
-      <?php else: ?>
-        <?= blok_text($bUzav) ?: '<p class="drobne tlumene">Uzávěrky zatím nejsou zveřejněné.</p>' ?>
-      <?php endif; ?>
-    </div>
-  </div>
-</section>
-
-<!-- II · Plán areálu Léto / Zima -->
+<!-- I · Plán areálu Léto / Zima – první sekce stránky, hned pod rozcestníkem (Petr 16. 10. 2026: „to je důležité“) -->
 <section class="sekce sekce--papir2" id="plan" aria-labelledby="plan-nadpis">
   <div class="wrap">
-    <?= hlava_sekce($bPlan, ['cislo' => 2, 'id' => 'plan-nadpis', 'radek' => true, 'nadpis' => 'Plán areálu']) ?>
+    <?= hlava_sekce($bPlan, ['cislo' => 1, 'id' => 'plan-nadpis', 'radek' => true, 'nadpis' => 'Plán areálu']) ?>
 
     <div class="mapa" data-mapa data-rezim="<?= e($sezona) ?>">
       <?php if ($maPlan): ?>
@@ -231,6 +180,57 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
   <div class="dialog__obsah"><?= obr($planFoto, html_text((string)$bPlan['perex']) ?: 'Plán areálu', ['loading' => 'lazy']) ?></div>
 </dialog>
 <?php endif; ?>
+
+<!-- II · Otevírací doby a uzávěrky -->
+<section class="sekce" id="provoz" aria-labelledby="casy-nadpis">
+  <div class="wrap provoz">
+    <div>
+      <?= hlava_sekce($bCasy, ['cislo' => 2, 'id' => 'casy-nadpis', 'tag' => 'h2', 'nadpis' => 'Otevírací doby']) ?>
+      <?php if ($sCasy): ?>
+      <ul class="radky">
+        <?php foreach ($sCasy as $s): ?>
+        <li class="radek radek--vodici"><span class="radek__nazev"><a href="#<?= e($s['kotva']) ?>"><?= typo((string)$s['nazev']) ?></a></span><span class="radek__hodnota"><?= typo((string)$s['casy']) ?></span></li>
+        <?php endforeach; ?>
+      </ul>
+      <?php endif; ?>
+      <?php if ($bezCasu > 0): ?>
+      <p class="provoz__dalsi">Časy dalších služeb <?= doplni_klub() ?></p>
+      <?php endif; ?>
+    </div>
+
+    <div>
+      <?= hlava_sekce($bUzav, ['id' => 'uzavirky-nadpis', 'tag' => 'h2', 'nadpis' => 'Plánované uzávěrky', 'bez_znacky' => true]) ?>
+      <?php if ($uzavirky): ?>
+        <?php if ($uzavAktualni): ?>
+        <ul class="uzavirky" aria-labelledby="uzavirky-nadpis">
+          <?php foreach ($uzavAktualni as $u): ?>
+          <li class="uzavirka<?= $u['stav'] === 'ted' ? ' uzavirka--ted' : '' ?>">
+            <p class="uzavirka__kdy"><?= $u['kdy'] ?><?php if ($u['stav'] === 'ted'): ?><span class="stitek">právě teď</span><?php endif; ?></p>
+            <div class="uzavirka__co"><?= $u['co'] ?></div>
+          </li>
+          <?php endforeach; ?>
+        </ul>
+        <?php else: ?>
+        <p class="drobne tlumene">Další uzávěrky zatím nejsou zveřejněné.</p>
+        <?php endif; ?>
+        <?php if ($uzavProbehle): ?>
+        <details class="rozbal rozbal--male uzavirky-probehle">
+          <summary>Proběhlé uzávěrky (<?= count($uzavProbehle) ?>)</summary>
+          <div class="rozbal__obsah">
+            <ul class="uzavirky">
+              <?php foreach ($uzavProbehle as $u): ?>
+              <li class="uzavirka uzavirka--probehla"><p class="uzavirka__kdy"><?= $u['kdy'] ?></p><div class="uzavirka__co"><?= $u['co'] ?></div></li>
+              <?php endforeach; ?>
+            </ul>
+          </div>
+        </details>
+        <?php endif; ?>
+      <?php else: ?>
+        <?= blok_text($bUzav) ?: '<p class="drobne tlumene">Uzávěrky zatím nejsou zveřejněné.</p>' ?>
+      <?php endif; ?>
+    </div>
+  </div>
+</section>
 
 <!-- III · Služby (kotvy = štítky „Služby v areálu“ z úvodu) -->
 <section class="sekce" id="sluzby" aria-labelledby="sluzby-nadpis">
