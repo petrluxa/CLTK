@@ -80,7 +80,7 @@ $strana = min($strana, $stran);
 $radky = [];
 try {
     $radky = rows('SELECT ' . POINTEKS_SLOUPCE . ' FROM cltk_pointeks_vysledky' . $kde
-        . " ORDER BY CASE WHEN stav = 'zive' THEN 0 ELSE 1 END, COALESCE(completed_at, received_at) DESC, id DESC"
+        . " ORDER BY CASE WHEN stav = 'zive' THEN 0 ELSE 1 END, " . POINTEKS_CAS_SQL . ' DESC, id DESC'
         . ' LIMIT ' . PK_NA_STRANKU . ' OFFSET ' . (($strana - 1) * PK_NA_STRANKU), $p);
 } catch (Throwable $e) {
     pointeks_chyba_db($e, 'administrace');
@@ -179,7 +179,7 @@ echo '<link rel="stylesheet" href="' . e(BASE_PATH . verze('admin/assets/admin-p
           foreach ($spojeni as $x) $jeNaWebu = $jeNaWebu && (int)$x['visible'] === 1; ?>
         <tr id="v<?= $id ?>"<?= $jeNaWebu ? '' : ' class="je-skryte"' ?>>
           <td data-label="Zápas" class="td-nazev">
-            <b><?= $z['cas'] ? e($z['cas']->format('j. n. Y')) : 'bez data' ?><?= $z['cas'] && (string)$r['completed_at'] !== '' ? ' <span class="pk-cas">' . e($z['cas']->format('G:i')) . '</span>' : '' ?></b>
+            <b><?= $z['cas'] ? e($z['cas']->format('j. n. Y')) : 'bez data' ?><?= $z['cas'] && (string)$r['completed_at'] !== '' && pointeks_cas_zapasu($r) === trim((string)$r['completed_at']) ? ' <span class="pk-cas">' . e($z['cas']->format('G:i')) . '</span>' : '' ?></b>
             <small><?= e(trim($z['turnaj'] . ($z['mesto'] !== '' ? ', ' . $z['mesto'] : '') . ($z['zeme'] !== '' ? ' (' . $z['zeme'] . ')' : ''), ', ')) ?></small>
             <?php if ($soutez !== ''): ?><small><?= e($soutez) ?></small><?php endif; ?>
           </td>
