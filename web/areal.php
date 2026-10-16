@@ -1,7 +1,8 @@
 <?php
-/* Areál a služby – rozcestník služeb, jako první sekce plán areálu Léto / Zima (mapa.js podle návrhu 3;
-   Petr 16. 10. 2026 chce plán na prvním místě), otevírací doby a uzávěrky, všechny služby s kotvami
-   pro štítky „Služby v areálu“ z úvodu (areal.php#bazen …) a příjezd.
+/* Areál a služby – úplně nahoře plán areálu Léto / Zima (mapa.js podle návrhu 3; Petr 16. 10. 2026: plán
+   musí být vidět hned po kliknutí, proto je místo hlavičky stránky), pod ním úvod stránky, rozcestník služeb,
+   otevírací doby a uzávěrky, všechny služby s kotvami pro štítky „Služby v areálu“ z úvodu
+   (areal.php#bazen …) a příjezd.
    Obsah: moduly Areál a služby (cltk_sluzby), Stránky (bloky „areal“),
    Ceníky (kurty léto / zima – ceny a zimní haly na plánu), Dokumenty (provoz – stránky dokumentů,
    u kurtů odkaz na pravidla hraní a rezervací)
@@ -120,21 +121,17 @@ $sablona = [
 require __DIR__ . '/inc/sablona/hlavicka.php';
 ?>
 
-<?= hlava_stranky($uvod, ['drobky' => [['Areál a služby']], 'nadpis' => 'Areál a služby']) ?>
-
-<?php if ($sluzby): ?>
-<nav class="rozcestnik" aria-label="Služby v areálu">
-  <div class="wrap rozcestnik__vnitrek">
-    <p class="stitek"><?= typo(trim((string)$bSluzby['stitek']) ?: 'Služby v areálu') ?></p>
-    <?= pilulky_html(array_map(fn($s) => [(string)$s['nazev'], '#' . $s['kotva']], $sluzby)) ?>
-  </div>
-</nav>
-<?php endif; ?>
-
-<!-- I · Plán areálu Léto / Zima – první sekce stránky, hned pod rozcestníkem (Petr 16. 10. 2026: „to je důležité“) -->
-<section class="sekce sekce--papir2" id="plan" aria-labelledby="plan-nadpis">
+<!-- I · Plán areálu Léto / Zima ÚPLNĚ NAHOŘE místo hlavičky stránky – kdo klikne na Areál a služby, vidí
+     plán hned bez posouvání (Petr 16. 10. 2026: „musí být vidět hned“). Drobečky, h1 = nadpis bloku plan,
+     perex vedle; úvod stránky (blok uvod) je až pod plánem. -->
+<?php $planPerex = trim((string)$bPlan['perex']); ?>
+<section class="sekce sekce--papir2 areal-plan" id="plan" aria-labelledby="plan-nadpis">
   <div class="wrap">
-    <?= hlava_sekce($bPlan, ['cislo' => 1, 'id' => 'plan-nadpis', 'radek' => true, 'nadpis' => 'Plán areálu']) ?>
+    <?= drobky([['Areál a služby']]) ?>
+    <header class="hlava areal-plan__hlava<?= $planPerex !== '' ? ' hlava--radek' : '' ?>">
+      <div><h1 class="h1 areal-plan__nadpis" id="plan-nadpis"><?= trim((string)$bPlan['nadpis']) !== '' ? html_inline((string)$bPlan['nadpis']) : 'Plán areálu' ?></h1></div>
+      <?php if ($planPerex !== ''): ?><div class="perex"><?= paragraphs($planPerex) ?></div><?php endif; ?>
+    </header>
 
     <div class="mapa" data-mapa data-rezim="<?= e($sezona) ?>">
       <?php if ($maPlan): ?>
@@ -179,6 +176,23 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
   <div class="dialog__hlava"><p class="stitek" id="d-plan-titul">Plán areálu</p><button class="dialog__zavrit" type="button" data-dialog-zavrit>Zavřít</button></div>
   <div class="dialog__obsah"><?= obr($planFoto, html_text((string)$bPlan['perex']) ?: 'Plán areálu', ['loading' => 'lazy']) ?></div>
 </dialog>
+<?php endif; ?>
+
+<!-- Úvod stránky (blok uvod: nadpis, perex, tlačítka) – pod plánem; do 16. 10. 2026 to byla hlavička stránky -->
+<section class="sekce areal-uvod" aria-labelledby="areal-uvod-nadpis">
+  <div class="wrap">
+    <?= hlava_sekce($uvod, ['id' => 'areal-uvod-nadpis', 'radek' => true, 'nadpis' => 'Areál a služby']) ?>
+    <?= blok_tlacitka($uvod) ?>
+  </div>
+</section>
+
+<?php if ($sluzby): ?>
+<nav class="rozcestnik" aria-label="Služby v areálu">
+  <div class="wrap rozcestnik__vnitrek">
+    <p class="stitek"><?= typo(trim((string)$bSluzby['stitek']) ?: 'Služby v areálu') ?></p>
+    <?= pilulky_html(array_map(fn($s) => [(string)$s['nazev'], '#' . $s['kotva']], $sluzby)) ?>
+  </div>
+</nav>
 <?php endif; ?>
 
 <!-- II · Otevírací doby a uzávěrky -->
