@@ -14,7 +14,7 @@ $b = static function (string $stranka, string $klic, array $data, int $poradi = 
 $b('index', 'uvod', ['stitek' => 'Ostrov Štvanice, Praha 7', 'nadpis' => 'Tenis na ostrově uprostřed Prahy od roku <em>1893</em>.',
     'odkaz' => 'clenstvi.php', 'odkaz_text' => 'Stát se členem', 'odkaz2' => 'cenik-kurtu.php', 'odkaz2_text' => 'Ceník kurtů'], 0);
 $b('index', 'aktuality', ['stitek' => 'Aktuality z klubu'], 1);
-$b('index', 'vysledky', ['stitek' => 'Aktuální výsledky našich hráčů'], 2);
+$b('index', 'vysledky', ['stitek' => 'Další výsledky našich hráčů'], 2);
 $b('index', 'kalendar', ['stitek' => 'Klubový kalendář', 'nadpis' => 'Na Štvanici se <em>potkáváme</em>.', 'perex' => 'Klubový rok – vyberte událost'], 3);
 $b('index', 'clenstvi', ['nadpis' => 'Členem se může stát <em>každý</em>.', 'odkaz' => 'clenstvi.php', 'odkaz_text' => 'Stát se členem',
     'foto' => seed_obrazek(seed_podklady('klient-pdf/clenstvi-vstup-cedule.jpg'), 'bloky', 'clenstvi-vstup-cedule'),

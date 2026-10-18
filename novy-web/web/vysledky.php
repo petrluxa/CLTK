@@ -32,14 +32,15 @@ if (!function_exists('tenis_podnav')) {
 }
 /* ---------- konec pomůcek ---------- */
 
-/** Stránkování: ‹ Novější · 1 … 4 5 6 … 12 · Starší › (stránka 1 = nejnovější výsledky). */
+/** Stránkování: ‹ Novější · 1 … 4 5 6 … 12 · Starší › (stránka 1 = nejnovější výsledky; na úzkém mobilu
+ *  zůstanou u směrů jen šipky, slovo je pro čtečky dál – .strankovani__slovo ve vysledky.css). */
 function vysl_strankovani(int $strana, int $stran, callable $odkaz): string {
     if ($stran <= 1) return '';
     $cisla = $stran <= 7 ? range(1, $stran) : array_values(array_unique(array_filter(
         [1, 2, $strana - 1, $strana, $strana + 1, $stran - 1, $stran], static fn(int $x): bool => $x >= 1 && $x <= $stran)));
     sort($cisla);
     $h = '<nav aria-label="Stránky výsledků"><ul class="strankovani">';
-    if ($strana > 1) $h .= '<li><a class="strankovani__smer" href="' . e($odkaz($strana - 1)) . '" rel="prev">' . sipka('zpet') . ' Novější</a></li>';
+    if ($strana > 1) $h .= '<li><a class="strankovani__smer" href="' . e($odkaz($strana - 1)) . '" rel="prev">' . sipka('zpet') . ' <span class="strankovani__slovo">Novější</span></a></li>';
     $predchozi = 0;
     foreach ($cisla as $c) {
         if ($predchozi && $c > $predchozi + 1) $h .= '<li><span class="strankovani__mezera" aria-hidden="true">…</span></li>';
@@ -48,7 +49,7 @@ function vysl_strankovani(int $strana, int $stran, callable $odkaz): string {
             : '<li><a href="' . e($odkaz($c)) . '"><span class="vh">Strana </span>' . $c . '</a></li>';
         $predchozi = $c;
     }
-    if ($strana < $stran) $h .= '<li><a class="strankovani__smer" href="' . e($odkaz($strana + 1)) . '" rel="next">Starší ' . sipka() . '</a></li>';
+    if ($strana < $stran) $h .= '<li><a class="strankovani__smer" href="' . e($odkaz($strana + 1)) . '" rel="next"><span class="strankovani__slovo">Starší</span> ' . sipka() . '</a></li>';
     return $h . '</ul></nav>';
 }
 
@@ -123,7 +124,7 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
     <?php endif; ?>
 
     <?php if ($seznam['zapasy']): ?>
-    <?= pointeks_tabule_html($seznam['zapasy'], ['nadpis' => $nadpisTabule, 'stav' => $stavTabule]) ?>
+    <?= pointeks_tabule_html($seznam['zapasy'], ['nadpis' => $nadpisTabule, 'stav' => $stavTabule, 'pozvanka' => 'vysledky-hlava']) ?>
     <?= vysl_strankovani($seznam['strana'], $seznam['stran'], $odkazStrany) ?>
     <?php elseif ($filtr && $seznam['celkem'] === 0 && $hraci): ?>
     <div class="vysl-prazdne">
