@@ -1,31 +1,58 @@
 /* ==========================================================================
    I. ČLTK Praha – výsledková tabule (výsledky hráčů ze služby Pointeks)
-   Rozvržení podle návrhu 3 „Živá Štvanice“ (cltk-navrhy/03-ziva-stvanice, tabule „Poslední
-   výsledky“: datum · město a soutěž · hráči nad soupeři · sety pod sebou · štítek), převedené
-   do Varianty 4 (papír, navy, zlatá linka, Cormorant Garamond / Cormorant SC / Jost).
+   Světlá sestra tmavomodrého pásu pod úvodem (uvod-vysledky.css) pro dlouhé výpisy: výsledkový
+   servis, ne „jídelní lístek“ (Petr 18. 10. 2026) – bez rámečku a nadpisu uprostřed, zápasy hustě
+   mezi vlasovými linkami, navy linka nahoře a dole. Každý zápas je malá výsledková tabule a čte se
+   zleva doprava: kdy a kde (datum · město, pod tím soutěž a kolo drobnými verzálkami, štítek Titul /
+   Finále místo slova kola) · kdo s kým (nahoře strana klubu se znakem klubu u hráčů I. ČLTK, dole
+   soupeř se zkratkou země, ✓ u vítěze) · hned za jmény číselník setů (sloupce pod sebou, vyhraný set =
+   plné navy pole, prohraný tiché; tiebreak zlatým horním indexem). Volné místo řádku zůstává až za
+   skóre – žádná „cesta k ceně“ přes prázdný papír. Prohra se nijak nebarví (žádná červená).
+   Číslice písmem Jost (lining a tabulkové) – ve WebKitu na Windows Cormorant kreslí číslice
+   „starého stylu“ a variabilní řez 600 nezná; pás pod úvodem má číslice stejně.
    HTML: pointeks_tabule_html() a pointeks_zapas_html() v inc/sablona/komponenty.php.
-   Používá úvod (index.php), stránka Výsledky (vysledky.php) a Závodní tenis.
+   Používá úvod (sekce 3 pod pásem), stránka Výsledky (vysledky.php) a Závodní tenis.
    ========================================================================== */
 
-/* Tabule: papír s vlasovou linkou a vnitřní zlatou linkou (jako Zlatá deska, bez textury) */
 .tabule {
+  --tab-set: 2.3rem;              /* šířka sloupce setu (pole i s 1px mezerou kolem) */
+  --tab-pole: 1.85rem;            /* výška pole setu */
+  --tab-radek: 1.95rem;           /* nejmenší výška řádku strany (klub / soupeř) */
+  --tab-ciselnik: var(--paper-2); /* pole prohraného setu */
+  --tab-tichy: #5b606e;           /* číslice prohraného setu: 5,5 : 1 na --paper-2 (--muted by měla jen 4,4 : 1) */
+  --tab-zlata: #775c2c;           /* zlatý text (tiebreak, Titul) na --paper-2: 5,5 : 1 (--gold-text jen 4,3 : 1) */
   position: relative;
-  padding: clamp(1.4rem, .9rem + 2.2vw, 3.2rem) clamp(1rem, .4rem + 2.6vw, 3.2rem) clamp(1rem, .7rem + 1.2vw, 2rem);
-  background: var(--paper);
-  border: 1px solid var(--line-2);
-  box-shadow: 0 1px 0 rgba(255, 255, 255, .8) inset, var(--stin);
 }
-.tabule::before { content: ''; position: absolute; inset: 6px; border: 1px solid var(--line-gold); pointer-events: none; }
-.tabule--bez-hlavy { padding-top: clamp(1rem, .7rem + 1.2vw, 2rem); }       /* bez hlavy (Závodní tenis): bez prázdného pruhu nad první linkou */
-.tabule__hlava { display: grid; justify-items: center; gap: .55rem; padding-bottom: clamp(1.1rem, .8rem + 1vw, 1.6rem); text-align: center; border-bottom: 1px solid var(--navy); }
-.tabule__hlava .stitek { margin: 0; }
-.tabule__nadpis { margin: 0; padding-top: .1em; font: 300 clamp(2rem, 1.45rem + 1.7vw, 3.1rem)/1 var(--serif); letter-spacing: -.01em; color: var(--navy); }
-.tabule__stav { margin: 0; font-size: var(--t-drobne); color: var(--muted); font-variant-numeric: lining-nums tabular-nums; }
+
+/* Hlava (Výsledky): nadpis vlevo (pod ním pozvánka do Pointeks), drobný stav vpravo, pod nimi navy linka */
+.tabule__hlava {
+  display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: .6rem 1.6rem;
+  padding-bottom: .8rem; border-bottom: 1px solid var(--navy);
+}
+.tabule__titul { min-width: 0; }
+.tabule__nadpis { margin: 0; padding-top: .1em; font: 400 clamp(1.6rem, 1.3rem + 1vw, 2.2rem)/1.1 var(--serif); letter-spacing: -.005em; color: var(--navy); }
+/* pozvánka do aplikace Pointeks pod nadpisem (stránka Výsledky) – světlá sestra pozvánky v pásu pod úvodem;
+   cíl pro prst 44 px (padding), vzhled i rozvržení beze změny (záporný margin), obrys fokusu u textu */
+.tabule__pozvanka { margin: .35rem 0 0; font: italic 400 clamp(1rem, .96rem + .14vw, 1.08rem)/1.4 var(--serif); }
+.tabule__pozvanka a {
+  display: inline-block; padding: .75rem; margin: -.75rem;
+  color: var(--ink-2); text-decoration: underline; text-decoration-color: var(--line-2);
+  text-decoration-thickness: 1px; text-underline-offset: .32em;
+  transition: color var(--pohyb-rychly), text-decoration-color var(--pohyb-rychly);
+}
+.tabule__pozvanka a:hover { color: var(--navy); text-decoration-color: var(--gold); }
+.tabule__pozvanka a:focus-visible { outline-offset: calc(3px - .75rem); }
+.tabule__znacka { font: normal 600 1.02em/1 var(--sc); letter-spacing: .07em; color: var(--navy); font-synthesis: none; }
+.tabule__pozvanka .sipka { width: .9em; margin-left: .4em; color: var(--gold-text); }
+.tabule__pozvanka a:hover .sipka--ven { transform: rotate(-45deg) translate(2px, 0); }
+.tabule__stav { margin: 0; font: 500 .7rem/1.4 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); font-variant-numeric: lining-nums tabular-nums; }
 .tabule__seznam { list-style: none; margin: 0; padding: 0; }
-.tabule__seznam:first-child { border-top: 1px solid var(--navy); }          /* tabule bez hlavy (Závodní tenis) */
+.tabule--bez-hlavy .tabule__seznam { border-top: 1px solid var(--navy); }
+
+/* Pata: Všechny výsledky vlevo, poděkování Pointeks vpravo */
 .tabule__pata {
-  display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: .4rem 2rem;
-  padding-top: .9rem; border-top: 1px solid var(--navy); font-size: var(--t-drobne); color: var(--muted);
+  display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0 2rem;
+  padding-top: .3rem; border-top: 1px solid var(--navy); font-size: var(--t-drobne); color: var(--muted);
 }
 .tabule__pata .odkaz { min-height: 44px; padding-top: .55em; }
 .tabule__kredit {
@@ -35,100 +62,160 @@
 }
 .tabule__kredit:hover { color: var(--navy); text-decoration-color: var(--gold); }
 
-/* Řádek zápasu – mřížka: datum | město + soutěž | hráči / soupeři | sety (nahoře naši, dole soupeř) | štítek.
-   Město a hráči si volné místo dělí 1 : 1,6 (město nejméně 8rem) – těsně nad 800 px a s pěti sety
-   by pevný sloupec města (dřív až 15rem) nechal jménům jen pár desítek px a lámala by se uprostřed slova. */
-.zapas { border-bottom: 1px solid var(--line); }
-.zapas:last-child { border-bottom: 0; }
+/* ---------- Zápas ----------
+   Mřížka s pojmenovanými linkami (sloupce kde | hráči | ✓ | set … set | konec, řádky nasi | souperi),
+   umístění prvků platí pro počítač i mobil – mění se jen šablona mřížky.
+   Počítač (od 960 px): kde a soutěž v levém sloupci po řádcích, hned za ním dva řádky stran a hned za
+   jmény sety v pevných sloupcích (kolik má nejdelší zápas tabule, pod sebou). Volné místo řádku zůstává
+   až za skóre (sloupec konec) – oko nepřechází přes prázdný papír od místa ke jménům a od jmen ke skóre
+   jako v jídelním lístku od jídla k ceně (posudek 18. 10.: mezery 200–440 px). Sloupce kde a jmen jsou
+   široké podle nejdelšího textu celé tabule (subgrid: všechny řádky sdílí sloupce seznamu), nejvýš
+   16 a 26 rem (delší text se zalomí); bez subgridu pevná šířka 15,5 a 26 rem. */
+.zapas + .zapas { border-top: 1px solid var(--line); }
 .zapas__mrizka {
   display: grid;
-  grid-template-columns: 4.4rem minmax(8rem, 1fr) minmax(0, 1.6fr) repeat(var(--sety, 3), 2.6ch) 5.6rem;
-  grid-template-rows: auto auto;
-  column-gap: clamp(.7rem, .3rem + 1vw, 1.5rem); row-gap: .15rem; align-items: baseline;
-  padding: 1.05rem 0;
+  grid-template-columns:
+    [kde] minmax(10.5rem, 15.5rem) [hraci] minmax(0, 26rem)
+    [vitez] 1.6rem repeat(var(--sety, 3), [set] var(--tab-set)) [konec] minmax(0, 1fr);
+  grid-template-rows: [nasi] minmax(var(--tab-radek), auto) [souperi] minmax(var(--tab-radek), auto);
+  padding: .6rem 0;
 }
-/* datum přes oba řádky, ale na účaří prvního (s městem, jménem a prvním setem – jako v návrhu 3) */
-.zapas__datum { grid-column: 1; grid-row: 1 / span 2; font: 400 1.08rem/1.3 var(--serif); color: var(--ink-2); font-variant-numeric: lining-nums tabular-nums; white-space: nowrap; }
-.zapas__rok { display: block; font: 500 .64rem/1.5 var(--sans); letter-spacing: .14em; color: var(--muted); }
-.zapas__mesto { grid-column: 2; grid-row: 1; min-width: 0; font: 600 1rem/1.3 var(--sc); letter-spacing: .06em; color: var(--navy); font-synthesis: none; }
-.zapas__soutez { grid-column: 2; grid-row: 2; min-width: 0; font-size: var(--t-drobne); line-height: 1.4; color: var(--muted); }
-.zapas__hraci { grid-column: 3; grid-row: 1; min-width: 0; font: 400 clamp(1.14rem, 1.05rem + .28vw, 1.3rem)/1.25 var(--serif); color: var(--navy); }
-.zapas__hraci b { font-weight: 600; }
-.zapas__hraci .zapas__jmeno { color: var(--ink-2); }
-.zapas__souperi { grid-column: 3; grid-row: 2; min-width: 0; font-size: var(--t-male); line-height: 1.4; color: var(--ink-2); }
+@supports (grid-template-columns: subgrid) {
+  @media (min-width: 960px) {
+    .tabule__seznam {
+      display: grid;
+      grid-template-columns:
+        [kde] fit-content(16rem) [hraci] fit-content(26rem)
+        [vitez] 1.6rem repeat(var(--sety, 3), [set] var(--tab-set)) [konec] minmax(0, 1fr);
+    }
+    .tabule__seznam > .zapas { display: grid; grid-column: 1 / -1; grid-template-columns: subgrid; }
+    .zapas__mrizka { grid-column: 1 / -1; grid-template-columns: subgrid; }
+  }
+}
+
+.zapas__kde {
+  grid-column: kde; grid-row: nasi; align-self: end; min-width: 0; padding-right: 1.2rem;
+  font: 500 .8125rem/1.35 var(--sans); color: var(--ink-2); font-variant-numeric: lining-nums tabular-nums;
+}
+.zapas__kdy { white-space: nowrap; }
+.zapas__kdy + .zapas__mesto::before { content: '·'; margin: 0 .5em; color: var(--muted); }
+.zapas__mesto { color: var(--navy); }
+.zapas__soutez {
+  grid-column: kde; grid-row: souperi; align-self: start; min-width: 0; padding: .2rem 1.2rem 0 0;
+  font: 500 .64rem/1.45 var(--sans); letter-spacing: .11em; text-transform: uppercase; color: var(--muted);
+}
+/* štítek Titul / Finále v řádku soutěže místo slova kola – menší, aby řádek nezvyšoval */
+.zapas__soutez .zapas-stitek { margin-block: -.3em; padding: .3em .72em .26em; letter-spacing: .15em; vertical-align: .06em; }
+
+/* strany: nahoře klub (Cormorant, hráči klubu tučně se znakem), dole soupeři (Jost) */
+.zapas__strana { grid-column: hraci; align-self: center; min-width: 0; padding-right: .6rem; }
+.zapas__strana[data-r="1"] { grid-row: nasi; font: 500 1.125rem/1.25 var(--serif); color: var(--ink-2); }
+.zapas__strana[data-r="2"] { grid-row: souperi; font: 400 .9rem/1.35 var(--sans); color: var(--ink-2); }
+.zapas__hrac--klub { font-weight: 600; color: var(--navy); }
+.zapas__hrac--neuveden { color: var(--muted); font-style: italic; }
+/* čtyřhra na jednom řádku: zalomit mezi hráči u lomítka, ne uprostřed jména (to se jinak čte jako třetí hráč) */
+@media (min-width: 960px) { .zapas__hrac { display: inline-block; max-width: 100%; } }
+.zapas__se-znakem { white-space: nowrap; }
+/* znak klubu stejně jako v pásu pod úvodem: 0,8 em (o kousek vyšší než verzálky Cormorantu, 0,63 em),
+   na střed výšky verzálek, malá mezera; s posledním slovem jména v nezlomitelném celku */
+.zapas .znak-hrace { display: inline-block; width: auto; height: .8em; max-width: none; margin-left: .3em; vertical-align: -.085em; }
 .zapas__zeme { font: 500 .62rem/1 var(--sans); letter-spacing: .12em; color: var(--muted); vertical-align: .12em; white-space: nowrap; }
-.zapas__lomitko { color: var(--muted); }
+.zapas__lomitko { color: var(--muted); font-weight: 400; }
 
-/* Sety: číslo uprostřed sloupce, tiebreak horním indexem vedle čísla (sloupce pod sebou nerozhodí) */
-.zapas__set { text-align: center; font: 400 1.32rem/1.25 var(--serif); font-variant-numeric: lining-nums tabular-nums; color: var(--muted); }
-.zapas__set--vyhra { color: var(--navy); font-weight: 600; }
+/* ✓ u vítěze (kreslená linkou, nezávislá na písmu) */
+.zapas__vitez { grid-column: vitez; align-self: center; justify-self: center; width: .62rem; height: .62rem; position: relative; }
+.zapas__vitez::before {
+  content: ''; position: absolute; left: .17rem; top: -.06rem; width: .3rem; height: .58rem;
+  border: solid var(--navy); border-width: 0 1.5px 1.5px 0; transform: rotate(42deg);
+}
+.zapas__vitez[data-r="1"] { grid-row: nasi; }
+.zapas__vitez[data-r="2"] { grid-row: souperi; }
+
+/* Sety: pevné sloupce, každý set jedno pole (stejně vysoké i u čtyřhry), číslo uprostřed; vyhraný set
+   = plné navy pole s papírovou číslicí, prohraný tiché papírové pole. Mezera mezi poli je průhledný
+   okraj (na živém řádku prosvítá jeho podklad). */
+.zapas__set {
+  position: relative; display: flex; align-items: center; justify-content: center; align-self: center;
+  height: var(--tab-pole); border: 1px solid transparent; background: var(--tab-ciselnik); background-clip: padding-box;
+  font: 500 1.0625rem/1 var(--sans); font-variant-numeric: lining-nums tabular-nums; color: var(--tab-tichy);
+}
+.zapas__set[data-r="1"] { grid-row: nasi; }
+.zapas__set[data-r="2"] { grid-row: souperi; }
+.zapas__set[data-s="1"] { grid-column: set 1; }
+.zapas__set[data-s="2"] { grid-column: set 2; }
+.zapas__set[data-s="3"] { grid-column: set 3; }
+.zapas__set[data-s="4"] { grid-column: set 4; }
+.zapas__set[data-s="5"] { grid-column: set 5; }
+.zapas__set--vyhra { color: var(--paper); font-weight: 600; background-color: var(--navy); }
+.zapas__set--hraje { color: var(--ink); }
 .zapas__gemy { position: relative; display: inline-block; }
-.zapas__gemy sup { position: absolute; left: 100%; top: -.12em; margin-left: .06em; font: 500 .54em/1 var(--serif); color: var(--gold-text); }
-.zapas__set[data-r="1"] { grid-row: 1; }
-.zapas__set[data-r="2"] { grid-row: 2; }
-.zapas__set[data-s="1"] { grid-column: 4; }
-.zapas__set[data-s="2"] { grid-column: 5; }
-.zapas__set[data-s="3"] { grid-column: 6; }
-.zapas__set[data-s="4"] { grid-column: 7; }
-.zapas__set[data-s="5"] { grid-column: 8; }
-/* bez setů: „výhra / prohra bez boje“ v řádku hráčů klubu (data-r 1), jinak („začíná“, „bez skóre“) uprostřed;
-   na jeden řádek – delší nápis smí přesahovat do mezer kolem sloupců setů */
-.zapas__bez-setu { grid-column: 4 / -2; grid-row: 1 / span 2; justify-self: center; align-self: center; text-align: center; white-space: nowrap; font: 500 .66rem/1.3 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--ink-2); }
-.zapas__bez-setu[data-r="1"] { grid-row: 1; align-self: baseline; }
-.zapas__stav { grid-column: -2 / -1; grid-row: 1 / span 2; justify-self: end; align-self: center; }
+.zapas__gemy sup { position: absolute; left: 100%; top: -.32em; margin-left: .08em; font: 600 .6em/1 var(--sans); color: var(--tab-zlata); }
 
-/* Štítky: Titul (zlatý), Finále; živý zápas = červená tečka + „živě“ */
+/* bez setů: „výhra / prohra bez boje“ v řádku klubu (data-r 1), jinak („začíná“, „bez skóre“) přes oba řádky */
+.zapas__bez-setu {
+  grid-column: set 1 / konec; grid-row: nasi / span 2; align-self: center; justify-self: start;
+  padding: 0 0 0 .3rem; text-align: left; white-space: nowrap;      /* „prohra bez boje“ ≈ 104 px se vejde do tří sloupců setů */
+  font: 500 .62rem/1.3 var(--sans); letter-spacing: .13em; text-transform: uppercase; color: var(--ink-2);
+}
+.zapas__bez-setu[data-r="1"] { grid-row: nasi; }
+
+/* Štítky: Titul (zlatý), Finále (v řádku soutěže); živý zápas = červená tečka + „živě“ místo data */
 .zapas-stitek {
   display: inline-block; padding: .42em .85em .38em; border: 1px solid var(--line-2); border-radius: 999px;
   font: 500 .62rem/1 var(--sans); letter-spacing: .17em; text-transform: uppercase; color: var(--navy); white-space: nowrap;
 }
-.zapas-stitek--titul { border-color: var(--gold); color: var(--gold-text); background: rgba(179, 147, 90, .08); }
-.zapas-zive { display: inline-flex; align-items: center; gap: .5em; font: 600 .64rem/1 var(--sans); letter-spacing: .17em; text-transform: uppercase; color: var(--chyba); white-space: nowrap; }
-.zapas-zive__bod { position: relative; flex: none; width: .56rem; height: .56rem; border-radius: 50%; background: var(--tri-cervena); }
-.zapas-zive__bod::after { content: ''; position: absolute; inset: 0; border-radius: 50%; background: var(--tri-cervena); opacity: 0; animation: zapas-pulz 1.7s cubic-bezier(.2, .7, .2, 1) infinite; }
+.zapas-stitek--titul { border-color: var(--gold); color: var(--tab-zlata); background: rgba(179, 147, 90, .08); }
+.zapas-zive { display: inline-flex; align-items: center; gap: .5em; font: 600 .64rem/1 var(--sans); letter-spacing: .17em; text-transform: uppercase; color: var(--chyba); white-space: nowrap; vertical-align: .08em; }
+.zapas-zive__bod { position: relative; flex: none; width: .5rem; height: .5rem; border-radius: 50%; background: var(--tri-cervena); }
+.zapas-zive__bod::after { content: ''; position: absolute; inset: 0; border-radius: 50%; background: var(--tri-cervena); opacity: 0; animation: zapas-pulz 2.6s cubic-bezier(.2, .7, .2, 1) infinite; }
 @keyframes zapas-pulz {
-  0% { transform: scale(1); opacity: .5; }
-  80%, 100% { transform: scale(2.9); opacity: 0; }
+  0% { transform: scale(1); opacity: .55; }
+  72%, 100% { transform: scale(2.8); opacity: 0; }
 }
 /* omezený pohyb (systém nebo přepínač „Omezit pohyb“ v patičce) = tečka stojí */
 @media (prefers-reduced-motion: reduce) {
   html:not([data-pohyb="plny"]) .zapas-zive__bod::after { animation: none; }
 }
 html[data-pohyb="omezit"] .zapas-zive__bod::after { animation: none; }
-.zapas--zive { background: linear-gradient(90deg, rgba(237, 28, 36, .05), rgba(237, 28, 36, .015) 70%, rgba(237, 28, 36, 0)); }
+/* živý zápas: řádek jen nádechem teplé červené zleva (drobný text na něm má pořád AA) */
+.zapas--zive { background: linear-gradient(90deg, rgba(237, 28, 36, .03), rgba(237, 28, 36, 0) 38%); }
 
-/* Tablet a mobil: datum + štítek, město, soutěž, pak hráči a soupeři se sety jen tolika sloupců, kolik zápas měl */
-@media (max-width: 799.98px) {
+/* Úvod: štítek sekce těsně nad tabulí (navazuje na pás pod úvodem) */
+.vysledky-sekce .vysledky-sekce__stitek { margin-bottom: clamp(1.1rem, .9rem + .6vw, 1.6rem); }
+
+/* ---------- Tablet a mobil (pod 960 px) ----------
+   Nahoře kdy a kde, pod tím soutěž (se štítkem Titul / Finále), pak dva řádky stran se sety jen tolika
+   sloupců, kolik zápas měl (číselník u pravého okraje); čtyřhra = jména pod sebou. */
+@media (max-width: 959.98px) {
+  .tabule { --tab-set: 2.1rem; --tab-pole: 1.8rem; --tab-radek: 1.85rem; }
   .zapas__mrizka {
-    grid-template-columns: minmax(0, 1fr) repeat(var(--sety-r, 3), 2.5ch);
-    grid-template-rows: none;
-    column-gap: .6rem; row-gap: .12rem; padding: 1rem 0 1.05rem;
+    grid-template-columns: [kde hraci] minmax(0, 1fr) [vitez] 1.3rem repeat(var(--sety-r, 3), [set] var(--tab-set)) [konec];
+    grid-template-rows: [kde] auto [soutez] auto [nasi] minmax(var(--tab-radek), auto) [souperi] minmax(var(--tab-radek), auto);
+    padding: .75rem 0 .8rem;
   }
-  .zapas--bez-setu .zapas__mrizka { grid-template-columns: minmax(0, 1fr) auto; }
-  .zapas__datum { grid-column: 1 / -1; grid-row: 1; justify-self: start; align-self: center; font-size: 1rem; }
-  .zapas__rok { display: inline; margin-left: .45rem; }
-  .zapas__stav { grid-column: 1 / -1; grid-row: 1; justify-self: end; align-self: center; }
-  .zapas__mesto { grid-column: 1 / -1; grid-row: 2; margin-top: .35rem; }
-  .zapas__soutez { grid-column: 1 / -1; grid-row: 3; margin-bottom: .5rem; }
-  .zapas__hraci { grid-column: 1; grid-row: 4; }
-  .zapas__souperi { grid-column: 1; grid-row: 5; }
-  .zapas__set[data-r="1"] { grid-row: 4; }
-  .zapas__set[data-r="2"] { grid-row: 5; }
-  .zapas__set[data-s="1"] { grid-column: 2; }
-  .zapas__set[data-s="2"] { grid-column: 3; }
-  .zapas__set[data-s="3"] { grid-column: 4; }
-  .zapas__set[data-s="4"] { grid-column: 5; }
-  .zapas__set[data-s="5"] { grid-column: 6; }
-  .zapas__set { font-size: 1.22rem; }
-  .zapas__bez-setu { grid-column: 2; grid-row: 4 / span 2; justify-self: end; text-align: right; }
-  .zapas__bez-setu[data-r="1"] { grid-row: 4; }
+  .zapas--bez-setu .zapas__mrizka { grid-template-columns: [kde hraci] minmax(0, 1fr) [vitez] 1.3rem [set] auto [konec]; }
+  .zapas__kde { grid-column: kde / -1; grid-row: kde; align-self: center; padding-right: 0; }
+  .zapas__soutez { grid-column: kde / -1; grid-row: soutez; padding: .12rem 0 .5rem; }
+  .zapas__strana { padding-right: .5rem; }
+  .zapas__bez-setu { grid-column: set 1 / -1; grid-row: nasi / span 2; justify-self: end; padding: 0; text-align: right; }
+  .zapas__bez-setu[data-r="1"] { grid-row: nasi; }
+  /* čtyřhra: každý hráč na vlastním řádku */
+  .zapas--ctyrhra .zapas__hrac { display: block; }
+  .zapas--ctyrhra .zapas__lomitko { display: none; }
+  .zapas--ctyrhra .zapas__strana { padding-block: .3rem; }
   .tabule__pata { flex-direction: column; align-items: flex-start; gap: 0; }
   .tabule__kredit { margin-left: 0; }
 }
 @media (max-width: 379.98px) {
-  .zapas__mrizka { column-gap: .45rem; }
-  .zapas__hraci { font-size: 1.08rem; }
-  .zapas__set { font-size: 1.12rem; }
+  .tabule { --tab-set: 1.85rem; }
+  .zapas__mrizka { grid-template-columns: [kde hraci] minmax(0, 1fr) [vitez] 1.1rem repeat(var(--sety-r, 3), [set] var(--tab-set)) [konec]; }
+  .zapas--bez-setu .zapas__mrizka { grid-template-columns: [kde hraci] minmax(0, 1fr) [vitez] 1.1rem [set] auto [konec]; }
+  .zapas__strana[data-r="1"] { font-size: 1.06rem; }
+  .zapas__strana[data-r="2"] { font-size: .84rem; }
+  .zapas__set { font-size: 1rem; }
+  .zapas[data-sety="4"], .zapas[data-sety="5"] { --tab-set: 1.6rem; }
+  /* úzká pole: dvoumístný tiebreak by přečníval pole i okraj tabule – číslo a index na střed pole spolu */
+  .zapas__gemy sup { position: static; vertical-align: .5em; margin-left: .04em; }
 }
 
 /* Stránka Výsledky (vysledky.php): filtr a stránkování */
@@ -138,9 +225,11 @@ html[data-pohyb="omezit"] .zapas-zive__bod::after { animation: none; }
 .vysl-filtr__akce { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1.6rem; }
 .vysl-filtr__akce .odkaz { min-height: 44px; padding-top: .55em; }
 .vysl-pocet { margin: 0 0 var(--s-4); font-size: var(--t-drobne); color: var(--muted); }
-.vysl-prazdne { padding: clamp(2rem, 1.4rem + 2vw, 3.4rem) clamp(1rem, .5rem + 2vw, 2.4rem); text-align: center; border: 1px solid var(--line); background: var(--paper-2); }
-.vysl-prazdne p { margin: 0; font: 400 clamp(1.25rem, 1.1rem + .5vw, 1.55rem)/1.35 var(--serif); color: var(--navy); }
-.vysl-prazdne p + p { margin-top: .9rem; font: 400 var(--t-male)/1.5 var(--sans); color: var(--ink-2); }
+/* prázdný výpis: jako tabule bez zápasů – mezi navy linkami, zarovnaný vlevo */
+.vysl-prazdne { padding: clamp(1.5rem, 1.1rem + 1.4vw, 2.4rem) 0; border-top: 1px solid var(--navy); border-bottom: 1px solid var(--navy); }
+.vysl-prazdne p { margin: 0; font: 400 clamp(1.3rem, 1.15rem + .5vw, 1.6rem)/1.35 var(--serif); color: var(--navy); }
+.vysl-prazdne p + p { margin-top: .55rem; font: 400 var(--t-male)/1.5 var(--sans); color: var(--ink-2); }
+.vysl-prazdne .odkaz { min-height: 44px; padding-top: .55em; }
 .strankovani { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: .45rem; margin-top: clamp(1.6rem, 1.2rem + 1.2vw, 2.4rem); list-style: none; padding: 0; }
 .strankovani > li > a, .strankovani > li > span {
   display: inline-flex; align-items: center; justify-content: center; gap: .6em; min-width: 44px; min-height: 44px; padding: 0 .85rem;
@@ -154,13 +243,33 @@ html[data-pohyb="omezit"] .zapas-zive__bod::after { animation: none; }
 .strankovani [aria-current="page"] { background: var(--navy); border-color: var(--navy); color: var(--paper); }
 .strankovani > li > .strankovani__mezera { border-color: transparent; background: transparent; color: var(--muted); min-width: 0; padding: 0 .2rem; }
 .strankovani__smer { text-transform: uppercase; }
+/* úzký mobil: u Novější / Starší jen šipka (slovo zůstává pro čtečky), ať se řada nezalomí */
+@media (max-width: 519.98px) {
+  .strankovani__slovo { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .strankovani > li > .strankovani__smer { padding: 0; width: 44px; }
+}
+@media (max-width: 379.98px) { .strankovani { gap: .25rem; } }      /* ← 1 2 3 4 → (6 × 44 px) se vejde i do 320 px */
 
-:root[data-kontrast="vyssi"] .zapas__set, :root[data-kontrast="vyssi"] .zapas__soutez, :root[data-kontrast="vyssi"] .zapas__zeme { color: var(--ink-2); }
-:root[data-kontrast="vyssi"] .zapas__set--vyhra { color: var(--navy); }
+/* Vyšší kontrast (přepínač v patičce nebo systém): tiché texty tmavší */
+:root[data-kontrast="vyssi"] .zapas__set, :root[data-kontrast="vyssi"] .zapas__soutez, :root[data-kontrast="vyssi"] .zapas__zeme,
+:root[data-kontrast="vyssi"] .zapas__kde { color: var(--ink-2); }
+:root[data-kontrast="vyssi"] .zapas__set--vyhra { color: var(--paper); }
+@media (prefers-contrast: more) {
+  :root:not([data-kontrast="normalni"]) .zapas__set, :root:not([data-kontrast="normalni"]) .zapas__soutez,
+  :root:not([data-kontrast="normalni"]) .zapas__zeme, :root:not([data-kontrast="normalni"]) .zapas__kde { color: var(--ink-2); }
+  :root:not([data-kontrast="normalni"]) .zapas__set--vyhra { color: var(--paper); }
+}
+
+/* Vynucené barvy (Windows – vysoký kontrast): pozadí polí zmizí, vyhraný set by poznal jen řez písma →
+   vyhraný set jako plné pole v barvách systému (CanvasText / Canvas) */
+@media (forced-colors: active) {
+  .zapas__set--vyhra { forced-color-adjust: none; background-color: CanvasText; color: Canvas; }
+}
 
 @media print {
-  .tabule { box-shadow: none; border-color: #999; }
-  .tabule::before { display: none; }
+  .zapas__set { background: none; color: #555; }
+  .zapas__set--vyhra { background: none; color: #000; font-weight: 700; }
   .zapas-zive__bod::after { display: none; }
-  .strankovani, .vysl-filtr { display: none; }
+  .zapas--zive { background: none; }
+  .strankovani, .vysl-filtr, .tabule__pozvanka { display: none; }
 }

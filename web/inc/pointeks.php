@@ -442,12 +442,14 @@ function pointeks_filtr_sql(array $f): array {
  * Výsledky pro web: zápasy (skupiny – spojená čtyřhra je jeden zápas) od nejnovějšího podle konce
  * zápasu (completed_at, když chybí, čas přijetí), živé zápasy první, jen viditelné (skupina se skrytým
  * záznamem se vynechá celá – POINTEKS_NA_WEBU_SQL).
- *   $f: 'hrac', 'kategorie' (viz pointeks_filtr_sql), 'limit' (výchozí 30), 'strana' (od 1)
+ *   $f: 'hrac', 'kategorie' (viz pointeks_filtr_sql), 'limit' (výchozí 30), 'strana' (od 1),
+ *       'preskocit' (vynechat prvních N zápasů – úvod: tabule pokračuje za pásem se 4 nejnovějšími)
  * Vrací ['zapasy' => [pointeks_zapas()…], 'celkem' => počet zápasů, 'stran' => n, 'strana' => n].
  * Chyba databáze web neshodí (zapíše se do data/chyby.log, vrátí prázdný výsledek).
  */
 function pointeks_seznam(array $f = []): array {
     $limit = max(1, min(100, (int)($f['limit'] ?? POINTEKS_NA_STRANKU)));
+    $preskocit = max(0, min(1000, (int)($f['preskocit'] ?? 0)));
     $prazdne = ['zapasy' => [], 'celkem' => 0, 'stran' => 0, 'strana' => 1];
     [$kde, $p] = pointeks_filtr_sql($f);
     try {
@@ -456,6 +458,7 @@ function pointeks_seznam(array $f = []): array {
         pointeks_chyba_db($e, 'výpis');
         return $prazdne;
     }
+    $celkem = max(0, $celkem - $preskocit);
     if ($celkem === 0) return $prazdne;
     $stran = (int)ceil($celkem / $limit);
     $strana = max(1, min($stran, (int)($f['strana'] ?? 1)));
@@ -464,7 +467,7 @@ function pointeks_seznam(array $f = []): array {
                             FROM cltk_pointeks_vysledky WHERE " . $kde . '
                         GROUP BY skupina
                         ORDER BY zive DESC, cas DESC, posledni DESC
-                           LIMIT ' . $limit . ' OFFSET ' . (($strana - 1) * $limit), $p);
+                           LIMIT ' . $limit . ' OFFSET ' . (($strana - 1) * $limit + $preskocit), $p);
     $klice = array_values(array_unique(array_map(static fn(array $s): string => (string)$s['skupina'], $skupiny)));
     if (!$klice) return ['zapasy' => [], 'celkem' => $celkem, 'stran' => $stran, 'strana' => $strana];
     /* všechny viditelné řádky skupin (i spoluhráče, když filtr ukazuje jen jednoho hráče) */

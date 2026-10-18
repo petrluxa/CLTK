@@ -20,9 +20,16 @@ $bPartneri  = blok('index', 'partneri');
 
 $galerie   = uvodni_galerie();
 $aktuality = aktuality(3);
-/* Výsledky hráčů jen ze služby Pointeks (Petr 15. 10. 2026): 10 nejnovějších podle konce zápasu
-   v pražském čase, živé zápasy první; ruční modul Výsledky hráčů se na webu neukazuje. */
-$vysledky  = pointeks_seznam(['limit' => POINTEKS_NA_UVODU])['zapasy'];
+/* Výsledky hráčů jen ze služby Pointeks (Petr 15. 10. 2026), podle konce zápasu v pražském čase,
+   živé zápasy první; ruční modul Výsledky hráčů se na webu neukazuje.
+   – tmavomodrý pás hned pod úvodem: 4 nejnovější + decentní pozvánka do aplikace Pointeks
+     (návrh C, Petr vybral 18. 10. 2026; inc/sablona/uvod-vysledky.php, assets/css/uvod-vysledky.css),
+   – tabule v sekci 3 pokračuje dalšími zápasy, aby se ty 4 z pásu neopakovaly,
+   – pás jen s čerstvými výsledky (uvod_vysledky_cerstve: nejnovější nejvýš 30 dní, jinak pás není
+     a sekce 3 začne od nejnovějšího výsledku – nic se neztratí). */
+require_once __DIR__ . '/inc/sablona/uvod-vysledky.php';
+$vysledky4 = uvod_vysledky_cerstve(pointeks_seznam(['limit' => 4])['zapasy']);
+$vysledky  = pointeks_seznam(['limit' => POINTEKS_NA_UVODU, 'preskocit' => count($vysledky4)])['zapasy'];
 $sluzbyUvod = sluzby(true);
 /* Plán areálu pod videem (mapa.js, kompaktní rozložení); „Podrobnosti“ u služby vedou na areal.php#kotva */
 $mapaUvod = mapa_data(null, null, null, url('areal.php'));
@@ -63,7 +70,7 @@ $sablona = [
     'titulek' => '',
     'popis'   => 'I. Český Lawn-Tennis Klub Praha – tenis na ostrově Štvanice uprostřed Prahy od roku ' . setting('zalozeno', '1893')
                . '. Členství, ceník kurtů, tenisová škola, závodní tenis, klubový kalendář a historie klubu.',
-    'css'     => ['index.css', 'mapa.css', 'vysledky.css'],
+    'css'     => ['index.css', 'mapa.css', 'vysledky.css', 'uvod-vysledky.css'],
     'js'      => ['galerie.js', 'kalendar.js', 'video.js', 'cenik.js', 'mapa.js'],
     'trida'   => 'stranka-uvod',
     'obrazek' => $galerie && $galerie[0]['typ'] === 'foto' ? $galerie[0]['foto'] : '',
@@ -134,6 +141,7 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
       </div>
     </div>
   </section>
+  <?= uvod_vysledky_html('pod-uvodem', $vysledky4) ?>
 
   <?php if ($aktuality): ?>
   <!-- 2 · Aktuality z klubu (nejsou to články – fotka, datum, nadpis, krátký popis) -->
@@ -160,12 +168,20 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
   </section>
   <?php endif; ?>
 
-  <?php if ($vysledky): ?>
-  <!-- 3 · Aktuální výsledky našich hráčů – výsledková tabule ze služby Pointeks (návrh 3, styl Varianty 4) -->
+  <?php if ($vysledky):
+    /* Nadpis sekce (modul Stránky, výchozí „Další výsledky našich hráčů“ – sekce navazuje na pás pod úvodem).
+       Bez pásu (žádný čerstvý výsledek) by „další“ nedávalo smysl: výchozí text pak zní „Poslední výsledky
+       našich hráčů“. Vlastní nadpis z administrace zůstává vždy. */
+    $vysledkyStitek = trim((string)$bVysledky['stitek']);
+    if ($vysledkyStitek === '' || (!$vysledky4 && $vysledkyStitek === 'Další výsledky našich hráčů')) {
+        $vysledkyStitek = $vysledky4 ? 'Další výsledky našich hráčů' : 'Poslední výsledky našich hráčů';
+    } ?>
+  <!-- 3 · Další výsledky našich hráčů – pokračování pásu pod úvodem (tam jsou 4 nejnovější): výsledková
+       tabule ze služby Pointeks bez vlastní hlavy, nadpisem je štítek sekce -->
   <section class="sekce vysledky-sekce" id="vysledky" aria-labelledby="vysledky-nadpis">
     <div class="wrap wrap--uzky">
-      <h2 class="stitek stitek--velky vysledky-sekce__stitek" id="vysledky-nadpis"><?= typo(trim((string)$bVysledky['stitek']) ?: 'Aktuální výsledky našich hráčů') ?></h2>
-      <?= pointeks_tabule_html($vysledky, ['nadpis' => 'Poslední výsledky', 'vsechny' => true]) ?>
+      <h2 class="stitek stitek--velky vysledky-sekce__stitek" id="vysledky-nadpis"><?= typo($vysledkyStitek) ?></h2>
+      <?= pointeks_tabule_html($vysledky, ['vsechny' => true]) ?>
     </div>
   </section>
   <?php endif; ?>

@@ -90,7 +90,7 @@ INSERT IGNORE INTO cltk_bloky (id, stranka, klic, stitek, nadpis, perex, text, f
 (64, 'letni-kempy', 'prihlaska', 'Přihláška', 'Přihláška a <em>kontakt</em>', 'Přihlašuje se online formulářem. Platí se až po potvrzení přihlášky e-mailem.', '', '', '', '', '', '', '', 0, 1, 4, '2026-10-04 12:38:38'),
 (65, 'index', 'uvod', 'Ostrov Štvanice, Praha 7', 'Tenis na ostrově uprostřed Prahy od roku <em>1893</em>.', '', '', '', '', 'clenstvi.php', 'Stát se členem', 'cenik-kurtu.php', 'Ceník kurtů', 0, 1, 0, '2026-10-04 12:38:38'),
 (66, 'index', 'aktuality', 'Aktuality z klubu', '', '', '', '', '', '', '', '', '', 0, 1, 1, '2026-10-04 12:38:38'),
-(67, 'index', 'vysledky', 'Aktuální výsledky našich hráčů', '', '', '', '', '', '', '', '', '', 0, 1, 2, '2026-10-04 12:38:38'),
+(67, 'index', 'vysledky', 'Další výsledky našich hráčů', '', '', '', '', '', '', '', '', '', 0, 1, 2, '2026-10-04 12:38:38'),
 (68, 'index', 'kalendar', 'Klubový kalendář', 'Na Štvanici se <em>potkáváme</em>.', 'Klubový rok – vyberte událost', '', '', '', '', '', '', '', 0, 1, 3, '2026-10-04 12:38:38'),
 (69, 'index', 'clenstvi', '', 'Členem se může stát <em>každý</em>.', '', '', 'bloky/clenstvi-vstup-cedule.jpg', 'Vstup do areálu I. Českého Lawn-Tennis Klubu Praha', 'clenstvi.php', 'Stát se členem', '', '', 0, 1, 4, '2026-10-04 12:38:38'),
 (70, 'index', 'sluzby', 'Služby v areálu', '', '', '', '', '', '', '', '', '', 0, 1, 5, '2026-10-04 12:38:38'),

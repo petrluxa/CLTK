@@ -381,17 +381,33 @@ function vysledek_karta_html(array $v, string $tag = 'li'): string {
 
 /* ==================================================================
    VÝSLEDKY HRÁČŮ ZE SLUŽBY POINTEKS – výsledková tabule
-   Rozvržení z návrhu 3 „Živá Štvanice“ (tabule s hlavou, sety pod sebou – nahoře naše strana,
-   dole soupeř), barvy, písma a linky Varianty 4. Styl: assets/css/vysledky.css (stránka ho přidá
-   do $sablona['css']). Data: pointeks_seznam() v inc/pointeks.php. Všechno z Pointeks je
-   nedůvěryhodný text – jména jen přes e() (přesně, jak přišla), ostatní e() / typo().
+   Světlá sestra tmavomodrého pásu pod úvodem (inc/sablona/uvod-vysledky.php, Petr 18. 10. 2026):
+   výsledkový servis místo „jídelního lístku“ – žádný rámeček ani nadpis uprostřed, zápasy hustě
+   pod sebou mezi vlasovými linkami, každý jako malá výsledková tabule: vlevo kdy a kde (datum · město,
+   pod tím soutěž a kolo drobnými verzálkami), uprostřed dva řádky – nahoře strana klubu se znakem
+   klubu u každého hráče I. ČLTK, dole soupeř se zkratkou země, ✓ u vítěze –, vpravo číselník setů
+   (pevné sloupce, vyhraný set plné navy pole). Styl: assets/css/vysledky.css (stránka ho přidá do
+   $sablona['css']). Data: pointeks_seznam() v inc/pointeks.php. Všechno z Pointeks je nedůvěryhodný
+   text – jména jen přes e() (přesně, jak přišla), ostatní e() / typo().
    ================================================================== */
 
+/** Malý znak klubu u jména hráče I. ČLTK ve výsledcích (Petr 18. 10. 2026: „aby bylo vidět, že je to hráč ČLTK“).
+ *  Jen u hráčů klubu (pointeks_zapas() 'klub' => true), ne u spoluhráče odjinud ani u soupeřů. Dekorace
+ *  (alt="", aria-hidden) – čtečka čte větu pointeks_zapas_veta(): hráči klubu jsou v ní první strana zápasu
+ *  a ve dvojici se spoluhráčem odjinud mají za jménem „(I. ČLTK)“. Velikost a odsazení řeší CSS výpisu
+ *  přes třídu .znak-hrace (pás i tabule stejně: 0,8 em, na střed výšky verzálek). */
+function pointeks_znak_html(): string {
+    return '<img class="znak-hrace" src="' . e(logo_url('64')) . '" width="14" height="16" alt="" aria-hidden="true" decoding="async">';
+}
+
 /**
- * Výsledková tabule: hlava (nadpis a stav), řádky zápasů, pata (Všechny výsledky + poděkování Pointeks).
- *   <?= pointeks_tabule_html($v['zapasy'], ['nadpis' => 'Poslední výsledky', 'vsechny' => true]) ?>
- * Volby: 'nadpis' (h3; '' = tabule bez hlavy), 'id' (id nadpisu), 'stitek' (štítek nad nadpisem),
- *        'stav' (věta pod nadpisem; bez volby „Stav k …“ podle posledního přijatého výsledku),
+ * Výsledková tabule: (hlava – nadpis vlevo, drobný stav vpravo), zápasy mezi vlasovými linkami,
+ * pata (Všechny výsledky + poděkování Pointeks).
+ *   <?= pointeks_tabule_html($v['zapasy'], ['vsechny' => true]) ?>      úvod: bez hlavy, nadpisem je štítek sekce
+ *   <?= pointeks_tabule_html($s['zapasy'], ['nadpis' => 'Všechny výsledky', 'stav' => '102 zápasů']) ?>
+ * Volby: 'nadpis' (h3 vlevo; bez volby / '' = tabule bez hlavy), 'id' (id nadpisu), 'stav' (drobný text
+ *        k nadpisu – počet zápasů, strana), 'pozvanka' (pod nadpisem pozvánka „Každý bod živě v aplikaci
+ *        Pointeks ↗“ jako v pásu pod úvodem; hodnota = utm_content odkazu, např. 'vysledky-hlava'),
  *        'vsechny' (odkaz Všechny výsledky → vysledky.php), 'pata' (false = bez paty).
  * Prázdný seznam = prázdný řetězec (sekce se nevypisuje).
  */
@@ -400,19 +416,21 @@ function pointeks_tabule_html(array $zapasy, array $volby = []): string {
     $setu = 3;                                   // sloupce setů v celé tabulce (aby seděly pod sebou), nejvýš 5
     foreach ($zapasy as $z) $setu = max($setu, count($z['sety']));
     $setu = min($setu, 5);
-    $nadpis = (string)($volby['nadpis'] ?? 'Poslední výsledky');
+    $nadpis = (string)($volby['nadpis'] ?? '');
     $h = '<div class="tabule' . ($nadpis === '' ? ' tabule--bez-hlavy' : '') . '">';
     if ($nadpis !== '') {
-        $stav = $volby['stav'] ?? null;
-        if ($stav === null) {
-            $posledni = pointeks_posledni_prijem();
-            $stav = $posledni ? 'Stav k ' . $posledni->format('j.') . "\u{00A0}" . $posledni->format('n.') . "\u{00A0}" . $posledni->format('Y')
-                              . ', ' . $posledni->format('G:i') : '';      // datum se nezalomí (typo() udělá &nbsp;)
+        $stav = (string)($volby['stav'] ?? '');
+        $pozvanka = '';
+        if ((string)($volby['pozvanka'] ?? '') !== '') {
+            $u = pointeks_pozvanka_url($zapasy, (string)$volby['pozvanka']);
+            $ven = odkaz_je_externi($u);
+            $pozvanka = '<p class="tabule__pozvanka"><a href="' . e($u) . '"' . odkaz_attr($u) . '>' . typo('Každý bod živě v aplikaci')
+                      . ' <span class="tabule__znacka">Pointeks</span>' . sipka($ven ? 'ven' : '') . ($ven ? '<span class="vh"> (v novém okně)</span>' : '') . '</a></p>';
         }
         $h .= '<header class="tabule__hlava">'
-            . (!empty($volby['stitek']) ? '<p class="stitek">' . typo((string)$volby['stitek']) . '</p>' : '')
-            . '<h3 class="tabule__nadpis"' . (isset($volby['id']) ? ' id="' . e((string)$volby['id']) . '"' : '') . '>' . e($nadpis) . '</h3>'
-            . ((string)$stav !== '' ? '<p class="tabule__stav">' . typo((string)$stav) . '</p>' : '')
+            . '<div class="tabule__titul"><h3 class="tabule__nadpis"' . (isset($volby['id']) ? ' id="' . e((string)$volby['id']) . '"' : '') . '>' . e($nadpis) . '</h3>'
+            . $pozvanka . '</div>'
+            . ($stav !== '' ? '<p class="tabule__stav">' . typo($stav) . '</p>' : '')
             . '</header>';
     }
     $h .= '<ol class="tabule__seznam" style="--sety: ' . $setu . '">';
@@ -429,101 +447,164 @@ function pointeks_tabule_html(array $zapasy, array $volby = []): string {
     return $h . '</div>';
 }
 
+/** Odkaz pozvánky „Každý bod živě v aplikaci Pointeks“ (pás pod úvodem, hlava stránky Výsledky): stejná adresa
+ *  jako poděkování „Výsledky: Pointeks“ (pointeks_kredit_url), navíc utm_content=$obsah, ať Petr i Pointeks
+ *  poznají, odkud lidé přišli – před kotvu #, nikdy dvakrát. Jen písmena, číslice a pomlčka. */
+function pointeks_pozvanka_url(array $zapasy, string $obsah): string {
+    $u = pointeks_kredit_url($zapasy);
+    if (!preg_match('/^[a-z0-9-]{1,40}$/', $obsah) || !odkaz_je_externi($u) || preg_match('~[?&]utm_content=~i', $u)) return $u;
+    $kotva = '';
+    if (($i = strpos($u, '#')) !== false) {
+        $kotva = substr($u, $i);
+        $u = substr($u, 0, $i);
+    }
+    return $u . (str_contains($u, '?') ? '&' : '?') . 'utm_content=' . $obsah . $kotva;
+}
+
+/** Štítek zápasu do tabule: Titul (výhra ve finále hlavní soutěže), Finále (prohra v něm), jinak ''.
+ *  Finále kvalifikace není titul; živý zápas štítek nemá (má „živě“). Stojí v řádku soutěže místo slova
+ *  kola (pointeks_soutez_html()). */
+function pointeks_tabule_stitek(array $z): string {
+    if (!empty($z['zive']) || empty($z['finale']) || !empty($z['kvalifikace'])) return '';
+    if ($z['vysledek'] === 'WIN') return '<span class="zapas-stitek zapas-stitek--titul">Titul</span>';
+    if ($z['vysledek'] === 'LOSS') return '<span class="zapas-stitek">Finále</span>';
+    return '';
+}
+
+/** Řádek soutěže pod „kdy a kde“ (tabule i pás pod úvodem) jako hotové HTML: „kategorie · kolo (· kvalifikace
+ *  · výhra / prohra skrečí)“; bez kategorie název turnaje, pokud už není nahoře místo města. Štítek Titul /
+ *  Finále ($stitek – hotové HTML volajícího) stojí místo slova kola, ať se „finále“ neopakuje a štítek zůstane
+ *  u svého zápasu: „ITF M15 · [Titul]“, „Challenger · [Finále]“. Text z Pointeks přes typo() (escapuje). */
+function pointeks_soutez_html(array $z, string $stitek = ''): string {
+    $mesto = (string)($z['mesto'] ?? '');
+    $prvni = (string)($z['kategorie'] ?? '') !== '' ? (string)$z['kategorie'] : ($mesto !== '' ? (string)($z['turnaj'] ?? '') : '');
+    $vysledek = (string)($z['vysledek'] ?? '');
+    $verdikt = $vysledek === 'WIN' ? 'výhra' : ($vysledek === 'LOSS' ? 'prohra' : '');
+    $casti = [];
+    if (trim($prvni) !== '') $casti[] = typo($prvni);
+    if ($stitek !== '') $casti[] = $stitek;
+    elseif (trim((string)($z['kolo'] ?? '')) !== '') $casti[] = typo((string)$z['kolo']);
+    if (!empty($z['kvalifikace'])) $casti[] = 'kvalifikace';
+    if ((string)($z['prubeh'] ?? '') === 'RETIRED') $casti[] = $verdikt !== '' ? $verdikt . ' skrečí' : 'skreč';
+    return implode(' · ', $casti);
+}
+
+/** Jména jedné strany zápasu, přesně, jak přišla (jen e()); čtyřhra „hráč / spoluhráč“.
+ *  Hráč klubu ($nasi a 'klub'): za jménem znak klubu (místo, kde mají ostatní zkratku země), přilepený
+ *  k poslednímu slovu v nezalomitelném kousku – nikdy neodskočí sám na další řádek. Text jména se jen
+ *  rozdělí na dva kusy, nemění se; neobvykle dlouhé poslední slovo (přes 14 znaků) se přilepí jen
+ *  posledními šesti znaky, zbytek se smí zlomit (nevyběhne do sloupců setů).
+ *  Ostatní (spoluhráč odjinud, soupeři): za jménem zkratka země za nezlomitelnou mezerou. */
+function pointeks_tabule_jmena(array $lide, bool $nasi): string {
+    $casti = [];
+    foreach ($lide as $c) {
+        $jmeno = (string)($c['jmeno'] ?? '');
+        if (trim($jmeno) === '') continue;
+        $zeme = (string)($c['zeme'] ?? '') !== '' ? '&nbsp;<span class="zapas__zeme">' . e((string)$c['zeme']) . '</span>' : '';
+        if ($nasi && !empty($c['klub'])) {
+            $mezera = mb_strrpos($jmeno, ' ');
+            $konec = $mezera === false ? $jmeno : mb_substr($jmeno, $mezera + 1);
+            if (mb_strlen($konec) > 14) $konec = mb_substr($jmeno, -6);
+            $zacatek = mb_substr($jmeno, 0, mb_strlen($jmeno) - mb_strlen($konec));
+            $casti[] = '<span class="zapas__hrac zapas__hrac--klub">' . e($zacatek)
+                     . '<span class="zapas__se-znakem">' . e($konec) . pointeks_znak_html() . '</span>' . $zeme . '</span>';
+        } else {
+            $casti[] = '<span class="zapas__hrac">' . e($jmeno) . $zeme . '</span>';
+        }
+    }
+    return implode('<span class="zapas__lomitko"> / </span>', $casti);
+}
+
 /**
- * Jeden zápas (pointeks_zapas()) jako řádek tabule. Pro čtečky celá věta (.vh), mřížka je aria-hidden.
- * Řádek: datum · město kapitálkami + „kategorie · kolo (· kvalifikace · výhra / prohra skrečí)“ · hráči klubu
- * tučně (čtyřhra „hráč / spoluhráč“), pod nimi soupeři se zkratkou země · sety (vyšší číslo setu zvýrazněné,
- * u živého zápasu ne rozehraný poslední set; tiebreak horním indexem; skreč = sety, jak stály) nebo
- * „výhra / prohra bez boje“ v řádku hráčů klubu · štítek Titul / Finále, živě.
+ * Jeden zápas (pointeks_zapas()) jako malá výsledková tabule v řádku. Pro čtečky celá věta (.vh), kreslená
+ * tabule je aria-hidden. Čte se zleva doprava: kdy a kde (datum, u živého zápasu „živě“ · město; pod tím
+ * „kategorie · kolo (· kvalifikace · výhra / prohra skrečí)“, štítek Titul / Finále místo slova kola) · kdo
+ * s kým (nahoře strana klubu – čtyřhra „hráč / spoluhráč“, u hráčů klubu znak klubu –, dole soupeři se
+ * zkratkou země, ✓ u vítěze) · hned za jmény číselník setů (v každém setu zvýrazněné vyšší číslo = pole
+ * vítěze setu, u živého zápasu ne rozehraný poslední set; tiebreak horním indexem u prohraného setu;
+ * skreč = sety, jak stály) nebo „výhra / prohra bez boje“ v řádku klubu.
  */
 function pointeks_zapas_html(array $z, int $setu = 3): string {
     $cas = $z['cas'] instanceof DateTimeImmutable ? $z['cas'] : null;
     $sety = array_slice((array)$z['sety'], 0, max(1, $setu));
+    $zive = !empty($z['zive']);
     $bezBoje = $z['prubeh'] === 'WALKOVER';
     $bezSetu = $bezBoje || !$sety;
-    $skrec = $z['prubeh'] === 'RETIRED';
     /* výsledek z pohledu hráče klubu – u skreče a zápasu bez boje jinak není poznat, kdo vyhrál */
     $verdikt = $z['vysledek'] === 'WIN' ? 'výhra' : ($z['vysledek'] === 'LOSS' ? 'prohra' : '');
-    $hlavni = $z['finale'] && !$z['kvalifikace'];          // finále hlavní soutěže (finále kvalifikace není titul)
-    $stitek = '';
-    if ($z['zive']) {
-        $stitek = '<span class="zapas-zive"><span class="zapas-zive__bod"></span>živě</span>';
-    } elseif ($hlavni && $z['vysledek'] === 'WIN') {
-        $stitek = '<span class="zapas-stitek zapas-stitek--titul">Titul</span>';
-    } elseif ($hlavni && $z['vysledek'] === 'LOSS') {
-        $stitek = '<span class="zapas-stitek">Finále</span>';
+    $vitez = $zive || $verdikt === '' ? 0 : ($z['vysledek'] === 'WIN' ? 1 : 2);     // řádek vítěze: 1 = klub, 2 = soupeř
+
+    /* kdy: datum d. m. v pražském čase (+ rok, když není letošní), u živého zápasu tečka „živě“ */
+    $kdy = '';
+    if ($zive) {
+        $kdy = '<span class="zapas-zive"><span class="zapas-zive__bod"></span>živě</span>';
+    } elseif ($cas) {
+        $letos = (new DateTimeImmutable('now', new DateTimeZone('Europe/Prague')))->format('Y');
+        $kdy = '<time datetime="' . e($cas->format('Y-m-d')) . '">' . e($cas->format('j.')) . '&nbsp;' . e($cas->format('n.'))
+             . ($cas->format('Y') !== $letos ? '&nbsp;' . e($cas->format('Y')) : '') . '</time>';
     }
-
-    /* jména – přesně, jak přišla */
-    $strana = static function (array $lide, bool $nasi): string {
-        $casti = [];
-        foreach ($lide as $c) {
-            // nezlomitelná mezera: zkratka země neodskočí od jména na samostatný řádek
-            $zeme = (string)($c['zeme'] ?? '') !== '' ? '&nbsp;<span class="zapas__zeme">' . e((string)$c['zeme']) . '</span>' : '';
-            $casti[] = $nasi && !empty($c['klub'])
-                ? '<b>' . e((string)$c['jmeno']) . '</b>' . $zeme
-                : '<span class="zapas__jmeno">' . e((string)$c['jmeno']) . '</span>' . $zeme;
-        }
-        return implode('<span class="zapas__lomitko"> / </span>', $casti);
-    };
-    $hraciHtml = $strana((array)$z['hraci'], true);
-    $souperiHtml = $z['souperi'] ? $strana((array)$z['souperi'], false) : '<span class="zapas__jmeno">soupeř neuveden</span>';
-
-    /* město (když chybí, název turnaje) a pod ním „kategorie · kolo“ (bez kategorie název turnaje, pokud už není nahoře) */
+    /* kde: město (když chybí, název turnaje), pod ním řádek soutěže (pointeks_soutez_html – se štítkem Titul / Finále) */
     $mesto = $z['mesto'] !== '' ? $z['mesto'] : $z['turnaj'];
-    $soutez = implode(' · ', array_filter([$z['kategorie'] !== '' ? $z['kategorie'] : ($z['mesto'] !== '' ? $z['turnaj'] : ''),
-        (string)$z['kolo'], $z['kvalifikace'] ? 'kvalifikace' : '', $skrec ? ($verdikt !== '' ? $verdikt . ' skrečí' : 'skreč') : ''],
-        static fn($x) => (string)$x !== ''));
+    $soutez = pointeks_soutez_html($z, pointeks_tabule_stitek($z));
     $titulek = $z['turnaj'] !== '' && $z['turnaj'] !== $mesto ? ' title="' . e($z['turnaj']) . '"' : '';
 
-    $datum = '';
-    if ($cas) {
-        $datum = '<time datetime="' . e($cas->format('Y-m-d')) . '">' . e($cas->format('j.')) . '&nbsp;' . e($cas->format('n.')) . '</time>';
-        if ($cas->format('Y') !== (new DateTimeImmutable('now', new DateTimeZone('Europe/Prague')))->format('Y')) {
-            $datum .= '<span class="zapas__rok">' . e($cas->format('Y')) . '</span>';
-        }
-    }
+    /* kdo s kým: nahoře strana klubu (data-r 1), dole soupeři (data-r 2) */
+    $souperi = pointeks_tabule_jmena((array)$z['souperi'], false);
+    if ($souperi === '') $souperi = '<span class="zapas__hrac zapas__hrac--neuveden">soupeř neuveden</span>';
+    $strana = static fn(int $r, string $druh, string $jmena): string => '<span class="zapas__strana zapas__strana--' . $druh
+        . ($vitez === $r ? ' zapas__strana--vitez' : '') . '" data-r="' . $r . '">' . $jmena . '</span>';
 
-    /* sety: nahoře hráči klubu (data-r 1), dole soupeři (data-r 2) */
+    /* číselník setů: sloupec = set, řádek 1 klub, řádek 2 soupeř */
     $setyHtml = '';
     if ($bezSetu) {
-        $text = $bezBoje ? trim($verdikt . ' bez boje') : ($z['zive'] ? 'začíná' : 'bez skóre');
-        // „výhra / prohra bez boje“ stojí v řádku hráčů klubu; bez známého výsledku uprostřed obou řádků
+        $text = $bezBoje ? trim($verdikt . ' bez boje') : ($zive ? 'začíná' : 'bez skóre');
+        // „výhra / prohra bez boje“ stojí v řádku hráčů klubu; bez známého výsledku přes oba řádky
         $radek = $bezBoje && $verdikt !== '' ? ' data-r="1"' : '';
         $setyHtml = '<span class="zapas__bez-setu"' . $radek . '>' . e($text) . '</span>';
     } else {
         $posledni = count($sety) - 1;
         foreach ($sety as $i => $s) {
             $n = $i + 1;
-            $rozehrany = $z['zive'] && $i === $posledni;      // živý zápas: poslední set se ještě hraje – nikdo ho nevyhrál
+            $rozehrany = $zive && $i === $posledni;      // živý zápas: poslední set se ještě hraje – nikdo ho nevyhrál
             foreach ([1 => ['h', 's', 'th'], 2 => ['s', 'h', 'ts']] as $r => [$moje, $cizi, $tb]) {
                 $vyhra = !$rozehrany && (int)$s[$moje] > (int)$s[$cizi];
                 $sup = $s[$tb] !== null ? '<sup>' . (int)$s[$tb] . '</sup>' : '';
-                $setyHtml .= '<span class="zapas__set' . ($vyhra ? ' zapas__set--vyhra' : '') . '" data-s="' . $n . '" data-r="' . $r . '">'
-                           . '<span class="zapas__gemy">' . (int)$s[$moje] . $sup . '</span></span>';
+                $setyHtml .= '<span class="zapas__set' . ($vyhra ? ' zapas__set--vyhra' : '') . ($rozehrany ? ' zapas__set--hraje' : '')
+                           . '" data-s="' . $n . '" data-r="' . $r . '"><span class="zapas__gemy">' . (int)$s[$moje] . $sup . '</span></span>';
             }
         }
     }
 
-    $tridy = 'zapas' . ($z['zive'] ? ' zapas--zive' : '') . ($bezSetu ? ' zapas--bez-setu' : '');
-    return '<li class="' . $tridy . '" style="--sety-r: ' . max(1, count($sety)) . '">'
+    $ctyrhra = !empty($z['ctyrhra']) || count((array)$z['hraci']) > 1 || count((array)$z['souperi']) > 1;
+    $tridy = 'zapas' . ($zive ? ' zapas--zive' : '') . ($bezSetu ? ' zapas--bez-setu' : '') . ($ctyrhra ? ' zapas--ctyrhra' : '');
+    return '<li class="' . $tridy . '" data-sety="' . ($bezSetu ? 0 : count($sety)) . '" style="--sety-r: ' . max(1, count($sety)) . '">'
          . '<p class="vh">' . e(pointeks_zapas_veta($z)) . '</p>'
          . '<div class="zapas__mrizka" aria-hidden="true">'
-         . '<span class="zapas__datum">' . $datum . '</span>'
-         . '<span class="zapas__mesto"' . $titulek . '>' . e($mesto) . '</span>'
-         . '<span class="zapas__soutez">' . typo($soutez) . '</span>'
-         . '<span class="zapas__hraci">' . $hraciHtml . '</span>'
-         . '<span class="zapas__souperi">' . $souperiHtml . '</span>'
+         . '<span class="zapas__kde">' . ($kdy !== '' ? '<span class="zapas__kdy">' . $kdy . '</span>' : '')
+         . ($mesto !== '' ? '<span class="zapas__mesto"' . $titulek . '>' . e($mesto) . '</span>' : '') . '</span>'
+         . ($soutez !== '' ? '<span class="zapas__soutez">' . $soutez . '</span>' : '')
+         . $strana(1, 'nasi', pointeks_tabule_jmena((array)$z['hraci'], true))
+         . $strana(2, 'souperi', $souperi)
+         . ($vitez ? '<span class="zapas__vitez" data-r="' . $vitez . '"></span>' : '')
          . $setyHtml
-         . ($stitek !== '' ? '<span class="zapas__stav">' . $stitek . '</span>' : '')
          . '</div></li>';
 }
 
 /** Celý zápas jednou větou pro čtečky: „11. 10. 2026, Prague, Prague Junior Open, ITF Juniors J200, čtvrtfinále:
- *  Novák Jan – Lukas Horvath (SVK): výhra 6:3, 4:6, 7:6 (4).“ (prostý text, escapuje volající) */
+ *  Novák Jan – Lukas Horvath (SVK): výhra 6:3, 4:6, 7:6 (4).“ (prostý text, escapuje volající)
+ *  Hráči klubu jsou vždy první strana. Ve dvojici hráče klubu se spoluhráčem odjinud má hráč klubu za jménem
+ *  „(I. ČLTK)“ – na kreslené tabuli to ukazuje znak klubu, který čtečka nevidí: „Filip Jakub (I. ČLTK) a J. Cizek“.
+ *  Jména zůstávají přesně, jak přišla. */
 function pointeks_zapas_veta(array $z): string {
-    $lide = static fn(array $s): string => implode(' a ', array_map(static fn(array $c): string => (string)$c['jmeno']
-        . ((string)($c['zeme'] ?? '') !== '' ? ' (' . $c['zeme'] . ')' : ''), $s));
+    $lide = static function (array $s): string {
+        $klubu = count(array_filter($s, static fn($c): bool => is_array($c) && !empty($c['klub'])));
+        $smisena = $klubu > 0 && $klubu < count($s);           // klub + spoluhráč odjinud (u soupeřů 'klub' není)
+        return implode(' a ', array_map(static function (array $c) use ($smisena): string {
+            $pozn = array_values(array_filter([$smisena && !empty($c['klub']) ? "I.\u{00A0}ČLTK" : '', (string)($c['zeme'] ?? '')],
+                static fn(string $x): bool => $x !== ''));
+            return (string)$c['jmeno'] . ($pozn ? ' (' . implode(', ', $pozn) . ')' : '');
+        }, $s));
+    };
     $kde = array_filter([
         $z['cas'] instanceof DateTimeImmutable ? $z['cas']->format('j. n. Y') : '',
         (string)$z['mesto'], (string)$z['turnaj'], (string)$z['kategorie'], (string)$z['kolo'],

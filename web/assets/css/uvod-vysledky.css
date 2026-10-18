@@ -1,0 +1,287 @@
+/* ==========================================================================
+   I. ČLTK Praha – úvodní stránka: pás „Naši hráči na turnajích“ hned pod úvodem
+   (návrh C, Petr vybral 18. 10. 2026). Tmavomodrý pás s malými výsledkovými tabulemi
+   ze služby Pointeks – v duchu turnajové výsledkové tabule, ale v klubovém luxusu Varianty 4:
+   navy, zlaté vlasové linky, teplá bílá, města Cormorant SC, jména Cormorant Garamond, číslice
+   (sety, datum) písmem Jost jako výsledková tabule webu (vysledky.css – lining a tabulkové; Cormorant
+   kreslí ve WebKitu číslice „starého stylu“), u jména každého hráče klubu malý znak klubu.
+   HTML: inc/sablona/uvod-vysledky.php (uvod_vysledky_html('pod-uvodem', …)).
+   Všechno je pod .uvc / .uvc-zapas / .uvc-zive; úvod jen přes .uvod:has(+ .uvc) – když pás je,
+   má úvod menší mezery nad fotkou a pod popiskem galerie, ať je horní zlatá linka pásu vidět
+   už v prvním okně notebooku (velikost fotky, výřezy, deska ani galerie se nemění). Bez pásu
+   (žádné výsledky) pravidla nic nedělají.
+   Rozvržení: od 1180 px tabule vedle sebe (méně výsledků = méně širších sloupců),
+   700–1179 px dvě a dvě, pod 700 px pod sebou (všechny výsledky bez posouvání do stran).
+   --uvc-tichy jen pro číslice prohraných setů na tmavém číselníku (≥ 4,5 : 1), jiný text nikdy;
+   nejmenší písmo .62rem jako na výsledkové tabuli webu (vysledky.css).
+   ========================================================================== */
+
+/* Úvod nad pásem: popisek galerie → zlatá linka pásu (jen když pás je). Od 900 px menší mezera
+   nad fotkou i pod popiskem, ať je horní zlatá linka pásu v prvním okně i na notebooku. */
+.uvod:has(+ .uvc) { padding-bottom: 2rem; }
+@media (min-width: 900px) {
+  .uvod:has(+ .uvc) { padding-top: clamp(1rem, .1rem + 1.7vw, 2.75rem); padding-bottom: .9rem; }
+  .uvod:has(+ .uvc) .galerie__pata { margin-top: .55rem; gap: .3rem; }
+}
+/* 900–1319 px: rejstřík snímků galerie a tlačítko „Zastavit“ se vedle sebe nevejdou – rejstřík by se
+   zalomil na dva řádky a popisek galerie o 36 px povyrostl, pás by v prvním okně (1280 × 720) nebyl vidět
+   vůbec (tlačítko je jen při samočinném střídání, s omezeným pohybem chybí). S pásem proto zůstane u
+   tlačítka jen ikona pauzy (jako na mobilu) o kousek blíž k rejstříku (jeden řádek od 1180 px); slovo
+   Zastavit / Spustit slyší čtečky dál. Cíl pro myš i prst 28 × 28 px s ikonou uprostřed (jako na mobilu).
+   (V 1180–1239 px je pás i tak pod spodní lištou kompaktní hlavičky – v prvním okně je až od 1240 px.) */
+@media (min-width: 900px) and (max-width: 1319.98px) {
+  .uvod:has(+ .uvc) .galerie__ovladani { gap: .75rem; }
+  .uvod:has(+ .uvc) .galerie__pauza-text { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .uvod:has(+ .uvc) .galerie__pauza { min-width: 1.75rem; min-height: 1.75rem; justify-content: center; padding-block: 0; }
+}
+
+.uvc {
+  --uvc-papir: var(--paper);
+  --uvc-text: rgba(251, 250, 246, .86);
+  --uvc-tlumeny: rgba(251, 250, 246, .64);
+  --uvc-tichy: rgba(251, 250, 246, .56);         /* jen číslice prohraných setů (Jost 22–24 px, ≥ 4,5 : 1 na číselníku) */
+  --uvc-linka: rgba(202, 172, 121, .2);
+  --uvc-linka-2: rgba(202, 172, 121, .42);
+  /* zlaté vlasové linky z linkové zlaté --gold (ne z --gold-soft): ta v průhlednosti přes navy šedne,
+     tahle se čte zlatě i v jednom pixelu (rám ~ rgb(156, 131, 87), vnitřní linka bronzová ozvěna ~ rgb(104, 96, 81)) */
+  --uvc-zlata: rgba(179, 147, 90, .85);          /* rám tabule, linka nad skóre, vnitřní linka pásu nahoře */
+  --uvc-zlata-2: rgba(179, 147, 90, .5);         /* vnitřní linka rámu */
+  --uvc-zlato: var(--gold-soft, #caac79);
+  --uvc-mezera: clamp(.75rem, .3rem + 1vw, 1.5rem);
+  position: relative;
+  padding: clamp(1.5rem, 1rem + 1.2vw, 2.4rem) 0 clamp(1.75rem, 1.1rem + 1.4vw, 2.6rem);
+  background:
+    radial-gradient(60% 150% at 12% -40%, rgba(46, 76, 120, .5) 0%, rgba(46, 76, 120, 0) 72%),
+    linear-gradient(180deg, var(--navy) 0%, #12223d 58%, var(--navy-deep) 100%);
+  border-top: 1px solid var(--gold);
+  color: var(--uvc-tlumeny);
+}
+/* dvojitá zlatá linka nahoře (jako pás čísel .cisla) a tichá linka dole */
+.uvc::before { content: ''; position: absolute; left: 0; right: 0; top: 3px; height: 1px; background: var(--uvc-zlata); pointer-events: none; }
+.uvc::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: rgba(202, 172, 121, .3); pointer-events: none; }
+
+/* Hlava: nadpis a pozvánka do Pointeks vlevo, Všechny výsledky vpravo, pod tím tabule */
+.uvc__plocha {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas: "nadpis vse" "pointeks vse" "tabule tabule";
+  column-gap: var(--s-6); align-items: end;
+}
+.uvc__nadpis {
+  grid-area: nadpis; margin: 0; padding-top: .1em;
+  font: 300 clamp(1.85rem, 1.4rem + 1.2vw, 2.6rem)/1.04 var(--serif); letter-spacing: -.006em; color: var(--uvc-papir);
+}
+.uvc__nadpis em { font-style: italic; font-weight: 400; color: var(--uvc-zlato); }
+.uvc__pointeks { grid-area: pointeks; margin: .45rem 0 0; font: italic 400 clamp(1.02rem, .97rem + .16vw, 1.12rem)/1.4 var(--serif); }
+/* odkaz má cíl pro prst vysoký 44 px (padding), vzhled i rozvržení beze změny (záporný margin);
+   obrys fokusu se stáhne zpět k textu (3 px kolem písma jako jinde na webu) */
+.uvc__pointeks a {
+  display: inline-block; padding: .75rem; margin: -.75rem;
+  color: rgba(251, 250, 246, .76); text-decoration: underline; text-decoration-color: rgba(202, 172, 121, .42);
+  text-decoration-thickness: 1px; text-underline-offset: .32em;
+  transition: color var(--pohyb-rychly), text-decoration-color var(--pohyb-rychly);
+}
+.uvc__pointeks a:hover { color: var(--uvc-papir); text-decoration-color: var(--uvc-zlato); }
+.uvc__pointeks a:focus-visible { outline-offset: calc(3px - .75rem); }
+.uvc__znacka { font: normal 600 1.02em/1 var(--sc); letter-spacing: .07em; color: var(--uvc-papir); font-synthesis: none; }
+.uvc__pointeks .sipka { width: .9em; margin-left: .4em; color: var(--uvc-zlato); }
+.uvc__pointeks a:hover .sipka--ven { transform: rotate(-45deg) translate(2px, 0); }
+.uvc__vse { grid-area: vse; margin: 0; }
+.uvc__vse .odkaz { min-height: 44px; padding-top: .7em; }
+
+/* Tabule. Řádky (hlava, soutěž, skóre) sdílí mřížka (subgrid) – města, soutěže i skóre
+   začínají ve všech tabulích na stejné výšce, i když se dlouhé město zalomí. */
+.uvc__tabule {
+  grid-area: tabule; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-template-rows: auto auto auto;
+  column-gap: var(--uvc-mezera); row-gap: 0;
+  margin: clamp(1.1rem, .8rem + .75vw, 1.6rem) 0 0; padding: 0; list-style: none;
+}
+/* tabule = malá deska s dvojitou vlasovou linkou (jako Zlatá deska a navy desky galerie) */
+.uvc-zapas {
+  position: relative; display: grid; grid-row: span 3; grid-template-rows: subgrid; row-gap: 0; min-width: 0;
+  padding: 1.05rem clamp(1.05rem, .8rem + .5vw, 1.4rem) 1.1rem;
+  background: linear-gradient(180deg, rgba(251, 250, 246, .05), rgba(251, 250, 246, .012) 80%);
+  border: 1px solid var(--uvc-zlata);
+}
+.uvc-zapas::before { content: ''; position: absolute; inset: 4px; border: 1px solid var(--uvc-zlata-2); pointer-events: none; }
+@supports not (grid-template-rows: subgrid) {
+  .uvc-zapas { display: flex; flex-direction: column; }
+}
+
+/* hlava tabule: město kapitálkami zlatě (jako místo na navy desce .bjk – vedou jména, ne město),
+   vpravo datum / živě */
+.uvc-zapas__hlava { display: flex; justify-content: space-between; align-items: baseline; gap: .15rem .9rem; margin: 0; min-width: 0; }
+.uvc-zapas__mesto { min-width: 0; font: 600 1.1rem/1.2 var(--sc); letter-spacing: .07em; color: var(--uvc-zlato); font-synthesis: none; }
+.uvc-zapas__kdy { flex: none; font: 400 .8125rem/1.2 var(--sans); letter-spacing: .02em; color: var(--uvc-tlumeny); font-variant-numeric: lining-nums tabular-nums; white-space: nowrap; }
+.uvc-zapas__rok { font-size: .86em; color: var(--uvc-tlumeny); }
+.uvc-zapas__soutez { margin: .22rem 0 0; font: 400 .8125rem/1.45 var(--sans); letter-spacing: .01em; color: var(--uvc-tlumeny); }
+
+/* Skóre: jména | sloupce setů na tmavším „číselníku“; nahoře klub, dole soupeř */
+/* skóre vyplní výšku řádku (určuje ji nejvyšší tabule – čtyřhra): obě strany mají stejnou výšku
+   a dělicí linka i číselník leží ve všech tabulích na stejném místě */
+.uvc-zapas__skore {
+  --set: 2.15rem;
+  position: relative; display: grid; grid-template-columns: minmax(0, 1fr) repeat(var(--sety, 2), var(--set));
+  grid-template-rows: 1fr 1fr; align-self: stretch;
+  margin-top: .7rem; border-top: 1px solid var(--uvc-zlata);
+}
+@supports not (grid-template-rows: subgrid) {
+  .uvc-zapas__skore { flex: 1 0 auto; }
+}
+.uvc-zapas__skore[data-sety="1"] { --sety: 1; }
+.uvc-zapas__skore[data-sety="3"] { --sety: 3; }
+.uvc-zapas__skore[data-sety="4"] { --sety: 4; --set: 2rem; }
+.uvc-zapas__skore[data-sety="5"] { --sety: 5; --set: 1.85rem; }
+.uvc-zapas__skore::after { content: ''; grid-column: 2 / -1; grid-row: 1 / -1; background: rgba(5, 12, 24, .3); }
+.uvc-zapas__skore::before { content: ''; position: relative; z-index: 2; grid-column: 1 / -1; grid-row: 2; align-self: start; height: 1px; background: var(--uvc-linka); }
+.uvc-zapas__skore > * { position: relative; z-index: 1; }
+
+.uvc-zapas__strana { grid-column: 1; min-width: 0; align-self: center; padding: .6rem .75rem .55rem 0; }
+.uvc-zapas__strana[data-r="1"] { grid-row: 1; }
+.uvc-zapas__strana[data-r="2"] { grid-row: 2; }
+.uvc-zapas__jmeno { display: block; }
+/* Jména klubu vedou: klubové písmo, teplá bílá, i při prohře o stupeň výraznější než soupeř (výsledek
+   ukazují sety – vyšší číslo každého setu je světlé a tučné). Soupeř drobnějším bezpatkovým písmem,
+   když prohrál, ještě tišší. Žádná červená „PROHRA“. */
+.uvc-zapas__strana--nasi .uvc-zapas__jmeno { font: 400 1.16rem/1.22 var(--serif); color: var(--uvc-papir); }
+.uvc-zapas__strana--nasi .uvc-zapas__jmeno--klub { font-weight: 600; }
+.uvc-zapas__strana--nasi.uvc-zapas__strana--porazeny .uvc-zapas__jmeno { color: rgba(251, 250, 246, .92); }
+.uvc-zapas__strana--souperi .uvc-zapas__jmeno { font: 400 .875rem/1.4 var(--sans); color: var(--uvc-text); }
+.uvc-zapas__strana--souperi.uvc-zapas__strana--porazeny .uvc-zapas__jmeno { color: var(--uvc-tlumeny); }
+/* zkratka země ve velikosti výsledkové tabule webu (.zapas__zeme), tlumeně (AA i v 10 px) */
+.uvc-zapas__zeme { font: 500 .64rem/1 var(--sans); letter-spacing: .12em; color: var(--uvc-tlumeny); vertical-align: .12em; white-space: nowrap; }
+/* Znak klubu za jménem hráče klubu (pointeks_znak_html(), PNG 64 × 73 s průhledností) stejně jako na
+   výsledkové tabuli webu (vysledky.css): 0,8 em – o kousek vyšší než verzálky jména (Cormorant Garamond
+   0,63 em), na střed výšky verzálek, malá mezera; s posledním slovem jména v nezlomitelném celku
+   (.uvc-zapas__se-znakem), takže nikdy neodskočí sám na nový řádek. Velikost v em – roste a klesá se
+   jménem (čtyřhra, mobil). Na navy drží sytě: vlastní zlatý lem štítu, žádný filtr. */
+.uvc-zapas__se-znakem { white-space: nowrap; }
+.uvc .znak-hrace {
+  display: inline-block; width: auto; height: .8em; max-width: none;
+  margin-left: .3em; vertical-align: -.085em;
+}
+/* čtyřhra: čtyři jména pod sebou o stupeň menší (jako na turnajové tabuli), ať se dlouhá jména nelámou */
+.uvc-zapas--ctyrhra .uvc-zapas__strana { padding-block: .5rem .45rem; }
+.uvc-zapas--ctyrhra .uvc-zapas__strana--nasi .uvc-zapas__jmeno { font-size: 1.08rem; line-height: 1.2; }
+.uvc-zapas--ctyrhra .uvc-zapas__strana--souperi .uvc-zapas__jmeno { font-size: .8125rem; line-height: 1.38; }
+
+/* číslice setů Jost (lining, tabulkové) jako na výsledkové tabuli webu – stejně vysoké jako dřívější
+   Cormorant 1,72 rem; vyhraný set teplá bílá 600, prohraný tichý 400 */
+.uvc-zapas__set {
+  display: flex; align-items: center; justify-content: center;
+  font: 400 1.5rem/1 var(--sans); font-variant-numeric: lining-nums tabular-nums; color: var(--uvc-tichy);
+}
+/* jemné přepážky mezi sloupci setů – „okénka“ tabule */
+.uvc-zapas__set:not([data-s="1"]) { box-shadow: inset 1px 0 0 rgba(202, 172, 121, .1); }
+.uvc-zapas__set[data-r="1"] { grid-row: 1; }
+.uvc-zapas__set[data-r="2"] { grid-row: 2; }
+.uvc-zapas__set[data-s="1"] { grid-column: 2; }
+.uvc-zapas__set[data-s="2"] { grid-column: 3; }
+.uvc-zapas__set[data-s="3"] { grid-column: 4; }
+.uvc-zapas__set[data-s="4"] { grid-column: 5; }
+.uvc-zapas__set[data-s="5"] { grid-column: 6; }
+.uvc-zapas__set--vyhra { color: var(--uvc-papir); font-weight: 600; }
+.uvc-zapas__gemy { position: relative; display: inline-block; }
+.uvc-zapas__gemy sup { position: absolute; left: 100%; top: -.3em; margin-left: .06em; font: 600 .5em/1 var(--sans); color: var(--uvc-zlato); }
+
+/* bez setů: „výhra / prohra bez boje“ v řádku klubu, jinak („začíná“, „bez skóre“) přes oba řádky */
+.uvc-zapas--bez-setu .uvc-zapas__skore { grid-template-columns: minmax(0, 1fr) auto; }
+.uvc-zapas__bez-setu {
+  grid-column: 2; grid-row: 1 / span 2; align-self: center; padding: 0 .8rem; text-align: center; white-space: nowrap;
+  font: 500 .62rem/1.3 var(--sans); letter-spacing: .15em; text-transform: uppercase; color: var(--uvc-text);
+}
+.uvc-zapas__bez-setu[data-r="1"] { grid-row: 1; }
+.uvc-zapas__skore--pres::before { grid-column: 1; }       /* nápis přes oba řádky: dělicí linka jen pod jmény */
+
+/* štítky Titul (zlatý) a Finále v řádku soutěže místo slova kola („ITF M15 · [Titul]“, pointeks_soutez_html)
+   – velikost jako .zapas-stitek tabule webu */
+.uvc-zapas__stitek {
+  display: inline-block; margin-block: -.3em; padding: .3em .7em .26em; border: 1px solid var(--uvc-linka-2); border-radius: 999px;
+  font: 500 .62rem/1 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--uvc-text); vertical-align: .1em; white-space: nowrap;
+}
+.uvc-zapas__stitek--titul { border-color: var(--uvc-zlato); color: var(--uvc-zlato); background: rgba(202, 172, 121, .1); }
+
+/* Živý zápas: červená tečka s pomalým klidným pulzem, nápis „živě“ teplou bílou */
+.uvc-zive { display: inline-flex; align-items: center; gap: .55em; font: 600 .64rem/1 var(--sans); letter-spacing: .18em; text-transform: uppercase; color: var(--uvc-papir); }
+.uvc-zive__bod { position: relative; flex: none; width: .5rem; height: .5rem; border-radius: 50%; background: var(--tri-cervena); }
+.uvc-zive__bod::after { content: ''; position: absolute; inset: 0; border-radius: 50%; background: var(--tri-cervena); opacity: 0; animation: uvc-pulz 2.6s cubic-bezier(.2, .7, .2, 1) infinite; }
+@keyframes uvc-pulz {
+  0% { transform: scale(1); opacity: .55; }
+  72%, 100% { transform: scale(2.8); opacity: 0; }
+}
+/* omezený pohyb (systém nebo přepínač „Omezit pohyb“ v patičce) = tečka stojí */
+@media (prefers-reduced-motion: reduce) {
+  html:not([data-pohyb="plny"]) .uvc-zive__bod::after { animation: none; }
+}
+html[data-pohyb="omezit"] .uvc-zive__bod::after { animation: none; }
+.uvc-zapas--zive { border-top-color: rgba(237, 28, 36, .75); }
+
+/* Vynucené barvy (Windows – vysoký kontrast): pozadí zmizí, vyhraný set jako plné pole v barvách systému
+   (stejně jako výsledková tabule webu) */
+@media (forced-colors: active) {
+  .uvc-zapas__set--vyhra { forced-color-adjust: none; background-color: CanvasText; color: Canvas; }
+}
+
+/* Vyšší kontrast (přepínač v patičce nebo systém) */
+:root[data-kontrast="vyssi"] .uvc { --uvc-text: #fbfaf6; --uvc-tlumeny: rgba(251, 250, 246, .86); --uvc-tichy: rgba(251, 250, 246, .74); --uvc-linka: rgba(202, 172, 121, .45); }
+@media (prefers-contrast: more) {
+  :root:not([data-kontrast="normalni"]) .uvc { --uvc-text: #fbfaf6; --uvc-tlumeny: rgba(251, 250, 246, .86); --uvc-tichy: rgba(251, 250, 246, .74); --uvc-linka: rgba(202, 172, 121, .45); }
+}
+
+/* Méně než čtyři výsledky: na počítači méně sloupců, ať pás nezůstane z poloviny prázdný
+   (jeden výsledek = polovina šířky, přes celý pás by tabule byla nečitelně široká) */
+@media (min-width: 1180px) {
+  .uvc__tabule[data-pocet="3"] { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .uvc__tabule[data-pocet="2"], .uvc__tabule[data-pocet="1"] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+/* Menší notebook (1180–1439 px): užší sloupce setů a vnitřní okraje, ať se dlouhá čtyřhra
+   („Clara Gouvea Vieira Elkind BRA“) vejde na jeden řádek (od 1220 px; užší okno ji zalomí –
+   řady tabulí zůstanou zarovnané, jméno se nikdy neusekne) */
+@media (min-width: 1180px) and (max-width: 1439.98px) {
+  .uvc__tabule { column-gap: .85rem; }
+  .uvc-zapas { padding-inline: .95rem; }
+  .uvc-zapas__skore { --set: 1.95rem; }
+  .uvc-zapas__strana { padding-right: .55rem; }
+}
+@media (min-width: 1180px) and (max-width: 1259.98px) {
+  .uvc__tabule { column-gap: .75rem; }
+  .uvc-zapas { padding-inline: .85rem; }
+  .uvc-zapas__skore { --set: 1.85rem; }
+  .uvc-zapas__strana { padding-right: .45rem; }
+}
+
+/* Tablet a menší notebook: dvě a dvě */
+@media (max-width: 1179.98px) {
+  .uvc__tabule { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .uvc-zapas:nth-child(n+3) { margin-top: var(--uvc-mezera); }
+}
+
+/* Mobil: nadpis, pozvánka, tabule pod sebou (bez posouvání do stran), pod nimi Všechny výsledky.
+   Tabule jsou samostatné (bez subgridu) a sevřenější, ať jsou všechny čtyři na jedné obrazovce. */
+@media (max-width: 699.98px) {
+  .uvc__plocha { grid-template-columns: minmax(0, 1fr); grid-template-areas: "nadpis" "pointeks" "tabule" "vse"; }
+  .uvc__pointeks { margin-top: .4rem; }
+  .uvc__tabule { grid-template-columns: minmax(0, 1fr); grid-template-rows: none; row-gap: .6rem; margin-top: 1.15rem; }
+  .uvc-zapas { grid-row: auto; display: flex; flex-direction: column; padding: .8rem .95rem .85rem; }
+  .uvc-zapas:nth-child(n+3) { margin-top: 0; }
+  .uvc-zapas::before { inset: 3px; }
+  .uvc-zapas__mesto { font-size: 1.06rem; }
+  .uvc-zapas__skore { margin-top: .6rem; }
+  .uvc-zapas__strana { padding: .42rem .65rem .36rem 0; }
+  .uvc-zapas--ctyrhra .uvc-zapas__strana { padding-block: .36rem .32rem; }
+  .uvc-zapas__set { font-size: 1.4rem; }
+  .uvc__vse { margin-top: .8rem; }
+}
+@media (max-width: 379.98px) {
+  .uvc-zapas { padding-inline: .85rem; }
+  .uvc-zapas__skore { --set: 2rem; }
+  .uvc-zapas__strana--nasi .uvc-zapas__jmeno { font-size: 1.1rem; }
+  .uvc-zapas__set { font-size: 1.3rem; }
+}
+
+@media print {
+  .uvc { background: none; border-top-color: #999; color: #333; }
+  .uvc::before, .uvc::after, .uvc-zapas__skore::after { display: none; }
+  .uvc, .uvc * { color: #000 !important; }
+  .uvc-zapas { border-color: #bbb; background: none; }
+  .uvc-zive__bod::after { display: none; }
+}
