@@ -89,6 +89,7 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
   </div>
 </section>
 
+<?php if (!blok_skryty($bKontakt)): /* skrytý blok „kontakt“ = celá sekce pryč (klub 21. 10. 2026) */ ?>
 <!-- II · Ceny, kontakt a výuka v areálu -->
 <section class="sekce" id="kontakt" aria-labelledby="kontakt-nadpis">
   <div class="wrap v-arealu">
@@ -121,6 +122,7 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
     <?php endif; ?>
   </div>
 </section>
+<?php endif; ?>
 
 <?= stranka_dalsi_bloky('privatni-treneri', ['uvod', 'treneri', 'kontakt']) ?>
 

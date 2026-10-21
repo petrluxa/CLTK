@@ -549,7 +549,15 @@ function blok(string $stranka, string $klic): array {
         'existuje' => false, 'stranka' => $stranka, 'klic' => $klic, 'stitek' => '', 'nadpis' => '', 'perex' => '',
         'text' => '', 'foto' => '', 'foto_popisek' => '', 'odkaz' => '', 'odkaz_text' => '', 'odkaz2' => '',
         'odkaz2_text' => '', 'doplni_klub' => 1, 'visible' => 0,
+        'skryty' => (bool)$r,          // v databázi je, ale správce ho skryl – viz blok_skryty()
     ];
+}
+
+/** Blok je v databázi, ale správce ho v modulu Stránky skryl (visible = 0) → šablona jeho sekci nevypíše vůbec.
+ *  Blok, který v databázi chybí, je něco jiného: tam šablona dál ukáže výchozí obsah. (Klub 21. 10. 2026:
+ *  „i když dám skrýt, blok nezmizí“ – skrytý blok se dřív choval jako chybějící a sekce zůstala s výchozím textem.) */
+function blok_skryty(array $b): bool {
+    return !empty($b['skryty']);
 }
 
 /** Všechny viditelné bloky stránky podle pořadí. */
