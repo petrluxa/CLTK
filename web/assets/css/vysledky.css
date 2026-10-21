@@ -250,14 +250,68 @@ html[data-pohyb="omezit"] .zapas-zive__bod::after { animation: none; }
 }
 @media (max-width: 379.98px) { .strankovani { gap: .25rem; } }      /* ← 1 2 3 4 → (6 × 44 px) se vejde i do 320 px */
 
-/* Vyšší kontrast (přepínač v patičce nebo systém): tiché texty tmavší */
-:root[data-kontrast="vyssi"] .zapas__set, :root[data-kontrast="vyssi"] .zapas__soutez, :root[data-kontrast="vyssi"] .zapas__zeme,
-:root[data-kontrast="vyssi"] .zapas__kde { color: var(--ink-2); }
-:root[data-kontrast="vyssi"] .zapas__set--vyhra { color: var(--paper); }
+/* ---------- Tmavomodrá tabule ----------
+   Petr 21. 10. 2026: „všechny výsledky v designu toho modrého jak je na titulní straně … velikost nech
+   takovouhle“ – mřížka, rozměry řádků i polí setů beze změny, barvy podle pásu pod úvodem (uvod-vysledky.css):
+   navy deska s jemným světlem vlevo nahoře, dvojitá zlatá linka nahoře, zlaté linky mezi hlavou, zápasy
+   a patou; hráči klubu teplou bílou tučně se znakem, soupeři tlumeně; vyhraný set = světlejší okénko
+   s jasnou tučnou číslicí, prohraný = tmavé okénko s tichou číslicí (jako číselník pásu); ✓ a tiebreak zlatě. */
+.tabule {
+  --tab-ciselnik: rgba(5, 12, 24, .34);          /* okénko prohraného setu */
+  --tab-vyhra: rgba(251, 250, 246, .15);          /* okénko vyhraného setu */
+  --tab-tichy: rgba(251, 250, 246, .6);           /* číslice prohraného setu (≥ 4,5 : 1 na okénku) */
+  --tab-zlata: var(--gold-soft, #caac79);
+  --tab-text: rgba(251, 250, 246, .86);
+  --tab-tlumeny: rgba(251, 250, 246, .66);
+  --tab-linka: rgba(202, 172, 121, .22);
+  --tab-linka-zlata: rgba(179, 147, 90, .85);
+  padding: clamp(1.25rem, .8rem + 1.2vw, 2.1rem) clamp(1rem, .4rem + 1.8vw, 2.4rem) clamp(.6rem, .4rem + .6vw, 1.1rem);
+  background:
+    radial-gradient(60% 150% at 12% -40%, rgba(46, 76, 120, .5) 0%, rgba(46, 76, 120, 0) 72%),
+    linear-gradient(180deg, var(--navy) 0%, #12223d 58%, var(--navy-deep) 100%);
+  border-top: 1px solid var(--gold);
+  color: var(--tab-tlumeny);
+}
+.tabule::before { content: ''; position: absolute; left: 0; right: 0; top: 3px; height: 1px; background: var(--tab-linka-zlata); pointer-events: none; }
+.tabule :focus-visible { outline-color: var(--gold-soft); }
+.tabule__hlava { border-bottom-color: var(--tab-linka-zlata); }
+.tabule__nadpis { font-weight: 300; color: var(--paper); }
+.tabule__pozvanka a { color: rgba(251, 250, 246, .76); text-decoration-color: rgba(202, 172, 121, .42); }
+.tabule__pozvanka a:hover { color: var(--paper); text-decoration-color: var(--gold-soft); }
+.tabule__znacka { color: var(--paper); }
+.tabule__pozvanka .sipka { color: var(--gold-soft); }
+.tabule__stav { color: var(--tab-tlumeny); }
+.tabule--bez-hlavy .tabule__seznam { border-top-color: var(--tab-linka-zlata); }
+.tabule__pata { border-top-color: var(--tab-linka-zlata); color: var(--tab-tlumeny); }
+.tabule__pata .odkaz { color: var(--paper); background-image: linear-gradient(var(--gold-soft), var(--gold-soft)); }
+.tabule__pata .odkaz:hover { color: var(--gold-soft); }
+.tabule__kredit { color: var(--tab-tlumeny); text-decoration-color: rgba(202, 172, 121, .42); }
+.tabule__kredit:hover { color: var(--paper); text-decoration-color: var(--gold-soft); }
+.tabule .zapas + .zapas { border-top-color: var(--tab-linka); }
+.tabule .zapas__kde { color: var(--tab-text); }
+.tabule .zapas__kdy + .zapas__mesto::before { color: var(--tab-tlumeny); }
+.tabule .zapas__mesto { color: var(--gold-soft); }
+.tabule .zapas__soutez { color: var(--tab-tlumeny); }
+.tabule .zapas__strana { color: var(--tab-text); }
+.tabule .zapas__hrac--klub { color: var(--paper); }
+.tabule .zapas__hrac--neuveden, .tabule .zapas__zeme, .tabule .zapas__lomitko { color: var(--tab-tlumeny); }
+.tabule .zapas__vitez::before { border-color: var(--gold-soft); }
+.tabule .zapas__set { color: var(--tab-tichy); }
+.tabule .zapas__set--vyhra { color: var(--paper); background-color: var(--tab-vyhra); }
+.tabule .zapas__set--hraje { color: var(--paper); }
+.tabule .zapas__bez-setu { color: var(--tab-text); }
+.tabule .zapas-stitek { border-color: rgba(251, 250, 246, .32); color: var(--paper); }
+.tabule .zapas-stitek--titul { border-color: var(--gold); color: var(--gold-soft); background: rgba(179, 147, 90, .14); }
+.tabule .zapas-zive { color: var(--paper); }
+.tabule .zapas--zive { background: linear-gradient(90deg, rgba(237, 28, 36, .14), rgba(237, 28, 36, 0) 38%); }
+
+/* Vyšší kontrast (přepínač v patičce nebo systém): tiché texty na navy jasnější */
+:root[data-kontrast="vyssi"] .tabule .zapas__set, :root[data-kontrast="vyssi"] .tabule .zapas__soutez, :root[data-kontrast="vyssi"] .tabule .zapas__zeme,
+:root[data-kontrast="vyssi"] .tabule .zapas__kde, :root[data-kontrast="vyssi"] .tabule .zapas__strana { color: var(--paper); }
 @media (prefers-contrast: more) {
-  :root:not([data-kontrast="normalni"]) .zapas__set, :root:not([data-kontrast="normalni"]) .zapas__soutez,
-  :root:not([data-kontrast="normalni"]) .zapas__zeme, :root:not([data-kontrast="normalni"]) .zapas__kde { color: var(--ink-2); }
-  :root:not([data-kontrast="normalni"]) .zapas__set--vyhra { color: var(--paper); }
+  :root:not([data-kontrast="normalni"]) .tabule .zapas__set, :root:not([data-kontrast="normalni"]) .tabule .zapas__soutez,
+  :root:not([data-kontrast="normalni"]) .tabule .zapas__zeme, :root:not([data-kontrast="normalni"]) .tabule .zapas__kde,
+  :root:not([data-kontrast="normalni"]) .tabule .zapas__strana { color: var(--paper); }
 }
 
 /* Vynucené barvy (Windows – vysoký kontrast): pozadí polí zmizí, vyhraný set by poznal jen řez písma →
@@ -267,6 +321,9 @@ html[data-pohyb="omezit"] .zapas-zive__bod::after { animation: none; }
 }
 
 @media print {
+  .tabule { background: none; border-top-color: #999; padding: 0; }
+  .tabule::before { display: none; }
+  .tabule, .tabule * { color: #000 !important; }
   .zapas__set { background: none; color: #555; }
   .zapas__set--vyhra { background: none; color: #000; font-weight: 700; }
   .zapas-zive__bod::after { display: none; }
