@@ -101,7 +101,7 @@ $ptOdkazVen = fn(string $u) => odkaz_je_externi($u) ? ' target="_blank" rel="noo
 
 <?php if ($ptRezervace !== '' || $ptTel !== ''): ?>
 <nav class="lista-mobil" aria-label="Rezervace a telefon">
-  <?php if ($ptRezervace !== ''): ?><a class="lista-mobil__rezervace" href="<?= e($ptRezervace) ?>" target="_blank" rel="noopener">Rezervovat kurt<small>online</small><span class="vh"> (v novém okně)</span></a><?php endif; ?>
+  <?php if ($ptRezervace !== ''): ?><a class="lista-mobil__rezervace" href="<?= e($ptRezervace) ?>" target="_blank" rel="noopener">Obsazenost kurtů<small>online</small><span class="vh"> (v novém okně)</span></a><?php endif; ?>
   <?php if ($ptTel !== ''): ?><a class="lista-mobil__telefon" href="<?= e(tel_href($ptTel)) ?>">Zavolat recepci<small><?= str_replace(' ', '&nbsp;', e(tel_kratce($ptTel))) ?></small></a><?php endif; ?>
 </nav>
 <?php endif; ?>

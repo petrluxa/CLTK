@@ -95,7 +95,9 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
                 if ($stary) {
                     db_update('cltk_aktuality', $id, $data);
                 } else {
-                    $data['poradi'] = admin_dalsi_poradi('cltk_aktuality');
+                    /* nová aktualita na první místo (klub 21. 10. 2026: „nejnovější by měla být nahoře“ – dřív
+                       skočila na konec a musela se posouvat ručně); šipky pořadí fungují dál */
+                    $data['poradi'] = (int)val('SELECT COALESCE(MIN(poradi), 1) - 1 FROM cltk_aktuality');
                     $data['created_at'] = ted();
                     $id = db_insert('cltk_aktuality', $data);
                 }

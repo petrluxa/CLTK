@@ -60,7 +60,9 @@ $hlPolozka = static function (array $m, int $i): string {
     <p class="hlavicka__jmeno"><span class="sc"><?= typo($hlNazev) ?></span><span class="zalozen">Založen 1893</span></p>
     <ul class="servis">
       <?php if ($hlTel !== ''): ?><li><a class="tel" href="<?= e(tel_href($hlTel)) ?>">Recepce <?= e(preg_replace('/\s+/', "\u{00A0}", trim(preg_replace('/^\+420\s*/', '', trim($hlTel))))) ?></a></li><?php endif; ?>
-      <?php $hlObsazenost = bezpecny_odkaz(setting('obsazenost_url')); if ($hlObsazenost !== ''): ?><li><a href="<?= e($hlObsazenost) ?>" target="_blank" rel="noopener">Obsazenost kurtů<span class="vh"> (v novém okně)</span></a></li><?php endif; ?>
+      <?php /* „Obsazenost kurtů“ je od 21. 10. 2026 modré tlačítko v hlavičce (klub: „stačí pouze jednou“) –
+               v horní liště jen náhradou, když tlačítko chybí (prázdný odkaz rezervace). */
+      $hlObsazenost = bezpecny_odkaz(setting('obsazenost_url')); if ($hlObsazenost !== '' && $hlRezervace === ''): ?><li><a href="<?= e($hlObsazenost) ?>" target="_blank" rel="noopener">Obsazenost kurtů<span class="vh"> (v novém okně)</span></a></li><?php endif; ?>
       <li><a href="<?= e(url('kontakt.php')) ?>"<?= here() === 'kontakt.php' ? ' aria-current="page"' : '' ?>>Kontakt</a></li>
     </ul>
   </div>
@@ -76,12 +78,12 @@ $hlPolozka = static function (array $m, int $i): string {
       <ul class="nav__seznam nav__seznam--p">
         <?php foreach ($hlMenu as $i => $m) if ($m['strana'] === 'p') echo $hlPolozka($m, $i); ?>
         <?php if ($hlRezervace !== ''): ?>
-        <li class="jen-desktop"><a class="btn btn--mala" href="<?= e($hlRezervace) ?>" target="_blank" rel="noopener">Rezervovat kurt<span class="vh"> (rezervační systém v novém okně)</span></a></li>
+        <li class="jen-desktop"><a class="btn btn--mala" href="<?= e($hlRezervace) ?>" target="_blank" rel="noopener">Obsazenost kurtů<span class="vh"> (rezervační systém v novém okně)</span></a></li>
         <?php endif; ?>
       </ul>
       <div class="nav__pata">
         <?php if ($hlRezervace !== ''): ?>
-        <a class="btn" href="<?= e($hlRezervace) ?>" target="_blank" rel="noopener">Rezervovat kurt <?= sipka('ven') ?><span class="vh"> (rezervační systém v novém okně)</span></a>
+        <a class="btn" href="<?= e($hlRezervace) ?>" target="_blank" rel="noopener">Obsazenost kurtů <?= sipka('ven') ?><span class="vh"> (rezervační systém v novém okně)</span></a>
         <?php endif; ?>
         <div class="nav__pata-radek">
           <?php if ($hlTel !== ''): ?><a href="<?= e(tel_href($hlTel)) ?>">Recepce <?= str_replace(' ', '&nbsp;', e(tel_kratce($hlTel))) ?></a><?php endif; ?>
