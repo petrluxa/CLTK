@@ -254,11 +254,10 @@ html[data-pohyb="omezit"] .zapas-zive__bod::after { animation: none; }
    Petr 21. 10. 2026: „všechny výsledky v designu toho modrého jak je na titulní straně … velikost nech
    takovouhle“ – mřížka, rozměry řádků i polí setů beze změny, barvy podle pásu pod úvodem (uvod-vysledky.css):
    navy deska s jemným světlem vlevo nahoře, dvojitá zlatá linka nahoře, zlaté linky mezi hlavou, zápasy
-   a patou; hráči klubu teplou bílou tučně se znakem, soupeři tlumeně; vyhraný set = světlejší okénko
-   s jasnou tučnou číslicí, prohraný = tmavé okénko s tichou číslicí (jako číselník pásu); ✓ a tiebreak zlatě. */
+   a patou; hráči klubu teplou bílou tučně se znakem, soupeři tlumeně; sety na souvislém tmavém
+   číselníku jako v pásu (vyhraný = jasná tučná číslice, prohraný = tichá); ✓ a tiebreak zlatě. */
 .tabule {
   --tab-ciselnik: rgba(5, 12, 24, .34);          /* okénko prohraného setu */
-  --tab-vyhra: rgba(251, 250, 246, .15);          /* okénko vyhraného setu */
   --tab-tichy: rgba(251, 250, 246, .6);           /* číslice prohraného setu (≥ 4,5 : 1 na okénku) */
   --tab-zlata: var(--gold-soft, #caac79);
   --tab-text: rgba(251, 250, 246, .86);
@@ -296,8 +295,14 @@ html[data-pohyb="omezit"] .zapas-zive__bod::after { animation: none; }
 .tabule .zapas__hrac--klub { color: var(--paper); }
 .tabule .zapas__hrac--neuveden, .tabule .zapas__zeme, .tabule .zapas__lomitko { color: var(--tab-tlumeny); }
 .tabule .zapas__vitez::before { border-color: var(--gold-soft); }
-.tabule .zapas__set { color: var(--tab-tichy); }
-.tabule .zapas__set--vyhra { color: var(--paper); background-color: var(--tab-vyhra); }
+/* sety jako v pásu pod úvodem (Petr 21. 10. 2026: světlejší okénka vyhraných setů „se mi nelíbí“): jeden
+   souvislý tmavý číselník přes oba řádky, jemné zlaté přepážky mezi sety a linka mezi řádky; vyhraný set
+   jasnou tučnou číslicí, prohraný tichou – bez vlastního pozadí */
+.tabule .zapas__set { align-self: stretch; height: auto; border: 0; background: var(--tab-ciselnik); color: var(--tab-tichy); font-weight: 400; }
+.tabule .zapas__set:not([data-s="1"]) { box-shadow: inset 1px 0 0 rgba(202, 172, 121, .12); }
+.tabule .zapas__set[data-r="1"] { box-shadow: inset 0 -1px 0 var(--tab-linka); }
+.tabule .zapas__set[data-r="1"]:not([data-s="1"]) { box-shadow: inset 1px 0 0 rgba(202, 172, 121, .12), inset 0 -1px 0 var(--tab-linka); }
+.tabule .zapas__set--vyhra { color: var(--paper); font-weight: 600; background-color: var(--tab-ciselnik); }
 .tabule .zapas__set--hraje { color: var(--paper); }
 .tabule .zapas__bez-setu { color: var(--tab-text); }
 .tabule .zapas-stitek { border-color: rgba(251, 250, 246, .32); color: var(--paper); }
