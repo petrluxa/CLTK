@@ -153,9 +153,13 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
         <?php foreach ($aktuality as $a):
           $aOdkaz = bezpecny_odkaz((string)$a['odkaz']); ?>
         <li class="aktualita">
-          <?php $aFoto = obr((string)$a['foto'], '', ['class' => 'foto', 'fokus' => $fokus((string)$a['fokus'], '50% 50%')]); ?>
+          <?php /* Fotka v rámu 4 : 3. Když má fotka jiný tvar (na výšku, panorama), ukáže se CELÁ na paspartě –
+                   ořez do 4 : 3 ji jinak hodně „přiblížil“ (klub 21. 10. 2026). Blízké tvary (1,2–1,55) se dál vyplní. */
+          [$aW, $aH] = obrazek_rozmer((string)$a['foto']);
+          $aCela = $aW > 0 && $aH > 0 && ($aW / $aH < 1.2 || $aW / $aH > 1.55);
+          $aFoto = obr((string)$a['foto'], '', ['class' => 'foto', 'fokus' => $aCela ? '50% 50%' : $fokus((string)$a['fokus'], '50% 50%')]); ?>
           <?php if ($aFoto !== ''): ?>
-          <div class="aktualita__foto ramec ramec--linka"><div class="ramec__obraz"><?= $aFoto ?></div></div>
+          <div class="aktualita__foto ramec ramec--linka<?= $aCela ? ' aktualita__foto--cela' : '' ?>"><div class="ramec__obraz"><?= $aFoto ?></div></div>
           <?php endif; ?>
           <?php $aDatum = normalizuj_datum((string)($a['datum'] ?? '')); if (is_string($aDatum)): ?><p class="aktualita__datum"><time datetime="<?= e($aDatum) ?>"><?= e(cz_date_dlouze($aDatum)) ?></time></p><?php endif; ?>
           <h3 class="aktualita__nadpis"><?php if ($aOdkaz !== ''): ?><a href="<?= e($aOdkaz) ?>"<?= odkaz_attr($aOdkaz) ?>><?= typo((string)$a['nadpis']) ?><?= odkaz_je_externi($aOdkaz) ? '<span class="vh"> (v novém okně)</span>' : '' ?></a><?php else: ?><?= typo((string)$a['nadpis']) ?><?php endif; ?></h3>
