@@ -107,10 +107,11 @@
 /* štítek Titul / Finále v řádku soutěže místo slova kola – menší, aby řádek nezvyšoval */
 .zapas__soutez .zapas-stitek { margin-block: -.3em; padding: .3em .72em .26em; letter-spacing: .15em; vertical-align: .06em; }
 
-/* strany: nahoře klub (Cormorant, hráči klubu tučně se znakem), dole soupeři (Jost) */
-.zapas__strana { grid-column: hraci; align-self: center; min-width: 0; padding-right: .6rem; }
-.zapas__strana[data-r="1"] { grid-row: nasi; font: 500 1.125rem/1.25 var(--serif); color: var(--ink-2); }
-.zapas__strana[data-r="2"] { grid-row: souperi; font: 400 .9rem/1.35 var(--sans); color: var(--ink-2); }
+/* strany: nahoře klub, dole soupeři – všechna jména jedním písmem a velikostí (Jost jako číslice; Petr
+   21. 10. 2026: „chci stejný font“, dřív klub Cormorant), hráči klubu tučně navy se znakem */
+.zapas__strana { grid-column: hraci; align-self: center; min-width: 0; padding-right: .6rem; font: 400 .95rem/1.35 var(--sans); color: var(--ink-2); }
+.zapas__strana[data-r="1"] { grid-row: nasi; }
+.zapas__strana[data-r="2"] { grid-row: souperi; }
 .zapas__hrac--klub { font-weight: 600; color: var(--navy); }
 .zapas__hrac--neuveden { color: var(--muted); font-style: italic; }
 /* čtyřhra na jednom řádku: zalomit mezi hráči u lomítka, ne uprostřed jména (to se jinak čte jako třetí hráč) */
@@ -210,8 +211,7 @@ html[data-pohyb="omezit"] .zapas-zive__bod::after { animation: none; }
   .tabule { --tab-set: 1.85rem; }
   .zapas__mrizka { grid-template-columns: [kde hraci] minmax(0, 1fr) [vitez] 1.1rem repeat(var(--sety-r, 3), [set] var(--tab-set)) [konec]; }
   .zapas--bez-setu .zapas__mrizka { grid-template-columns: [kde hraci] minmax(0, 1fr) [vitez] 1.1rem [set] auto [konec]; }
-  .zapas__strana[data-r="1"] { font-size: 1.06rem; }
-  .zapas__strana[data-r="2"] { font-size: .84rem; }
+  .zapas__strana { font-size: .9rem; }
   .zapas__set { font-size: 1rem; }
   .zapas[data-sety="4"], .zapas[data-sety="5"] { --tab-set: 1.6rem; }
   /* úzká pole: dvoumístný tiebreak by přečníval pole i okraj tabule – číslo a index na střed pole spolu */

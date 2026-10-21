@@ -172,7 +172,7 @@ const STRANKY = [
 /** Známé bloky (šablony je čtou natvrdo) – „stránka|klíč“ => kde se na stránce ukazují. */
 const STRANKY_BLOKY = [
     'index|uvod' => 'Úvod – deska s nadpisem a tlačítky Stát se členem / Ceník kurtů (štítek nad nadpisem = „Ostrov Štvanice, Praha 7“)',
-    'index|aktuality' => 'Nadpis sekce Aktuality z klubu', 'index|vysledky' => 'Nadpis sekce Další výsledky našich hráčů (výsledky ze služby Pointeks)',
+    'index|aktuality' => 'Nadpis sekce Aktuality z klubu', 'index|vysledky' => 'Nepoužívá se – sekce výsledků na úvodu je od 21. 10. 2026 zrušená (výsledky jsou v pásu pod úvodem a na stránce Výsledky)',
     'index|kalendar' => 'Klubový kalendář – nadpis a perex', 'index|clenstvi' => 'Členství – nadpis a tlačítko nad videem',
     'index|sluzby' => 'Nadpis štítků Služby v areálu', 'index|historie' => 'Naše historie – tlačítko Kompletní historie',
     'index|partneri' => 'Nadpis sekce Partneři',
@@ -239,7 +239,7 @@ const STRANKY_UVOD_POLE = [
         'odkaz2'  => ['Podtržený odkaz vedle tlačítka', 'Ceník kurtů|cenik-kurtu.php', 'Prázdný text = odkaz se neukáže.'],
     ],
     'index|aktuality' => ['stitek' => ['Nadpis sekce aktualit (zlaté verzálky)', 'Aktuality z klubu', 'Samotné aktuality se spravují v modulu Aktuality z klubu.']],
-    'index|vysledky'  => ['stitek' => ['Nadpis sekce dalších výsledků (tmavomodré verzálky)', 'Další výsledky našich hráčů', 'Sekce navazuje na pás „Naši hráči na turnajích“ pod úvodem (4 nejnovější výsledky). Když pás není (žádný výsledek za posledních 30 dní), výchozí nadpis zní „Poslední výsledky našich hráčů“. Výsledky samotné přicházejí automaticky ze služby Pointeks – modul Výsledky (Pointeks).']],
+    'index|vysledky'  => ['stitek' => ['Nadpis sekce (nepoužívá se)', '', 'Sekce výsledků na úvodu je od 21. 10. 2026 zrušená – výsledky jsou v tmavomodrém pásu pod úvodem (8 nejnovějších) a všechny na stránce Výsledky. Výsledky samotné přicházejí automaticky ze služby Pointeks – modul Výsledky (Pointeks).']],
     'index|kalendar'  => [
         'stitek'  => ['Štítek nad nadpisem kalendáře', 'Klubový kalendář', ''],
         'nadpis'  => ['Nadpis kalendáře', 'Na Štvanici se <em>potkáváme</em>.', ''],
@@ -262,9 +262,8 @@ const STRANKY_UVOD_MAPA = [
     ['Informační lišta pod menu', 'oznameni.php', 'Informační lišta', ''],
     ['Úvod – deska s nadpisem a tlačítky', '', '', 'uvod'],
     ['Úvod – galerie fotek se štítovým přechodem', 'galerie.php', 'Úvodní galerie', ''],
-    ['Naši hráči na turnajích – pás se 4 nejnovějšími výsledky pod úvodem', 'pointeks.php', 'Výsledky (Pointeks)', ''],
+    ['Naši hráči na turnajích – pás s 8 nejnovějšími výsledky pod úvodem (na mobilu 4)', 'pointeks.php', 'Výsledky (Pointeks)', ''],
     ['Aktuality z klubu', 'aktuality.php', 'Aktuality z klubu', 'aktuality'],
-    ['Další výsledky našich hráčů', 'pointeks.php', 'Výsledky (Pointeks)', 'vysledky'],
     ['Klubový kalendář a přihlášky k akcím', 'akce.php', 'Kalendář akcí', 'kalendar'],
     ['Členství – nadpis a tlačítko', '', '', 'clenstvi'],
     ['Video členství', 'nastaveni.php#sk-uvod', 'Texty a údaje → video', ''],

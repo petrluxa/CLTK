@@ -138,14 +138,15 @@
 .uvc-zapas__strana { grid-column: 1; min-width: 0; align-self: center; padding: .6rem .75rem .55rem 0; }
 .uvc-zapas__strana[data-r="1"] { grid-row: 1; }
 .uvc-zapas__strana[data-r="2"] { grid-row: 2; }
-.uvc-zapas__jmeno { display: block; }
-/* Jména klubu vedou: klubové písmo, teplá bílá, i při prohře o stupeň výraznější než soupeř (výsledek
-   ukazují sety – vyšší číslo každého setu je světlé a tučné). Soupeř drobnějším bezpatkovým písmem,
-   když prohrál, ještě tišší. Žádná červená „PROHRA“. */
-.uvc-zapas__strana--nasi .uvc-zapas__jmeno { font: 400 1.16rem/1.22 var(--serif); color: var(--uvc-papir); }
+/* Jména všech hráčů jedním písmem a stejnou velikostí – Jost jako číslice setů (Petr 21. 10. 2026: „chci
+   stejný font“; dřív klub Cormorant, soupeř Jost). Hráč klubu vede tučným řezem, znakem a teplou bílou,
+   i při prohře o stupeň výraznější než soupeř (výsledek ukazují sety – vyšší číslo každého setu je světlé
+   a tučné); soupeř, když prohrál, ještě tišší. Žádná červená „PROHRA“. */
+.uvc-zapas__jmeno { display: block; font: 400 .95rem/1.32 var(--sans); }
+.uvc-zapas__strana--nasi .uvc-zapas__jmeno { color: var(--uvc-papir); }
 .uvc-zapas__strana--nasi .uvc-zapas__jmeno--klub { font-weight: 600; }
 .uvc-zapas__strana--nasi.uvc-zapas__strana--porazeny .uvc-zapas__jmeno { color: rgba(251, 250, 246, .92); }
-.uvc-zapas__strana--souperi .uvc-zapas__jmeno { font: 400 .875rem/1.4 var(--sans); color: var(--uvc-text); }
+.uvc-zapas__strana--souperi .uvc-zapas__jmeno { color: var(--uvc-text); }
 .uvc-zapas__strana--souperi.uvc-zapas__strana--porazeny .uvc-zapas__jmeno { color: var(--uvc-tlumeny); }
 /* zkratka země ve velikosti výsledkové tabule webu (.zapas__zeme), tlumeně (AA i v 10 px) */
 .uvc-zapas__zeme { font: 500 .64rem/1 var(--sans); letter-spacing: .12em; color: var(--uvc-tlumeny); vertical-align: .12em; white-space: nowrap; }
@@ -161,8 +162,7 @@
 }
 /* čtyřhra: čtyři jména pod sebou o stupeň menší (jako na turnajové tabuli), ať se dlouhá jména nelámou */
 .uvc-zapas--ctyrhra .uvc-zapas__strana { padding-block: .5rem .45rem; }
-.uvc-zapas--ctyrhra .uvc-zapas__strana--nasi .uvc-zapas__jmeno { font-size: 1.08rem; line-height: 1.2; }
-.uvc-zapas--ctyrhra .uvc-zapas__strana--souperi .uvc-zapas__jmeno { font-size: .8125rem; line-height: 1.38; }
+.uvc-zapas--ctyrhra .uvc-zapas__jmeno { font-size: .875rem; line-height: 1.3; }
 
 /* číslice setů Jost (lining, tabulkové) jako na výsledkové tabuli webu – stejně vysoké jako dřívější
    Cormorant 1,72 rem; vyhraný set teplá bílá 600, prohraný tichý 400 */
@@ -227,6 +227,11 @@ html[data-pohyb="omezit"] .uvc-zive__bod::after { animation: none; }
   :root:not([data-kontrast="normalni"]) .uvc { --uvc-text: #fbfaf6; --uvc-tlumeny: rgba(251, 250, 246, .86); --uvc-tichy: rgba(251, 250, 246, .74); --uvc-linka: rgba(202, 172, 121, .45); }
 }
 
+/* Dvě řady po čtyřech (8 výsledků, Petr 21. 10. 2026): druhá řada s mezerou – každá tabule dál sdílí
+   řádky (subgrid) se sousedkami ve své řadě */
+@media (min-width: 1180px) {
+  .uvc-zapas:nth-child(n+5) { margin-top: var(--uvc-mezera); }
+}
 /* Méně než čtyři výsledky: na počítači méně sloupců, ať pás nezůstane z poloviny prázdný
    (jeden výsledek = polovina šířky, přes celý pás by tabule byla nečitelně široká) */
 @media (min-width: 1180px) {
@@ -263,6 +268,7 @@ html[data-pohyb="omezit"] .uvc-zive__bod::after { animation: none; }
   .uvc__tabule { grid-template-columns: minmax(0, 1fr); grid-template-rows: none; row-gap: .6rem; margin-top: 1.15rem; }
   .uvc-zapas { grid-row: auto; display: flex; flex-direction: column; padding: .8rem .95rem .85rem; }
   .uvc-zapas:nth-child(n+3) { margin-top: 0; }
+  .uvc-zapas:nth-child(n+5) { display: none; }      /* na mobilu jen 4 nejnovější – ostatní ve Všech výsledcích */
   .uvc-zapas::before { inset: 3px; }
   .uvc-zapas__mesto { font-size: 1.06rem; }
   .uvc-zapas__skore { margin-top: .6rem; }
@@ -274,7 +280,6 @@ html[data-pohyb="omezit"] .uvc-zive__bod::after { animation: none; }
 @media (max-width: 379.98px) {
   .uvc-zapas { padding-inline: .85rem; }
   .uvc-zapas__skore { --set: 2rem; }
-  .uvc-zapas__strana--nasi .uvc-zapas__jmeno { font-size: 1.1rem; }
   .uvc-zapas__set { font-size: 1.3rem; }
 }
 

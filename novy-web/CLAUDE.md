@@ -60,11 +60,12 @@ Běžící server se převádí migrací `web/sql/migrace/2026-10-02-dokumenty-a
   v `pointeks_prijmi()`, web stav `zive` umí. Testy a naplnění kopie DB: `podklady/_raw/qa/pointeks/`.
   Klíč uložení = `id` z **podepsaného těla** (hlavičku `X-Pointeks-Delivery` podpis nekryje – jen se porovná do protokolu).
   Skrytí platí pro celou `skupina` (spojená čtyřhra dvou hráčů klubu = dva záznamy, na webu jeden řádek).
-- **Úvod: tmavomodrý pás pod úvodem se 4 nejnovějšími výsledky + pozvánka do aplikace Pointeks** (návrh C, Petr vybral
-  18. 10. 2026): `inc/sablona/uvod-vysledky.php` (`uvod_vysledky_html()`, `uvod_vysledky_cerstve()` – starší než 30 dní
-  = pás zmizí) + `assets/css/uvod-vysledky.css`. Sekce 3 pokračuje dalšími 10 (`pointeks_seznam([... 'preskocit' => 4])`),
-  nadpis „Další výsledky našich hráčů“ (migrace `sql/migrace/2026-10-18-uvod-vysledky.php`). U každého hráče klubu
-  malý znak `pointeks_znak_html()` (ne u spoluhráče odjinud ani soupeřů). Tabule výsledků nesmí působit jako „polední
+- **Úvod: tmavomodrý pás pod úvodem s 8 nejnovějšími výsledky (dvě řady po čtyřech, na mobilu 4) + pozvánka do aplikace
+  Pointeks** (návrh C, Petr vybral 18. 10. 2026, dvě řady 21. 10.): `inc/sablona/uvod-vysledky.php` (`uvod_vysledky_html()`,
+  `uvod_vysledky_cerstve()` – starší než 30 dní = pás zmizí) + `assets/css/uvod-vysledky.css`. Světlá tabule „Další
+  výsledky“ z úvodu je od 21. 10. zrušená (všechny výsledky na `vysledky.php`); blok index/vysledky se nepoužívá.
+  U každého hráče klubu malý znak `pointeks_znak_html()` (ne u spoluhráče odjinud ani soupeřů); jména všech hráčů
+  jedním písmem a velikostí (Jost, Petr: „stejný font“), hráč klubu tučně. Tabule výsledků nesmí působit jako „polední
   menu v restauraci“ (Petr): husté řádky, sety jako pole (vyhraný = navy), číslice Jost, žádný rámeček s nadpisem na střed.
 
 ## Pasti (z Liberce, Olympu a z této stavby)
