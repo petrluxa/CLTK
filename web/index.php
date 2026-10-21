@@ -1,7 +1,7 @@
 <?php
 /* Úvodní stránka I. ČLTK Praha – podle PDF klienta (ZADANI.md §4,
    podklady/klient-pdf/stranka-00 … 06) v jazyce Varianty 4.
-   Pořadí: úvod s galerií · aktuality · výsledky · kalendář · členství a video
+   Pořadí: úvod s galerií · pás výsledků hráčů (Pointeks) · aktuality · kalendář · členství a video
            · služby v areálu · naše historie · partneři · patička.
    Všechen obsah je z databáze (moduly administrace) a z Textů a údajů. */
 require __DIR__ . '/inc/rezim.php';
@@ -11,7 +11,6 @@ track_visit();
 /* ---------- data ---------- */
 $bUvod      = blok('index', 'uvod');
 $bAktuality = blok('index', 'aktuality');
-$bVysledky  = blok('index', 'vysledky');
 $bKalendar  = blok('index', 'kalendar');
 $bClenstvi  = blok('index', 'clenstvi');
 $bSluzby    = blok('index', 'sluzby');
@@ -22,14 +21,13 @@ $galerie   = uvodni_galerie();
 $aktuality = aktuality(3);
 /* Výsledky hráčů jen ze služby Pointeks (Petr 15. 10. 2026), podle konce zápasu v pražském čase,
    živé zápasy první; ruční modul Výsledky hráčů se na webu neukazuje.
-   – tmavomodrý pás hned pod úvodem: 4 nejnovější + decentní pozvánka do aplikace Pointeks
-     (návrh C, Petr vybral 18. 10. 2026; inc/sablona/uvod-vysledky.php, assets/css/uvod-vysledky.css),
-   – tabule v sekci 3 pokračuje dalšími zápasy, aby se ty 4 z pásu neopakovaly,
-   – pás jen s čerstvými výsledky (uvod_vysledky_cerstve: nejnovější nejvýš 30 dní, jinak pás není
-     a sekce 3 začne od nejnovějšího výsledku – nic se neztratí). */
+   – tmavomodrý pás hned pod úvodem: 8 nejnovějších (dvě řady po čtyřech, na mobilu 4) + decentní pozvánka
+     do aplikace Pointeks (návrh C, Petr vybral 18. 10. 2026; 21. 10. dvě řady; inc/sablona/uvod-vysledky.php,
+     assets/css/uvod-vysledky.css); jen s čerstvými výsledky (uvod_vysledky_cerstve: nejnovější nejvýš 30 dní),
+   – světlá tabule „Další výsledky“ z úvodu zrušená 21. 10. 2026 (Petr: všechny výsledky jsou na stránce
+     Výsledky pod Závodním tenisem). */
 require_once __DIR__ . '/inc/sablona/uvod-vysledky.php';
-$vysledky4 = uvod_vysledky_cerstve(pointeks_seznam(['limit' => 4])['zapasy']);
-$vysledky  = pointeks_seznam(['limit' => POINTEKS_NA_UVODU, 'preskocit' => count($vysledky4)])['zapasy'];
+$vysledkyPas = uvod_vysledky_cerstve(pointeks_seznam(['limit' => 8])['zapasy']);
 $sluzbyUvod = sluzby(true);
 /* Plán areálu pod videem (mapa.js, kompaktní rozložení); „Podrobnosti“ u služby vedou na areal.php#kotva */
 $mapaUvod = mapa_data(null, null, null, url('areal.php'));
@@ -70,7 +68,7 @@ $sablona = [
     'titulek' => '',
     'popis'   => 'I. Český Lawn-Tennis Klub Praha – tenis na ostrově Štvanice uprostřed Prahy od roku ' . setting('zalozeno', '1893')
                . '. Členství, ceník kurtů, tenisová škola, závodní tenis, klubový kalendář a historie klubu.',
-    'css'     => ['index.css', 'mapa.css', 'vysledky.css', 'uvod-vysledky.css'],
+    'css'     => ['index.css', 'mapa.css', 'uvod-vysledky.css'],
     'js'      => ['galerie.js', 'kalendar.js', 'video.js', 'cenik.js', 'mapa.js'],
     'trida'   => 'stranka-uvod',
     'obrazek' => $galerie && $galerie[0]['typ'] === 'foto' ? $galerie[0]['foto'] : '',
@@ -141,7 +139,7 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
       </div>
     </div>
   </section>
-  <?= uvod_vysledky_html('pod-uvodem', $vysledky4) ?>
+  <?= uvod_vysledky_html('pod-uvodem', $vysledkyPas) ?>
 
   <?php if ($aktuality): ?>
   <!-- 2 · Aktuality z klubu (nejsou to články – fotka, datum, nadpis, krátký popis) -->
@@ -168,24 +166,6 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
         </li>
         <?php endforeach; ?>
       </ul>
-    </div>
-  </section>
-  <?php endif; ?>
-
-  <?php if ($vysledky):
-    /* Nadpis sekce (modul Stránky, výchozí „Další výsledky našich hráčů“ – sekce navazuje na pás pod úvodem).
-       Bez pásu (žádný čerstvý výsledek) by „další“ nedávalo smysl: výchozí text pak zní „Poslední výsledky
-       našich hráčů“. Vlastní nadpis z administrace zůstává vždy. */
-    $vysledkyStitek = trim((string)$bVysledky['stitek']);
-    if ($vysledkyStitek === '' || (!$vysledky4 && $vysledkyStitek === 'Další výsledky našich hráčů')) {
-        $vysledkyStitek = $vysledky4 ? 'Další výsledky našich hráčů' : 'Poslední výsledky našich hráčů';
-    } ?>
-  <!-- 3 · Další výsledky našich hráčů – pokračování pásu pod úvodem (tam jsou 4 nejnovější): výsledková
-       tabule ze služby Pointeks bez vlastní hlavy, nadpisem je štítek sekce -->
-  <section class="sekce vysledky-sekce" id="vysledky" aria-labelledby="vysledky-nadpis">
-    <div class="wrap wrap--uzky">
-      <h2 class="stitek stitek--velky vysledky-sekce__stitek" id="vysledky-nadpis"><?= typo($vysledkyStitek) ?></h2>
-      <?= pointeks_tabule_html($vysledky, ['vsechny' => true]) ?>
     </div>
   </section>
   <?php endif; ?>

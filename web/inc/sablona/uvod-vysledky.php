@@ -1,13 +1,15 @@
 <?php
 /* ÚVODNÍ STRÁNKA – tmavomodrý pás „Naši hráči na turnajích“ hned pod úvodem (návrh C, Petr vybral 18. 10. 2026)
-   Volá index.php: uvod_vysledky_html('pod-uvodem', $vysledky4) – 4 nejnovější zápasy z pointeks_seznam();
-   tabule v sekci 3 úvodu pokračuje až dalšími zápasy, aby se neopakovaly.
+   Volá index.php: uvod_vysledky_html('pod-uvodem', $vysledkyPas) – 8 nejnovějších zápasů z pointeks_seznam()
+   (Petr 21. 10. 2026: dvě řady; světlá tabule „Další výsledky“ z úvodu je zrušená – všechny výsledky
+   jsou na stránce Výsledky pod Závodním tenisem).
 
      – vlevo nadpis „Naši hráči na turnajích“ a pod ním decentní pozvánka „Každý bod živě
        v aplikaci Pointeks ↗“ (pointeks_pozvanka_url(…, 'uvod-pas'), nové okno),
        vpravo „Všechny výsledky →“ (na mobilu pod tabulemi),
-     – pod tím malé výsledkové tabule (nejvýš 4): od 1180 px vedle sebe, 700–1179 px dvě a dvě,
-       na mobilu pod sebou (všechny bez posouvání do stran); méně výsledků = méně širších sloupců.
+     – pod tím malé výsledkové tabule (nejvýš 8): od 1180 px dvě řady po čtyřech, 700–1179 px po dvou,
+       na mobilu pod sebou jen 4 nejnovější (ať úvod není nekonečný); méně výsledků = méně širších sloupců.
+   Jména všech hráčů jedním písmem (Jost, Petr 21. 10. 2026: „stejný font“) – hráč klubu tučně se znakem.
    Jedna tabule: město kapitálkami a datum (živý zápas: červená tečka „živě“), kategorie · kolo
    (· kvalifikace · výhra / prohra skrečí; štítek Titul / Finále místo slova kola – pointeks_soutez_html(),
    stejně jako tabule v sekci 3), pak dva řádky se sloupci setů –
@@ -23,7 +25,7 @@
    letošní), živé zápasy první (řadí pointeks_seznam()). Pro čtečky celá věta pointeks_zapas_veta(),
    kreslená tabule je aria-hidden. Bez výsledků se pás nevypíše (vrací '').
    Jen čerstvé výsledky: index.php pás nejdřív projde uvod_vysledky_cerstve() – nejnovější zápas starší než
-   UVOD_VYSLEDKY_DNI (mimo sezónu, výpadek příjmu) = pás se nevypíše a sekce 3 začne od nejnovějšího.
+   UVOD_VYSLEDKY_DNI (mimo sezónu, výpadek příjmu) = pás se nevypíše (výsledky jsou dál na stránce Výsledky).
    Styl: assets/css/uvod-vysledky.css (všechno pod .uvc, úvod jen přes .uvod:has(+ .uvc)). */
 
 const UVOD_VYSLEDKY_DNI = 30;
@@ -42,7 +44,7 @@ function uvod_vysledky_cerstve(array $zapasy): array {
 
 function uvod_vysledky_html(string $misto, array $zapasy): string {
     if ($misto !== 'pod-uvodem') return '';
-    $zapasy = array_slice(array_values(array_filter($zapasy, 'is_array')), 0, 4);
+    $zapasy = array_slice(array_values(array_filter($zapasy, 'is_array')), 0, 8);   // dvě řady po čtyřech (Petr 21. 10. 2026)
     if (!$zapasy) return '';
     $letos = (new DateTimeImmutable('now', new DateTimeZone('Europe/Prague')))->format('Y');
 
