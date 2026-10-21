@@ -108,6 +108,12 @@
 .v2 .kiosek-vysledky mark { background: none; color: var(--zlato-tmave); font-weight: 600; box-shadow: inset 0 -.35em 0 rgba(205,189,132,.35); }
 .v2 .kiosek-stav { font: 400 var(--t-stitek)/1.4 var(--f-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--rici); min-height: 1.4em; }
 .v2 .policka { display: flex; flex-wrap: wrap; align-items: flex-end; gap: var(--s-6) 0; }
+/* Na počítači vždy pět ročníků na řádek (2006–2010, 2011–2015 …): nový ročník začne nový řádek a nenalepí se
+   na konec předchozího jen proto, že má zatím jedno číslo (klub 21. 10. 2026: „díl 01/2026 by měl být na novém
+   řádku“). Pod 900 px je polička dál vodorovný pás k posouvání. */
+@media (min-width: 900.02px) {
+  .v2 .policka { display: grid; grid-template-columns: repeat(5, max-content); justify-content: start; align-items: end; }
+}
 .v2 .policka-rok { display: grid; gap: 10px; padding: 0 clamp(8px, 1.1vw, 16px); border-bottom: 2px solid var(--linka-2); position: relative; }
 .v2 .policka-rok::after { content: ""; position: absolute; left: 0; right: 0; bottom: -7px; height: 5px; background: linear-gradient(rgba(31,52,64,.08), transparent); }
 .v2 .policka-obalky { display: flex; align-items: flex-end; gap: 6px; min-height: 142px; }
