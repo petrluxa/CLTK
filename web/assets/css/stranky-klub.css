@@ -366,19 +366,27 @@
 /* ==========================================================================
    VEDENÍ (vedeni.php)
    ========================================================================== */
-.vedeni-prezident { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: var(--s-5) clamp(1.5rem, 1rem + 2vw, 3rem);
-  margin-bottom: clamp(3.5rem, 2.5rem + 3vw, 5.5rem); padding: clamp(1.6rem, 1rem + 2vw, 2.8rem) clamp(1.4rem, 1rem + 2.5vw, 3.2rem);
-  background: var(--zrno), var(--paper-2); border-top: 1px solid var(--gold); border-bottom: 1px solid var(--gold); }
-.vedeni-prezident__erb { width: clamp(3.4rem, 2.6rem + 2.4vw, 5.2rem); }
+/* Výkonný výbor (Petr 22. 10. 2026): nahoře uprostřed prezident s portrétem (o něco větším), pod ním
+   členové výboru v řadách na střed – 4 + 4, na tabletu po třech, na mobilu po dvou; od prezidenta k výboru
+   svislá zlatá linka. Bez fotky má prezident klubový znak. */
+.vedeni-prezident { display: flex; flex-direction: column; align-items: center; max-width: 46rem; margin: 0 auto; text-align: center; }
+.vedeni-prezident__foto { width: clamp(13.5rem, 7rem + 17.8vw, 23rem); margin-bottom: 1.4rem; }      /* ≈ 1,2× portrét člena */
+.vedeni-prezident__erb { width: clamp(3.4rem, 2.6rem + 2.4vw, 5.2rem); margin-bottom: 1.2rem; }
 .vedeni-prezident__erb img { display: block; width: 100%; height: auto; }
-.vedeni-prezident__text .stitek { margin-bottom: .5rem; }
-.vedeni-prezident__jmeno { margin: 0; font: 300 clamp(2rem, 1.4rem + 2.2vw, 3.3rem)/1.08 var(--serif); color: var(--navy); }
-.vedeni-prezident__od { margin: .5rem 0 0; font: italic 400 1.2rem/1.3 var(--serif); color: var(--gold-text); }
-.vedeni-prezident__pozn { max-width: 40rem; margin-top: .6rem; font-size: var(--t-male); color: var(--ink-2); }
+.vedeni-prezident__text .stitek { margin-bottom: .5rem; padding-left: .24em; }      /* prostrkání za poslední literou – na střed opticky */
+.vedeni-prezident__jmeno { margin: 0; font: 300 clamp(2rem, 1.5rem + 1.5vw, 2.75rem)/1.1 var(--serif); color: var(--navy); }
+.vedeni-prezident__od { margin: .45rem 0 0; font: italic 400 1.2rem/1.3 var(--serif); color: var(--gold-text); }
+.vedeni-prezident__pozn { max-width: 36rem; margin: .7rem auto 0; font-size: var(--t-male); color: var(--ink-2); }
 .vedeni-prezident__pozn p { margin: 0; }
-@media (max-width: 599.98px) { .vedeni-prezident { grid-template-columns: minmax(0, 1fr); } }
+.vedeni-prezident--nad-vyborem::after { content: ''; width: 1px; height: clamp(2rem, 1.2rem + 2.5vw, 3.5rem); margin-top: clamp(1.5rem, 1.1rem + 1.2vw, 2.3rem); background: var(--gold); }
 .vedeni-osoby { margin-top: var(--s-6); gap: var(--s-6) var(--mezera); }
 .vedeni-osoby .osoba__jmeno { font-size: 1.45rem; }
+.vedeni-prezident--nad-vyborem + .vedeni-clenove { margin-top: var(--s-4); }
+.vedeni-clenove:not(.osoby--bez-fotek) { display: flex; flex-wrap: wrap; justify-content: center; }
+.vedeni-clenove:not(.osoby--bez-fotek) > .osoba { flex: 0 0 calc((100% - var(--mezera)) / 2 - .1px); }      /* −0,1 px: zaokrouhlení nesmí poslat poslední do další řady */
+@media (min-width: 600px) { .vedeni-clenove:not(.osoby--bez-fotek) > .osoba { flex-basis: calc((100% - 2 * var(--mezera)) / 3 - .1px); } }
+@media (min-width: 1000px) { .vedeni-clenove:not(.osoby--bez-fotek) > .osoba { flex-basis: calc((100% - 3 * var(--mezera)) / 4 - .1px); } }
+@media (max-width: 599.98px) { .vedeni-clenove:not(.osoby--bez-fotek) .osoba__jmeno { font-size: 1.2rem; } }
 .vedeni-osoby .osoba__kontakt { font-size: var(--t-male); }
 .vedeni-osoby .osoba__kontakt a { overflow-wrap: anywhere; }
 .vedeni-vybor .hlava--radek .perex, .vedeni-kancelar .hlava--radek .perex, .vedeni-prezidenti .hlava--radek .perex { max-width: 30rem; margin: 0; }

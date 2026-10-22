@@ -65,6 +65,9 @@ $poznPrvni = trim(html_text((string)$bDeskaPrez['text']));
 
 /* výbor bez kontaktů (kontakty jsou u kanceláře) */
 $vyborBezKontaktu = array_map(fn($v) => array_merge($v, ['telefon' => '', 'email' => '']), $vybor);
+/* Výbor s portréty (Petr 22. 10. 2026 poslal fotky všech devíti členů; fotka = modul Vedení).
+   Když fotky nemá nikdo, zůstane dřívější seznam bez fotek; kdo ji nemá, má monogram. */
+$vyborFotky = (bool)array_filter($vyborBezKontaktu, static fn($v) => trim((string)$v['foto']) !== '');
 
 /* Skrytý blok (modul Stránky) = jeho část stránky zmizí i s pilulkou pod hlavou (klub 21. 10. 2026):
    výbor, prezidenti, dokumenty = celá sekce; prezident = jen jeho rámeček; kancelář a další kontakty jsou
@@ -75,6 +78,13 @@ $maKancelar   = $kancelar && !blok_skryty($bKancelar);
 $maKontakty   = $kontakty && !blok_skryty($bKontakty);
 $maPrezidenty = ($prezidentiRoky || $prezidentiPrvni) && !blok_skryty($bPrezidenti);
 $maDokumenty  = $dokumentyKlub && !blok_skryty($bDokumenty);
+
+/* Nahoře uprostřed prezident s portrétem, pod ním ostatní členové výboru (Petr 22. 10. 2026). Se skrytým
+   rámečkem prezidenta zůstane prezident v řadě s ostatními jako dřív; bez fotky má rámeček klubový znak. */
+$clenove = $maPrezidenta
+    ? array_values(array_filter($vyborBezKontaktu, static fn($v) => (int)$v['id'] !== (int)$prezident['id']))
+    : $vyborBezKontaktu;
+$prezidentFoto = $maPrezidenta && $vyborFotky ? obr((string)$prezident['foto'], (string)$prezident['jmeno'], ['loading' => 'eager']) : '';
 
 $kotvy = [];
 if ($maVybor) $kotvy[] = [trim(html_text((string)$bVybor['nadpis'])) ?: 'Výkonný výbor', '#vybor'];
@@ -99,15 +109,21 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
 ]) ?>
 
 <?php if ($maVybor): ?>
-  <!-- I · Prezident a Výkonný výbor -->
+  <!-- I · Výkonný výbor: nahoře uprostřed prezident, pod ním členové výboru -->
   <section class="<?= sekce_tridy('sekce sekce--linka vedeni-vybor') ?>" id="vybor" aria-labelledby="vybor-nadpis">
     <div class="wrap">
+      <?= hlava_sekce($bVybor, ['cislo' => ++$cislo, 'id' => 'vybor-nadpis', 'stitek' => 'Výkonný výbor', 'nadpis' => 'Výkonný výbor', 'radek' => true]) ?>
+
       <?php if ($maPrezidenta): ?>
-      <div class="vedeni-prezident">
+      <div class="vedeni-prezident<?= $prezidentFoto !== '' ? ' vedeni-prezident--foto' : '' ?><?= $clenove ? ' vedeni-prezident--nad-vyborem' : '' ?>">
+        <?php if ($prezidentFoto !== ''): ?>
+        <div class="osoba__foto vedeni-prezident__foto"><?= $prezidentFoto ?></div>
+        <?php else: ?>
         <span class="vedeni-prezident__erb" aria-hidden="true"><img src="<?= e(logo_url('svg')) ?>" alt="" width="60" height="69" loading="lazy" decoding="async"></span>
+        <?php endif; ?>
         <div class="vedeni-prezident__text">
           <p class="stitek"><?= typo(trim((string)$bPrezident['stitek']) ?: 'Prezident klubu') ?></p>
-          <p class="vedeni-prezident__jmeno"><?= typo((string)$prezident['jmeno']) ?></p>
+          <h3 class="vedeni-prezident__jmeno"><?= typo((string)$prezident['jmeno']) ?></h3>
           <?php if ($vUradu && vedeni_od((string)$vUradu['rok']) > 0): ?>
           <p class="vedeni-prezident__od">v&nbsp;čele klubu <?= vedeni_roky((string)$vUradu['rok']) ?></p>
           <?php endif; ?>
@@ -117,13 +133,11 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
       </div>
       <?php endif; ?>
 
-      <?= hlava_sekce($bVybor, ['cislo' => ++$cislo, 'id' => 'vybor-nadpis', 'stitek' => 'Výkonný výbor', 'nadpis' => 'Výkonný výbor', 'radek' => true]) ?>
-      <?php /* Výbor s portréty (Petr 22. 10. 2026 poslal fotky všech devíti členů; fotka = modul Vedení).
-               Když fotky nemá nikdo, zůstane dřívější seznam bez fotek; kdo ji nemá, má monogram. */
-      $vyborFotky = (bool)array_filter($vyborBezKontaktu, static fn($v) => trim((string)$v['foto']) !== ''); ?>
-      <ul class="osoby<?= $vyborFotky ? '' : ' osoby--bez-fotek' ?> vedeni-osoby">
-        <?php foreach ($vyborBezKontaktu as $v) echo osoba_html($v, ['foto' => $vyborFotky]); ?>
+      <?php if ($clenove): ?>
+      <ul class="osoby<?= $vyborFotky ? '' : ' osoby--bez-fotek' ?> vedeni-osoby vedeni-clenove">
+        <?php foreach ($clenove as $v) echo osoba_html($v, ['foto' => $vyborFotky]); ?>
       </ul>
+      <?php endif; ?>
     </div>
   </section>
 <?php elseif (blok_skryty($bVybor)): sekce_vynechana(); endif; ?>
