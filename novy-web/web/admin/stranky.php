@@ -660,7 +660,7 @@ if ($rezim === 'prehled'):
       <p class="hint">Sekce se na úvodní stránce ukazuje vždy – její obsah se mění v modulu uvedeném v <a href="<?= e($strankaUrl) ?>#mapa">mapě úvodní stránky</a>.</p>
       <?= tlacitka_formulare('Uložit', $strankaUrl, 'Zpět bez uložení') ?>
       <?php else: ?>
-      <?= pole_text('stitek', 'Štítek', $f['stitek'], ['maxlength' => 120, 'placeholder' => 'Areál a služby', 'hint' => 'Nad nadpisem se na webu od 16. 10. 2026 neukazuje. U úvodu stránky je to titulek v záložce prohlížeče; když zůstane Nadpis prázdný, použije se jako nadpis. U několika sekcí je to malý popisek (např. Rodokmen, Prezident klubu).']) ?>
+      <?= pole_text('stitek', 'Štítek', $f['stitek'], ['maxlength' => 120, 'placeholder' => 'Areál a služby', 'hint' => 'Nad nadpisem se na webu od 16. 10. 2026 neukazuje. U úvodu stránky je to titulek v záložce prohlížeče; když zůstane Nadpis prázdný, použije se jako nadpis. U několika sekcí je to malý popisek (např. Rodokmen); popisek prezidenta na stránce Vedení je jeho funkce z modulu Vedení.']) ?>
       <?= pole_text('nadpis', 'Nadpis', $f['nadpis'], ['maxlength' => 255, 'sirka' => 'cela',
             'hint' => 'Zlatou kurzívou zvýrazníte slovo takto: Tenis od roku &lt;em&gt;1893&lt;/em&gt;. Jiné značky se nepovolí.']) ?>
       <?= pole_textarea('perex', 'Perex', $f['perex'], ['rows' => 4, 'hint' => 'Krátký úvodní text pod nadpisem. Odstavce oddělte prázdným řádkem.']) ?>
