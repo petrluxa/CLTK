@@ -60,18 +60,24 @@ foreach ($souteze as &$s) {
 }
 unset($s);
 
+/* Skrytý blok (modul Stránky) = celá jeho sekce zmizí i s pilulkou pod hlavou (klub 21. 10. 2026) */
+$maClenstvi = $fakty && !blok_skryty($bClenstvi);
+$maUtkani   = ($utkani || $kluby) && !blok_skryty($bUtkani);
+$maSouteze  = $souteze && !blok_skryty($bSouteze);
+$maRodokmen = $rodokmen && !blok_skryty($bRodokmen);
+
 $kotvy = [];
-if ($fakty) $kotvy[] = [trim(html_text((string)$bClenstvi['stitek'])) ?: 'Členství v CTC', '#clenstvi'];
-if ($utkani || $kluby) $kotvy[] = [trim(html_text((string)$bUtkani['stitek'])) !== '' && trim(html_text((string)$bUtkani['stitek'])) !== 'Na Štvanici' ? trim(html_text((string)$bUtkani['stitek'])) : 'Utkání', '#utkani'];
-if ($souteze) $kotvy[] = [trim(html_text((string)$bSouteze['stitek'])) ?: 'Soutěže', '#souteze'];
-if ($rodokmen) $kotvy[] = [trim(html_text((string)$bRodokmen['stitek'])) ?: 'Rodokmen stoletých', '#rodokmen'];
+if ($maClenstvi) $kotvy[] = [trim(html_text((string)$bClenstvi['stitek'])) ?: 'Členství v CTC', '#clenstvi'];
+if ($maUtkani) $kotvy[] = [trim(html_text((string)$bUtkani['stitek'])) !== '' && trim(html_text((string)$bUtkani['stitek'])) !== 'Na Štvanici' ? trim(html_text((string)$bUtkani['stitek'])) : 'Utkání', '#utkani'];
+if ($maSouteze) $kotvy[] = [trim(html_text((string)$bSouteze['stitek'])) ?: 'Soutěže', '#souteze'];
+if ($maRodokmen) $kotvy[] = [trim(html_text((string)$bRodokmen['stitek'])) ?: 'Rodokmen stoletých', '#rodokmen'];
 
 $cislo = 0;
 $sablona = [
     'titulek' => 'Centenary Tennis Clubs',
     'popis'   => html_text((string)$uvod['perex']),
     'css'     => ['stranky-klub.css'],
-    'obrazek' => (string)$bFoto['foto'],
+    'obrazek' => blok_skryty($bSouteze) ? '' : (string)$bFoto['foto'],      // fotka je v sekci Soutěží – skrytá sekce = logo
     'trida'   => 'stranka-ctc',
 ];
 require __DIR__ . '/inc/sablona/hlavicka.php';
@@ -83,9 +89,9 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
     'navic'  => $kotvy ? '<nav class="kotvy" aria-label="Části stránky">' . pilulky_html($kotvy) . '</nav>' : '',
 ]) ?>
 
-<?php if ($fakty): ?>
+<?php if ($maClenstvi): ?>
   <!-- I · Členství v CTC a hra v klubech sdružení -->
-  <section class="sekce sekce--linka ctc-clenstvi" id="clenstvi" aria-labelledby="clenstvi-nadpis">
+  <section class="<?= sekce_tridy('sekce sekce--linka ctc-clenstvi') ?>" id="clenstvi" aria-labelledby="clenstvi-nadpis">
     <div class="wrap mrizka">
       <div class="sl-5">
         <?= hlava_sekce($bClenstvi, ['cislo' => ++$cislo, 'id' => 'clenstvi-nadpis', 'stitek' => 'Členství v CTC', 'nadpis' => 'Centenary Tennis Clubs']) ?>
@@ -114,11 +120,11 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
       </div>
     </div>
   </section>
-<?php endif; ?>
+<?php elseif (blok_skryty($bClenstvi)): sekce_vynechana(); endif; ?>
 
-<?php if ($utkani || $kluby): ?>
+<?php if ($maUtkani): ?>
   <!-- II · Mezinárodní utkání a kluby, které hrály na Štvanici -->
-  <section class="sekce sekce--papir2 ctc-utkani" id="utkani" aria-labelledby="utkani-nadpis">
+  <section class="<?= sekce_tridy('sekce sekce--papir2 ctc-utkani') ?>" id="utkani" aria-labelledby="utkani-nadpis">
     <div class="wrap">
       <?= hlava_sekce($bUtkani, ['cislo' => ++$cislo, 'id' => 'utkani-nadpis', 'stitek' => 'Na Štvanici', 'nadpis' => 'Mezinárodní utkání', 'radek' => true]) ?>
       <div class="ctc-utkani__mrizka">
@@ -151,11 +157,11 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
       </div>
     </div>
   </section>
-<?php endif; ?>
+<?php elseif (blok_skryty($bUtkani)): sekce_vynechana(); endif; ?>
 
-<?php if ($souteze): ?>
+<?php if ($maSouteze): ?>
   <!-- III · Poháry: Carrickmines Cup, I. ČLTK Praha Cup U14, CTC Senior -->
-  <section class="sekce ctc-souteze" id="souteze" aria-labelledby="souteze-nadpis">
+  <section class="<?= sekce_tridy('sekce ctc-souteze') ?>" id="souteze" aria-labelledby="souteze-nadpis">
     <div class="wrap">
       <?= hlava_sekce($bSouteze, ['cislo' => ++$cislo, 'id' => 'souteze-nadpis', 'stitek' => 'Soutěže', 'nadpis' => 'Soutěže CTC', 'radek' => true]) ?>
       <div class="ctc-souteze__mrizka<?= obr((string)$bFoto['foto']) !== '' ? ' ctc-souteze__mrizka--s-fotkou' : '' ?>">
@@ -174,11 +180,11 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
       </div>
     </div>
   </section>
-<?php endif; ?>
+<?php elseif (blok_skryty($bSouteze)): sekce_vynechana(); endif; ?>
 
-<?php if ($rodokmen): ?>
+<?php if ($maRodokmen): ?>
   <!-- IV · Rodokmen stoletých klubů (V4 sekce 3b) -->
-  <section class="sekce sekce--papir2 ctc-rodokmen" id="rodokmen" aria-labelledby="rodokmen-nadpis">
+  <section class="<?= sekce_tridy('sekce sekce--papir2 ctc-rodokmen') ?>" id="rodokmen" aria-labelledby="rodokmen-nadpis">
     <div class="wrap mrizka">
       <div class="sl-5">
         <?= hlava_sekce(array_merge($bRodokmen, ['nadpis' => trim((string)$bRodokmen['nadpis']) !== '' ? (string)$bRodokmen['nadpis'] : 'Rodokmen <em>stoletých</em> klubů']), ['cislo' => ++$cislo, 'id' => 'rodokmen-nadpis', 'stitek' => 'Rodokmen stoletých']) ?>

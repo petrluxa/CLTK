@@ -523,12 +523,25 @@ foreach ($model['skupiny'] as $sk) {
 }
 $moznostiTypu[] = ['jine', 'Jiná kombinace – cenu potvrdí kancelář', ['data-druh' => 'jine', 'data-osob' => '0']];
 
+/* Skrytý blok (modul Stránky) = jeho část stránky zmizí i s pilulkou pod hlavou (klub 21. 10. 2026). Přihláška se
+   po odeslání (a při chybě v odeslaném formuláři) ukáže i se skrytým blokem – kdo ji právě poslal, musí vidět výsledek. */
+$vCeneVidet     = ($vCene || $zima) && !blok_skryty($bVCene);
+$cenikVidet     = $cenik && !blok_skryty($bKonf);
+$listVidet      = !blok_skryty($bList);
+$postupVidet    = ($postup || $druhy) && !blok_skryty($bPostup);
+$prihlaskaVidet = !blok_skryty($bPrihlaska) || $odeslano || ($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST';
+$prihlaskaHlava = $odeslano ? !blok_skryty($bDekujeme) : !blok_skryty($bPrihlaska);   // nadpis sekce přihlášky
+/* tlačítko hlavy stránky na kotvu sekce, která se nevypíše („Vyplnit přihlášku“ → #prihlaska), se vynechá */
+$chybiKotvy = array_keys(array_filter(['v-cene' => !$vCeneVidet, 'cenik' => !$cenikVidet, 'cenik-clenstvi' => !$cenikVidet,
+                                       'postup' => !$postupVidet, 'prihlaska' => !$prihlaskaVidet]));
+if ($chybiKotvy) $uvod = blok_bez_kotev($uvod, $chybiKotvy);
+
 /* Kotvy pod hlavou stránky */
 $kotvy = [];
-if ($bVCene['existuje']) $kotvy[] = [trim(html_text((string)$bVCene['nadpis'])) ?: 'V ceně členství', '#v-cene'];
-if ($cenik) $kotvy[] = ['Ceník ' . $model['rok'], '#cenik'];
-if ($postup) $kotvy[] = [trim(html_text((string)$bPostup['nadpis'])) ?: 'Postup přijetí', '#postup'];
-$kotvy[] = ['Přihláška', '#prihlaska'];
+if ($bVCene['existuje'] && $vCeneVidet) $kotvy[] = [trim(html_text((string)$bVCene['nadpis'])) ?: 'V ceně členství', '#v-cene'];
+if ($cenikVidet) $kotvy[] = ['Ceník ' . $model['rok'], '#cenik'];
+if ($postup && $postupVidet) $kotvy[] = [trim(html_text((string)$bPostup['nadpis'])) ?: 'Postup přijetí', '#postup'];
+if ($prihlaskaVidet) $kotvy[] = ['Přihláška', '#prihlaska'];
 
 $kancelar = ['jmeno' => setting('kancelar_jmeno'), 'popis' => setting('kancelar_popis'),
              'telefon' => setting('kancelar_telefon'), 'email' => setting('kancelar_email')];
@@ -568,9 +581,9 @@ $clenskyList = static function (string $jmeno, string $druh, string $typ, string
     'navic'  => '<nav class="kotvy" aria-label="Části stránky">' . pilulky_html($kotvy) . '</nav>',
 ]) ?>
 
-<?php if ($vCene || $zima): ?>
+<?php if ($vCeneVidet): ?>
   <!-- I · V ceně členství (V4 sekce 6) a výhody členů v zimě -->
-  <section class="sekce sekce--linka clen-vcene" id="v-cene" aria-labelledby="v-cene-nadpis">
+  <section class="<?= sekce_tridy('sekce sekce--linka clen-vcene') ?>" id="v-cene" aria-labelledby="v-cene-nadpis">
     <div class="wrap mrizka">
       <div class="sl-5">
         <?= hlava_sekce($bVCene, ['cislo' => ++$cislo, 'id' => 'v-cene-nadpis', 'stitek' => 'Výhody členů', 'nadpis' => 'V ceně členství']) ?>
@@ -599,11 +612,11 @@ $clenskyList = static function (string $jmeno, string $druh, string $typ, string
       <?php endif; ?>
     </div>
   </section>
-<?php endif; ?>
+<?php elseif (blok_skryty($bVCene)): sekce_vynechana(); endif; ?>
 
-<?php if ($cenik): ?>
+<?php if ($cenikVidet): ?>
   <!-- II · Konfigurátor ceny a Členský list (V4 sekce 6 a 6b), celý ceník -->
-  <section class="sekce sekce--papir2 clen-cenik" id="cenik" aria-labelledby="cenik-nadpis">
+  <section class="<?= sekce_tridy('sekce sekce--papir2 clen-cenik') ?>" id="cenik" aria-labelledby="cenik-nadpis">
     <div class="wrap">
       <?= hlava_sekce($bKonf, ['cislo' => ++$cislo, 'id' => 'cenik-nadpis', 'radek' => true, 'stitek' => 'Ceník ' . $model['rok'], 'nadpis' => 'Ceník členství']) ?>
 
@@ -663,17 +676,21 @@ $clenskyList = static function (string $jmeno, string $druh, string $typ, string
                 <span class="konfigurator__stav" data-konf-stav><?= $konfVysledek['stav'] === 'nezname' ? 'Stačí odeslat přihlášku, cenu potvrdí kancelář klubu.' : '' ?></span>
               </output>
               <div class="konfigurator__akce">
+<?php if ($prihlaskaVidet): /* skrytá přihláška = není kam pokračovat */ ?>
                 <button class="btn" type="submit">Pokračovat<span class="vh"> k&nbsp;přihlášce</span> <?= sipka() ?></button>
+<?php endif; ?>
                 <a class="odkaz odkaz--text" href="#cenik-clenstvi" data-otevrit="cenik-clenstvi">Celý ceník členství</a>
               </div>
             </div>
           </div>
         </form>
 
+<?php if ($listVidet): /* skrytý blok „clensky-list“ = bez náhledu Členského listu (konfigurátor zůstane) */ ?>
         <div class="clenstvi-list">
           <?= $clenskyList('Vaše jméno', $konfOk ? clen_druh_nazev($konfVysledek['druh']) : 'Členství', $konfOk ? $konfVysledek['typ'] : '—', $konfOk ? cena_kc($konfVysledek['cena']) : 'na míru', true, 'list-nahled') ?>
           <?php if (trim((string)$bList['perex']) !== ''): ?><div class="drobne clenstvi-list__pozn"><?= paragraphs((string)$bList['perex']) ?></div><?php endif; ?>
         </div>
+<?php endif; ?>
       </div>
       <?php endif; ?>
 
@@ -707,11 +724,11 @@ $clenskyList = static function (string $jmeno, string $druh, string $typ, string
       <?php endif; ?>
     </div>
   </section>
-<?php endif; ?>
+<?php elseif (blok_skryty($bKonf)): sekce_vynechana(); endif; ?>
 
-<?php if ($postup || $druhy): ?>
+<?php if ($postupVidet): ?>
   <!-- III · Jak se stát členem (proces přijetí) a druhy členství podle stanov -->
-  <section class="sekce clen-postup" id="postup" aria-labelledby="postup-nadpis">
+  <section class="<?= sekce_tridy('sekce clen-postup') ?>" id="postup" aria-labelledby="postup-nadpis">
     <div class="wrap">
       <?= hlava_sekce($bPostup, ['cislo' => ++$cislo, 'id' => 'postup-nadpis', 'stitek' => 'Přijetí', 'nadpis' => 'Jak se stát členem']) ?>
       <?php if ($postup): ?>
@@ -738,16 +755,17 @@ $clenskyList = static function (string $jmeno, string $druh, string $typ, string
       <?php endif; ?>
     </div>
   </section>
-<?php endif; ?>
+<?php elseif (blok_skryty($bPostup)): sekce_vynechana(); endif; ?>
 
+<?php if ($prihlaskaVidet): ?>
   <!-- IV · Přihláška do klubu (čtyři kroky s JavaScriptem, jinak jedna stránka) -->
-  <section class="sekce sekce--papir2 clen-prihlaska" id="prihlaska" aria-labelledby="prihlaska-nadpis">
+  <section class="<?= sekce_tridy('sekce sekce--papir2 clen-prihlaska') ?>" id="prihlaska"<?= $prihlaskaHlava ? ' aria-labelledby="prihlaska-nadpis"' : ' aria-label="' . ($odeslano ? 'Přihláška odeslána' : 'Přihláška do klubu') . '"' ?>>
     <div class="wrap">
       <?php if ($odeslano): ?>
         <?php $dek = $bDekujeme['existuje'] ? $bDekujeme : ['stitek' => 'Přihláška odeslána', 'nadpis' => 'Děkujeme, přihláška <em>dorazila</em>.', 'perex' => '', 'doplni_klub' => 0]; ?>
         <div class="clen-dekujeme">
           <div class="clen-dekujeme__text">
-            <?= hlava_sekce($dek, ['cislo' => ++$cislo, 'id' => 'prihlaska-nadpis']) ?>
+            <?= $prihlaskaHlava ? hlava_sekce($dek, ['cislo' => ++$cislo, 'id' => 'prihlaska-nadpis']) : '' ?>
             <div class="hlaska hlaska--ok" role="status" tabindex="-1" id="prihlaska-ok">
               <span class="hlaska__titul">Přihláška je uložená.</span>
               <?php if ($poslana): ?><p>Přihlášku na <b><?= typo((string)$poslana['typ_clenstvi']) ?></b> jsme přijali <?= e(cz_date(substr((string)$poslana['created_at'], 0, 10))) ?>.</p><?php endif; ?>
@@ -771,7 +789,7 @@ $clenskyList = static function (string $jmeno, string $druh, string $typ, string
       <?php else: ?>
       <div class="clen-prihlaska__mrizka">
         <div class="clen-prihlaska__hlavni">
-          <?= hlava_sekce($bPrihlaska, ['cislo' => ++$cislo, 'id' => 'prihlaska-nadpis', 'stitek' => 'Přihláška', 'nadpis' => 'Přihláška do klubu']) ?>
+          <?= $prihlaskaHlava ? hlava_sekce($bPrihlaska, ['cislo' => ++$cislo, 'id' => 'prihlaska-nadpis', 'stitek' => 'Přihláška', 'nadpis' => 'Přihláška do klubu']) : '' ?>
 
           <?php if ($chyba !== '' || $chyby): ?>
           <div class="hlaska hlaska--chyba clen-chyby" role="alert" tabindex="-1" id="prihlaska-chyby">
@@ -799,7 +817,7 @@ $clenskyList = static function (string $jmeno, string $druh, string $typ, string
               <h3 class="krok__nadpis" id="krok-1-nadpis" tabindex="-1"><span class="krok__cislo">I.</span> Osoby a&nbsp;typ členství</h3>
 
               <?= clen_pole('typ', 'Typ členství', ['typ' => 'select', 'povinne' => true, 'hodnota' => $h('typ'), 'chyba' => $ch('typ'), 'moznosti' => $moznostiTypu,
-                  'napoveda' => $model['lze_konfigurovat'] ? 'Cenu spočítáte v&nbsp;<a href="#cenik">konfigurátoru</a> výše. Přihláška je až pro pět osob.' : 'Přihláška je až pro pět osob.']) ?>
+                  'napoveda' => $model['lze_konfigurovat'] && $cenikVidet ? 'Cenu spočítáte v&nbsp;<a href="#cenik">konfigurátoru</a> výše. Přihláška je až pro pět osob.' : 'Přihláška je až pro pět osob.']) ?>
 
               <div class="clen-firma" data-jen-firemni>
                 <p class="pole__napoveda clen-firma__pozn">Jen u&nbsp;firemního členství. Výpis z&nbsp;obchodního rejstříku pošlete prosím kanceláři klubu.</p>
@@ -943,5 +961,6 @@ $clenskyList = static function (string $jmeno, string $druh, string $typ, string
       <?php endif; ?>
     </div>
   </section>
+<?php endif; ?>
 
 <?php require __DIR__ . '/inc/sablona/paticka.php'; ?>

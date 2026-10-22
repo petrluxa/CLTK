@@ -90,10 +90,15 @@ $rokOd = $policka ? (int)array_key_first($policka) : 0;
 $rokDo = $policka ? (int)array_key_last($policka) : 0;
 $let = $rokOd ? $rokDo - $rokOd + 1 : 0;
 
+/* Skrytý blok (modul Stránky) = jeho sekce zmizí i s pilulkou (klub 21. 10. 2026): „kiosek“ = kiosek s poličkou
+   a detailem čísla (seznam všech čísel pod ním zůstane), „newslettery“ = sekce newsletteru. */
+$maKiosek     = $cisla && !blok_skryty($bKiosek);
+$maNewsletter = $nlRoky && !blok_skryty($bNewsletter);
+
 $kotvy = [];
-if ($cisla) $kotvy[] = [trim(html_text((string)$bKiosek['stitek'])) ?: 'Kiosek', '#kiosek'];
+if ($maKiosek) $kotvy[] = [trim(html_text((string)$bKiosek['stitek'])) ?: 'Kiosek', '#kiosek'];
 if ($cisla) $kotvy[] = ['Všechna čísla', '#archiv'];
-if ($newslettery) $kotvy[] = [trim(html_text((string)$bNewsletter['stitek'])) ?: 'Newsletter', '#newsletter'];
+if ($maNewsletter) $kotvy[] = [trim(html_text((string)$bNewsletter['stitek'])) ?: 'Newsletter', '#newsletter'];
 
 $cislo = 0;
 $sablona = [
@@ -114,8 +119,9 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
 ]) ?>
 
 <?php if ($cisla): ?>
+<?php if ($maKiosek): ?>
   <!-- I · Kiosek I.ČLTK Revue (V4 sekce 8, převzato z návrhu 2) -->
-  <section class="sekce sekce--papir2 v2 kiosek-sekce" id="kiosek" aria-labelledby="kiosek-nadpis">
+  <section class="<?= sekce_tridy('sekce sekce--papir2 v2 kiosek-sekce') ?>" id="kiosek" aria-labelledby="kiosek-nadpis">
     <div class="wrap">
       <?= hlava_sekce(array_merge($bKiosek, ['nadpis' => trim((string)$bKiosek['nadpis']) !== '' ? (string)$bKiosek['nadpis'] : 'Kiosek <em>I.ČLTK Revue</em>']), ['cislo' => ++$cislo, 'id' => 'kiosek-nadpis', 'radek' => true, 'stitek' => 'Kiosek']) ?>
 
@@ -195,9 +201,10 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
     <div class="dialog-hlava"><p class="nadtitul" id="revue-dialog-titul" data-dialog-titul>Detail</p><button type="button" class="dialog-zavrit" data-dialog-zavrit>Zavřít</button></div>
     <div class="dialog-obsah" data-dialog-obsah></div>
   </dialog>
+<?php else: sekce_vynechana(); endif; ?>
 
   <!-- II · Všechna čísla v seznamu (i bez JavaScriptu) -->
-  <section class="sekce sekce--tesna revue-archiv" id="archiv" aria-labelledby="archiv-nadpis">
+  <section class="<?= sekce_tridy('sekce sekce--tesna revue-archiv') ?>" id="archiv" aria-labelledby="archiv-nadpis">
     <div class="wrap">
       <details class="rozbal revue-archiv__rozbal"<?= isset($_GET['q']) ? ' open' : '' ?>>
         <summary><span id="archiv-nadpis">Všechna čísla v&nbsp;seznamu <span class="tlumene">· <?= count($cisla) ?> čísel<?= $rokOd ? ', ' . $rokOd . '–' . $rokDo : '' ?></span></span></summary>
@@ -218,9 +225,9 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
   </section>
 <?php endif; ?>
 
-<?php if ($nlRoky): ?>
+<?php if ($maNewsletter): ?>
   <!-- III · Klubový newsletter česky a anglicky -->
-  <section class="sekce sekce--papir2 revue-newsletter" id="newsletter" aria-labelledby="newsletter-nadpis">
+  <section class="<?= sekce_tridy('sekce sekce--papir2 revue-newsletter') ?>" id="newsletter" aria-labelledby="newsletter-nadpis">
     <div class="wrap">
       <?= hlava_sekce($bNewsletter, ['cislo' => ++$cislo, 'id' => 'newsletter-nadpis', 'radek' => true, 'stitek' => 'Newsletter', 'nadpis' => 'I.ČLTK Newsletter']) ?>
       <div class="newslettery">

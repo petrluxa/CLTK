@@ -148,6 +148,37 @@ function hlava_stranky(array $b, array $volby = []): string {
     return $h . '</div></header>';
 }
 
+/* ------------------------------------------------------------------
+   POZADÍ SEKCÍ PO SKRYTÉ SEKCI (klub 21. 10. 2026: skrytý blok = celá jeho sekce zmizí)
+   Šablona prožene třídy každé sekce stránky v pořadí přes sekce_tridy('sekce sekce--papir2') a místo
+   sekce, kterou vzal skrytý blok, zavolá sekce_vynechana(). Když za vynechanou sekcí přijde sekce se
+   stejným pozadím jako poslední vypsaná (hlava stránky = papír), dostane navíc vlasovou linku nahoře
+   (.sekce--linka) – jako dvě sekce stejné barvy za sebou v designovém systému (PRUVODCE-STRANKY §3).
+   Bez vynechané sekce vrátí třídy beze změny, takže výstup stránky se nezmění. Prvek bez třídy „sekce“
+   (rozcestník s linkami nahoře a dole) sekce odděluje sám – linku za ním nepřidá.
+   ------------------------------------------------------------------ */
+function &sekce_stav(): array {
+    static $s = ['pozadi' => 'papir', 'vynechana' => false];
+    return $s;
+}
+
+/** Třídy sekce (beze změny), po vynechané sekci se stejným pozadím navíc ' sekce--linka'. */
+function sekce_tridy(string $tridy): string {
+    $s = &sekce_stav();
+    $t = ' ' . $tridy . ' ';
+    $pozadi = !str_contains($t, ' sekce ') ? 'oddeleno'
+            : (str_contains($t, ' sekce--navy ') ? 'navy' : (str_contains($t, ' sekce--papir2 ') ? 'papir2' : 'papir'));
+    if ($s['vynechana'] && $pozadi !== 'oddeleno' && $s['pozadi'] === $pozadi && !str_contains($t, ' sekce--linka ')) $tridy .= ' sekce--linka';
+    $s = ['pozadi' => $pozadi, 'vynechana' => false];
+    return $tridy;
+}
+
+/** Sekce se nevypsala, protože její blok je skrytý (blok_skryty()) – další sekce stejného pozadí dostane linku. */
+function sekce_vynechana(): void {
+    $s = &sekce_stav();
+    $s['vynechana'] = true;
+}
+
 /** Drobečková navigace: drobky([['Klub', 'klub.php'], ['Historie']]) – „Úvod“ se doplní sám. */
 function drobky(array $cesta): string {
     if (!$cesta) return '';

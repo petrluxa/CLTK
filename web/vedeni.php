@@ -66,11 +66,21 @@ $poznPrvni = trim(html_text((string)$bDeskaPrez['text']));
 /* výbor bez kontaktů (kontakty jsou u kanceláře) */
 $vyborBezKontaktu = array_map(fn($v) => array_merge($v, ['telefon' => '', 'email' => '']), $vybor);
 
+/* Skrytý blok (modul Stránky) = jeho část stránky zmizí i s pilulkou pod hlavou (klub 21. 10. 2026):
+   výbor, prezidenti, dokumenty = celá sekce; prezident = jen jeho rámeček; kancelář a další kontakty jsou
+   dvě části jedné sekce – zmizí jen ta skrytá, obě = celá sekce. */
+$maVybor      = $vybor && !blok_skryty($bVybor);
+$maPrezidenta = $prezident && !blok_skryty($bPrezident);
+$maKancelar   = $kancelar && !blok_skryty($bKancelar);
+$maKontakty   = $kontakty && !blok_skryty($bKontakty);
+$maPrezidenty = ($prezidentiRoky || $prezidentiPrvni) && !blok_skryty($bPrezidenti);
+$maDokumenty  = $dokumentyKlub && !blok_skryty($bDokumenty);
+
 $kotvy = [];
-if ($vybor) $kotvy[] = [trim(html_text((string)$bVybor['nadpis'])) ?: 'Výkonný výbor', '#vybor'];
-if ($kancelar) $kotvy[] = [trim(html_text((string)$bKancelar['nadpis'])) ?: 'Kancelář klubu', '#kancelar'];
-if ($prezidentiRoky || $prezidentiPrvni) $kotvy[] = [trim(html_text((string)$bPrezidenti['nadpis'])) ?: 'Prezidenti klubu', '#prezidenti'];
-if ($dokumentyKlub) $kotvy[] = [trim(html_text((string)$bDokumenty['nadpis'])) ?: 'Stanovy a dokumenty', '#dokumenty'];
+if ($maVybor) $kotvy[] = [trim(html_text((string)$bVybor['nadpis'])) ?: 'Výkonný výbor', '#vybor'];
+if ($maKancelar) $kotvy[] = [trim(html_text((string)$bKancelar['nadpis'])) ?: 'Kancelář klubu', '#kancelar'];
+if ($maPrezidenty) $kotvy[] = [trim(html_text((string)$bPrezidenti['nadpis'])) ?: 'Prezidenti klubu', '#prezidenti'];
+if ($maDokumenty) $kotvy[] = [trim(html_text((string)$bDokumenty['nadpis'])) ?: 'Stanovy a dokumenty', '#dokumenty'];
 
 $cislo = 0;
 $sablona = [
@@ -88,11 +98,11 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
     'navic'  => $kotvy ? '<nav class="kotvy" aria-label="Části stránky">' . pilulky_html($kotvy) . '</nav>' : '',
 ]) ?>
 
-<?php if ($vybor): ?>
+<?php if ($maVybor): ?>
   <!-- I · Prezident a Výkonný výbor -->
-  <section class="sekce sekce--linka vedeni-vybor" id="vybor" aria-labelledby="vybor-nadpis">
+  <section class="<?= sekce_tridy('sekce sekce--linka vedeni-vybor') ?>" id="vybor" aria-labelledby="vybor-nadpis">
     <div class="wrap">
-      <?php if ($prezident): ?>
+      <?php if ($maPrezidenta): ?>
       <div class="vedeni-prezident">
         <span class="vedeni-prezident__erb" aria-hidden="true"><img src="<?= e(logo_url('svg')) ?>" alt="" width="60" height="69" loading="lazy" decoding="async"></span>
         <div class="vedeni-prezident__text">
@@ -108,27 +118,30 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
       <?php endif; ?>
 
       <?= hlava_sekce($bVybor, ['cislo' => ++$cislo, 'id' => 'vybor-nadpis', 'stitek' => 'Výkonný výbor', 'nadpis' => 'Výkonný výbor', 'radek' => true]) ?>
-      <ul class="osoby osoby--bez-fotek vedeni-osoby">
-        <?php foreach ($vyborBezKontaktu as $v) echo osoba_html($v, ['foto' => false]); ?>
+      <?php /* Výbor s portréty (Petr 22. 10. 2026 poslal fotky všech devíti členů; fotka = modul Vedení).
+               Když fotky nemá nikdo, zůstane dřívější seznam bez fotek; kdo ji nemá, má monogram. */
+      $vyborFotky = (bool)array_filter($vyborBezKontaktu, static fn($v) => trim((string)$v['foto']) !== ''); ?>
+      <ul class="osoby<?= $vyborFotky ? '' : ' osoby--bez-fotek' ?> vedeni-osoby">
+        <?php foreach ($vyborBezKontaktu as $v) echo osoba_html($v, ['foto' => $vyborFotky]); ?>
       </ul>
     </div>
   </section>
-<?php endif; ?>
+<?php elseif (blok_skryty($bVybor)): sekce_vynechana(); endif; ?>
 
-<?php if ($kancelar || $kontakty): ?>
+<?php if ($maKancelar || $maKontakty): ?>
   <!-- II · Kancelář klubu a další kontakty -->
-  <section class="sekce sekce--papir2 vedeni-kancelar" id="kancelar" aria-labelledby="kancelar-nadpis">
+  <section class="<?= sekce_tridy('sekce sekce--papir2 vedeni-kancelar') ?>" id="kancelar" aria-labelledby="<?= $maKancelar ? 'kancelar-nadpis' : 'kontakty-nadpis' ?>">
     <div class="wrap">
-      <?php if ($kancelar): ?>
+      <?php if ($maKancelar): ?>
       <?= hlava_sekce($bKancelar, ['cislo' => ++$cislo, 'id' => 'kancelar-nadpis', 'stitek' => 'Kancelář klubu', 'nadpis' => 'Kancelář klubu', 'radek' => true]) ?>
       <ul class="osoby osoby--bez-fotek vedeni-osoby">
         <?php foreach ($kancelar as $v) echo osoba_html($v, ['foto' => false]); ?>
       </ul>
       <?php endif; ?>
 
-      <?php if ($kontakty): ?>
+      <?php if ($maKontakty): ?>
       <div class="vedeni-kontakty" id="kontakty">
-        <h3 class="h4 vedeni-kontakty__nadpis"><?= trim((string)$bKontakty['nadpis']) !== '' ? html_inline((string)$bKontakty['nadpis']) : 'Další kontakty' ?></h3>
+        <h3 class="h4 vedeni-kontakty__nadpis"<?= $maKancelar ? '' : ' id="kontakty-nadpis"' ?>><?= trim((string)$bKontakty['nadpis']) !== '' ? html_inline((string)$bKontakty['nadpis']) : 'Další kontakty' ?></h3>
         <ul class="radky vedeni-kontakty__seznam">
           <?php foreach ($kontakty as $k):
             $smi = (int)$k['zobrazit_kontakt'] === 1;
@@ -147,11 +160,11 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
       <?php endif; ?>
     </div>
   </section>
-<?php endif; ?>
+<?php elseif (blok_skryty($bKancelar) || blok_skryty($bKontakty)): sekce_vynechana(); endif; ?>
 
-<?php if ($prezidentiRoky || $prezidentiPrvni): ?>
+<?php if ($maPrezidenty): ?>
   <!-- III · Prezidenti klubu od roku 1893 -->
-  <section class="sekce vedeni-prezidenti" id="prezidenti" aria-labelledby="prezidenti-nadpis">
+  <section class="<?= sekce_tridy('sekce vedeni-prezidenti') ?>" id="prezidenti" aria-labelledby="prezidenti-nadpis">
     <div class="wrap">
       <?= hlava_sekce($bPrezidenti, ['cislo' => ++$cislo, 'id' => 'prezidenti-nadpis', 'stitek' => 'Od roku ' . setting('zalozeno', '1893'), 'nadpis' => 'Prezidenti klubu', 'radek' => true]) ?>
       <ol class="prezidenti">
@@ -174,11 +187,11 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
       <p class="drobne vedeni-prezidenti__pata"><?= tlacitko('historie.php#sin-slavy', 'Zlatá deska klubu', 'odkaz') ?></p>
     </div>
   </section>
-<?php endif; ?>
+<?php elseif (blok_skryty($bPrezidenti)): sekce_vynechana(); endif; ?>
 
-<?php if ($dokumentyKlub): ?>
+<?php if ($maDokumenty): ?>
   <!-- IV · Stanovy a dokumenty -->
-  <section class="sekce sekce--papir2 sekce--tesna vedeni-dokumenty" id="dokumenty" aria-labelledby="dokumenty-nadpis">
+  <section class="<?= sekce_tridy('sekce sekce--papir2 sekce--tesna vedeni-dokumenty') ?>" id="dokumenty" aria-labelledby="dokumenty-nadpis">
     <div class="wrap mrizka">
       <div class="sl-5">
         <?= hlava_sekce($bDokumenty, ['cislo' => ++$cislo, 'id' => 'dokumenty-nadpis', 'stitek' => 'Dokumenty', 'nadpis' => 'Stanovy a dokumenty']) ?>

@@ -173,9 +173,10 @@ $sekce = 0;
 
 <?= hlava_stranky(array_merge($uvod, ['odkaz' => '', 'odkaz2' => '']), ['drobky' => [['Tenisová škola', 'tenisova-skola.php'], ['Rozvrhy']], 'nadpis' => 'Rozvrhy Tenisové školy', 'navic' => blok_tlacitka($uvod) . tenis_podnav()]) ?>
 
-<?php $sekce++; ?>
+<?php /* skrytý blok (modul Stránky) = celá jeho sekce pryč, i když obsah je z modulu Tenisová škola (klub 21. 10. 2026) */ ?>
+<?php if (!blok_skryty($bHarmonogram)): $sekce++; ?>
 <!-- Harmonogram sezóny -->
-<section class="sekce sekce--bez-horni" id="harmonogram" aria-labelledby="harmonogram-nadpis">
+<section class="<?= sekce_tridy('sekce sekce--bez-horni') ?>" id="harmonogram" aria-labelledby="harmonogram-nadpis">
   <div class="wrap">
     <div class="mrizka">
       <div class="sl-4">
@@ -201,10 +202,11 @@ $sekce = 0;
     </div>
   </div>
 </section>
+<?php else: sekce_vynechana(); endif; ?>
 
-<?php $sekce++; ?>
+<?php if (!blok_skryty($bRozvrhy)): $sekce++; ?>
 <!-- Rozvrhy tréninků: mřížka dny × hodiny pro každý kurt -->
-<section class="sekce sekce--papir2" id="rozvrhy" aria-labelledby="rozvrhy-nadpis">
+<section class="<?= sekce_tridy('sekce sekce--papir2') ?>" id="rozvrhy" aria-labelledby="rozvrhy-nadpis">
   <div class="wrap">
     <?= hlava_sekce(array_merge($bRozvrhy, ['doplni_klub' => 0]), ['cislo' => $sekce, 'id' => 'rozvrhy-nadpis', 'stitek' => 'Rozvrhy', 'nadpis' => 'Rozvrhy tréninků', 'radek' => true]) ?>
 
@@ -303,5 +305,6 @@ $sekce = 0;
     <?php endif; ?>
   </div>
 </section>
+<?php endif; ?>
 
 <?php require __DIR__ . '/inc/sablona/paticka.php'; ?>

@@ -76,6 +76,7 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
 
 <?= hlava_stranky($uvod, ['drobky' => [['Areál a služby', 'areal.php'], ['Sportovní lékařství']], 'nadpis' => 'Sportovní lékařství']) ?>
 
+<?php if (!blok_skryty($bKontakt)): /* skrytý blok „kontakt“ = celá sekce pryč, i s kartou služby (klub 21. 10. 2026) */ ?>
 <!-- I · Kontakt a objednání + služba v areálu -->
 <section class="sekce sekce--linka" id="kontakt" aria-labelledby="kontakt-nadpis">
   <div class="wrap v-arealu">
@@ -94,6 +95,7 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
     <?php if ($sluzba): ?><div><?= sluzba_v_arealu_html($sluzba) ?></div><?php endif; ?>
   </div>
 </section>
+<?php endif; ?>
 
 <?= stranka_dalsi_bloky('sportovni-lekarstvi', ['uvod', 'kontakt']) ?>
 

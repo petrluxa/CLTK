@@ -63,7 +63,7 @@ $recMail = setting('recepce_email');
 
 $sablona = [
     'titulek' => html_text((string)$uvod['stitek']) ?: 'Privátní trenéři',
-    'popis'   => html_text((string)$uvod['perex']) . ($treneri ? ' Trenéři: ' . implode(', ', array_column($treneri, 'jmeno')) . '.' : ''),
+    'popis'   => html_text((string)$uvod['perex']) . ($treneri && !blok_skryty($bTreneri) ? ' Trenéři: ' . implode(', ', array_column($treneri, 'jmeno')) . '.' : ''),
     'css'     => ['stranky-areal.css'],
     'trida'   => 'stranka-treneri',
 ];
@@ -72,8 +72,9 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
 
 <?= hlava_stranky($uvod, ['drobky' => [['Areál a služby', 'areal.php'], ['Privátní trenéři']], 'nadpis' => 'Privátní trenéři']) ?>
 
+<?php if (!blok_skryty($bTreneri)): /* skrytý blok = celá sekce pryč, i se seznamem trenérů z modulu Trenéři */ ?>
 <!-- I · Trenéři -->
-<section class="sekce sekce--papir2" id="treneri" aria-labelledby="treneri-nadpis">
+<section class="<?= sekce_tridy('sekce sekce--papir2') ?>" id="treneri" aria-labelledby="treneri-nadpis">
   <div class="wrap">
     <?= hlava_sekce($bTreneri, ['cislo' => 1, 'id' => 'treneri-nadpis', 'nadpis' => 'Trenéři', 'stitek' => 'Trenéři']) ?>
     <?php if ($skupiny): ?>
@@ -88,10 +89,11 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
     <?php endif; ?>
   </div>
 </section>
+<?php else: sekce_vynechana(); endif; ?>
 
 <?php if (!blok_skryty($bKontakt)): /* skrytý blok „kontakt“ = celá sekce pryč (klub 21. 10. 2026) */ ?>
 <!-- II · Ceny, kontakt a výuka v areálu -->
-<section class="sekce" id="kontakt" aria-labelledby="kontakt-nadpis">
+<section class="<?= sekce_tridy('sekce') ?>" id="kontakt" aria-labelledby="kontakt-nadpis">
   <div class="wrap v-arealu">
     <div class="v-arealu__text">
       <?= hlava_sekce($bKontakt, ['cislo' => 2, 'id' => 'kontakt-nadpis', 'nadpis' => 'Ceny a kontakt', 'stitek' => 'Kontakt']) ?>

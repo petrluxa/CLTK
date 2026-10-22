@@ -50,18 +50,21 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
 
 <?= hlava_stranky($uvod, ['drobky' => [['Prague Open']], 'nadpis' => 'Prague Open']) ?>
 
+<?php $rocnikSkryty = blok_skryty($bRocnik);      /* skrytý „rocnik“ = jen jeho sloupec, karta vítězů zůstane */ ?>
 <?php if ($bRocnik['existuje'] || $bVitezove['existuje']): ?>
 <!-- I · Ročník v kostce a vítězové -->
-<section class="sekce sekce--papir2" id="rocnik" aria-labelledby="rocnik-nadpis">
+<section class="<?= sekce_tridy('sekce sekce--papir2') ?>" id="rocnik" aria-labelledby="<?= $rocnikSkryty ? 'vitezove-nadpis' : 'rocnik-nadpis' ?>">
   <div class="wrap po-rocnik">
+<?php if (!$rocnikSkryty): ?>
     <div>
       <?= hlava_sekce($bRocnik, ['cislo' => 1, 'id' => 'rocnik-nadpis', 'nadpis' => 'Ročník v kostce', 'tag' => 'h2']) ?>
       <?= blok_text($bRocnik, 'prose udaje') ?>
       <?= blok_tlacitka($bRocnik) ?>
     </div>
+<?php endif; ?>
     <?php if ($bVitezove['existuje']): ?>
     <div class="karta karta--zlata po-karta">
-      <h3 class="h3 po-karta__titul"><?= trim((string)$bVitezove['nadpis']) !== '' ? html_inline((string)$bVitezove['nadpis']) : 'Vítězové' ?></h3>
+      <h3 class="h3 po-karta__titul"<?= $rocnikSkryty ? ' id="vitezove-nadpis"' : '' ?>><?= trim((string)$bVitezove['nadpis']) !== '' ? html_inline((string)$bVitezove['nadpis']) : 'Vítězové' ?></h3>
       <?php if (trim((string)$bVitezove['perex']) !== ''): ?><div class="male"><?= paragraphs((string)$bVitezove['perex']) ?></div><?php endif; ?>
       <?= blok_text($bVitezove, 'prose udaje udaje--vitezove') ?>
       <?= blok_tlacitka($bVitezove) ?>
@@ -69,11 +72,11 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
     <?php endif; ?>
   </div>
 </section>
-<?php endif; ?>
+<?php elseif (blok_skryty($bRocnik) || blok_skryty($bVitezove)): sekce_vynechana(); endif; ?>
 
 <?php if ($bHistorie['existuje']): ?>
 <!-- II · Historie turnaje -->
-<section class="sekce" id="historie" aria-labelledby="historie-nadpis">
+<section class="<?= sekce_tridy('sekce') ?>" id="historie" aria-labelledby="historie-nadpis">
   <div class="wrap po-historie">
     <div>
       <?= hlava_sekce($bHistorie, ['cislo' => 2, 'id' => 'historie-nadpis', 'nadpis' => 'Historie turnaje']) ?>
@@ -83,11 +86,11 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
     <?= blok_foto($bHistorie, 'pomer-4x3') ?>
   </div>
 </section>
-<?php endif; ?>
+<?php elseif (blok_skryty($bHistorie)): sekce_vynechana(); endif; ?>
 
 <?php if ($webTurnaje !== ''): ?>
 <!-- Web turnaje -->
-<section class="sekce sekce--navy sekce--tesna po-web" aria-label="Web turnaje">
+<section class="<?= sekce_tridy('sekce sekce--navy sekce--tesna po-web') ?>" aria-label="Web turnaje">
   <div class="wrap po-web__vnitrek">
     <p class="perex">Aktuální informace o&nbsp;turnaji najdete na jeho webu.</p>
     <?= tlacitko($webTurnaje, trim((string)$uvod['odkaz_text']) ?: 'Web turnaje', 'btn', ['trida' => 'btn--svetla']) ?>

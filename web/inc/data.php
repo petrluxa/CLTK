@@ -535,13 +535,15 @@ function cenik(string $klic): ?array {
     return ['list' => $list, 'sekce' => $sekce];
 }
 
-/** Jeden textový blok stránky. Když neexistuje, vrátí prázdný blok s 'existuje' => false. */
+/** Jeden textový blok stránky. Když neexistuje, vrátí prázdný blok s 'existuje' => false; skrytý blok vrátí stejně
+ *  prázdný, jen navíc s 'skryty' => true (blok_skryty()). Blok, který skrýt nejde (hlavička stránky, plán areálu,
+ *  text souhlasu – blok_lze_skryt()), vrátí celý, i když u něj z dřívějška zůstalo visible = 0 (blok_na_webu()). */
 function blok(string $stranka, string $klic): array {
     static $cache = [];
     $k = $stranka . '|' . $klic;
     if (isset($cache[$k])) return $cache[$k];
     $r = data_row('SELECT * FROM cltk_bloky WHERE stranka = ? AND klic = ?', [$stranka, $klic]);
-    if ($r && (int)$r['visible'] === 1) {
+    if ($r && blok_na_webu($r)) {
         $r['existuje'] = true;
         return $cache[$k] = $r;
     }
@@ -549,15 +551,54 @@ function blok(string $stranka, string $klic): array {
         'existuje' => false, 'stranka' => $stranka, 'klic' => $klic, 'stitek' => '', 'nadpis' => '', 'perex' => '',
         'text' => '', 'foto' => '', 'foto_popisek' => '', 'odkaz' => '', 'odkaz_text' => '', 'odkaz2' => '',
         'odkaz2_text' => '', 'doplni_klub' => 1, 'visible' => 0,
-        'skryty' => (bool)$r,          // v databázi je, ale správce ho skryl – viz blok_skryty()
+        // v databázi je, ale správce ho skryl – viz blok_skryty() (skrytý blok úvodní stránky = výchozí obsah jako dřív)
+        'skryty' => $r && blok_lze_skryt($stranka, $klic),
     ];
 }
 
-/** Blok je v databázi, ale správce ho v modulu Stránky skryl (visible = 0) → šablona jeho sekci nevypíše vůbec.
- *  Blok, který v databázi chybí, je něco jiného: tam šablona dál ukáže výchozí obsah. (Klub 21. 10. 2026:
- *  „i když dám skrýt, blok nezmizí“ – skrytý blok se dřív choval jako chybějící a sekce zůstala s výchozím textem.) */
+/** Ukáže web tento řádek cltk_bloky? Viditelný ano, skrytý (visible = 0) ne – kromě bloků, které skrýt nejde
+ *  (blok_lze_skryt()): u hlavičky stránky, plánu areálu a textu souhlasu je visible = 0 jen pozůstatek z doby,
+ *  kdy „Skrýt“ šlo, a web je ukáže celé (ověření 22. 10. 2026: hlavička skrytá z dřívějška ukazovala jen
+ *  „obsah doplní klub“). Úvodní stránka zůstává, jak byla: skrytý blok = výchozí obsah šablony, dokud ho správce
+ *  neuloží. Podle toho i modul Stránky ukazuje stav bloku a nabízí „Zobrazit“. */
+function blok_na_webu(array $r): bool {
+    if ((int)($r['visible'] ?? 0) === 1) return true;
+    $stranka = (string)($r['stranka'] ?? '');
+    return $stranka !== 'index' && !blok_lze_skryt($stranka, (string)($r['klic'] ?? ''));
+}
+
+/** Blok je v databázi, ale správce ho v modulu Stránky skryl (visible = 0) → šablona jeho část stránky nevypíše vůbec:
+ *  celou sekci, když je blok její hlavou (nadpis a perex sekce – i když položky sekce jsou z jiného modulu), nebo jen
+ *  jeho kus, když je blok částí větší sekce (karta, záložka, boční rámeček, mezititulek s textem). Odkazy a pilulky
+ *  na zmizelou sekci šablona vynechá. Blok, který v databázi chybí, je něco jiného: tam šablona dál ukáže výchozí
+ *  obsah (štítek „doplní klub“). (Klub 21. 10. 2026: „i když dám skrýt, blok nezmizí“ – skrytý blok se dřív choval
+ *  jako chybějící a sekce zůstala s výchozím textem.) */
 function blok_skryty(array $b): bool {
     return !empty($b['skryty']);
+}
+
+/** Blok bez tlačítek, která vedou na kotvu sekce, jež na stránce teď není (zmizela se skrytým blokem):
+ *    $uvod = blok_bez_kotev($uvod, ['prihlaska']);     // „Vyplnit přihlášku“ → #prihlaska se nevypíše
+ *  Týká se jen odkazů „#kotva“ v poli odkaz / odkaz2; odkazy na jiné stránky zůstanou. */
+function blok_bez_kotev(array $b, array $chybi): array {
+    foreach (['odkaz' => 'odkaz_text', 'odkaz2' => 'odkaz2_text'] as $o => $t) {
+        $h = trim((string)($b[$o] ?? ''));
+        if ($h !== '' && $h[0] === '#' && in_array(substr($h, 1), $chybi, true)) { $b[$o] = ''; $b[$t] = ''; }
+    }
+    return $b;
+}
+
+/** Bloky, které skrýt nejde (kromě hlaviček stránek – klíč „uvod“ – a bloků úvodní stránky):
+ *  „areal|plan“ = hlavička stránky Areál (od 16. 10. 2026 je nahoře plán areálu s nadpisem stránky),
+ *  „formulare|souhlas“ = text souhlasu se zpracováním údajů, bez kterého nejde přihlášku odeslat. */
+const BLOKY_NESKRYVATELNE = ['areal|plan', 'formulare|souhlas'];
+
+/** Smí správce blok skrýt? Ne: hlavička stránky (klíč „uvod“ – nadpis h1 stránky), bloky úvodní stránky (index.php
+ *  je čte natvrdo, admin/stranky.php STRANKY_UVOD_POLE) a BLOKY_NESKRYVATELNE. Takový blok se na webu ukáže vždy,
+ *  i když u něj z dřívějška zůstalo visible = 0 (blok_na_webu(); bloky úvodní stránky až po uložení); modul Stránky
+ *  u něj „Skrýt“ nenabízí a uložení visible srovná na 1. */
+function blok_lze_skryt(string $stranka, string $klic): bool {
+    return $klic !== 'uvod' && $stranka !== 'index' && !in_array($stranka . '|' . $klic, BLOKY_NESKRYVATELNE, true);
 }
 
 /** Všechny viditelné bloky stránky podle pořadí. */
@@ -792,8 +833,11 @@ function areal_cenik_js(?array $c): ?array {
 }
 
 /** Data pro mapa.js: ceníky kurtů (zimní haly, ceny), služby s polohou podle kotvy, rezervace.
-    $sluzbyUrl = kam vede „Podrobnosti“ u služby ('' = kotva na téže stránce, jinak např. url('areal.php')). */
-function mapa_data(?array $cenikLeto = null, ?array $cenikZima = null, ?array $sluzby = null, string $sluzbyUrl = ''): array {
+    $sluzbyUrl = kam vede „Podrobnosti“ u služby ('' = kotva na téže stránce, jinak např. url('areal.php')).
+    $podrobnosti = false: služby se na stránce nevypisují (areal.php se skrytým blokem areal|sluzby) – karta služby
+    na plánu je bez odkazu „Podrobnosti“ (vedl by na kotvu, která na stránce není). Klíč 'podrobnosti' je v datech
+    jen tehdy, jinak se data nezmění. */
+function mapa_data(?array $cenikLeto = null, ?array $cenikZima = null, ?array $sluzby = null, string $sluzbyUrl = '', bool $podrobnosti = true): array {
     $cenikLeto = $cenikLeto ?? cenik('kurty-leto');
     $cenikZima = $cenikZima ?? cenik('kurty-zima');
     $sluzby = $sluzby ?? sluzby();
@@ -803,6 +847,6 @@ function mapa_data(?array $cenikLeto = null, ?array $cenikZima = null, ?array $s
         'rezervace'  => rezervace_url(),
         'cenik_url'  => url('cenik-kurtu.php'),
         'sluzby_url' => $sluzbyUrl,
-    ];
+    ] + ($podrobnosti ? [] : ['podrobnosti' => false]);
 }
 

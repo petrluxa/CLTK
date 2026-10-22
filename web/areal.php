@@ -96,6 +96,20 @@ $textOdkazu = static function (string $odkaz) use ($nazvyStranek): string {
     return odkaz_je_externi($odkaz) ? 'Web služby' : 'Více informací';
 };
 
+/* Skrytý blok (modul Stránky) = jeho část stránky zmizí (klub 21. 10. 2026): kurty = text o kurtech pod plánem,
+   letecky-leto / letecky-zima = jejich snímek, casy / uzavirky = sloupec sekce Provoz (oba = celá sekce), sluzby =
+   sekce služeb i s rozcestníkem (názvy v Otevíracích dobách pak nevedou na kotvy, karta služby na plánu je bez
+   „Podrobnosti“ a popis stránky bez výčtu služeb), prijezd = sekce příjezdu.
+   Hlavička stránky (blok plan – plán areálu s nadpisem stránky) ani úvod skrýt nejde (blok_lze_skryt). */
+$kurtyVidet   = !blok_skryty($bKurty);
+$casyVidet    = !blok_skryty($bCasy);
+$uzavVidet    = !blok_skryty($bUzav);
+$sluzbyVidet  = !blok_skryty($bSluzby);
+$prijezdVidet = !blok_skryty($bPrijezd);
+/* skrytý letní snímek: zimní se ukáže sám místo něj (bez přepínače Léto / Zima) */
+$jenZima = blok_skryty($bLetoF) && !blok_skryty($bZimaF);
+if ($jenZima) [$bLetoF, $bZimaF] = [$bZimaF, $bLetoF];
+
 $sezona = areal_sezona($cenikZima);
 $planFoto = (string)$bPlan['foto'];
 $maPlan = $planFoto !== '' && is_file(UPLOAD_DIR . '/' . $planFoto);
@@ -104,7 +118,7 @@ $fotoZima = (string)$bZimaF['foto'];
 $maLetecky = $fotoLeto !== '' && is_file(UPLOAD_DIR . '/' . $fotoLeto);
 $maLeteckyZima = $maLetecky && $fotoZima !== '' && is_file(UPLOAD_DIR . '/' . $fotoZima);
 
-$mapaData = mapa_data($cenikLeto, $cenikZima, $sluzby);
+$mapaData = mapa_data($cenikLeto, $cenikZima, $sluzby, '', $sluzbyVidet);
 
 $mapaUrl = bezpecny_odkaz(setting('mapa_url'));
 $planPdf = bezpecny_odkaz((string)$bPlan['odkaz']);          // plán k vytištění (dokument.php?d=plan-arealu)
@@ -112,7 +126,7 @@ $pravidlaDok = dokument_pravidla_hrani();                     // pravidla hraní
 
 $sablona = [
     'titulek' => html_text((string)$uvod['stitek']) ?: 'Areál a služby',
-    'popis'   => html_text((string)$uvod['perex']) . ' ' . implode(', ', array_map(fn($s) => (string)$s['nazev'], array_slice($sluzby, 0, 8))) . '.',
+    'popis'   => html_text((string)$uvod['perex']) . ($sluzbyVidet ? ' ' . implode(', ', array_map(fn($s) => (string)$s['nazev'], array_slice($sluzby, 0, 8))) . '.' : ''),
     'css'     => ['stranky-areal.css', 'mapa.css'],
     'js'      => ['cenik.js', 'mapa.js'],
     'trida'   => 'stranka-areal',
@@ -125,7 +139,7 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
      plán hned bez posouvání (Petr 16. 10. 2026: „musí být vidět hned“). Drobečky, h1 = nadpis bloku plan,
      perex vedle; úvod stránky (blok uvod) je až pod plánem. -->
 <?php $planPerex = trim((string)$bPlan['perex']); ?>
-<section class="sekce sekce--papir2 areal-plan" id="plan" aria-labelledby="plan-nadpis">
+<section class="<?= sekce_tridy('sekce sekce--papir2 areal-plan') ?>" id="plan" aria-labelledby="plan-nadpis">
   <div class="wrap">
     <?= drobky([['Areál a služby']]) ?>
     <header class="hlava areal-plan__hlava<?= $planPerex !== '' ? ' hlava--radek' : '' ?>">
@@ -145,8 +159,10 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
 
     <div class="plan-pod mrizka">
       <div class="sl-7">
+<?php if ($kurtyVidet): ?>
         <?php if (trim((string)$bKurty['nadpis']) !== ''): ?><h3 class="h3"><?= html_inline((string)$bKurty['nadpis']) ?></h3><?php endif; ?>
         <?= blok_text($bKurty) ?>
+<?php endif; ?>
         <div class="odkazy-radek">
           <?= tlacitko('cenik-kurtu.php', 'Ceník kurtů', 'odkaz') ?>
           <?= $pravidlaDok ? tlacitko(dokument_url($pravidlaDok), 'Pravidla hraní a rezervací', 'odkaz') : '' ?>
@@ -156,9 +172,10 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
       </div>
       <?php if ($maLetecky): ?>
       <div class="sl-5 od-8">
-        <figure class="letecky ramec ramec--linka" data-letecky data-rezim="<?= e($maLeteckyZima ? $sezona : 'leto') ?>">
+<?php /* data-letecky = mapa.js přepíná snímek se sezónou plánu – jen když jsou oba (jinak by jediný snímek v zimě zmizel) */ ?>
+        <figure class="letecky ramec ramec--linka"<?= $maLeteckyZima ? ' data-letecky' : '' ?> data-rezim="<?= e($maLeteckyZima ? $sezona : 'leto') ?>">
           <div class="ramec__obraz">
-            <?= obr($fotoLeto, html_text((string)$bLetoF['foto_popisek']) ?: 'Areál v létě shora', ['class' => 'foto letecky__leto']) ?>
+            <?= obr($fotoLeto, html_text((string)$bLetoF['foto_popisek']) ?: ($jenZima ? 'Areál v zimě shora' : 'Areál v létě shora'), ['class' => 'foto letecky__leto']) ?>
             <?= $maLeteckyZima ? obr($fotoZima, html_text((string)$bZimaF['foto_popisek']) ?: 'Areál v zimě shora', ['class' => 'foto letecky__zima']) : '' ?>
           </div>
           <figcaption class="popisek">
@@ -179,31 +196,33 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
 <?php endif; ?>
 
 <!-- Úvod stránky (blok uvod: nadpis, perex, tlačítka) – pod plánem; do 16. 10. 2026 to byla hlavička stránky -->
-<section class="sekce areal-uvod" aria-labelledby="areal-uvod-nadpis">
+<section class="<?= sekce_tridy('sekce areal-uvod') ?>" aria-labelledby="areal-uvod-nadpis">
   <div class="wrap">
     <?= hlava_sekce($uvod, ['id' => 'areal-uvod-nadpis', 'radek' => true, 'nadpis' => 'Areál a služby']) ?>
     <?= blok_tlacitka($uvod) ?>
   </div>
 </section>
 
-<?php if ($sluzby): ?>
-<nav class="rozcestnik" aria-label="Služby v areálu">
+<?php if ($sluzby && $sluzbyVidet): ?>
+<nav class="<?= sekce_tridy('rozcestnik') ?>" aria-label="Služby v areálu">
   <div class="wrap rozcestnik__vnitrek">
     <p class="stitek"><?= typo(trim((string)$bSluzby['stitek']) ?: 'Služby v areálu') ?></p>
     <?= pilulky_html(array_map(fn($s) => [(string)$s['nazev'], '#' . $s['kotva']], $sluzby)) ?>
   </div>
 </nav>
-<?php endif; ?>
+<?php elseif (!$sluzbyVidet): sekce_vynechana(); endif; ?>
 
+<?php if ($casyVidet || $uzavVidet): ?>
 <!-- II · Otevírací doby a uzávěrky -->
-<section class="sekce" id="provoz" aria-labelledby="casy-nadpis">
+<section class="<?= sekce_tridy('sekce') ?>" id="provoz" aria-labelledby="<?= $casyVidet ? 'casy-nadpis' : 'uzavirky-nadpis' ?>">
   <div class="wrap provoz">
+<?php if ($casyVidet): ?>
     <div>
       <?= hlava_sekce($bCasy, ['cislo' => 2, 'id' => 'casy-nadpis', 'tag' => 'h2', 'nadpis' => 'Otevírací doby']) ?>
       <?php if ($sCasy): ?>
       <ul class="radky">
         <?php foreach ($sCasy as $s): ?>
-        <li class="radek radek--vodici"><span class="radek__nazev"><a href="#<?= e($s['kotva']) ?>"><?= typo((string)$s['nazev']) ?></a></span><span class="radek__hodnota"><?= typo((string)$s['casy']) ?></span></li>
+        <li class="radek radek--vodici"><span class="radek__nazev"><?= $sluzbyVidet ? '<a href="#' . e((string)$s['kotva']) . '">' . typo((string)$s['nazev']) . '</a>' : typo((string)$s['nazev']) ?></span><span class="radek__hodnota"><?= typo((string)$s['casy']) ?></span></li>
         <?php endforeach; ?>
       </ul>
       <?php endif; ?>
@@ -211,7 +230,9 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
       <p class="provoz__dalsi">Časy dalších služeb <?= doplni_klub() ?></p>
       <?php endif; ?>
     </div>
+<?php endif; ?>
 
+<?php if ($uzavVidet): ?>
     <div>
       <?= hlava_sekce($bUzav, ['id' => 'uzavirky-nadpis', 'tag' => 'h2', 'nadpis' => 'Plánované uzávěrky', 'bez_znacky' => true]) ?>
       <?php if ($uzavirky): ?>
@@ -243,11 +264,14 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
         <?= blok_text($bUzav) ?: '<p class="drobne tlumene">Uzávěrky zatím nejsou zveřejněné.</p>' ?>
       <?php endif; ?>
     </div>
+<?php endif; ?>
   </div>
 </section>
+<?php else: sekce_vynechana(); endif; ?>
 
+<?php if ($sluzbyVidet): ?>
 <!-- III · Služby (kotvy = štítky „Služby v areálu“ z úvodu) -->
-<section class="sekce" id="sluzby" aria-labelledby="sluzby-nadpis">
+<section class="<?= sekce_tridy('sekce') ?>" id="sluzby" aria-labelledby="sluzby-nadpis">
   <div class="wrap">
     <?= hlava_sekce($bSluzby, ['cislo' => 3, 'id' => 'sluzby-nadpis', 'radek' => true, 'nadpis' => 'Služby v areálu']) ?>
     <?php if ($sluzby): ?>
@@ -278,9 +302,11 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
     <?php endif; ?>
   </div>
 </section>
+<?php else: sekce_vynechana(); endif; ?>
 
+<?php if ($prijezdVidet): ?>
 <!-- IV · Příjezd a provozní řády -->
-<section class="sekce sekce--linka" id="prijezd" aria-labelledby="prijezd-nadpis">
+<section class="<?= sekce_tridy('sekce sekce--linka') ?>" id="prijezd" aria-labelledby="prijezd-nadpis">
   <div class="wrap">
     <?= hlava_sekce($bPrijezd, ['cislo' => 4, 'id' => 'prijezd-nadpis', 'nadpis' => 'Jak se k nám dostanete']) ?>
     <div class="prijezd">
@@ -301,6 +327,7 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
     </div>
   </div>
 </section>
+<?php endif; ?>
 
 <?php require __DIR__ . '/inc/sablona/paticka.php'; ?>
 

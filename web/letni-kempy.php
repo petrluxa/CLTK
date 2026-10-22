@@ -83,6 +83,11 @@ if ($cekaji === 0 && $bezData === 0) {
     $stavHlavy = '<p class="tenis-stav-hlavy">' . doplni_klub('termíny ' . $dalsiRok . ' doplní klub') . '</p>';
 }
 
+/* Skrytý blok (modul Stránky) = jeho část stránky zmizí (klub 21. 10. 2026): termíny a ceny = celá sekce;
+   informace a přihláška jsou dva sloupce jedné sekce – zmizí jen ten skrytý, oba = celá sekce. */
+$infoVidet      = !blok_skryty($bInfo);
+$prihlaskaVidet = !blok_skryty($bPrihlaska);
+
 $sablona = [
     'titulek' => 'Letní kempy',
     'popis'   => html_text((string)$uvod['perex']),
@@ -96,9 +101,9 @@ $sekce = 0;
 
 <?= hlava_stranky(array_merge($uvodHlava, ['odkaz' => '', 'odkaz2' => '']), ['drobky' => [['Tenisová škola', 'tenisova-skola.php'], ['Letní kempy']], 'nadpis' => 'Letní kempy', 'navic' => blok_tlacitka($uvodHlava) . $stavHlavy . tenis_podnav()]) ?>
 
-<?php $sekce++; ?>
+<?php if (!blok_skryty($bTerminy)): $sekce++; ?>
 <!-- Termíny kempů -->
-<section class="sekce sekce--bez-horni" id="terminy" aria-labelledby="terminy-nadpis">
+<section class="<?= sekce_tridy('sekce sekce--bez-horni') ?>" id="terminy" aria-labelledby="terminy-nadpis">
   <div class="wrap">
     <?= hlava_sekce($jenHlava($bTerminy), ['cislo' => $sekce, 'id' => 'terminy-nadpis', 'radek' => true, 'stitek' => 'Termíny', 'nadpis' => 'Termíny kempů']) ?>
     <ol class="tenis-terminy" role="list">
@@ -133,10 +138,11 @@ $sekce = 0;
     <?php if ($tOdkazy !== ''): ?><div class="akce tenis-terminy-akce"><?= $tOdkazy ?></div><?php endif; ?>
   </div>
 </section>
+<?php else: sekce_vynechana(); endif; ?>
 
-<?php $sekce++; ?>
+<?php if (!blok_skryty($bCeny)): $sekce++; ?>
 <!-- Varianty a ceny (modul Ceníky, klíč „kempy“) -->
-<section class="sekce sekce--papir2" id="ceny" aria-labelledby="ceny-nadpis">
+<section class="<?= sekce_tridy('sekce sekce--papir2') ?>" id="ceny" aria-labelledby="ceny-nadpis">
   <div class="wrap">
     <?= hlava_sekce($jenHlava($bCeny), ['cislo' => $sekce, 'id' => 'ceny-nadpis', 'radek' => true, 'stitek' => 'Ceník', 'nadpis' => 'Varianty a ceny']) ?>
     <?php if ($cenik): $l = $cenik['list']; ?>
@@ -172,17 +178,21 @@ $sekce = 0;
     <?php endif; ?>
   </div>
 </section>
+<?php else: sekce_vynechana(); endif; ?>
 
-<?php $sekce++; ?>
+<?php if ($infoVidet || $prihlaskaVidet): $sekce++; ?>
 <!-- Co je dobré vědět + přihláška a kontakt -->
-<section class="sekce" id="informace" aria-labelledby="informace-nadpis">
+<section class="<?= sekce_tridy('sekce') ?>" id="informace" aria-labelledby="<?= $infoVidet ? 'informace-nadpis' : 'prihlaska-nadpis' ?>">
   <div class="wrap">
     <div class="mrizka">
+<?php if ($infoVidet): ?>
       <div class="sl-7">
         <?= hlava_sekce($bInfo, ['cislo' => $sekce, 'id' => 'informace-nadpis', 'stitek' => 'Informace', 'nadpis' => 'Co je dobré vědět']) ?>
         <?= blok_text($bInfo) ?>
       </div>
-      <div class="sl-4 od-9">
+<?php endif; ?>
+<?php if ($prihlaskaVidet): /* bez sloupce informací stojí přihláška vlevo (jako kontakt u rozvrhů) */ ?>
+      <div class="<?= $infoVidet ? 'sl-4 od-9' : 'sl-5' ?>">
         <aside class="karta karta--zlata tenis-prihlaska" id="prihlaska" aria-labelledby="prihlaska-nadpis">
           <p class="stitek"><?= typo(trim((string)$bPrihlaska['stitek']) ?: 'Přihláška') ?></p>
           <h2 class="h3" id="prihlaska-nadpis"><?= trim((string)$bPrihlaska['nadpis']) !== '' ? html_inline((string)$bPrihlaska['nadpis']) : 'Přihláška a kontakt' ?></h2>
@@ -198,8 +208,10 @@ $sekce = 0;
           <?php endif; ?>
         </aside>
       </div>
+<?php endif; ?>
     </div>
   </div>
 </section>
+<?php endif; ?>
 
 <?php require __DIR__ . '/inc/sablona/paticka.php'; ?>
