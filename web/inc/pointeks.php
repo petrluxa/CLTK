@@ -410,10 +410,10 @@ function pointeks_uloz(string $dorucenka, array $radek, string $raw, string $sta
    VÝPIS NA WEBU
    ================================================================== */
 
-/** Podmínka „je na webu“: viditelný záznam ze skupiny, ve které správce nic neskryl. Skrytí jednoho
- *  záznamu spojené čtyřhry tak schová celý zápas (i jméno skrytého hráče, které by jinak zůstalo
- *  v poli partner druhého záznamu). Poddotaz jen nad cltk_ – projde pojistkou (sql_pojistka). */
-const POINTEKS_NA_WEBU_SQL = 'visible = 1 AND skupina NOT IN (SELECT skupina FROM cltk_pointeks_vysledky WHERE visible = 0)';
+/** Podmínka „je na webu“: viditelná DVOUHRA ze skupiny, ve které správce nic neskryl. Čtyřhry se od 22. 10. 2026
+ *  na webu neukazují (Petr: „aby se ve výsledcích nezobrazovaly čtyřhry“) – dál se ukládají a jsou v administraci.
+ *  Poddotaz jen nad cltk_ – projde pojistkou (sql_pojistka). */
+const POINTEKS_NA_WEBU_SQL = "visible = 1 AND discipline <> 'DOUBLES' AND skupina NOT IN (SELECT skupina FROM cltk_pointeks_vysledky WHERE visible = 0)";
 
 /** Čas zápasu pro řazení (v PHP totéž pointeks_cas_zapasu()): konec zápasu, ale nikdy pozdější než přijetí –
  *  zápas nemůže skončit až po odeslání výsledku. Pointeks u výsledků bez času posílá půlnoc a u některých
@@ -595,12 +595,52 @@ function pointeks_sety_pro_vypis(array $sety, string $skore = ''): array {
 }
 
 /**
+ * Jméno soupeře v pořadí „Příjmení Jméno“ jako u hráčů klubu (Petr 22. 10. 2026: „jména soupeřů jsou obrácené“ –
+ * Pointeks posílá hráče klubu podle soupisky „Příjmení Jméno“, soupeře z turnajů „Jméno Příjmení“). Otáčí se jen tam,
+ * kde je dělení jisté: iniciály na začátku („E. Tichackova“ → „Tichackova E.“, „M. A. Jecan“ → „Jecan M. A.“),
+ * příjmení VERZÁLKAMI za jménem psaným normálně („Aida ATAGELDIYEVA“ → „ATAGELDIYEVA Aida“) a dvě slova („Zosia
+ * Bielus“ → „Bielus Zosia“). Delší jméno bez vodítka („Maria Paula Ortiz Peres“) zůstane, jak přišlo – hádat, kde
+ * končí jméno a začíná příjmení, by ho mohlo zkomolit. Soupeř, který je hráčem klubu (je v soupisce), se neotáčí.
+ * Písmena ani diakritika se nemění.
+ */
+function pointeks_jmeno_souper(string $jmeno): string {
+    $jmeno = trim((string)preg_replace('/\s+/u', ' ', $jmeno));
+    $t = $jmeno === '' ? [] : explode(' ', $jmeno);
+    $n = count($t);
+    if ($n < 2 || in_array(mb_strtolower($jmeno), pointeks_jmena_klubu(), true)) return $jmeno;
+    $inicialy = static fn(string $s): bool => (bool)preg_match('/^(\p{Lu}\.)+(-(\p{Lu}\.)+)?$/u', $s);   // „E.“, „M.A.“, „J.-P.“
+    $i = 0;
+    while ($i < $n - 1 && $inicialy($t[$i])) $i++;
+    if ($i > 0) return implode(' ', [...array_slice($t, $i), ...array_slice($t, 0, $i)]);
+    $verzalky = static fn(string $s): bool => mb_strlen($s) > 1 && $s === mb_strtoupper($s) && $s !== mb_strtolower($s);
+    $j = $n;
+    while ($j > 0 && $verzalky($t[$j - 1])) $j--;
+    if ($j > 0 && $j < $n) return implode(' ', [...array_slice($t, $j), ...array_slice($t, 0, $j)]);
+    if ($n === 2) return $t[1] . ' ' . $t[0];
+    return $jmeno;
+}
+
+/** Jména hráčů klubu, jak je posílá Pointeks (malými písmeny) – soupeř se stejným jménem se neotáčí. */
+function pointeks_jmena_klubu(): array {
+    static $jmena = null;
+    if ($jmena === null) {
+        try {
+            $jmena = array_map(static fn(array $r): string => mb_strtolower(trim((string)$r['j'])),
+                               rows('SELECT DISTINCT player_name AS j FROM cltk_pointeks_vysledky'));
+        } catch (Throwable $e) {
+            $jmena = [];
+        }
+    }
+    return $jmena;
+}
+
+/**
  * Řádky jedné skupiny → zápas pro výpis (pointeks_zapas_html()):
  *   hraci   [['jmeno', 'klub' => true|false, 'zeme'], …] – hráči klubu tučně, spoluhráč mimo klub obyčejně
  *   souperi [['jmeno', 'zeme'], …], sety (pointeks_sety_pro_vypis), cas (DateTimeImmutable v Praze | null),
  *   zive, vysledek (WIN/LOSS/''), prubeh (FINISHED/RETIRED/WALKOVER/''), kolo (česky), finale, kvalifikace,
  *   turnaj, kategorie, vek, mesto, zeme, url, ctyrhra, ids.
- * Jména jsou přesně, jak přišla.
+ * Jména hráčů klubu jsou přesně, jak přišla; soupeři v pořadí „Příjmení Jméno“ (pointeks_jmeno_souper()).
  */
 function pointeks_zapas(array $radky): array {
     usort($radky, static fn(array $a, array $b): int => (int)$a['id'] <=> (int)$b['id']);
@@ -623,7 +663,7 @@ function pointeks_zapas(array $radky): array {
     $souperi = [];
     foreach (json_pole((string)$r['opponents_json']) as $o) {
         if (!is_array($o) || trim((string)($o['name'] ?? '')) === '') continue;
-        $souperi[] = ['jmeno' => trim((string)$o['name']), 'zeme' => (string)($o['country'] ?? '')];
+        $souperi[] = ['jmeno' => pointeks_jmeno_souper((string)$o['name']), 'zeme' => (string)($o['country'] ?? '')];
     }
     $kolo = trim((string)$r['round']);
     return [

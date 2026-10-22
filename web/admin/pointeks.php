@@ -175,7 +175,8 @@ echo '<link rel="stylesheet" href="' . e(BASE_PATH . verze('admin/assets/admin-p
           $souperiText = implode(' / ', array_map(static fn(array $c): string => $c['jmeno'] . ($c['zeme'] !== '' ? ' (' . $c['zeme'] . ')' : ''), $z['souperi']));
           $clenove = $skupinaClenove[(string)$r['skupina']] ?? [];
           $spojeni = array_values(array_filter($clenove, static fn(array $x): bool => (int)$x['id'] !== $id));
-          $jeNaWebu = (int)$r['visible'] === 1;
+          $jeCtyrhra = (string)$r['discipline'] === 'DOUBLES';          // čtyřhry web od 22. 10. 2026 neukazuje
+          $jeNaWebu = !$jeCtyrhra && (int)$r['visible'] === 1;
           foreach ($spojeni as $x) $jeNaWebu = $jeNaWebu && (int)$x['visible'] === 1; ?>
         <tr id="v<?= $id ?>"<?= $jeNaWebu ? '' : ' class="je-skryte"' ?>>
           <td data-label="Zápas" class="td-nazev">
@@ -193,7 +194,7 @@ echo '<link rel="stylesheet" href="' . e(BASE_PATH . verze('admin/assets/admin-p
             <?php if ($z['prubeh'] === 'RETIRED'): ?><span class="pk-tlumene">skreč</span><?php endif; ?>
           </td>
           <td data-label="Stav">
-            <?= stav_badge($jeNaWebu ? 1 : 0, 'Na webu', 'Skryto') ?>
+            <?= $jeCtyrhra ? badge('Čtyřhra – na webu není', 'off') : stav_badge($jeNaWebu ? 1 : 0, 'Na webu', 'Skryto') ?>
             <?= $z['zive'] ? badge('živě', 'err') : '' ?>
             <?= $z['finale'] && !$z['kvalifikace'] && $z['vysledek'] === 'WIN' ? badge('Titul', 'zlato') : '' ?>
           </td>

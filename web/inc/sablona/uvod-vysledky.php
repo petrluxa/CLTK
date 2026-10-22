@@ -30,6 +30,24 @@
 
 const UVOD_VYSLEDKY_DNI = 30;
 
+/** Výběr do pásu: nejnovější zápasy, ale každý hráč klubu nejvýš jednou (jeho poslední zápas, živý vede) –
+ *  Petr 22. 10. 2026: „aby se nestalo, že tam bude mít někdo 5 výsledků, když se ten týden nic nehraje“.
+ *  Čtyřhry na webu nejsou (POINTEKS_NA_WEBU_SQL), takže hráč klubu je v každém zápase jeden. */
+function uvod_vysledky_vyber(array $zapasy, int $pocet = 8): array {
+    $vyber = [];
+    $hraci = [];
+    foreach ($zapasy as $z) {
+        if (!is_array($z)) continue;
+        $klubovi = array_filter((array)($z['hraci'] ?? []), static fn($h): bool => is_array($h) && !empty($h['klub']));
+        $klic = mb_strtolower(implode('|', array_map(static fn(array $h): string => trim((string)$h['jmeno']), $klubovi)));
+        if ($klic === '' || isset($hraci[$klic])) continue;
+        $hraci[$klic] = true;
+        $vyber[] = $z;
+        if (count($vyber) >= $pocet) break;
+    }
+    return $vyber;
+}
+
 /** Zápasy pro pás pod úvodem, jen když jsou čerstvé: živý zápas, nebo nejnovější zápas (první v seznamu
  *  z pointeks_seznam()) nejvýš UVOD_VYSLEDKY_DNI dní starý; jinak [] (pás se nevypíše). Zápas bez známého
  *  času stáří nerozhoduje. */
