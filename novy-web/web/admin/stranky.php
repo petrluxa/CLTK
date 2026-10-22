@@ -278,6 +278,13 @@ function stranky_pevna_pole(string $stranka, string $klic): ?array {
     return STRANKY_UVOD_POLE[$stranka . '|' . $klic] ?? null;
 }
 
+/** Proč blok nejde skrýt (blok_lze_skryt() v inc/data.php) – do nápovědy u bloku a do hlášky. */
+function stranky_proc_neskryt(string $stranka, string $klic): string {
+    if ($stranka === 'index') return 'sekce úvodní stránky určuje šablona';
+    if ($stranka . '|' . $klic === 'formulare|souhlas') return 'text souhlasu je u každé přihlášky povinný';
+    return 'je to hlavička stránky s jejím nadpisem';
+}
+
 /** Bloky, které šablona čte podle předpony klíče (dají se přidávat i mazat). */
 const STRANKY_PREDPONY = [
     'zavodni-tenis|pyramida-' => 'Stupeň pyramidy závodního tenisu (štítek = věk, nadpis = stupeň, perex = popis, text = odrážky „tučně popisek, hodnota“)',
@@ -398,6 +405,8 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
             $f['doplni_klub'] = 0;
             $f['visible'] = 1;
         }
+        /* hlavička stránky (uvod, plán areálu) a text souhlasu se na webu ukazují vždy – formulář nemá „Zobrazit na webu“ */
+        if (!blok_lze_skryt($stranka, (string)$b['klic'])) $f['visible'] = 1;
         if (strlen($f['text']) > 60000) $chyby['text'] = 'Text je příliš dlouhý (víc než 60 000 znaků) – rozdělte ho prosím do dvou bloků.';
         $o1 = obsah_odkaz($f['odkaz']);
         $o2 = obsah_odkaz($f['odkaz2']);
@@ -439,8 +448,12 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
         if (!$x) redirect('stranky.php', 'Blok nebyl nalezen – možná byl mezitím smazán.', 'err');
         $zpet = 'stranky.php?stranka=' . rawurlencode((string)$x['stranka']);
         if ($akce === 'prepnout') {
+            /* skrýt nejde hlavičku stránky, plán areálu, text souhlasu ani bloky úvodní stránky (znovu zobrazit ano) */
+            if ((int)$x['visible'] === 1 && !blok_lze_skryt((string)$x['stranka'], (string)$x['klic'])) {
+                redirect($zpet . '#b' . $rid, 'Blok „' . $x['klic'] . '“ se na webu ukazuje vždy – ' . stranky_proc_neskryt((string)$x['stranka'], (string)$x['klic']) . '. Skrýt ho nejde.', 'warn');
+            }
             $novy = admin_prepni('cltk_bloky', $rid);
-            redirect($zpet . '#b' . $rid, 'Blok „' . $x['klic'] . '“ je teď na webu ' . ($novy ? 'vidět.' : 'skrytý – šablona se k němu chová, jako by nebyl.'));
+            redirect($zpet . '#b' . $rid, 'Blok „' . $x['klic'] . '“ je teď na webu ' . ($novy ? 'vidět.' : 'skrytý – jeho část stránky (celá sekce, nebo jen jeho kus) se na webu neukáže.'));
         }
         if ($akce === 'nahoru' || $akce === 'dolu') {
             admin_posun('cltk_bloky', $rid, $akce === 'nahoru' ? -1 : 1, 'stranka');
@@ -448,7 +461,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
         }
         if ($akce === 'smazat') {
             if (stranky_znamy((string)$x['stranka'], (string)$x['klic'])) {
-                redirect($zpet . '#b' . $rid, 'Blok „' . $x['klic'] . '“ čte šablona stránky – smazat ho nejde, můžete ho skrýt.', 'warn');
+                redirect($zpet . '#b' . $rid, 'Blok „' . $x['klic'] . '“ čte šablona stránky – smazat ho nejde' . (blok_lze_skryt((string)$x['stranka'], (string)$x['klic']) ? ', můžete ho skrýt.' : '.'), 'warn');
             }
             q('DELETE FROM cltk_bloky WHERE id = ?', [$rid]);
             obsah_smazat_nepouzite([(string)$x['foto']], [['cltk_bloky', 'foto']]);
@@ -470,7 +483,7 @@ if ($rezim === 'prehled') {
         'zpet' => ['stranky.php', 'Stránky'],
         'podnadpis' => $stranka === 'index'
             ? 'Nadpisy a tlačítka sekcí <a href="' . e($u) . '" target="_blank" rel="noopener">úvodní stránky ↗</a>. Pořadí sekcí i to, které se ukazují, určuje šablona podle PDF klienta – obsah sekcí (fotky, aktuality, výsledky, akce…) se mění ve vlastních modulech, viz mapa níže.'
-            : 'Bloky stránky' . ($u !== '' ? ' <a href="' . e($u) . '" target="_blank" rel="noopener">' . e($stranka) . '.php ↗</a>' : ' (texty bez vlastní stránky)') . '. Pořadí bloků určuje šablona stránky; šipky jsou jen u bloků, které šablona vypisuje za sebou.',
+            : 'Bloky stránky' . ($u !== '' ? ' <a href="' . e($u) . '" target="_blank" rel="noopener">' . e($stranka) . '.php ↗</a>' : ' (texty bez vlastní stránky)') . '. Pořadí bloků určuje šablona stránky; šipky jsou jen u bloků, které šablona vypisuje za sebou. Skrytý blok se na webu neukáže – zmizí celá jeho část stránky; hlavička stránky (uvod) se ukazuje vždy.',
     ]);
 } else {
     $u = stranky_url($stranka);
@@ -482,10 +495,15 @@ if ($rezim === 'prehled') {
 echo obsah_assets();
 
 if ($rezim === 'prehled'):
+    /* skryté = ty, které web opravdu neukazuje (blok_na_webu() – hlavička stránky skrytá z dřívějška se ukazuje) */
     $stat = [];
-    foreach (rows('SELECT stranka, COUNT(*) AS n, SUM(CASE WHEN visible = 0 THEN 1 ELSE 0 END) AS skryte,
-                          SUM(CASE WHEN doplni_klub = 1 THEN 1 ELSE 0 END) AS doplnit
-                     FROM cltk_bloky GROUP BY stranka') as $r) $stat[$r['stranka']] = $r;
+    foreach (rows('SELECT stranka, klic, visible, doplni_klub FROM cltk_bloky') as $r) {
+        $s = $stat[$r['stranka']] ?? ['n' => 0, 'skryte' => 0, 'doplnit' => 0];
+        $s['n']++;
+        if (!blok_na_webu($r)) $s['skryte']++;
+        if ((int)$r['doplni_klub'] === 1) $s['doplnit']++;
+        $stat[$r['stranka']] = $s;
+    }
     $skupiny = [];
     foreach (STRANKY as $k => [$n, $sk]) $skupiny[$sk][$k] = $n;
     foreach ($vDb as $k) if (!isset(STRANKY[$k])) $skupiny['Ostatní'][$k] = $k;
@@ -556,8 +574,9 @@ if ($rezim === 'prehled'):
       <thead><tr><th>Blok</th><th>Obsah</th><th>Foto</th><th>Stav</th><th class="right">Akce</th></tr></thead>
       <tbody>
       <?php foreach ($radky as $i => $r): $rid = (int)$r['id']; $znamy = stranky_znamy($stranka, (string)$r['klic']);
-            $pevny = stranky_pevna_pole($stranka, (string)$r['klic']) !== null; ?>
-        <tr id="b<?= $rid ?>"<?= (int)$r['visible'] ? '' : ' class="je-skryte"' ?>>
+            $lzeSkryt = blok_lze_skryt($stranka, (string)$r['klic']);       // hlavička stránky a úvodní stránka ne
+            $naWebu = blok_na_webu($r);                                      // hlavička skrytá z dřívějška se na webu ukazuje ?>
+        <tr id="b<?= $rid ?>"<?= $naWebu ? '' : ' class="je-skryte"' ?>>
           <td data-label="Blok" class="td-nazev"><b><a href="stranky.php?id=<?= $rid ?>"><span class="klic"><?= e($r['klic']) ?></span></a></b><small><?= e(stranky_popis($stranka, (string)$r['klic'])) ?></small></td>
           <td data-label="Obsah" class="td-mala">
             <?php if ($r['stitek'] !== ''): ?><span class="stranky-skupina"><?= e($r['stitek']) ?></span><br><?php endif; ?>
@@ -566,11 +585,11 @@ if ($rezim === 'prehled'):
             <?php if ($r['stitek'] === '' && $r['nadpis'] === '' && $r['perex'] === '' && $r['text'] === ''): ?><i>prázdný</i><?php endif; ?>
           </td>
           <td data-label="Foto"><?= $r['foto'] !== '' ? obsah_nahled_foto($r['foto'], 'thumb-sm') : '–' ?></td>
-          <td data-label="Stav"><?= stav_badge($r['visible']) ?> <?= (int)$r['doplni_klub'] ? badge('doplní klub', 'warn') : '' ?></td>
+          <td data-label="Stav"><?= stav_badge($naWebu ? 1 : 0) ?> <?= (int)$r['doplni_klub'] ? badge('doplní klub', 'warn') : '' ?></td>
           <td data-label="Akce" class="right"><div class="akce-radku">
             <?php if (!$znamy): ?><?= tlacitka_poradi($rid, $rid === $prvniPosun, $rid === $posledniPosun, ['stranka' => $stranka]) ?><?php endif; ?>
             <a class="btn btn-sm btn-primary" href="stranky.php?id=<?= $rid ?>">Upravit</a>
-            <?php if (!$pevny || !(int)$r['visible']): ?><?= tlacitko_prepnout($rid, $r['visible'], ['stranka' => $stranka]) ?><?php endif; ?>
+            <?php if ($lzeSkryt || !$naWebu): /* blok úvodní stránky skrytý dřív jde znovu zobrazit */ ?><?= tlacitko_prepnout($rid, $r['visible'], ['stranka' => $stranka]) ?><?php endif; ?>
             <?php if (!$znamy): ?><?= tlacitko_smazat($rid, 'Smazat blok „' . $r['klic'] . '“? Nejde to vrátit.', ['stranka' => $stranka]) ?><?php endif; ?>
           </div></td>
         </tr>
@@ -594,7 +613,7 @@ if ($rezim === 'prehled'):
                 'hint' => 'Malá písmena bez diakritiky a pomlčky. Klíč pak už neměňte.']),
             pole_text('nadpis', 'Nadpis', '', ['maxlength' => 255]),
           ]) ?>
-      <p class="hint">Nový blok se na webu ukáže, až ho šablona stránky začne vypisovat (vlastní bloky vypisují stránky, které berou všechny bloky za sebou). Bloky, které šablona čte natvrdo, jdou jen skrýt, ne smazat.</p>
+      <p class="hint">Nový blok se na webu ukáže, až ho šablona stránky začne vypisovat (vlastní bloky vypisují stránky, které berou všechny bloky za sebou). Bloky, které šablona čte natvrdo, jdou jen skrýt, ne smazat – hlavička stránky (uvod) ani skrýt.</p>
       <?= tlacitka_formulare('Přidat blok') ?>
     </form>
   </div>
@@ -661,7 +680,11 @@ if ($rezim === 'prehled'):
         <p class="hint">Stránka webu se zapisuje jen názvem souboru (clenstvi.php, areal.php#bazen, dokument.php?d=stanovy), odkazy ven celou adresou https://… – otevřou se v novém okně.</p>
       </fieldset>
       <?= pole_check('doplni_klub', 'Obsah zatím chybí (web ukáže štítek „doplní klub“)', (bool)$f['doplni_klub']) ?>
-      <?= pole_check('visible', 'Zobrazit na webu', (bool)$f['visible'], ['hint' => 'Skrytý blok se na webu chová, jako by nebyl – šablona ukáže výchozí obsah nebo nic.']) ?>
+      <?php if (blok_lze_skryt($stranka, (string)$b['klic'])): ?>
+      <?= pole_check('visible', 'Zobrazit na webu', (bool)$f['visible'], ['hint' => 'Skrytý blok se na webu neukáže – zmizí celá jeho část stránky: celá sekce, nebo jen jeho kus (karta, záložka, rámeček), když je blok částí větší sekce.']) ?>
+      <?php else: ?>
+      <p class="hint">Na webu se ukazuje vždy – <?= e(stranky_proc_neskryt($stranka, (string)$b['klic'])) ?>, proto ho skrýt nejde.<?= blok_na_webu($b) ? '' : ' Teď je skrytý (zůstal z dřívějška) – uložením se zase zobrazí.' ?></p>
+      <?php endif; ?>
       <?= tlacitka_formulare('Uložit blok', $strankaUrl, 'Zpět bez uložení') ?>
       <?php endif; ?>
     </form>

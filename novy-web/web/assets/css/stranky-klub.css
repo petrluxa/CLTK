@@ -384,6 +384,7 @@
 .vedeni-vybor .hlava--radek .perex, .vedeni-kancelar .hlava--radek .perex, .vedeni-prezidenti .hlava--radek .perex { max-width: 30rem; margin: 0; }
 .vedeni-vybor .hlava--radek .perex p, .vedeni-kancelar .hlava--radek .perex p, .vedeni-prezidenti .hlava--radek .perex p { margin: 0; }
 .vedeni-kontakty { margin-top: clamp(3.5rem, 2.5rem + 3vw, 5rem); max-width: 60rem; }
+.vedeni-kontakty:first-child { margin-top: 0; }      /* skrytá kancelář (modul Stránky) – kontakty jsou první v sekci */
 .vedeni-kontakty__nadpis { margin-bottom: var(--s-4); }
 .vedeni-kontakt { align-items: baseline; padding-block: .85rem; }
 .vedeni-kontakt .radek__nazev b { display: block; font: 400 1.2rem/1.3 var(--serif); color: var(--navy); }

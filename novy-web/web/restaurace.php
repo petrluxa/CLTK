@@ -55,8 +55,9 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
 
 <?= hlava_stranky($uvod, ['drobky' => [['Restaurace']], 'nadpis' => 'Restaurace']) ?>
 
+<?php if (!blok_skryty($bInfo)): /* skrytý blok = celá sekce pryč, i s fotkami prostor (klub 21. 10. 2026) */ ?>
 <!-- I · Terasa a salónek -->
-<section class="sekce sekce--papir2" id="prostory" aria-labelledby="info-nadpis">
+<section class="<?= sekce_tridy('sekce sekce--papir2') ?>" id="prostory" aria-labelledby="info-nadpis">
   <div class="wrap restaurace-info">
     <div>
       <?= hlava_sekce($bInfo, ['cislo' => 1, 'id' => 'info-nadpis', 'nadpis' => 'Terasa a salónek', 'stitek' => 'Restaurace a terasa']) ?>
@@ -75,9 +76,11 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
     <?php endif; ?>
   </div>
 </section>
+<?php else: sekce_vynechana(); endif; ?>
 
+<?php if (!blok_skryty($bKontakt)): ?>
 <!-- II · Otevírací doba a kontakt -->
-<section class="sekce" id="kontakt" aria-labelledby="kontakt-nadpis">
+<section class="<?= sekce_tridy('sekce') ?>" id="kontakt" aria-labelledby="kontakt-nadpis">
   <div class="wrap mrizka">
     <div class="sl-6">
       <?= hlava_sekce($bKontakt, ['cislo' => 2, 'id' => 'kontakt-nadpis', 'nadpis' => 'Otevírací doba a kontakt', 'stitek' => 'Kontakt']) ?>
@@ -95,6 +98,7 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
     </div>
   </div>
 </section>
+<?php endif; ?>
 
 <?= stranka_dalsi_bloky('restaurace', ['uvod', 'informace', 'kontakt']) ?>
 

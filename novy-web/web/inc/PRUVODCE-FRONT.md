@@ -193,9 +193,13 @@ přes `normalizuj_datum()`.
 ## 8. Texty stránek – `blok($stranka, $klic)`
 
 Vrací řádek `cltk_bloky` (`stitek, nadpis`*inline*`, perex`*text*`, text`*html*`, foto, foto_popisek,
-odkaz, odkaz_text, odkaz2, odkaz2_text, doplni_klub`) nebo prázdný blok s `existuje => false` (skrytý blok
-se chová jako neexistující). **`doplni_klub = 1` → decentní štítek „doplní klub“** (obsah zatím chybí –
-nevymýšlet). Odkazy tlačítek přes `bezpecny_odkaz($b['odkaz'])` + `odkaz_attr()`.
+odkaz, odkaz_text, odkaz2, odkaz2_text, doplni_klub`) nebo prázdný blok s `existuje => false`. Skrytý blok
+(`visible = 0`) má navíc `'skryty' => true` a šablona jeho část stránky nevypíše vůbec (`blok_skryty($b)`,
+od 21. 10. 2026 – PRUVODCE-STRANKY §2); chybějící blok dál dává výchozí obsah. Skrýt nejde hlavičku stránky
+(`uvod`), `areal|plan`, `formulare|souhlas` a bloky úvodní stránky (`blok_lze_skryt()`) – první tři vrátí `blok()`
+celé, i když u nich z dřívějška zůstalo `visible = 0` (`blok_na_webu()`).
+**`doplni_klub = 1` → decentní štítek „doplní klub“** (obsah zatím chybí – nevymýšlet). Odkazy tlačítek přes
+`bezpecny_odkaz($b['odkaz'])` + `odkaz_attr()`.
 
 Výchozí bloky (`*` = doplni_klub, `+foto` = má fotku). Klíč `uvod` = hlavička stránky.
 

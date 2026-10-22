@@ -162,6 +162,23 @@ $soupiska = tenis_polozky((string)$bSoupiska['text']);
 $druzstva = tenis_polozky((string)$bDruzstva['text']);
 
 $vysledky = pointeks_seznam(['limit' => 5])['zapasy'];      // výsledky ze služby Pointeks (5 nejnovějších)
+
+/* Sekce, které se vypíšou. Skrytý blok (modul Stránky) = celá jeho sekce pryč, i se stupni, kartami a výsledky
+   z jiných bloků a modulů (klub 21. 10. 2026); skrytá část sekce (žebříček, reprezentanti, ročníky, soupiska)
+   zmizí sama – bez textu nemá co vypsat. Tlačítko na kotvu sekce, která se nevypíše (stupeň pyramidy
+   „Extraliga“ → #extraliga), se vynechá. */
+$maPyramidu  = ($stupne || $bPyramida['existuje']) && !blok_skryty($bPyramida);
+$maCisla     = ($cisla || $cislaJine || $zebricky || $repre || $bCisla['existuje']) && !blok_skryty($bCisla);
+$maHrace     = ($hraci || $vysledky) && !blok_skryty($bHraci);
+$maExtraligu = ($bExtraliga['existuje'] || $rocniky || $soupiska) && !blok_skryty($bExtraliga);
+$maDruzstva  = ($druzstva || $bDruzstva['existuje']) && !blok_skryty($bDruzstva);
+$chybiKotvy = array_keys(array_filter(['pyramida' => !$maPyramidu, 'cisla' => !$maCisla, 'hraci' => !$maHrace,
+                                       'extraliga' => !$maExtraligu, 'druzstva' => !$maDruzstva]));
+if ($chybiKotvy) {
+    $uvod   = blok_bez_kotev($uvod, $chybiKotvy);
+    $stupne = array_map(static fn(array $st): array => blok_bez_kotev($st, $chybiKotvy), $stupne);
+    $hraci  = array_map(static fn(array $h): array => blok_bez_kotev($h, $chybiKotvy), $hraci);
+}
 $treneriNahled = array_slice(array_values(array_filter(treneri('zavodni'),
     fn($t) => trim((string)$t['foto']) !== '' && is_file(UPLOAD_DIR . '/' . ltrim((string)$t['foto'], '/')))), 0, 6);
 
@@ -169,7 +186,7 @@ $sablona = [
     'titulek' => 'Závodní tenis',
     'popis'   => html_text((string)$uvod['perex']),
     'css'     => ['stranky-tenis.css', 'vysledky.css'],
-    'obrazek' => (string)$bSoupiska['foto'],
+    'obrazek' => blok_skryty($bExtraliga) ? '' : (string)$bSoupiska['foto'],   // týmová fotka je v sekci Extraligy – skrytá sekce = logo
     'trida'   => 'stranka-tenis stranka-zavodni-tenis',
 ];
 require __DIR__ . '/inc/sablona/hlavicka.php';
@@ -178,9 +195,9 @@ $sekce = 0;
 
 <?= hlava_stranky(array_merge($uvod, ['odkaz' => '', 'odkaz2' => '']), ['drobky' => [['Závodní tenis']], 'nadpis' => 'Závodní tenis', 'navic' => blok_tlacitka($uvod) . tenis_podnav()]) ?>
 
-<?php if ($stupne || $bPyramida['existuje']): $sekce++; ?>
+<?php if ($maPyramidu): $sekce++; ?>
 <!-- Pyramida ČTS: stupně od Tenisové školy po extraligu -->
-<section class="sekce sekce--bez-horni" id="pyramida" aria-labelledby="pyramida-nadpis">
+<section class="<?= sekce_tridy('sekce sekce--bez-horni') ?>" id="pyramida" aria-labelledby="pyramida-nadpis">
   <div class="wrap">
     <?= hlava_sekce($stupne ? $jenHlava($bPyramida) : $bPyramida, ['cislo' => $sekce, 'id' => 'pyramida-nadpis', 'stitek' => 'Pyramida ČTS', 'nadpis' => 'Od školy po extraligu']) ?>
     <?php if ($stupne): ?>
@@ -221,11 +238,11 @@ $sekce = 0;
     <?php endif; ?>
   </div>
 </section>
-<?php endif; ?>
+<?php elseif (blok_skryty($bPyramida)): sekce_vynechana(); endif; ?>
 
-<?php if ($cisla || $cislaJine || $zebricky || $repre || $bCisla['existuje']): $sekce++; ?>
+<?php if ($maCisla): $sekce++; ?>
 <!-- Sezóna v číslech: pás čísel, žebříček ČTS a reprezentanti -->
-<section class="sekce sekce--papir2" id="cisla" aria-labelledby="cisla-nadpis">
+<section class="<?= sekce_tridy('sekce sekce--papir2') ?>" id="cisla" aria-labelledby="cisla-nadpis">
   <div class="wrap">
     <?= hlava_sekce($bCisla, ['cislo' => $sekce, 'id' => 'cisla-nadpis', 'stitek' => 'Čísla sezóny', 'nadpis' => 'Sezóna v číslech']) ?>
     <?php if ($cisla): ?>
@@ -277,11 +294,11 @@ $sekce = 0;
     <?php endif; ?>
   </div>
 </section>
-<?php endif; ?>
+<?php elseif (blok_skryty($bCisla)): sekce_vynechana(); endif; ?>
 
-<?php if ($hraci || $vysledky): $sekce++; ?>
+<?php if ($maHrace): $sekce++; ?>
 <!-- Naši hráči: karty hráčů (bloky hrac-*) a poslední výsledky (služba Pointeks, všechny na vysledky.php) -->
-<section class="sekce" id="hraci" aria-labelledby="hraci-nadpis">
+<section class="<?= sekce_tridy('sekce') ?>" id="hraci" aria-labelledby="hraci-nadpis">
   <div class="wrap">
     <?= hlava_sekce($jenHlava($bHraci), ['cislo' => $sekce, 'id' => 'hraci-nadpis', 'radek' => true, 'stitek' => 'Naši hráči', 'nadpis' => 'Naši hráči']) ?>
     <?php if ($hraci): ?>
@@ -301,11 +318,11 @@ $sekce = 0;
     <?php endif; ?>
   </div>
 </section>
-<?php endif; ?>
+<?php elseif (blok_skryty($bHraci)): sekce_vynechana(); endif; ?>
 
-<?php if ($bExtraliga['existuje'] || $rocniky || $soupiska): $sekce++; ?>
+<?php if ($maExtraligu): $sekce++; ?>
 <!-- Extraliga smíšených družstev: text, ročníky, týmová fotka a soupiska -->
-<section class="sekce sekce--navy" id="extraliga" aria-labelledby="extraliga-nadpis">
+<section class="<?= sekce_tridy('sekce sekce--navy') ?>" id="extraliga" aria-labelledby="extraliga-nadpis">
   <div class="wrap">
     <div class="mrizka tenis-extraliga">
       <div class="sl-5 tenis-extraliga__text">
@@ -348,11 +365,11 @@ $sekce = 0;
     </div>
   </div>
 </section>
-<?php endif; ?>
+<?php elseif (blok_skryty($bExtraliga)): sekce_vynechana(); endif; ?>
 
-<?php if ($druzstva || $bDruzstva['existuje']): $sekce++; ?>
+<?php if ($maDruzstva): $sekce++; ?>
 <!-- Družstva mládeže: výsledky soutěží družstev podle sezón -->
-<section class="sekce sekce--papir2" id="druzstva" aria-labelledby="druzstva-nadpis">
+<section class="<?= sekce_tridy('sekce sekce--papir2') ?>" id="druzstva" aria-labelledby="druzstva-nadpis">
   <div class="wrap">
     <div class="mrizka">
       <div class="sl-4">
@@ -382,11 +399,11 @@ $sekce = 0;
     </div>
   </div>
 </section>
-<?php endif; ?>
+<?php elseif (blok_skryty($bDruzstva)): sekce_vynechana(); endif; ?>
 
 <?php $sekce++; ?>
 <!-- Trenérský tým: náhled a odkaz na celý tým -->
-<section class="sekce" id="treneri" aria-labelledby="treneri-nadpis">
+<section class="<?= sekce_tridy('sekce') ?>" id="treneri" aria-labelledby="treneri-nadpis">
   <div class="wrap">
     <?= hlava_sekce($jenHlava($bTreneri), ['cislo' => $sekce, 'id' => 'treneri-nadpis', 'radek' => true, 'stitek' => 'Trenérský tým', 'nadpis' => 'Trenéři závodního tenisu']) ?>
     <?php if ($treneriNahled): ?>

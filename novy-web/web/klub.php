@@ -83,6 +83,14 @@ $cesta    = klub_polozky((string)$bCesta['text']);
 $rodokmen = ctc('rodokmen');
 $dokumentyKlub = dokumenty('klub');
 
+/* Skrytý blok (modul Stránky) = jeho část stránky zmizí (klub 21. 10. 2026): „jmena“ = celá sekce III
+   (i s cestou na ostrov a rodokmenem), „ctc/rodokmen“ = jen rodokmen v ní, „rozcestnik“ = celá sekce IV,
+   „vedeni/dokumenty“ = jen stanovy a dokumenty v rozcestníku. */
+$rodokmenVidet   = $rodokmen && !blok_skryty($bRodokmen);
+$jmenaVidet      = ($jmena || $rodokmenVidet) && !blok_skryty($bJmena);
+$rozcestnikVidet = !blok_skryty($bRozcestnik);
+$dokumentyVidet  = $dokumentyKlub && !blok_skryty($bDokumenty);
+
 /* Text pod seznamem jmen (poznámka „Roky změn jmen uvádíme podle klubu…“) */
 $jmenaPozn = trim((string)preg_replace('~<(ul|ol)>.*?</\1>~s', '', html_ocistit((string)$bJmena['text'])));
 
@@ -116,7 +124,7 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
 
 <?php if ($cisla): ?>
   <!-- I · Klub v číslech (V4 sekce 3) -->
-  <section class="sekce sekce--tesna sekce--linka klub-cisla" id="cisla" aria-labelledby="cisla-nadpis">
+  <section class="<?= sekce_tridy('sekce sekce--tesna sekce--linka klub-cisla') ?>" id="cisla" aria-labelledby="cisla-nadpis">
     <div class="wrap">
       <h2 class="vh" id="cisla-nadpis"><?= typo(trim((string)$bCisla['stitek']) ?: 'Klub v číslech') ?></h2>
       <ul class="cisla" style="--sloupcu:<?= min(6, max(2, count($cisla))) ?>">
@@ -144,11 +152,11 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
       <?php endif; ?>
     </div>
   </section>
-<?php endif; ?>
+<?php elseif (blok_skryty($bCisla)): sekce_vynechana(); endif; ?>
 
 <?php if ($bOKlubu['existuje']): ?>
   <!-- II · Klub uprostřed města -->
-  <section class="sekce sekce--papir2 klub-mesto" id="o-klubu" aria-labelledby="o-klubu-nadpis">
+  <section class="<?= sekce_tridy('sekce sekce--papir2 klub-mesto') ?>" id="o-klubu" aria-labelledby="o-klubu-nadpis">
     <div class="wrap mrizka">
       <div class="sl-5">
         <?= hlava_sekce($bOKlubu, ['cislo' => 1, 'id' => 'o-klubu-nadpis', 'stitek' => 'O klubu']) ?>
@@ -159,11 +167,11 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
       </div>
     </div>
   </section>
-<?php endif; ?>
+<?php elseif (blok_skryty($bOKlubu)): sekce_vynechana(); endif; ?>
 
-<?php if ($jmena || $rodokmen): ?>
+<?php if ($jmenaVidet): ?>
   <!-- III · Sedm jmen, cesta na ostrov, rodokmen stoletých (V4 sekce 3b) -->
-  <section class="sekce klub-rod-sekce" id="jmena" aria-labelledby="jmena-nadpis">
+  <section class="<?= sekce_tridy('sekce klub-rod-sekce') ?>" id="jmena" aria-labelledby="jmena-nadpis">
     <div class="wrap klub-rod">
       <div class="klub-rod__jmena">
         <?= hlava_sekce(klub_stitek($bJmena, 'Klub'), ['cislo' => 2, 'id' => 'jmena-nadpis', 'nadpis' => 'Sedm jmen, jeden klub.']) ?>
@@ -190,7 +198,7 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
         <?php endif; ?>
       </div>
 
-      <?php if ($rodokmen): ?>
+      <?php if ($rodokmenVidet): ?>
       <div class="klub-rod__rodokmen">
         <p class="stitek"><?= typo(trim((string)$bRodokmen['stitek']) ?: 'Rodokmen stoletých') ?></p>
         <?php if (trim((string)$bRodokmen['perex']) !== ''): ?><div class="klub-rod__perex"><?= paragraphs((string)$bRodokmen['perex']) ?></div><?php endif; ?>
@@ -208,11 +216,11 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
       <?php endif; ?>
     </div>
   </section>
-<?php endif; ?>
+<?php elseif (blok_skryty($bJmena)): sekce_vynechana(); endif; ?>
 
-<?php if ($podstranky): ?>
+<?php if ($podstranky && $rozcestnikVidet): ?>
   <!-- IV · Rozcestník na podstránky Klubu -->
-  <section class="sekce sekce--linka rozcestnik-sekce" id="rozcestnik" aria-labelledby="rozcestnik-nadpis">
+  <section class="<?= sekce_tridy('sekce sekce--linka rozcestnik-sekce') ?>" id="rozcestnik" aria-labelledby="rozcestnik-nadpis">
     <div class="wrap">
       <?= hlava_sekce($bRozcestnik, ['cislo' => 3, 'id' => 'rozcestnik-nadpis', 'stitek' => 'Klub', 'nadpis' => 'Členství, historie a lidé klubu.']) ?>
       <ol class="rozcestnik">
@@ -231,7 +239,7 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
         <?php endforeach; ?>
       </ol>
 
-      <?php if ($dokumentyKlub): ?>
+      <?php if ($dokumentyVidet): ?>
       <div class="klub-dokumenty">
         <h3 class="h4"><?= trim((string)$bDokumenty['nadpis']) !== '' ? html_inline((string)$bDokumenty['nadpis']) : 'Stanovy a dokumenty' ?></h3>
         <?= dokumenty_html($dokumentyKlub) ?>

@@ -131,6 +131,13 @@ $recTel     = setting('recepce_telefon');
 $recMail    = setting('recepce_email');
 $maKalk     = ($leto && $leto['sekce']) || ($zima && $zima['sekce']);
 
+/* Skrytý blok (modul Stránky) = celá jeho sekce zmizí i s odkazy na ni (klub 21. 10. 2026) */
+$cenikyVidet   = !blok_skryty($bCeniky);
+$kalkVidet     = $maKalk && !blok_skryty($bKalk);
+$pravidlaVidet = !blok_skryty($bPravidla);
+$doplVidet     = $dopl && $dopl['sekce'] && !blok_skryty($bDopl);
+$rezVidet      = !blok_skryty($bRez);
+
 /* Hlava: vedlejší odkaz bloku, když ho klub nevyplnil, = Rezervovat kurt (ceník je místo, kde dává smysl) */
 $uvodHlava = $uvod;
 if (trim((string)$uvodHlava['odkaz2']) === '' && $rezervace !== '') {
@@ -146,9 +153,9 @@ $kalkData = [
 
 $sablona = [
     'titulek' => html_text((string)$uvod['stitek']) ?: 'Ceník kurtů',
-    'popis'   => trim(html_text((string)$uvod['perex']) . ' ' . implode(' · ', array_column($zalozky, 'nazev'))),
+    'popis'   => trim(html_text((string)$uvod['perex']) . ' ' . ($cenikyVidet ? implode(' · ', array_column($zalozky, 'nazev')) : '')),   // bez skryté sekce ceníků
     'css'     => ['stranky-areal.css'],
-    'js'      => $maKalk ? ['cenik.js'] : [],
+    'js'      => $kalkVidet ? ['cenik.js'] : [],
     'trida'   => 'stranka-cenik',
 ];
 require __DIR__ . '/inc/sablona/hlavicka.php';
@@ -156,8 +163,9 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
 
 <?= hlava_stranky($uvodHlava, ['drobky' => [['Areál a služby', 'areal.php'], ['Ceník kurtů']], 'nadpis' => 'Ceník kurtů']) ?>
 
+<?php if ($cenikyVidet): ?>
 <!-- I · Ceníky léto / zima -->
-<section class="sekce sekce--bez-horni" id="ceniky" aria-labelledby="ceniky-nadpis">
+<section class="<?= sekce_tridy('sekce sekce--bez-horni') ?>" id="ceniky" aria-labelledby="ceniky-nadpis">
   <div class="wrap">
     <?= hlava_sekce($bCeniky, ['cislo' => 1, 'id' => 'ceniky-nadpis', 'nadpis' => 'Ceník kurtů']) ?>
     <?php if ($zalozky): ?>
@@ -184,27 +192,29 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
     <p><?= doplni_klub('ceník doplní klub') ?></p>
     <?php endif; ?>
     <div class="odkazy-radek">
-      <?= tlacitko('#kalkulacka', 'Spočítat cenu', 'odkaz') ?>
-      <?= tlacitko('#pravidla', 'Pravidla rezervací', 'odkaz') ?>
+      <?= $kalkVidet ? tlacitko('#kalkulacka', 'Spočítat cenu', 'odkaz') : '' ?>
+      <?= $pravidlaVidet ? tlacitko('#pravidla', 'Pravidla rezervací', 'odkaz') : '' ?>
       <?= tlacitko('areal.php#plan', 'Kde který kurt najdete', 'odkaz') ?>
     </div>
   </div>
 </section>
+<?php else: sekce_vynechana(); endif; ?>
 
-<?php if ($maKalk): ?>
+<?php if ($kalkVidet): ?>
 <!-- II · Kalkulačka -->
-<section class="sekce sekce--papir2" id="kalkulacka" aria-labelledby="kalk-nadpis">
+<section class="<?= sekce_tridy('sekce sekce--papir2') ?>" id="kalkulacka" aria-labelledby="kalk-nadpis">
   <div class="wrap">
     <?= hlava_sekce($bKalk, ['cislo' => 2, 'id' => 'kalk-nadpis', 'radek' => true, 'nadpis' => 'Kalkulačka ceny']) ?>
     <div class="kalk" data-kalkulacka hidden></div>
-    <noscript><p class="kalk-nahrada">Kalkulačka potřebuje zapnutý JavaScript. Všechny ceny najdete v&nbsp;<a href="#ceniky">ceníku výše</a>.</p></noscript>
+    <noscript><p class="kalk-nahrada">Kalkulačka potřebuje zapnutý JavaScript.<?= $cenikyVidet ? ' Všechny ceny najdete v&nbsp;<a href="#ceniky">ceníku výše</a>.' : '' ?></p></noscript>
     <?= json_skript('ceniky-kurtu', $kalkData) ?>
   </div>
 </section>
-<?php endif; ?>
+<?php elseif (blok_skryty($bKalk)): sekce_vynechana(); endif; ?>
 
+<?php if ($pravidlaVidet): ?>
 <!-- III · Pravidla rezervací -->
-<section class="sekce" id="pravidla" aria-labelledby="pravidla-nadpis">
+<section class="<?= sekce_tridy('sekce') ?>" id="pravidla" aria-labelledby="pravidla-nadpis">
   <div class="wrap mrizka">
     <div class="sl-6">
       <?= hlava_sekce($bPravidla, ['cislo' => $maKalk ? 3 : 2, 'id' => 'pravidla-nadpis', 'nadpis' => 'Pravidla rezervací', 'stitek' => 'Rezervace a předplatné']) ?>
@@ -220,10 +230,11 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
     <?php endif; ?>
   </div>
 </section>
+<?php else: sekce_vynechana(); endif; ?>
 
-<?php if ($dopl && $dopl['sekce']): ?>
+<?php if ($doplVidet): ?>
 <!-- IV · Doplňkové služby -->
-<section class="sekce sekce--papir2" id="doplnkove" aria-labelledby="dopl-nadpis">
+<section class="<?= sekce_tridy('sekce sekce--papir2') ?>" id="doplnkove" aria-labelledby="dopl-nadpis">
   <div class="wrap mrizka">
     <div class="sl-5">
       <?= hlava_sekce($bDopl, ['cislo' => $maKalk ? 4 : 3, 'id' => 'dopl-nadpis', 'nadpis' => (string)$dopl['list']['nazev']]) ?>
@@ -235,10 +246,11 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
     </div>
   </div>
 </section>
-<?php endif; ?>
+<?php elseif (blok_skryty($bDopl)): sekce_vynechana(); endif; ?>
 
+<?php if ($rezVidet): ?>
 <!-- V · Rezervace -->
-<section class="sekce sekce--navy rezervace-pas" id="rezervace" aria-labelledby="rez-nadpis">
+<section class="<?= sekce_tridy('sekce sekce--navy rezervace-pas') ?>" id="rezervace" aria-labelledby="rez-nadpis">
   <div class="wrap">
     <?= hlava_sekce($bRez, ['id' => 'rez-nadpis', 'nadpis' => 'Rezervace kurtů', 'stitek' => 'Rezervace']) ?>
     <div class="rezervace-pas__kontakty">
@@ -249,5 +261,6 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
     </div>
   </div>
 </section>
+<?php endif; ?>
 
 <?php require __DIR__ . '/inc/sablona/paticka.php'; ?>

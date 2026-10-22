@@ -40,6 +40,7 @@ foreach ($skupiny as $klic => [$kategorie, $kotva, $nadpis, $perex]) {
     $docs = array_values(array_filter($docs, fn($d) => dokument_url($d) !== ''));
     if (!$docs) continue;
     $b = dok_blok($klic);
+    if (blok_skryty($b)) continue;               // skrytý blok (modul Stránky) = celá skupina pryč i s pilulkou
     if (empty($b['existuje'])) { $b['nadpis'] = $nadpis; $b['perex'] = $perex; }
     $sekce[] = ['klic' => $klic, 'kotva' => $kotva, 'blok' => $b, 'docs' => $docs];
 }
@@ -64,10 +65,14 @@ if (empty($bRevue['existuje'])) {
     $bRevue['perex'] = 'Speciální číslo I.ČLTK Revue ke 130. výročí klubu – dějiny klubu od roku 1893, prezidenti, legendy Štvanice.';
 }
 
+/* skrytý blok archiv / revue = jeho sekce zmizí i s pilulkou (klub 21. 10. 2026) */
+$maArchiv = $archiv && !blok_skryty($bArchiv);
+$maRevue  = $revue && !blok_skryty($bRevue);
+
 $kotvy = [];
 foreach ($sekce as $s) $kotvy[] = [trim(html_text((string)$s['blok']['nadpis'])), '#' . $s['kotva']];
-if ($archiv) $kotvy[] = ['Archiv turnajů', '#archiv-turnaju'];
-if ($revue) $kotvy[] = ['I.ČLTK Revue', '#revue'];
+if ($maArchiv) $kotvy[] = ['Archiv turnajů', '#archiv-turnaju'];
+if ($maRevue) $kotvy[] = ['I.ČLTK Revue', '#revue'];
 
 $cislo = 0;
 $sablona = [
@@ -99,7 +104,7 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
 </section>
 <?php endforeach; ?>
 
-<?php if ($archiv): ?>
+<?php if ($maArchiv): ?>
 <!-- Archiv klubových turnajů – PDF po turnajích a ročnících -->
 <section class="sekce<?= count($sekce) % 2 ? ' sekce--papir2' : '' ?> archiv-turnaju" id="archiv-turnaju" aria-labelledby="archiv-nadpis">
   <div class="wrap">
@@ -124,7 +129,7 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
 </section>
 <?php endif; ?>
 
-<?php if ($revue): ?>
+<?php if ($maRevue): ?>
 <!-- Jubilejní Revue 1893–2023 a archiv Revue -->
 <section class="sekce sekce--navy dokumenty-revue" id="revue" aria-labelledby="revue-nadpis">
   <div class="wrap mrizka mrizka--stred">

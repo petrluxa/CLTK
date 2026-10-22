@@ -166,21 +166,29 @@ $deskaKategorie = [
     'prezidenti' => 'Prezidenti',
 ];
 $deska = [];
+$deskaSkryta = false;                            // některou záložku vzal skrytý blok (zmizí-li všechny, zmizí sekce)
 foreach ($deskaKategorie as $kat => $vychozi) {
     $b = klub_blok('historie', 'deska-' . $kat);
+    if (blok_skryty($b)) { $deskaSkryta = true; continue; }   // skrytý blok (modul Stránky) = bez této záložky desky
     $hlavni = deska($kat, 'hlavni');
     $jmena = deska($kat, 'jmena');
     if (!$hlavni && !$jmena) continue;
     $deska[$kat] = ['nazev' => trim(html_text((string)$b['nadpis'])) ?: $vychozi, 'blok' => $b, 'hlavni' => $hlavni, 'jmena' => $jmena];
 }
 
+/* Skrytý blok (modul Stránky) = celá jeho sekce zmizí i s pilulkou pod hlavou (klub 21. 10. 2026) */
+$maTriptych  = $triptych && !blok_skryty($bTriptych);
+$maKroniku   = $epochy && !blok_skryty($bKronika);
+$maDesku     = $deska && !blok_skryty($bDeska);
+$maOsobnosti = $osobnosti && !blok_skryty($bOsobnosti);
+
 /* Kotvy pod hlavou stránky */
 $kotvy = [];
-if ($triptych) $kotvy[] = [trim((string)$bTriptych['stitek']) ?: 'Tři wimbledonské trávy', '#triptych'];
-if ($epochy) $kotvy[] = [trim((string)$bKronika['stitek']) ?: 'Kronika', '#kronika'];
-if ($epochy && $jubilejni) $kotvy[] = ['Jubilejní Revue', '#jubilejni-revue'];
-if ($deska) $kotvy[] = ['Zlatá deska', '#sin-slavy'];
-if ($osobnosti) $kotvy[] = [trim((string)$bOsobnosti['stitek']) ?: 'Osobnosti klubu', '#osobnosti'];
+if ($maTriptych) $kotvy[] = [trim((string)$bTriptych['stitek']) ?: 'Tři wimbledonské trávy', '#triptych'];
+if ($maKroniku) $kotvy[] = [trim((string)$bKronika['stitek']) ?: 'Kronika', '#kronika'];
+if ($maKroniku && $jubilejni) $kotvy[] = ['Jubilejní Revue', '#jubilejni-revue'];
+if ($maDesku) $kotvy[] = ['Zlatá deska', '#sin-slavy'];
+if ($maOsobnosti) $kotvy[] = [trim((string)$bOsobnosti['stitek']) ?: 'Osobnosti klubu', '#osobnosti'];
 
 $cislo = 0;
 $sablona = [
@@ -188,7 +196,7 @@ $sablona = [
     'popis'   => html_text((string)$uvod['perex']),
     'css'     => ['v2.css', 'stranky-klub.css'],
     'js'      => ['historie.js'],
-    'obrazek' => $triptych[0]['foto'] ?? '',
+    'obrazek' => blok_skryty($bTriptych) ? '' : ($triptych[0]['foto'] ?? ''),   // fotka je v sekci trav – skrytá sekce = logo
     'trida'   => 'stranka-historie',
 ];
 require __DIR__ . '/inc/sablona/hlavicka.php';
@@ -200,9 +208,9 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
     'navic'  => $kotvy ? '<nav class="kotvy" aria-label="Části stránky">' . pilulky_html($kotvy) . '</nav>' : '',
 ]) ?>
 
-<?php if ($triptych): ?>
+<?php if ($maTriptych): ?>
   <!-- Tři wimbledonské trávy (V4 sekce 4) -->
-  <section class="sekce sekce--papir2 travy" id="triptych" aria-labelledby="travy-nadpis">
+  <section class="<?= sekce_tridy('sekce sekce--papir2 travy') ?>" id="triptych" aria-labelledby="travy-nadpis">
     <div class="wrap">
       <?= hlava_sekce($bTriptych, ['cislo' => ++$cislo, 'id' => 'travy-nadpis', 'radek' => true, 'nadpis' => 'Tři wimbledonské trávy']) ?>
 
@@ -266,11 +274,11 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
       <?php endif; ?>
     </div>
   </section>
-<?php endif; ?>
+<?php elseif (blok_skryty($bTriptych)): sekce_vynechana(); endif; ?>
 
-<?php if ($epochy): ?>
+<?php if ($maKroniku): ?>
   <!-- Kronika po epochách s razítkem dobového jména (návrh 2) -->
-  <section class="sekce kronika-sekce" id="kronika" aria-labelledby="kronika-nadpis">
+  <section class="<?= sekce_tridy('sekce kronika-sekce') ?>" id="kronika" aria-labelledby="kronika-nadpis">
     <div class="wrap">
       <?= hlava_sekce($bKronika, ['cislo' => ++$cislo, 'id' => 'kronika-nadpis', 'radek' => true, 'nadpis' => 'Kronika']) ?>
       <?php if ($jubilejni): $jPdf = (string)$jubilejni['pdf']; $jObalka = obr((string)$jubilejni['obalka'], ''); ?>
@@ -340,11 +348,11 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
       </div>
     </div>
   </section>
-<?php endif; ?>
+<?php elseif (blok_skryty($bKronika)): sekce_vynechana(); endif; ?>
 
-<?php if ($deska): ?>
+<?php if ($maDesku): ?>
   <!-- Zlatá deska se záložkami (V4 sekce 9) -->
-  <section class="sekce sekce--papir2 deska-sekce" id="sin-slavy" aria-labelledby="deska-nadpis">
+  <section class="<?= sekce_tridy('sekce sekce--papir2 deska-sekce') ?>" id="sin-slavy" aria-labelledby="deska-nadpis">
     <div class="wrap">
       <?= hlava_sekce($bDeska, ['cislo' => ++$cislo, 'id' => 'deska-nadpis', 'stred' => true, 'nadpis' => 'Zlatá deska']) ?>
 
@@ -398,16 +406,16 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
 
         <div class="deska__pata">
           <?php if (trim((string)$bDeskaPram['perex']) !== ''): ?><span><?= typo(html_text((string)$bDeskaPram['perex'])) ?></span><?php endif; ?>
-          <?php if ($triptych): ?><a class="odkaz" href="#triptych"><?= typo(trim((string)$bTriptych['stitek']) ?: 'Tři wimbledonské trávy') ?> <?= sipka('nahoru') ?></a><?php endif; ?>
+          <?php if ($maTriptych): ?><a class="odkaz" href="#triptych"><?= typo(trim((string)$bTriptych['stitek']) ?: 'Tři wimbledonské trávy') ?> <?= sipka('nahoru') ?></a><?php endif; ?>
         </div>
       </div>
     </div>
   </section>
-<?php endif; ?>
+<?php elseif (blok_skryty($bDeska) || ($deskaSkryta && !$deska)): sekce_vynechana(); endif; ?>
 
-<?php if ($osobnosti): ?>
+<?php if ($maOsobnosti): ?>
   <!-- Od Žemly po Muchovou – medailony (V4 sekce 9b) -->
-  <section class="sekce v2 osobnosti" id="osobnosti" aria-labelledby="osobnosti-nadpis">
+  <section class="<?= sekce_tridy('sekce v2 osobnosti') ?>" id="osobnosti" aria-labelledby="osobnosti-nadpis">
     <div class="wrap">
       <?= hlava_sekce($bOsobnosti, ['cislo' => ++$cislo, 'id' => 'osobnosti-nadpis', 'radek' => true, 'nadpis' => 'Osobnosti klubu']) ?>
       <ol class="medailony">

@@ -241,6 +241,13 @@ if (($_GET['csv'] ?? '') === '1') {                     // před admin_head()!
   bloků (pevné řadí šablona). Bloky úvodní stránky (`STRANKY_UVOD_POLE`) nemají šipky ani „Skrýt“ a formulář ukazuje
   jen pole, která sekce používá; nad nimi je mapa „Co se kde mění na úvodní stránce“ (`STRANKY_UVOD_MAPA`). `nadpis` je *inline*
   (smí `<em>`), `text` z editoru (`html_ocistit`), `doplni_klub` = zaškrtávátko „obsah zatím chybí“.
+  **„Skrýt“ (od 21. 10. 2026): skrytý blok se na webu neukáže – zmizí celá jeho část stránky** (celá sekce, když je blok
+  její hlavou, jinak jen jeho kus – karta, záložka, rámeček), i s pilulkou pod hlavou stránky; šablony to zjišťují
+  `blok_skryty()` (PRUVODCE-STRANKY §2). Skrýt nejde hlavičku stránky (blok `uvod`), plán areálu `areal|plan`
+  a text souhlasu `formulare|souhlas` (`blok_lze_skryt()`): u nich není „Skrýt“ ani „Zobrazit na webu“ a web je ukáže
+  vždy – i takový blok, u kterého z dřívějška zůstalo `visible = 0` (`blok_na_webu()`; seznam ho proto ukazuje jako
+  zobrazený, bez „Zobrazit“, a uložení `visible` srovná na 1); POST `prepnout` na takový viditelný blok skončí hláškou.
+  Blok úvodní stránky skrytý z dřívějška web dál nahradí výchozím obsahem – v seznamu má „Zobrazit“.
 - **Ceníky**: list → sekce → řádky (jako Liberec `cenik-edit.php`). Hlavička sloupce prázdná = sloupec se skryje.
 - **Výsledky (Pointeks)** (`pointeks.php`, od 15. 10. 2026 místo ručních Výsledků hráčů): nic se nezadává – výsledky
   posílá služba Pointeks na `pointeks/feed` (`inc/pointeks.php`). Modul ukazuje přijaté výsledky (filtr podle hráče,

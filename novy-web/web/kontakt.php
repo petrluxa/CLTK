@@ -80,16 +80,17 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
 <?= hlava_stranky($uvod, ['drobky' => [['Kontakt']], 'nadpis' => 'Kontakt']) ?>
 
 <!-- I · Recepce a kancelář -->
-<section class="sekce sekce--bez-horni" id="recepce" aria-label="Recepce a kancelář klubu">
+<section class="<?= sekce_tridy('sekce sekce--bez-horni') ?>" id="recepce" aria-label="Recepce a kancelář klubu">
   <div class="wrap kontakt-karty">
     <?= kontakt_karta($recepce, $obsazenost !== '' ? '<div class="akce">' . tlacitko($obsazenost, 'Obsazenost kurtů', 'odkaz') . '</div>' : '') ?>
     <?= kontakt_karta($kancelar, '<div class="akce">' . tlacitko('clenstvi.php', 'Členství v klubu', 'odkaz') . '</div>') ?>
   </div>
 </section>
 
-<?php if ($lideKancelar || $lideDalsi): ?>
+<?php /* skrytý blok (modul Stránky) = celá jeho sekce pryč, i s lidmi, plánem nebo dokumenty z jiných modulů (klub 21. 10. 2026) */ ?>
+<?php if (($lideKancelar || $lideDalsi) && !blok_skryty($bLide)): ?>
 <!-- II · Lidé a role -->
-<section class="sekce sekce--papir2" id="lide" aria-labelledby="lide-nadpis">
+<section class="<?= sekce_tridy('sekce sekce--papir2') ?>" id="lide" aria-labelledby="lide-nadpis">
   <div class="wrap">
     <?= hlava_sekce($bLide, ['cislo' => 1, 'id' => 'lide-nadpis', 'nadpis' => 'Kancelář klubu']) ?>
     <?php if ($lideKancelar): ?>
@@ -107,12 +108,13 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
     <?php $odkazLide = tlacitko($bLide['odkaz'], $bLide['odkaz_text'], 'odkaz'); if ($odkazLide !== ''): ?><div class="odkazy-radek"><?= $odkazLide ?></div><?php endif; ?>
   </div>
 </section>
-<?php endif; ?>
+<?php elseif (blok_skryty($bLide)): sekce_vynechana(); endif; ?>
 
+<?php if (!blok_skryty($bPrijezd)): ?>
 <!-- III · Adresa a příjezd – adresa a cesta, pod nimi interaktivní plán areálu přes celou šířku
      (mapa.js jako na úvodu: plán vlevo, volby vpravo, popis místa pod plánem).
      Bez JavaScriptu zůstane statický obrázek plánu z bloku areal/plan. -->
-<section class="sekce" id="prijezd" aria-labelledby="prijezd-nadpis">
+<section class="<?= sekce_tridy('sekce') ?>" id="prijezd" aria-labelledby="prijezd-nadpis">
   <div class="wrap">
     <?= hlava_sekce($bPrijezd, ['cislo' => 2, 'id' => 'prijezd-nadpis', 'nadpis' => 'Adresa a příjezd']) ?>
     <div class="prijezd prijezd--kontakt">
@@ -141,9 +143,11 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
     <?= json_skript('mapa-data', $mapaKontakt) ?>
   </div>
 </section>
+<?php else: sekce_vynechana(); endif; ?>
 
+<?php if (!blok_skryty($bFakt)): ?>
 <!-- IV · Fakturační údaje -->
-<section class="sekce sekce--papir2" id="fakturace" aria-labelledby="fakt-nadpis">
+<section class="<?= sekce_tridy('sekce sekce--papir2') ?>" id="fakturace" aria-labelledby="fakt-nadpis">
   <div class="wrap">
     <?= hlava_sekce($bFakt, ['cislo' => 3, 'id' => 'fakt-nadpis', 'nadpis' => 'Fakturační údaje']) ?>
     <div class="fakturace">
@@ -162,10 +166,11 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
     </div>
   </div>
 </section>
+<?php else: sekce_vynechana(); endif; ?>
 
-<?php if ($doky || $site): ?>
+<?php if (($doky || $site) && !blok_skryty($bDoky)): ?>
 <!-- V · Dokumenty a sítě -->
-<section class="sekce" id="dokumenty" aria-labelledby="doky-nadpis">
+<section class="<?= sekce_tridy('sekce') ?>" id="dokumenty" aria-labelledby="doky-nadpis">
   <div class="wrap mrizka">
     <div class="sl-5">
       <?= hlava_sekce($bDoky, ['cislo' => 4, 'id' => 'doky-nadpis', 'nadpis' => 'Dokumenty']) ?>

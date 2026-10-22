@@ -9,7 +9,9 @@
      – služby (název, perex, časy) z modulu Areál a služby podle kotvy.
    Data: <script type="application/json" id="mapa-data">
      {ceniky: {leto, zima, dnes, ladeni}, sluzby: [{kotva, nazev, perex, casy}],
-      rezervace, cenik_url}</script>
+      rezervace, cenik_url, sluzby_url, podrobnosti?}</script>
+     (sluzby_url = kam vede „Podrobnosti“ u služby, '' = kotva na téže stránce;
+      podrobnosti: false = služby se na stránce nevypisují – skrytý blok areal|sluzby – karta bez odkazu)
    Bez JavaScriptu zůstane obrázek plánu (.mapa__zaloha) a odkaz na PDF.
    ========================================================================== */
 (function () {
@@ -180,6 +182,7 @@
     var rezim = maZimu ? c.sezona : 'leto';
     var sluzby = (data.sluzby || []).filter(function (s) { return SLUZBY[s.kotva]; });
     var rezervace = String(data.rezervace || ''), cenikUrl = String(data.cenik_url || ''), sluzbyUrl = String(data.sluzby_url || '');
+    var podrobnosti = data.podrobnosti !== false;
     var uid = 'mapa-' + Math.random().toString(36).slice(2, 7);
 
     var zaloha = box.querySelector('.mapa__zaloha');
@@ -317,7 +320,7 @@
         '<div class="mapa__karta-hlava"><span class="mapa__karta-cislo mapa__karta-cislo--sluzba" aria-hidden="true"></span><div>' +
         '<p class="mapa__karta-nazev">' + typo(sl.nazev) + '</p>' + (sl.perex ? '<p class="mapa__karta-pod">' + typo(sl.perex) + '</p>' : '') + '</div></div>' +
         sloupec('Časy', '<p>' + (sl.casy ? typo(sl.casy) : '<span class="doplni">doplní klub</span>') + '</p>', false) +
-        '<div class="mapa__karta-akce"><a class="odkaz" href="' + esc(sluzbyUrl) + '#' + esc(sl.kotva) + '">Podrobnosti <span class="sipka" aria-hidden="true"></span></a></div>';
+        (podrobnosti ? '<div class="mapa__karta-akce"><a class="odkaz" href="' + esc(sluzbyUrl) + '#' + esc(sl.kotva) + '">Podrobnosti <span class="sipka" aria-hidden="true"></span></a></div>' : '');
     }
 
     function vyber(id) {

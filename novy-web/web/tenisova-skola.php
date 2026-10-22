@@ -160,9 +160,10 @@ $sekce = 0;
 
 <?= hlava_stranky(array_merge($uvod, ['odkaz' => '', 'odkaz2' => '']), ['drobky' => [['Tenisová škola']], 'nadpis' => 'Tenisová škola', 'navic' => blok_tlacitka($uvod) . tenis_podnav()]) ?>
 
-<?php if ($info || $bInfo['existuje']): $sekce++; ?>
+<?php /* skrytý blok (modul Stránky) = celá jeho sekce pryč, i když položky jsou z jiného modulu (klub 21. 10. 2026) */ ?>
+<?php if (($info || $bInfo['existuje']) && !blok_skryty($bInfo)): $sekce++; ?>
 <!-- Jak škola funguje: odstavce z modulu Tenisová škola → Informace -->
-<section class="sekce sekce--bez-horni tenis-info" id="informace" aria-labelledby="informace-nadpis">
+<section class="<?= sekce_tridy('sekce sekce--bez-horni tenis-info') ?>" id="informace" aria-labelledby="informace-nadpis">
   <div class="wrap">
     <div class="mrizka">
       <div class="sl-4">
@@ -188,11 +189,11 @@ $sekce = 0;
     </div>
   </div>
 </section>
-<?php endif; ?>
+<?php elseif (blok_skryty($bInfo)): sekce_vynechana(); endif; ?>
 
-<?php if ($kategorie || $bKategorie['existuje']): $sekce++; ?>
+<?php if (($kategorie || $bKategorie['existuje']) && !blok_skryty($bKategorie)): $sekce++; ?>
 <!-- Kategorie podle věku (minitenis, střední kurt, babytenis) -->
-<section class="sekce sekce--papir2" id="kategorie" aria-labelledby="kategorie-nadpis">
+<section class="<?= sekce_tridy('sekce sekce--papir2') ?>" id="kategorie" aria-labelledby="kategorie-nadpis">
   <div class="wrap">
     <?= hlava_sekce($bKategorie, ['cislo' => $sekce, 'id' => 'kategorie-nadpis', 'radek' => true, 'stitek' => 'Kategorie podle věku', 'nadpis' => 'Kategorie podle věku']) ?>
     <?php if ($kategorie): ?>
@@ -218,11 +219,11 @@ $sekce = 0;
     <?php if (!$kategorie) echo blok_text($bKategorie); ?>
   </div>
 </section>
-<?php endif; ?>
+<?php elseif (blok_skryty($bKategorie)): sekce_vynechana(); endif; ?>
 
-<?php if ($kroky || $bPrihlaska['existuje']): $sekce++; ?>
+<?php if (($kroky || $bPrihlaska['existuje']) && !blok_skryty($bPrihlaska)): $sekce++; ?>
 <!-- Jak se přihlásit: kroky z bloku „prihlaska“ -->
-<section class="sekce" id="prihlaska" aria-labelledby="prihlaska-nadpis">
+<section class="<?= sekce_tridy('sekce') ?>" id="prihlaska" aria-labelledby="prihlaska-nadpis">
   <div class="wrap">
     <?= hlava_sekce($bPrihlaska, ['cislo' => $sekce, 'id' => 'prihlaska-nadpis', 'stitek' => 'Přihláška', 'nadpis' => 'Jak se přihlásit']) ?>
     <?php if ($kroky): ?>
@@ -236,11 +237,11 @@ $sekce = 0;
     <?php endif; ?>
   </div>
 </section>
-<?php endif; ?>
+<?php elseif (blok_skryty($bPrihlaska)): sekce_vynechana(); endif; ?>
 
-<?php $sekce++; ?>
+<?php if (!blok_skryty($bKontakt)): $sekce++; ?>
 <!-- Kontakt: vedoucí trenér (blok „kontakt“) a další kontakty trenérského týmu -->
-<section class="sekce sekce--papir2" id="kontakt" aria-labelledby="kontakt-nadpis">
+<section class="<?= sekce_tridy('sekce sekce--papir2') ?>" id="kontakt" aria-labelledby="kontakt-nadpis">
   <div class="wrap">
     <?= hlava_sekce(array_merge($bKontakt, ['perex' => '']), ['cislo' => $sekce, 'id' => 'kontakt-nadpis', 'stitek' => 'Kontakt', 'nadpis' => 'Kontakt']) ?>
     <div class="tenis-kontakt">
@@ -269,9 +270,10 @@ $sekce = 0;
     </div>
   </div>
 </section>
+<?php else: sekce_vynechana(); endif; ?>
 
 <!-- Rozcestník: další stránky Tenisové školy (texty z jejich hlaviček) -->
-<section class="sekce" id="dalsi" aria-labelledby="dalsi-nadpis">
+<section class="<?= sekce_tridy('sekce') ?>" id="dalsi" aria-labelledby="dalsi-nadpis">
   <div class="wrap">
     <h2 class="stitek stitek--velky tenis-rozcestnik-nadpis" id="dalsi-nadpis">Tenisová škola</h2>
     <ul class="tenis-rozcestnik" role="list">

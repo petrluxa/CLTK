@@ -113,6 +113,46 @@ Ručně: `<header class="hlava"><h2 class="h2">Nadpis <em>kurzívou</em>.</h2><d
 | `obr($rel, $alt, ['class' => 'foto', 'fokus' => $r['fokus'], 'loading' => 'eager'])` | `<picture>` s WebP, rozměry z disku, `object-position` z fokusu; neexistující soubor = `''` |
 | `json_skript('id', $data)` | data pro JS do `<script type="application/json">` |
 | `drobky([['Klub', 'klub.php'], ['CTC']])` | samotná drobečková navigace |
+| `blok_skryty($b)` | blok je v databázi, ale správce ho skryl → jeho část stránky nevypisovat (níže) |
+| `blok_na_webu($radek)` | ukáže web tento řádek `cltk_bloky`? (skrytý ne – kromě bloků, které skrýt nejde; modul Stránky podle toho ukazuje stav) |
+| `blok_bez_kotev($b, ['prihlaska'])` | blok bez tlačítek `odkaz` / `odkaz2`, která vedou na `#kotvu` zmizelé sekce |
+| `sekce_tridy('sekce sekce--papir2')`, `sekce_vynechana()` | třídy sekce; po sekci vynechané kvůli skrytému bloku přidá `.sekce--linka`, když by se sešly dvě sekce stejného pozadí |
+
+### Skrytý blok (modul Stránky › „Skrýt“) – od 21. 10. 2026
+Blok, který správce skryl (`visible = 0`), vrátí `blok()` s `'skryty' => true` a **jeho část stránky se nevypíše
+vůbec** (klub: „i když dám skrýt, blok nezmizí“ – dřív se skrytý blok choval jako chybějící a sekce zůstala
+s výchozím nadpisem). Šablona se zeptá `blok_skryty($b)`:
+- blok je **hlavou sekce** (nadpis a perex sekce – i když položky sekce jsou z jiného modulu) → pryč celá `<section>`:
+  `<?php if (!blok_skryty($bKontakt)): ?>` … `<?php endif; ?>`. Řádky s `if` / `endif` pište **od začátku řádku**:
+  PHP za `?>` sní konec řádku, takže při viditelném bloku zůstane výstup stejný bajt po bajtu (odsazené `<?php`
+  by přidalo mezery);
+- blok je **částí větší sekce** (karta, záložka desky, boční rámeček, sloupec, mezititulek s textem) → jen ten kus;
+  zmizí-li všechny části, zmizí sekce (a zavolá se `sekce_vynechana()`, viz níže – i když hlava sekce vidět je, např.
+  Zlatá deska bez všech záložek); `aria-labelledby` sekce pak míří na nadpis, který zůstal;
+- pilulky pod hlavou stránky (`.kotvy`), rozcestník a odkazy `#kotva` na zmizelou sekci vynechte; tlačítka bloků
+  na takovou kotvu odstraní `blok_bez_kotev()`. Pozor i na odkazy, které skládá JavaScript: plán areálu dostane
+  `mapa_data(…, $podrobnosti = false)` a karta služby pak nemá „Podrobnosti“ (`#kotva` služby by na stránce nebyla).
+  Odkazy z jiných stránek (`areal.php#bazen`) skončí na stránce – to stačí;
+- popis stránky (`$sablona['popis']`) a fotka pro sdílení (`'obrazek'`) se skládají jen z částí, které jsou vidět
+  (výčet služeb, jména trenérů, názvy ceníků, fotka ze zmizelé sekce → bez nich / logo).
+Blok, který v databázi **chybí**, je jiný případ: šablona dál ukáže výchozí nadpis nebo štítek „doplní klub“.
+Skrýt nejde (`blok_lze_skryt()` v `inc/data.php`) hlavičku stránky (klíč `uvod`, nadpis h1), `areal|plan` (plán
+areálu s nadpisem stránky Areál), `formulare|souhlas` a bloky úvodní stránky – modul Stránky u nich „Skrýt“
+nenabízí a `blok()` vrátí hlavičku, plán i souhlas celé, i když u nich z dřívějška zůstalo `visible = 0`
+(`blok_na_webu()`; podle ní ukazuje stav i modul Stránky). Jen úvodní stránka zůstává, jak byla: skrytý blok
+z dřívějška = výchozí obsah šablony, dokud ho správce neuloží. Bloky podle předpony (`bloky()`,
+`stranka_dalsi_bloky()`) skryté vynechávají samy.
+**Pozadí sekcí po skryté sekci:** třídy sekcí stránky jdou přes `sekce_tridy('sekce sekce--papir2')` (vrátí je beze
+změny) a místo sekce, kterou vzal skrytý blok, šablona zavolá `sekce_vynechana()`
+(`<?php elseif (blok_skryty($bKontakt)): sekce_vynechana(); endif; ?>`). Když se pak sejdou dvě sekce stejného
+pozadí (nebo bílá sekce hned pod hlavou stránky), dostane druhá `.sekce--linka` jako v §3; rozcestník bez třídy
+`sekce` odděluje sám. Část sekce, která zmizí, nechá zbytek ve své mřížce (sloupec vlevo) – boční karta bez
+sousedního sloupce se posune doleva (`sl-5` místo `sl-4 od-9`).
+Test všech bloků (každý skryje, projde stránky, vrátí): `podklady/_raw/qa/skryte-bloky/test-skryte.mjs`,
+snímky stránek se skrytou sekcí uprostřed: `render.mjs` tamtéž; po ověření 22. 10. 2026 v `podklady/_raw/qa/skryte-opravy/`
+(`test-skryte.mjs` – u bloků, které skrýt nejde, čeká stránku beze změny; `test-skryti.mjs` – i skupiny bloků
+a švy bez linky podle vypočteného stylu; `overeni-oprav.mjs` – „Podrobnosti“ na plánu, deska bez záložek, popis
+a fotka stránky, hlavičky skryté z dřívějška, stav v modulu Stránky).
 
 ---
 
