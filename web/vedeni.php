@@ -65,9 +65,6 @@ $poznPrvni = trim(html_text((string)$bDeskaPrez['text']));
 
 /* výbor bez kontaktů (kontakty jsou u kanceláře) */
 $vyborBezKontaktu = array_map(fn($v) => array_merge($v, ['telefon' => '', 'email' => '']), $vybor);
-/* Výbor s portréty (Petr 22. 10. 2026 poslal fotky všech devíti členů; fotka = modul Vedení).
-   Když fotky nemá nikdo, zůstane dřívější seznam bez fotek; kdo ji nemá, má monogram. */
-$vyborFotky = (bool)array_filter($vyborBezKontaktu, static fn($v) => trim((string)$v['foto']) !== '');
 
 /* Skrytý blok (modul Stránky) = jeho část stránky zmizí i s pilulkou pod hlavou (klub 21. 10. 2026):
    výbor, prezidenti, dokumenty = celá sekce; prezident = jen jeho rámeček; kancelář a další kontakty jsou
@@ -84,7 +81,10 @@ $maDokumenty  = $dokumentyKlub && !blok_skryty($bDokumenty);
 $clenove = $maPrezidenta
     ? array_values(array_filter($vyborBezKontaktu, static fn($v) => (int)$v['id'] !== (int)$prezident['id']))
     : $vyborBezKontaktu;
-$prezidentFoto = $maPrezidenta && $vyborFotky ? obr((string)$prezident['foto'], (string)$prezident['jmeno'], ['loading' => 'eager']) : '';
+$prezidentFoto = $maPrezidenta ? obr((string)$prezident['foto'], (string)$prezident['jmeno'], ['loading' => 'eager']) : '';
+/* Řady s portréty (Petr 22. 10. 2026 poslal fotky všech devíti členů; fotka = modul Vedení), jakmile má fotku
+   aspoň jeden z vypsaných členů – kdo ji nemá, má monogram; když ji nemá nikdo, zůstane seznam bez fotek. */
+$clenoveFotky = (bool)array_filter($clenove, static fn($v) => trim((string)$v['foto']) !== '');
 
 $kotvy = [];
 if ($maVybor) $kotvy[] = [trim(html_text((string)$bVybor['nadpis'])) ?: 'Výkonný výbor', '#vybor'];
@@ -122,7 +122,7 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
         <span class="vedeni-prezident__erb" aria-hidden="true"><img src="<?= e(logo_url('svg')) ?>" alt="" width="60" height="69" loading="lazy" decoding="async"></span>
         <?php endif; ?>
         <div class="vedeni-prezident__text">
-          <p class="stitek"><?= typo(trim((string)$bPrezident['stitek']) ?: 'Prezident klubu') ?></p>
+          <p class="stitek"><?= typo(trim((string)$prezident['funkce']) ?: (trim((string)$bPrezident['stitek']) ?: 'Prezident klubu')) ?></p>
           <h3 class="vedeni-prezident__jmeno"><?= typo((string)$prezident['jmeno']) ?></h3>
           <?php if ($vUradu && vedeni_od((string)$vUradu['rok']) > 0): ?>
           <p class="vedeni-prezident__od">v&nbsp;čele klubu <?= vedeni_roky((string)$vUradu['rok']) ?></p>
@@ -134,8 +134,8 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
       <?php endif; ?>
 
       <?php if ($clenove): ?>
-      <ul class="osoby<?= $vyborFotky ? '' : ' osoby--bez-fotek' ?> vedeni-osoby vedeni-clenove">
-        <?php foreach ($clenove as $v) echo osoba_html($v, ['foto' => $vyborFotky]); ?>
+      <ul class="osoby<?= $clenoveFotky ? '' : ' osoby--bez-fotek' ?> vedeni-osoby vedeni-clenove">
+        <?php foreach ($clenove as $v) echo osoba_html($v, ['foto' => $clenoveFotky]); ?>
       </ul>
       <?php endif; ?>
     </div>

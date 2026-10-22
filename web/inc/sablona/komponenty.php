@@ -310,9 +310,11 @@ function osoba_html(array $o, array $volby = []): string {
     $h = '<' . $tag . ' class="osoba">';
     if ($volby['foto'] ?? true) {
         $img = obr((string)($o['foto'] ?? ''), $jmeno, ['fokus' => (string)($o['fokus'] ?? '')]);
+        /* monogram z jména, ne z titulu („JUDr. Tomáš Havel“ → T, „Ing. arch. Kristýna …“ → K) */
+        $bezTitulu = trim((string)preg_replace('/^(?:[^\s.]+\.[\s\x{00A0}]+)+/u', '', $jmeno));
         $h .= $img !== ''
             ? '<div class="osoba__foto">' . $img . '</div>'
-            : '<div class="osoba__foto osoba__foto--prazdne" aria-hidden="true"><span>' . e(mb_substr($jmeno, 0, 1)) . '</span></div>';
+            : '<div class="osoba__foto osoba__foto--prazdne" aria-hidden="true"><span>' . e(mb_substr($bezTitulu !== '' ? $bezTitulu : $jmeno, 0, 1)) . '</span></div>';
     }
     if ($role !== '') $h .= '<p class="osoba__role">' . typo($role) . '</p>';
     $h .= '<h3 class="osoba__jmeno">' . typo($jmeno) . '</h3>';
