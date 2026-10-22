@@ -27,7 +27,8 @@ $aktuality = aktuality(3);
    – světlá tabule „Další výsledky“ z úvodu zrušená 21. 10. 2026 (Petr: všechny výsledky jsou na stránce
      Výsledky pod Závodním tenisem). */
 require_once __DIR__ . '/inc/sablona/uvod-vysledky.php';
-$vysledkyPas = uvod_vysledky_cerstve(pointeks_seznam(['limit' => 8])['zapasy']);
+/* 8 různých hráčů: z nejnovějších 100 zápasů (jen dvouhry) u každého hráče jeho poslední (Petr 22. 10. 2026) */
+$vysledkyPas = uvod_vysledky_cerstve(uvod_vysledky_vyber(pointeks_seznam(['limit' => 100])['zapasy'], 8));
 $sluzbyUvod = sluzby(true);
 /* Plán areálu pod videem (mapa.js, kompaktní rozložení); „Podrobnosti“ u služby vedou na areal.php#kotva */
 $mapaUvod = mapa_data(null, null, null, url('areal.php'));
