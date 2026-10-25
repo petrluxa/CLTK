@@ -155,11 +155,24 @@ function aktuality(int $limit = 3): array {
 const AKTUALITA_ZOOM_MAX = 3.0;
 
 /**
+ * Inline styl obrázku přiblíženého z× kolem bodu fokus („x% y%“) v rámu s position: relative a overflow: hidden:
+ * obrázek je z× větší než rám a posunutý tak, že bod fokus zůstane na místě (object-fit: cover a object-position = fokus
+ * zůstávají) – přesně stejný výřez jako transform: scale(z) s počátkem fokus, ale bez transformace: tu WebKit u fotky
+ * s filtrem (.foto) vykreslí z malé předlohy a výřez je rozmazaný (kontrola 25. 10. 2026). '' = bez přiblížení.
+ */
+function vyrez_styl_obrazku(string $fokus, float $z): string {
+    if ($z <= 1.001 || !preg_match('/^(\d{1,3}(?:\.\d+)?)%\s+(\d{1,3}(?:\.\d+)?)%$/', trim($fokus), $m)) return '';
+    $p = static fn(float $v): string => rtrim(rtrim(number_format($v, 3, '.', ''), '0'), '.') . '%';
+    return 'position:absolute;left:' . $p(-($z - 1) * (float)$m[1]) . ';top:' . $p(-($z - 1) * (float)$m[2])
+         . ';width:' . $p($z * 100) . ';height:' . $p($z * 100) . ';max-width:none;max-height:none';
+}
+
+/**
  * Výřez fotky aktuality (editor v administraci, Petr 25. 10. 2026) → jak ji vykreslit v rámečku 4 : 3:
  * ['cela' => bool, 'fokus' => 'x% y%', 'zoom' => float, 'styl' => inline styl obrázku navíc].
- * Sloupec vyrez: 'cela' = celá fotka na paspartě; číslo 1–3 = výřez přiblížený kolem bodu fokus – object-position
- * a transform: scale se stejným počátkem dají přesně obdélník z editoru; '' = dosavadní automatika (fotka jiného
- * tvaru než 1,2–1,55 se ukáže celá, ořez do 4 : 3 by ji moc přiblížil – klub 21. 10. 2026; jinak vyplní rámeček).
+ * Sloupec vyrez: 'cela' = celá fotka na paspartě; číslo 1–3 = výřez přiblížený kolem bodu fokus (vyrez_styl_obrazku –
+ * dá přesně obdélník z editoru); '' = dosavadní automatika (fotka jiného tvaru než 1,2–1,55 se ukáže celá, ořez
+ * do 4 : 3 by ji moc přiblížil – klub 21. 10. 2026; jinak vyplní rámeček).
  */
 function aktualita_vyrez(array $a): array {
     $fokus = trim((string)($a['fokus'] ?? ''));
@@ -168,8 +181,7 @@ function aktualita_vyrez(array $a): array {
     if ($v === 'cela') return ['cela' => true, 'fokus' => '50% 50%', 'zoom' => 1.0, 'styl' => ''];
     if ($v !== '' && is_numeric($v)) {
         $z = max(1.0, min(AKTUALITA_ZOOM_MAX, (float)$v));
-        return ['cela' => false, 'fokus' => $fokus, 'zoom' => $z,
-                'styl' => $z > 1.001 ? 'transform:scale(' . round($z, 3) . ');transform-origin:' . $fokus : ''];
+        return ['cela' => false, 'fokus' => $fokus, 'zoom' => $z, 'styl' => vyrez_styl_obrazku($fokus, $z)];
     }
     [$w, $h] = obrazek_rozmer((string)($a['foto'] ?? ''));
     $cela = $w > 0 && $h > 0 && ($w / $h < 1.2 || $w / $h > 1.55);

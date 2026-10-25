@@ -1,10 +1,11 @@
 /* Výřez fotky v administraci (pole_vyrez v admin/inc/ui.php; Petr 25. 10. 2026: „ať si manažer při psaní sám vybere
    výřez fotky“). Rámeček v poměru stran rámu na webu: táhne se myší nebo prstem, velikost za rohy, posuvníkem nebo
    klávesami (šipky posun, + − přiblížení); vedle živý náhled karty. Výsledek = dvě skrytá pole:
-     fokus „x% y%“ – object-position, a zároveň počátek transform: scale,
+     fokus „x% y%“ – object-position a zároveň bod, který při přiblížení zůstává na místě,
      vyrez – přiblížení 1–3 (1 = největší výřez v daném poměru stran) | 'cela' = celá fotka na paspartě.
-   object-fit: cover + object-position + scale se stejným počátkem dají na webu přesně stejný obdélník jako tady
-   (aktualita_vyrez() v inc/data.php): výřez šířky w = okno / zoom leží na x = fokus_x · (šířka fotky − w). */
+   Výřez šířky w = okno / zoom leží na x = fokus_x · (šířka fotky − w); web (aktualita_vyrez + vyrez_styl_obrazku
+   v inc/data.php) obrázek zvětší z× a posune o −(z − 1) · fokus – vyjde přesně tentýž obdélník, bez transform
+   (WebKit by fotku s filtrem po transformaci rozmazal). Server vykreslí rámeček i náhled ve stejném stavu jako tady. */
 (function () {
   'use strict';
 
@@ -13,10 +14,11 @@
   function cislo(v, d) { var n = parseFloat(v); return isFinite(n) ? n : d; }
   function omez(v, a, b) { return Math.max(a, Math.min(b, v)); }
   function zaokr(v, mista) { var k = Math.pow(10, mista); return Math.round(v * k) / k; }
+  function pr(v) { return zaokr(v, 3) + '%'; }
 
   /* „2026-10-05“ (nebo „5. 10. 2026“) → „5. října 2026“ jako na webu */
   function datumDlouze(s) {
-    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s) || null, d, mes, r;
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s), d, mes, r;
     if (m) { r = +m[1]; mes = +m[2]; d = +m[3]; }
     else {
       m = /^(\d{1,2})\.\s*(\d{1,2})\.\s*(\d{4})$/.exec(s);
@@ -36,12 +38,13 @@
     var plocha = pole.querySelector('[data-vyrez-plocha]');
     var prazdno = pole.querySelector('[data-vyrez-prazdno]');
     var obal = pole.querySelector('[data-vyrez-obraz]');
-    var img = obal.querySelector('img');
+    var img = obal ? obal.querySelector('img') : null;
     var ram = pole.querySelector('[data-vyrez-ram]');
     var zoomVstup = pole.querySelector('[data-vyrez-zoom]');
     var zoomText = pole.querySelector('[data-vyrez-zoom-text]');
     var reset = pole.querySelector('[data-vyrez-reset]');
     var varovani = pole.querySelector('[data-vyrez-varovani]');
+    var hlas = pole.querySelector('[data-vyrez-hlas]');
     var rezimy = pole.querySelectorAll('[data-vyrez-rezim]');
     var fokusVstup = pole.querySelector('[data-vyrez-fokus]');
     var hodnotaVstup = pole.querySelector('[data-vyrez-hodnota]');
@@ -52,13 +55,21 @@
     var souborVstup = form && jmenoSouboru ? form.querySelector('input[type="file"][name="' + jmenoSouboru + '"]') : null;
     var odebrat = form && jmenoSouboru ? form.querySelector('input[name="' + jmenoSouboru + '_odebrat"]') : null;
     var obalPole = pole.closest('.field') || pole;
-    if (!obal || !img || !ram || !fokusVstup || !hodnotaVstup) return;
+    if (!obal || !img || !ram || !zoomVstup || !fokusVstup || !hodnotaVstup) return;
 
     var W = 0, H = 0;               // přirozená velikost fotky (po natočení podle EXIF – stejně jako na serveru)
     var st = { rezim: pole.getAttribute('data-rezim') === 'cela' ? 'cela' : 'vyrez', z: 1, px: .5, py: .5 };
     st.z = omez(cislo(pole.getAttribute('data-zoom'), 1), 1, zoomMax);
     var f = /^\s*([\d.]+)%\s+([\d.]+)%\s*$/.exec(pole.getAttribute('data-fokus') || fokusVstup.value);
     if (f) { st.px = omez(cislo(f[1], 50) / 100, 0, 1); st.py = omez(cislo(f[2], 50) / 100, 0, 1); }
+
+    /* uložený stav = to, co ukázal server (a co se odešle, dokud správce nic nezmění) */
+    var ulozeno = { src: img.getAttribute('src') || '', w: img.getAttribute('width'), h: img.getAttribute('height'),
+                    st: { rezim: st.rezim, z: st.z, px: st.px, py: st.py },
+                    /* ne defaultValue: u skrytého pole je to atribut value a ten WebKit po návratu Zpět přepíše obnovenou hodnotou */
+                    fokus: pole.getAttribute('data-ulozeny-fokus') || fokusVstup.defaultValue, vyrez: pole.hasAttribute('data-ulozeny-vyrez') ? pole.getAttribute('data-ulozeny-vyrez') : hodnotaVstup.defaultValue };
+    var dotknuto = false;           // správce už s editorem něco udělal
+    var blob = '';
 
     /* největší výřez v poměru stran (přiblížení 1) */
     function okno() { return W / H > pomer ? { w: H * pomer, h: H } : { w: W, h: W / pomer }; }
@@ -75,42 +86,62 @@
       if (W - w > .5) st.px = omez(zaokr(r.x / (W - w), 3), 0, 1);
       if (H - h > .5) st.py = omez(zaokr(r.y / (H - h), 3), 0, 1);
     }
+    function fokusText() { return zaokr(st.px * 100, 1) + '% ' + zaokr(st.py * 100, 1) + '%'; }
 
-    function zapis() {
-      fokusVstup.value = zaokr(st.px * 100, 1) + '% ' + zaokr(st.py * 100, 1) + '%';
+    function zapis(oznamit) {
+      fokusVstup.value = fokusText();
       hodnotaVstup.value = st.rezim === 'cela' ? 'cela' : String(st.z);
-      hodnotaVstup.dispatchEvent(new Event('change', { bubbles: true }));     // hlídání neuložených změn formuláře
+      if (oznamit) hodnotaVstup.dispatchEvent(new Event('change', { bubbles: true }));    // hlídání neuložených změn formuláře
+    }
+
+    var hlasCasovac = 0;
+    function ohlas() {              // čtečce obrazovky polohu a přiblížení (s odstupem, ne při každém pohybu myši)
+      if (!hlas) return;
+      window.clearTimeout(hlasCasovac);
+      hlasCasovac = window.setTimeout(function () {
+        hlas.textContent = st.rezim === 'cela' ? 'Celá fotka na paspartě.'
+          : 'Výřez: vodorovně ' + Math.round(st.px * 100) + ' %, svisle ' + Math.round(st.py * 100) + ' %, přiblížení ' + Math.round(st.z * 100) + ' %.';
+      }, 450);
     }
 
     function vykresli() {
       var cela = st.rezim === 'cela';
       pole.classList.toggle('vyrez--cela', cela);
+      if (cela) obal.style.cursor = '';
       rezimy.forEach(function (r) { r.checked = r.value === st.rezim; });
       zoomVstup.disabled = cela;
       if (reset) reset.disabled = cela;
       zoomVstup.value = String(st.z);
       if (zoomText) zoomText.textContent = Math.round(st.z * 100) + ' %';
-      var fokus = zaokr(st.px * 100, 1) + '% ' + zaokr(st.py * 100, 1) + '%';
+      var fokus = fokusText();
       if (W && H) {
         var r = obdelnik();
-        ram.style.left = (r.x / W * 100) + '%';
-        ram.style.top = (r.y / H * 100) + '%';
-        ram.style.width = (r.w / W * 100) + '%';
-        ram.style.height = (r.h / H * 100) + '%';
+        ram.style.left = pr(r.x / W * 100);
+        ram.style.top = pr(r.y / H * 100);
+        ram.style.width = pr(r.w / W * 100);
+        ram.style.height = pr(r.h / H * 100);
         if (varovani) {
           var skut = maxPx > 0 ? r.w * Math.min(1, maxPx / Math.max(W, H)) : r.w;   // fotka se na serveru zmenší
           varovani.hidden = cela || skut >= 700;
+          varovani.textContent = st.z <= 1.01
+            ? 'Fotka je pro kartu malá – na webu bude trochu neostrá. Nahrajte větší, aspoň 1200 px na šířku.'
+            : 'Takhle velké přiblížení už bude na webu trochu neostré.';
         }
       }
-      if (kartaImg) {
+      if (kartaImg) {                // stejný výpočet jako vyrez_styl_obrazku() na webu
+        var s = kartaImg.style, zoom = !cela && st.z > 1.001;
         karta.classList.toggle('vyrez-karta__foto--cela', cela);
-        kartaImg.style.objectPosition = cela ? '50% 50%' : fokus;
-        kartaImg.style.transformOrigin = fokus;
-        kartaImg.style.transform = !cela && st.z > 1.001 ? 'scale(' + st.z + ')' : '';
+        s.objectPosition = cela ? '50% 50%' : fokus;
+        s.transform = '';
+        s.position = zoom ? 'absolute' : '';
+        s.left = zoom ? pr(-(st.z - 1) * st.px * 100) : '';
+        s.top = zoom ? pr(-(st.z - 1) * st.py * 100) : '';
+        s.width = s.height = zoom ? pr(st.z * 100) : '';
+        s.maxWidth = s.maxHeight = zoom ? 'none' : '';
       }
     }
 
-    function zmena() { vykresli(); zapis(); }
+    function zmena() { dotknuto = true; vykresli(); zapis(true); ohlas(); }
 
     function priblizit(z) {          // střed výřezu zůstane na místě
       if (!W) return;
@@ -133,45 +164,111 @@
       plocha.hidden = false;
       if (prazdno) prazdno.hidden = true;
       vykresli();
-      if (nova) zapis();
+      if (nova) zapis(false);
     }
-    function nacti(src, nova) {
+    function nacti(src, nova, rozmer) {
+      [img, kartaImg].forEach(function (i) {
+        if (!i) return;
+        if (rozmer && rozmer.w) { i.setAttribute('width', rozmer.w); i.setAttribute('height', rozmer.h); }
+        else { i.removeAttribute('width'); i.removeAttribute('height'); }   // rozměry jiné fotky by zkreslily místo
+      });
       img.onload = function () { nacteno(nova); };
       img.src = src;
       if (kartaImg) kartaImg.src = src;
+      if (img.complete && img.naturalWidth) nacteno(nova);
     }
+    function novaFotka(soubor) {
+      if (blob) URL.revokeObjectURL(blob);
+      blob = URL.createObjectURL(soubor);
+      nacti(blob, true);
+    }
+    /* zpět na uloženou fotku a uložený výřez (výběr souboru zrušený, „Odebrat obrázek“, obnovený formulář) */
+    function zpetNaUlozenou() {
+      if (proVstup) proVstup.value = '';
+      fokusVstup.value = ulozeno.fokus;
+      hodnotaVstup.value = ulozeno.vyrez;
+      st = { rezim: ulozeno.st.rezim, z: ulozeno.st.z, px: ulozeno.st.px, py: ulozeno.st.py };
+      if (!ulozeno.src) {
+        W = H = 0;
+        plocha.hidden = true;
+        if (prazdno) prazdno.hidden = false;
+        vykresli();
+        return;
+      }
+      if (img.getAttribute('src') !== ulozeno.src) nacti(ulozeno.src, false, { w: ulozeno.w, h: ulozeno.h });
+      else vykresli();
+    }
+    function vybranySoubor() {
+      var s = souborVstup && souborVstup.files && souborVstup.files[0];
+      return s && window.URL && /^image\//.test(s.type) ? s : null;
+    }
+    /* Po návratu Zpět prohlížeč obnoví formulář (skrytá pole, vybraný soubor, zaškrtnutí, posuvník) bez událostí
+       change. Editor ukazuje stav ze serveru → formulář musí nést právě ten; obnovenou novou fotku načteme znovu. */
+    function srovnejSFormularem() {
+      if (odebrat && odebrat.checked) {
+        if (souborVstup) souborVstup.value = '';
+        zpetNaUlozenou();
+        obalPole.hidden = true;
+        return;
+      }
+      var soubor = vybranySoubor();
+      if (soubor) { novaFotka(soubor); return; }
+      zpetNaUlozenou();
+    }
+
     if (img.getAttribute('src')) {
       if (img.complete && img.naturalWidth) nacteno(false); else img.onload = function () { nacteno(false); };
     }
+    srovnejSFormularem();
+    window.addEventListener('pageshow', function (e) { if (!e.persisted && !dotknuto) srovnejSFormularem(); });
+
     if (souborVstup) {
       souborVstup.addEventListener('change', function () {
-        var soubor = souborVstup.files && souborVstup.files[0];
-        if (!soubor || !window.URL || !/^image\//.test(soubor.type)) return;
+        var soubor = vybranySoubor();
+        if (!soubor) { zpetNaUlozenou(); return; }          // výběr zrušený nebo vyprázdněný
         if (odebrat) { odebrat.checked = false; obalPole.hidden = false; }
-        nacti(URL.createObjectURL(soubor), true);
+        dotknuto = true;
+        novaFotka(soubor);
       });
     }
     if (odebrat) {
-      odebrat.addEventListener('change', function () { obalPole.hidden = odebrat.checked; });
+      odebrat.addEventListener('change', function () {
+        if (odebrat.checked && souborVstup && souborVstup.value) {
+          souborVstup.value = '';                            // jinak by se uložila vybraná fotka, i když editor zmizel
+          souborVstup.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+        if (odebrat.checked) zpetNaUlozenou();
+        obalPole.hidden = odebrat.checked;
+      });
     }
 
-    /* ---------- tažení: posun rámečku, nebo velikost za roh ---------- */
+    /* ---------- tažení: posun rámečku, nebo velikost za roh (podle vzdálenosti od rohu, ne podle skrytých zón) ---------- */
     var tah = null;
     function bod(e) {
       var b = obal.getBoundingClientRect();
       return { x: (e.clientX - b.left) / b.width * W, y: (e.clientY - b.top) / b.height * H };
     }
+    function rohPod(e) {             // 'lh' | 'ph' | 'ld' | 'pd', nebo '' – zóna roste s rámečkem (min. 16, max. 44 px)
+      var b = ram.getBoundingClientRect();
+      var zona = Math.max(16, Math.min(44, b.width * .25, b.height * .25));
+      var vlevo = Math.abs(e.clientX - b.left) <= zona, vpravo = Math.abs(e.clientX - b.right) <= zona;
+      var nahore = Math.abs(e.clientY - b.top) <= zona, dole = Math.abs(e.clientY - b.bottom) <= zona;
+      if (!(vlevo || vpravo) || !(nahore || dole)) return '';
+      return (vlevo && !(vpravo && e.clientX > b.left + b.width / 2) ? 'l' : 'p') + (nahore && !(dole && e.clientY > b.top + b.height / 2) ? 'h' : 'd');
+    }
+    function uvnitr(e) {
+      var b = ram.getBoundingClientRect();
+      return e.clientX >= b.left && e.clientX <= b.right && e.clientY >= b.top && e.clientY <= b.bottom;
+    }
     obal.addEventListener('pointerdown', function (e) {
       if (st.rezim === 'cela' || !W || (e.pointerType === 'mouse' && e.button !== 0)) return;
       e.preventDefault();
-      var p = bod(e), r = obdelnik();
-      var roh = e.target.closest ? e.target.closest('[data-roh]') : null;
-      if (roh) {
-        var k = roh.getAttribute('data-roh');                 // lh | ph | ld | pd = levý/pravý + horní/dolní
+      var p = bod(e), r = obdelnik(), k = rohPod(e);
+      if (k) {
         var vlevo = k.charAt(0) === 'l', nahoru = k.charAt(1) === 'h';
         tah = { typ: 'roh', vlevo: vlevo, nahoru: nahoru, ax: vlevo ? r.x + r.w : r.x, ay: nahoru ? r.y + r.h : r.y };
       } else {
-        if (p.x < r.x || p.x > r.x + r.w || p.y < r.y || p.y > r.y + r.h) {   // klepnutí vedle = rámeček sem
+        if (!uvnitr(e)) {                                     // klepnutí vedle = rámeček sem
           zObdelniku({ x: omez(p.x - r.w / 2, 0, W - r.w), y: omez(p.y - r.h / 2, 0, H - r.h), w: r.w, h: r.h });
           zmena();
           r = obdelnik();
@@ -183,7 +280,13 @@
       ram.focus({ preventScroll: true });
     });
     obal.addEventListener('pointermove', function (e) {
-      if (!tah) return;
+      if (!tah) {                                             // jen najetí myší: kurzor podle toho, co tah udělá
+        if (e.pointerType === 'mouse' && W && st.rezim !== 'cela') {
+          var k = rohPod(e);
+          obal.style.cursor = k ? (k === 'lh' || k === 'pd' ? 'nwse-resize' : 'nesw-resize') : uvnitr(e) ? 'move' : 'crosshair';
+        }
+        return;
+      }
       var p = bod(e), r = obdelnik(), o = okno();
       if (tah.typ === 'posun') {
         zObdelniku({ x: omez(p.x - tah.dx, 0, W - r.w), y: omez(p.y - tah.dy, 0, H - r.h), w: r.w, h: r.h });
@@ -220,23 +323,44 @@
       r.addEventListener('change', function () { if (r.checked) { st.rezim = r.value === 'cela' ? 'cela' : 'vyrez'; zmena(); } });
     });
 
-    /* ---------- živý náhled karty: datum, nadpis, popis z formuláře ---------- */
-    ['datum', 'nadpis', 'popis'].forEach(function (k) {
+    /* ---------- živý náhled karty: datum, nadpis, celý popis po odstavcích, řádek s odkazem (jako na webu) ---------- */
+    function vstupPole(k) {
       var jmeno = pole.getAttribute('data-nahled-' + k);
-      var cil = pole.querySelector('[data-vyrez-text="' + k + '"]');
-      var vstup = form && jmeno ? form.querySelector('[name="' + jmeno + '"]') : null;
-      if (!cil || !vstup) return;
-      function prepis() {
-        var t = (vstup.value || '').trim();
+      return form && jmeno ? form.querySelector('[name="' + jmeno + '"]') : null;
+    }
+    function popisHtml(cil, t) {     // odstavce podle prázdných řádků, uvnitř nový řádek = <br> (jen text, žádné HTML)
+      cil.textContent = '';
+      t.split(/\n\s*\n/).forEach(function (odst) {
+        odst = odst.trim();
+        if (!odst) return;
+        var p = document.createElement('p');
+        odst.split('\n').forEach(function (radek, i) { if (i) p.appendChild(document.createElement('br')); p.appendChild(document.createTextNode(radek)); });
+        cil.appendChild(p);
+      });
+    }
+    var texty = { datum: vstupPole('datum'), nadpis: vstupPole('nadpis'), popis: vstupPole('popis'), odkaz: vstupPole('odkaz'), odkazText: vstupPole('odkaz-text') };
+    function prepisKartu() {
+      ['datum', 'nadpis', 'popis'].forEach(function (k) {
+        var cil = pole.querySelector('[data-vyrez-text="' + k + '"]');
+        if (!cil || !texty[k]) return;
+        var t = (texty[k].value || '').trim();
         if (k === 'datum') t = datumDlouze(t);
-        if (k === 'popis' && t.length > 220) t = t.slice(0, 219) + '…';
-        cil.textContent = t;
+        if (k === 'popis') popisHtml(cil, t); else cil.textContent = t;
         cil.hidden = t === '';
+      });
+      var odk = pole.querySelector('[data-vyrez-text="odkaz"]');
+      if (odk) {
+        var t = texty.odkaz && texty.odkazText ? (texty.odkazText.value || '').trim() : '';
+        odk.textContent = t ? t + ' →' : '';
+        odk.hidden = !t || !(texty.odkaz.value || '').trim();      // web ukáže řádek jen s odkazem i textem odkazu
       }
-      vstup.addEventListener('input', prepis);
-      vstup.addEventListener('change', prepis);
-      prepis();
+    }
+    Object.keys(texty).forEach(function (k) {
+      if (!texty[k]) return;
+      texty[k].addEventListener('input', prepisKartu);
+      texty[k].addEventListener('change', prepisKartu);
     });
+    prepisKartu();
 
     vykresli();
   });

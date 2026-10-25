@@ -170,7 +170,7 @@ if ($form !== null):
             'hint' => 'Nejlépe na šířku, aspoň 1200 px. JPG, PNG nebo WEBP – velikost a natočení se upraví samy. Hned pod tímto polem si vyberete výřez.']) ?>
       <?= pole_vyrez('fokus', 'vyrez', $form['fokus'], (string)($form['vyrez'] ?? ''), $form['foto'], 'Výřez fotky na webu', [
             'stav' => aktualita_vyrez($form), 'soubor' => 'foto', 'pomer' => 4 / 3, 'auto' => [1.2, 1.55], 'zoom_max' => AKTUALITA_ZOOM_MAX, 'max_px' => 2000,
-            'nahled' => ['datum' => 'datum', 'nadpis' => 'nadpis', 'popis' => 'popis'],
+            'nahled' => ['datum' => 'datum', 'nadpis' => 'nadpis', 'popis' => 'popis', 'odkaz' => 'odkaz', 'odkaz_text' => 'odkaz_text'],
           ]) ?>
       <?= pole_radek([
             pole_text('odkaz', 'Odkaz (nepovinné)', $form['odkaz'], ['maxlength' => 255, 'attrs' => ['inputmode' => 'url'],
