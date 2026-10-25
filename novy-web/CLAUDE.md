@@ -48,6 +48,11 @@ Běžící server se převádí migrací `web/sql/migrace/2026-10-02-dokumenty-a
 - Admin `web/admin/` (`inc/layout.php` – pořadí modulů `admin_moduly()`, `inc/ui.php` – pole a tlačítka).
   Modul Stránky: známé bloky v `STRANKY_BLOKY` (nejdou smazat/přejmenovat), bloky podle předpony v `STRANKY_PREDPONY`.
   **Skrytý blok = jeho část stránky zmizí** (klub 21. 10. 2026): šablona `if (!blok_skryty($b))` kolem celé sekce (blok = její hlava) nebo jen jeho kusu, pilulky/kotvy na zmizelou sekci pryč (`blok_bez_kotev()`), linka mezi sekcemi stejného pozadí `sekce_tridy()`/`sekce_vynechana()`, `if`/`endif` od začátku řádku (výstup se jinak nezmění); chybějící blok dál = výchozí obsah; skrýt nejde `uvod`, `areal|plan`, `formulare|souhlas`, úvod (`blok_lze_skryt()`; první tři web ukáže i s `visible = 0` z dřívějška – `blok_na_webu()`, podle ní i stav v modulu Stránky); i odkazy z JS (plán areálu: `mapa_data(…, $podrobnosti)`) a popis / fotka stránky pro sdílení jen z viditelných částí; testy `podklady/_raw/qa/skryte-opravy/` (`test-skryte.mjs`, `test-skryti.mjs` – skupiny a švy).
+- **Aktuality – výřez fotky** (Petr 25. 10. 2026): v administraci si správce výřez vybere sám – `pole_vyrez()` + `admin/assets/vyrez.js`
+  (rámeček 4 : 3 přes fotku, rohy / posuvník / klávesy, živý náhled karty, „Celá fotka na paspartě“); uložené jako `fokus` („x% y%“)
+  + `cltk_aktuality.vyrez` (`1`–`3` přiblížení | `cela` | `''` = dřívější automatika), migrace `2026-10-25-aktuality-vyrez.php`.
+  Web: `aktualita_vyrez()` v `inc/data.php` – object-position + `transform: scale` se stejným počátkem = přesně obdélník z editoru.
+  Výřez staré fotky se na novou nepřenáší (`vyrez_pro = nova`). Test `podklady/_raw/qa/vyrez/test-vyrez.mjs` (porovnává pixely karty na úvodu).
 - Data: `web/sql/schema.sql` + `SCHEMA.md` (měnit obojí), sady `web/sql/seed/NN-*.php`
   (dvojice stránka+klíč bloku se mezi sadami nesmí opakovat), export `web/sql/export-dat.php`.
 - Návody: `web/inc/PRUVODCE-FRONT.md`, `web/PRUVODCE-STRANKY.md`, `web/admin/PRUVODCE.md`.

@@ -83,8 +83,9 @@ Společné volby `$o`: `hint` (HTML pod polem – váš text, escapujte), `requi
 | `pole_editor($name, $label, $html, $o)` | editor (tučné, kurzíva, nadpisy, seznamy, odkaz, citace, HTML) | **`html_k_ulozeni(vstup('name', 0))`** – vždy (vyčistí a uloží odkazy bez `/cltkv2/`) |
 | `pole_select($name, $label, $value, [hodnota => popisek], $o)` | výběr | ověřte, že hodnota je v seznamu |
 | `pole_check($name, $label, $checked, $o)` | zaškrtávátko (posílá 1) | `vstup_bool('name')` |
-| `pole_obrazek($name, $label, $rel, $o)` | náhled, výběr nového, „odebrat“; `nahled => siroky/ctverec/logo` | `admin_obrazek(…)` – §4 |
+| `pole_obrazek($name, $label, $rel, $o)` | náhled, výběr nového, „odebrat“; `nahled => siroky/ctverec/logo/bez` (`bez` = náhled ukazuje jiné pole, např. `pole_vyrez`) | `admin_obrazek(…)` – §4 |
 | `pole_fokus($name, $label, $fokus, $foto, $o)` | ohnisko fotky klepnutím do náhledu → „44% 28%“ | `vstup('name', 20)` + kontrola `/^\d{1,3}(\.\d+)?%\s+\d{1,3}(\.\d+)?%$/` |
+| `pole_vyrez($nFokus, $nVyrez, $fokus, $vyrez, $foto, $label, $o)` | výřez fotky (Aktuality, 25. 10. 2026): rámeček v poměru rámu na webu se táhne, mění za rohy / posuvníkem / klávesami, vedle živý náhled karty; nová fotka z `$o['soubor']` hned po výběru; skrytá pole fokus „x% y%“ + vyrez `1`–`3` / `cela` / `''` (+ `<vyrez>_pro = nova`, když výřez patří právě vybrané fotce); JS `assets/vyrez.js` | `admin_vyrez('fokus', 'vyrez', $zoomMax)` → `[fokus, vyrez, chyba]`; na webu `aktualita_vyrez()` |
 | `pole_pdf($name, $label, $rel, $nazev, $o)` | PDF: odkaz, výběr, odebrat | `admin_pdf(…)` – §4 |
 | `pole_radek([$pole1, $pole2], 2)` | pole vedle sebe (na mobilu pod sebou), 1–4 sloupce | – |
 | `tlacitka_formulare('Uložit', 'aktuality.php', 'Zpět')` | jediné odesílací tlačítko + odkaz zpět | – |

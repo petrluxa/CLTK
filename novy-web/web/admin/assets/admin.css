@@ -285,6 +285,56 @@ legend{font-family:var(--serif);font-size:19px;color:var(--navy);padding:0 8px}
   box-shadow:0 0 0 2px var(--navy),0 2px 8px rgba(0,0,0,.4);pointer-events:none;left:50%;top:50%}
 .fokus input{max-width:200px}
 
+/* ---------- výřez fotky (pole_vyrez + vyrez.js, Petr 25. 10. 2026) ----------
+   rámeček v poměru stran rámu na webu přes fotku, mimo něj ztmaveno; vedle živý náhled karty jako na úvodu webu */
+.field[hidden],.vyrez [hidden]{display:none!important}
+.vyrez{display:grid;gap:14px}
+.vyrez__rezimy{display:flex;flex-wrap:wrap;gap:8px 12px}
+.vyrez__rezim{display:inline-flex;align-items:center;gap:10px;min-height:44px;padding:8px 16px;border:1px solid var(--linka);background:var(--karta);cursor:pointer;font-size:15px}
+.vyrez__rezim input{width:18px;height:18px;accent-color:var(--navy);flex:none}
+.vyrez__rezim:has(input:checked){border-color:var(--navy);box-shadow:inset 0 0 0 1px var(--navy)}
+.vyrez__rezim b{font-weight:600;color:var(--navy)}
+.vyrez__plocha{display:grid;grid-template-columns:minmax(0,1fr) minmax(220px,290px);gap:24px;align-items:start}
+.vyrez__editor{display:grid;gap:12px;justify-items:start;min-width:0}
+.vyrez__obraz{position:relative;display:inline-block;max-width:100%;line-height:0;overflow:hidden;background:var(--navy2);
+  touch-action:none;user-select:none;-webkit-user-select:none}
+.vyrez__obraz img{display:block;max-width:100%;max-height:min(460px,62vh);width:auto;height:auto;pointer-events:none}
+.vyrez__ram{position:absolute;left:0;top:0;width:100%;height:100%;cursor:move;outline:2px solid #fff;box-shadow:0 0 0 9999px rgba(14,22,38,.6)}
+.vyrez__ram::before{content:'';position:absolute;inset:3%;border:1px solid rgba(251,250,246,.62);pointer-events:none}
+.vyrez__ram:focus-visible{outline:3px solid var(--zlato)}
+.vyrez--tah .vyrez__ram{cursor:grabbing}
+.vyrez__roh{position:absolute;width:24px;height:24px;border:0 solid #fff;filter:drop-shadow(0 0 2px rgba(0,0,0,.7))}
+.vyrez__roh::after{content:'';position:absolute;inset:-10px}
+.vyrez__roh--lh{left:0;top:0;border-width:4px 0 0 4px;cursor:nwse-resize}
+.vyrez__roh--ph{right:0;top:0;border-width:4px 4px 0 0;cursor:nesw-resize}
+.vyrez__roh--ld{left:0;bottom:0;border-width:0 0 4px 4px;cursor:nesw-resize}
+.vyrez__roh--pd{right:0;bottom:0;border-width:0 4px 4px 0;cursor:nwse-resize}
+.vyrez--cela .vyrez__ram{display:none}
+.vyrez--cela .vyrez__zoom,.vyrez--cela [data-vyrez-reset]{opacity:.45}
+.vyrez__ovladani{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px}
+.vyrez__zoom{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--seda)}
+.vyrez__zoom input{width:min(260px,50vw);min-height:44px;accent-color:var(--navy)}
+.vyrez__zoom output{min-width:4.2em;font-variant-numeric:tabular-nums;color:var(--inkoust)}
+.vyrez__varovani{flex-basis:100%;font-size:13px;color:var(--warn)}
+.vyrez__nahled{display:grid;gap:10px;align-content:start;min-width:0}
+.vyrez__nahled figcaption{font-size:12px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--seda)}
+.vyrez-karta{padding:18px 18px 20px;background:var(--papir2);border:1px solid var(--linka)}
+.vyrez-karta__foto{position:relative;aspect-ratio:4/3;overflow:hidden;background:#e9e4da;box-shadow:0 18px 18px -16px rgba(14,27,48,.7)}
+.vyrez-karta__foto img{display:block;width:100%;height:100%;object-fit:cover}
+.vyrez-karta__foto::after{content:'';position:absolute;inset:8px;border:1px solid rgba(251,250,246,.62);pointer-events:none;z-index:1}
+.vyrez-karta__foto--cela{background:var(--papir)}
+.vyrez-karta__foto--cela img{object-fit:contain;padding:9px;transform:none!important}
+.vyrez-karta__datum{margin:16px 0 6px;font:500 10.5px/1.35 var(--sans);letter-spacing:.24em;text-transform:uppercase;color:var(--zlato-text)}
+.vyrez-karta__nadpis{margin:0;font:400 24px/1.15 var(--serif);color:var(--navy);overflow-wrap:anywhere}
+.vyrez-karta__popis{margin:6px 0 0;font-size:14px;line-height:1.5;color:#3a4254;overflow-wrap:anywhere}
+.vyrez-karta__foto + .vyrez-karta__nadpis{margin-top:16px}
+@media (max-width:900px){.vyrez__plocha{grid-template-columns:minmax(0,1fr)}.vyrez__nahled{max-width:320px}}
+/* náhled v seznamu aktualit se stejným výřezem jako karta na webu */
+.thumb-vyrez{display:inline-block;width:64px;height:48px;overflow:hidden;border:1px solid var(--linka);background:var(--papir2);line-height:0;vertical-align:middle}
+.thumb-vyrez img{width:100%;height:100%;object-fit:cover}
+.thumb-vyrez--cela{background:var(--papir)}
+.thumb-vyrez--cela img{object-fit:contain;padding:2px}
+
 /* ---------- graf návštěvnosti ---------- */
 .chart{display:flex;align-items:flex-end;gap:4px;height:180px;padding:14px 0 0;border-bottom:1px solid var(--linka)}
 .chart .bar{flex:1;min-width:4px;background:linear-gradient(180deg,var(--zlato),#9c7d48);position:relative;transition:opacity .2s}

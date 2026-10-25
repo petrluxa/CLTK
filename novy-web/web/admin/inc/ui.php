@@ -112,7 +112,14 @@ function pole_obrazek(string $name, string $label, ?string $rel, array $o = []):
     $rel = (string)$rel;
     $typ = $o['nahled'] ?? 'siroky';
     $h = '<div class="obr-pole obr-pole--' . e($typ) . '" data-obr-pole>';
-    if ($rel !== '' && is_file(UPLOAD_DIR . '/' . $rel)) {
+    if ($typ === 'bez') {
+        /* náhled ukazuje jiné pole (např. pole_vyrez s velkým náhledem) – tady jen odebrání a výběr souboru */
+        if ($rel !== '' && is_file(UPLOAD_DIR . '/' . $rel) && ($o['odebrat'] ?? true) !== false) {
+            $h .= '<div class="obr-prev"><label class="check"><input type="checkbox" name="' . e($name) . '_odebrat" value="1"><span>Odebrat obrázek</span></label></div>';
+        } elseif ($rel !== '' && !is_file(UPLOAD_DIR . '/' . $rel)) {
+            $h .= '<div class="hint hint--varovani">Uložený soubor <b>' . e($rel) . '</b> na serveru chybí. Nahrajte ho znovu.</div>';
+        }
+    } elseif ($rel !== '' && is_file(UPLOAD_DIR . '/' . $rel)) {
         $h .= '<div class="obr-prev"><img src="' . e(upload_url($rel)) . '" alt="Současný obrázek" data-obr-nahled>';
         if (($o['odebrat'] ?? true) !== false) {
             $h .= '<label class="check"><input type="checkbox" name="' . e($name) . '_odebrat" value="1"><span>Odebrat obrázek</span></label>';
@@ -143,6 +150,84 @@ function pole_fokus(string $name, string $label, ?string $value, ?string $foto, 
     }
     $o['hint'] = $o['hint'] ?? 'Klepněte do fotky na místo, které má zůstat vidět i při ořezu (např. obličej). Zapisuje se jako „vodorovně% svisle%“.';
     return ui_obal($id, $label, $h, $o);
+}
+
+/**
+ * Výřez fotky (Petr 25. 10. 2026: „ať si manažer při psaní sám vybere výřez“): velký náhled fotky s rámečkem
+ * v poměru stran rámu na webu – táhne se myší nebo prstem, zvětší / zmenší za roh, posuvníkem nebo klávesami
+ * (šipky, + −); vedle živý náhled karty, jak bude na webu. Nová fotka z pole $o['soubor'] se ukáže hned po výběru.
+ * Skrytá pole: $nFokus = poloha „x% y%“ (object-position), $nVyrez = přiblížení '1'–'3' | 'cela' | '' (automatika).
+ * Bez JavaScriptu funguje jen volba výřez / celá fotka. Zpracování admin_vyrez(), vykreslení na webu aktualita_vyrez().
+ * $o: 'stav' => aktualita_vyrez(…) (výchozí podoba), 'soubor' => jméno pole s fotkou, 'pomer' => 4/3,
+ *     'auto' => [1.2, 1.55] (nová fotka jiného tvaru se nabídne celá), 'zoom_max' => 3, 'max_px' => zmenšení na serveru,
+ *     'nahled' => ['datum' => …, 'nadpis' => …, 'popis' => …] (jména polí formuláře pro živý náhled karty), 'hint'.
+ */
+function pole_vyrez(string $nFokus, string $nVyrez, ?string $fokus, ?string $vyrez, ?string $foto, string $label, array $o = []): string {
+    $id = ui_id($nVyrez, $o);
+    $foto = (string)$foto;
+    $ma = $foto !== '' && is_file(UPLOAD_DIR . '/' . $foto);
+    $stav = $o['stav'] ?? ['cela' => false, 'fokus' => '50% 50%', 'zoom' => 1.0];
+    $cela = !empty($stav['cela']);
+    $z = max(1.0, (float)($stav['zoom'] ?? 1));
+    $zMax = (float)($o['zoom_max'] ?? 3);
+    $auto = $o['auto'] ?? [1.2, 1.55];
+    $nahled = $o['nahled'] ?? [];
+    $src = $ma ? e(upload_url($foto)) : '';
+    $data = ' data-vyrez data-pomer="' . e((string)($o['pomer'] ?? 4 / 3)) . '" data-zoom-max="' . e((string)$zMax) . '"'
+          . ' data-auto="' . e($auto[0] . ' ' . $auto[1]) . '" data-rezim="' . ($cela ? 'cela' : 'vyrez') . '" data-zoom="' . e((string)$z) . '"'
+          . ' data-fokus="' . e(preg_match('/^\d{1,3}(\.\d+)?%\s+\d{1,3}(\.\d+)?%$/', trim((string)$fokus)) ? trim((string)$fokus) : (string)($stav['fokus'] ?? '50% 50%')) . '"'
+          . (isset($o['soubor']) ? ' data-soubor="' . e((string)$o['soubor']) . '"' : '')
+          . (isset($o['max_px']) ? ' data-max-px="' . (int)$o['max_px'] . '"' : '');
+    foreach (['datum', 'nadpis', 'popis'] as $k) if (isset($nahled[$k])) $data .= ' data-nahled-' . $k . '="' . e((string)$nahled[$k]) . '"';
+
+    $h = '<div class="vyrez' . ($cela ? ' vyrez--cela' : '') . '"' . $data . '>'
+       . '<div class="vyrez__rezimy" role="radiogroup" aria-label="Jak fotku ukázat na webu">'
+       . '<label class="vyrez__rezim"><input type="radio" id="' . e($id) . '" name="' . e($nVyrez) . '_rezim" value="vyrez"' . ($cela ? '' : ' checked') . ' data-vyrez-rezim>'
+       . '<span><b>Výřez</b> vyplní rámeček na webu</span></label>'
+       . '<label class="vyrez__rezim"><input type="radio" name="' . e($nVyrez) . '_rezim" value="cela"' . ($cela ? ' checked' : '') . ' data-vyrez-rezim>'
+       . '<span><b>Celá fotka</b> na paspartě</span></label></div>'
+       . '<p class="hint vyrez__prazdno" data-vyrez-prazdno' . ($ma ? ' hidden' : '') . '>Jakmile vyberete fotku, ukáže se tady a výřez si nastavíte.</p>'
+       . '<div class="vyrez__plocha" data-vyrez-plocha' . ($ma ? '' : ' hidden') . '>'
+       . '<div class="vyrez__editor"><div class="vyrez__obraz" data-vyrez-obraz>'
+       . '<img src="' . $src . '" alt="" draggable="false">'
+       . '<div class="vyrez__ram" data-vyrez-ram tabindex="0" role="group" aria-roledescription="výřez fotky"'
+       . ' aria-label="Výřez fotky – šipkami ho posunete, klávesami plus a minus přiblížíte" aria-describedby="' . e($id) . '-hint">'
+       . '<span class="vyrez__roh vyrez__roh--lh" data-roh="lh"></span><span class="vyrez__roh vyrez__roh--ph" data-roh="ph"></span>'
+       . '<span class="vyrez__roh vyrez__roh--ld" data-roh="ld"></span><span class="vyrez__roh vyrez__roh--pd" data-roh="pd"></span></div></div>'
+       . '<div class="vyrez__ovladani"><label class="vyrez__zoom"><span>Přiblížení</span>'
+       . '<input type="range" min="1" max="' . e((string)$zMax) . '" step="0.01" value="' . e((string)$z) . '" data-vyrez-zoom>'
+       . '<output data-vyrez-zoom-text>' . (int)round($z * 100) . '&nbsp;%</output></label>'
+       . '<button type="button" class="btn btn-sm btn-ghost" data-vyrez-reset>Celý rámeček na střed</button>'
+       . '<p class="vyrez__varovani" data-vyrez-varovani hidden>Takhle velké přiblížení už bude na webu trochu neostré.</p></div></div>'
+       . '<figure class="vyrez__nahled"><figcaption>Takhle bude karta na webu</figcaption><div class="vyrez-karta">'
+       . '<div class="vyrez-karta__foto' . ($cela ? ' vyrez-karta__foto--cela' : '') . '" data-vyrez-karta><img src="' . $src . '" alt=""></div>'
+       . '<p class="vyrez-karta__datum" data-vyrez-text="datum"></p><p class="vyrez-karta__nadpis" data-vyrez-text="nadpis"></p>'
+       . '<p class="vyrez-karta__popis" data-vyrez-text="popis"></p></div></figure></div>'
+       . '<input type="hidden" name="' . e($nFokus) . '" value="' . e(trim((string)$fokus) !== '' ? (string)$fokus : '50% 50%') . '" data-vyrez-fokus>'
+       . '<input type="hidden" name="' . e($nVyrez) . '" value="' . e((string)$vyrez) . '" data-vyrez-hodnota>'
+       . '<input type="hidden" name="' . e($nVyrez) . '_pro" value="" data-vyrez-pro></div>';
+    $o['hint'] = $o['hint'] ?? 'Rámeček táhněte myší nebo prstem – co je uvnitř, bude na webu vidět. Velikost změníte za roh nebo posuvníkem, '
+        . 'na klávesnici šipkami a klávesami + −. Fotka na výšku nebo panorama se nabídne celá na paspartě.';
+    $o['sirka'] = $o['sirka'] ?? 'cela';
+    return ui_obal($id, $label, $h, $o);
+}
+
+/** Zpracuje pole_vyrez(): [fokus „x% y%“, vyrez '' | 'cela' | '1'–'3', chyba]. Bez JavaScriptu rozhoduje volba výřez / celá. */
+function admin_vyrez(string $nFokus, string $nVyrez, float $zoomMax = 3.0): array {
+    $fokus = vstup($nFokus, 20);
+    if ($fokus === '') $fokus = '50% 50%';
+    if (!preg_match('/^(\d{1,3}(?:\.\d+)?)%\s+(\d{1,3}(?:\.\d+)?)%$/', $fokus, $m) || (float)$m[1] > 100 || (float)$m[2] > 100) {
+        return ['50% 50%', '', 'Výřez fotky se nepodařilo přečíst – nastavte ho prosím znovu.'];
+    }
+    $v = vstup($nVyrez, 20);
+    $rezim = vstup($nVyrez . '_rezim', 10);
+    if ($rezim === 'cela') $v = 'cela';
+    elseif ($rezim === 'vyrez' && $v === 'cela') $v = '1';
+    if ($v !== '' && $v !== 'cela') {
+        if (!preg_match('/^\d{1,2}(\.\d{1,3})?$/', $v)) return [$fokus, '', 'Přiblížení výřezu se nepodařilo přečíst – nastavte ho prosím znovu.'];
+        $v = (string)round(max(1.0, min($zoomMax, (float)$v)), 2);
+    }
+    return [$fokus, $v, ''];
 }
 
 /** PDF: odkaz na současný soubor, výběr nového, odebrání. Zpracování: admin_pdf('soubor', $stary). */

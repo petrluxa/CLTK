@@ -151,6 +151,31 @@ function aktuality(int $limit = 3): array {
     return data_rows('SELECT * FROM cltk_aktuality WHERE visible = 1 ORDER BY poradi, id LIMIT ' . max(1, $limit));
 }
 
+/** Nejvyšší přiblížení výřezu fotky aktuality (víc = fotka už by na kartě byla neostrá). */
+const AKTUALITA_ZOOM_MAX = 3.0;
+
+/**
+ * Výřez fotky aktuality (editor v administraci, Petr 25. 10. 2026) → jak ji vykreslit v rámečku 4 : 3:
+ * ['cela' => bool, 'fokus' => 'x% y%', 'zoom' => float, 'styl' => inline styl obrázku navíc].
+ * Sloupec vyrez: 'cela' = celá fotka na paspartě; číslo 1–3 = výřez přiblížený kolem bodu fokus – object-position
+ * a transform: scale se stejným počátkem dají přesně obdélník z editoru; '' = dosavadní automatika (fotka jiného
+ * tvaru než 1,2–1,55 se ukáže celá, ořez do 4 : 3 by ji moc přiblížil – klub 21. 10. 2026; jinak vyplní rámeček).
+ */
+function aktualita_vyrez(array $a): array {
+    $fokus = trim((string)($a['fokus'] ?? ''));
+    if (!preg_match('/^\d{1,3}(\.\d+)?%\s+\d{1,3}(\.\d+)?%$/', $fokus)) $fokus = '50% 50%';
+    $v = trim((string)($a['vyrez'] ?? ''));
+    if ($v === 'cela') return ['cela' => true, 'fokus' => '50% 50%', 'zoom' => 1.0, 'styl' => ''];
+    if ($v !== '' && is_numeric($v)) {
+        $z = max(1.0, min(AKTUALITA_ZOOM_MAX, (float)$v));
+        return ['cela' => false, 'fokus' => $fokus, 'zoom' => $z,
+                'styl' => $z > 1.001 ? 'transform:scale(' . round($z, 3) . ');transform-origin:' . $fokus : ''];
+    }
+    [$w, $h] = obrazek_rozmer((string)($a['foto'] ?? ''));
+    $cela = $w > 0 && $h > 0 && ($w / $h < 1.2 || $w / $h > 1.55);
+    return ['cela' => $cela, 'fokus' => $cela ? '50% 50%' : $fokus, 'zoom' => 1.0, 'styl' => ''];
+}
+
 /** Poslední RUČNÍ výsledky (cltk_vysledky, nejnovější první); každý řádek má navíc 'sety_pole' ze sety_rozloz().
  *  Od 15. 10. 2026 je web nevypisuje (výsledky jen ze služby Pointeks – pointeks_seznam() v inc/pointeks.php);
  *  tabulka i data zůstávají. */

@@ -69,7 +69,8 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
         $popis  = vstup('popis', 600);
         [$odkaz, $chOdkaz] = ak_odkaz(vstup('odkaz', 255));
         $odkazText = vstup('odkaz_text', 80);
-        $fokus  = vstup('fokus', 20);
+        [$fokus, $vyrez, $chVyrez] = admin_vyrez('fokus', 'vyrez', AKTUALITA_ZOOM_MAX);
+        $vyrezNovaFotka = vstup('vyrez_pro', 10) === 'nova';      // výřez nastavený v editoru na právě vybrané fotce
         $datum  = normalizuj_datum(vstup('datum', 20));
         $visible = vstup_bool('visible');
 
@@ -77,19 +78,32 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
         if ($popis === '') $chyby[] = 'Vyplňte krátký popis – jedna nebo dvě věty.';
         if ($chOdkaz !== '') $chyby[] = $chOdkaz;
         if ($datum === false) { $chyby[] = 'Datum nedává smysl – vyberte ho v kalendáři nebo napište např. 5. 10. 2026.'; $datum = null; }
-        if ($fokus === '') $fokus = '50% 50%';
-        if (!preg_match('/^\d{1,3}(\.\d+)?%\s+\d{1,3}(\.\d+)?%$/', $fokus)) $chyby[] = 'Ohnisko fotky zapište jako dvě procenta, např. 50% 40%.';
+        if ($chVyrez !== '') $chyby[] = $chVyrez;
 
         $form = ['id' => $id, 'nadpis' => $nadpis, 'popis' => $popis, 'odkaz' => $odkaz, 'odkaz_text' => $odkazText,
-                 'fokus' => $fokus, 'datum' => $datum ?? vstup('datum', 20), 'visible' => $visible, 'foto' => (string)($stary['foto'] ?? '')];
+                 'fokus' => $fokus, 'vyrez' => $vyrez, 'datum' => $datum ?? vstup('datum', 20), 'visible' => $visible, 'foto' => (string)($stary['foto'] ?? '')];
 
         $foto = null;
         if (!$chyby) {
             $foto = admin_obrazek('foto', $stary['foto'] ?? '', 'aktuality', 2000, 2000, $nadpis);
             if ($foto['chyba'] !== '') $chyby[] = $foto['chyba'] . ' Vyberte prosím fotku znovu.';
         }
+        if ($chyby && $vyrezNovaFotka) {
+            /* vybraná fotka se po chybě ve formuláři neuloží (prohlížeč ji zapomene) → výřez patřil jí, ne uložené fotce */
+            $form['fokus'] = (string)($stary['fokus'] ?? '50% 50%');
+            $form['vyrez'] = (string)($stary['vyrez'] ?? '');
+            if (!$foto || $foto['chyba'] === '') $chyby[] = 'Fotku prosím vyberte znovu a nastavte výřez – po chybě ve formuláři ji prohlížeč zapomene.';
+        }
         if (!$chyby) {
-            $data = ['nadpis' => $nadpis, 'popis' => $popis, 'foto' => $foto['soubor'], 'fokus' => $fokus, 'datum' => $datum,
+            if ($foto['soubor'] === '') {
+                $fokus = '50% 50%';
+                $vyrez = '';
+            } elseif ($foto['soubor'] !== (string)($stary['foto'] ?? '') && !$vyrezNovaFotka) {
+                /* nová fotka bez výřezu z editoru (bez JavaScriptu) – výřez staré fotky by na ní neseděl → automatika */
+                $fokus = '50% 50%';
+                $vyrez = '';
+            }
+            $data = ['nadpis' => $nadpis, 'popis' => $popis, 'foto' => $foto['soubor'], 'fokus' => $fokus, 'vyrez' => $vyrez, 'datum' => $datum,
                      'odkaz' => $odkaz, 'odkaz_text' => $odkaz !== '' ? $odkazText : '', 'visible' => $visible, 'updated_at' => ted()];
             try {
                 if ($stary) {
@@ -121,11 +135,12 @@ if ($form === null && $upravit > 0) {
     if (!$form) redirect(AK_STRANKA, 'Aktualita nebyla nalezena.', 'err');
 }
 if ($form === null && isset($_GET['nova'])) {
-    $form = ['id' => 0, 'nadpis' => '', 'popis' => '', 'odkaz' => '', 'odkaz_text' => '', 'fokus' => '50% 50%', 'datum' => dnes(), 'visible' => 1, 'foto' => ''];
+    $form = ['id' => 0, 'nadpis' => '', 'popis' => '', 'odkaz' => '', 'odkaz_text' => '', 'fokus' => '50% 50%', 'vyrez' => '', 'datum' => dnes(), 'visible' => 1, 'foto' => ''];
 }
 
 $css = '<link rel="stylesheet" href="' . e(BASE_PATH . verze('admin/assets/admin-uvod.css')) . '">';
-$js  = '<script src="' . e(BASE_PATH . verze('admin/assets/admin-uvod.js')) . '" defer></script>';
+$js  = '<script src="' . e(BASE_PATH . verze('admin/assets/admin-uvod.js')) . '" defer></script>'
+     . '<script src="' . e(BASE_PATH . verze('admin/assets/vyrez.js')) . '" defer></script>';
 
 if ($form !== null):
     $nova = (int)$form['id'] === 0;
@@ -151,8 +166,12 @@ if ($form !== null):
       <?= pole_textarea('popis', 'Krátký popis', $form['popis'], ['required' => true, 'rows' => 3, 'maxlength' => 600,
             'placeholder' => 'Halová sezóna začíná od 5. 10.',
             'attrs' => ['data-pocitadlo' => '140'], 'hint' => 'Jedna, nejvýš dvě věty.']) ?>
-      <?= pole_obrazek('foto', 'Fotka', $form['foto'], ['hint' => 'Na šířku, aspoň 1200 px. JPG, PNG nebo WEBP – velikost a natočení se upraví samy. Na webu je fotka ve zlatém rámečku.']) ?>
-      <?= pole_fokus('fokus', 'Ohnisko fotky', $form['fokus'], $form['foto']) ?>
+      <?= pole_obrazek('foto', 'Fotka', $form['foto'], ['nahled' => 'bez',
+            'hint' => 'Nejlépe na šířku, aspoň 1200 px. JPG, PNG nebo WEBP – velikost a natočení se upraví samy. Hned pod tímto polem si vyberete výřez.']) ?>
+      <?= pole_vyrez('fokus', 'vyrez', $form['fokus'], (string)($form['vyrez'] ?? ''), $form['foto'], 'Výřez fotky na webu', [
+            'stav' => aktualita_vyrez($form), 'soubor' => 'foto', 'pomer' => 4 / 3, 'auto' => [1.2, 1.55], 'zoom_max' => AKTUALITA_ZOOM_MAX, 'max_px' => 2000,
+            'nahled' => ['datum' => 'datum', 'nadpis' => 'nadpis', 'popis' => 'popis'],
+          ]) ?>
       <?= pole_radek([
             pole_text('odkaz', 'Odkaz (nepovinné)', $form['odkaz'], ['maxlength' => 255, 'attrs' => ['inputmode' => 'url'],
                 'placeholder' => 'areal.php nebo https://…', 'hint' => 'Stránka tohoto webu (např. <b>areal.php</b>) nebo adresa jinam.']),
@@ -204,9 +223,10 @@ echo $css;
             $uvod = in_array($id, $naUvodu, true);
             $tridy = trim(((int)$r['visible'] === 1 ? '' : 'je-skryte') . ($uvod ? ' uv-na-uvodu' : '')); ?>
           <tr<?= $tridy !== '' ? ' class="' . $tridy . '"' : '' ?>>
-            <td data-label="Foto"><?= (string)$r['foto'] !== ''
-                ? '<img class="thumb-sm" src="' . e(upload_url($r['foto'])) . '" alt="" style="object-position:' . e($r['fokus']) . '">'
-                : '<span class="thumb-ph">bez fotky</span>' ?></td>
+            <td data-label="Foto"><?php if ((string)$r['foto'] !== ''):
+                $rv = aktualita_vyrez($r);     /* náhled se stejným výřezem jako karta na webu */ ?>
+              <span class="thumb-vyrez<?= $rv['cela'] ? ' thumb-vyrez--cela' : '' ?>"><img src="<?= e(upload_url($r['foto'])) ?>" alt="" style="object-position:<?= e($rv['fokus']) ?><?= $rv['styl'] !== '' ? ';' . e($rv['styl']) : '' ?>"></span>
+            <?php else: ?><span class="thumb-ph">bez fotky</span><?php endif; ?></td>
             <td data-label="Nadpis a popis" class="td-nazev"><b><?= e($r['nadpis']) ?></b><small><?= !empty($r['datum']) ? e(cz_date_dlouze((string)$r['datum'])) . ' · ' : '' ?><?= e(uryvek($r['popis'], 110)) ?></small></td>
             <td data-label="Odkaz" class="tlumene"><?= (string)$r['odkaz'] !== '' ? e(($r['odkaz_text'] !== '' ? $r['odkaz_text'] . ' · ' : '') . $r['odkaz']) : '–' ?></td>
             <td data-label="Stav"><?= stav_badge($r['visible']) ?><?= $uvod ? ' ' . badge('Na úvodu', 'zlato') : ((int)$r['visible'] === 1 ? ' ' . badge('Mimo úvod', 'info') : '') ?></td>
