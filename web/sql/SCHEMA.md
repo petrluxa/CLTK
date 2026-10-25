@@ -182,8 +182,8 @@ Načíst: `rows("SELECT * FROM cltk_uvodni_galerie WHERE visible = 1 ORDER BY po
 nová aktualita má předvyplněný dnešek; sloupec přidala migrace `2026-10-05-aktuality-datum.php`), `visible`, `poradi`.
 `vyrez` (od 25. 10. 2026, migrace `2026-10-25-aktuality-vyrez.php`) = výřez fotky z editoru v administraci: `''` = automatika
 (fotka jiného tvaru než 1,2–1,55 celá, jinak vyplní rámeček 4 : 3 podle `fokus`), `cela` = celá fotka na paspartě,
-číslo `1`–`3` = přiblížení výřezu; poloha výřezu je `fokus` („x% y%“ jako object-position, stejný bod je počátek
-`transform: scale`) – web i náhled v administraci ukážou přesně stejný výřez (`aktualita_vyrez()` v `inc/data.php`).
+číslo `1`–`3` = přiblížení výřezu; poloha výřezu je `fokus` („x% y%“ jako object-position, kolem tohoto bodu se obrázek
+zvětší) – web i náhled v administraci ukážou přesně stejný výřez (`aktualita_vyrez()`, `vyrez_styl_obrazku()` v `inc/data.php`).
 
 ### `cltk_vysledky` – výsledky hráčů
 | sloupec | význam |

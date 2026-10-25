@@ -51,8 +51,11 @@ Běžící server se převádí migrací `web/sql/migrace/2026-10-02-dokumenty-a
 - **Aktuality – výřez fotky** (Petr 25. 10. 2026): v administraci si správce výřez vybere sám – `pole_vyrez()` + `admin/assets/vyrez.js`
   (rámeček 4 : 3 přes fotku, rohy / posuvník / klávesy, živý náhled karty, „Celá fotka na paspartě“); uložené jako `fokus` („x% y%“)
   + `cltk_aktuality.vyrez` (`1`–`3` přiblížení | `cela` | `''` = dřívější automatika), migrace `2026-10-25-aktuality-vyrez.php`.
-  Web: `aktualita_vyrez()` v `inc/data.php` – object-position + `transform: scale` se stejným počátkem = přesně obdélník z editoru.
-  Výřez staré fotky se na novou nepřenáší (`vyrez_pro = nova`). Test `podklady/_raw/qa/vyrez/test-vyrez.mjs` (porovnává pixely karty na úvodu).
+  Web: `aktualita_vyrez()` + `vyrez_styl_obrazku()` v `inc/data.php` – obrázek z× větší a posunutý o −(z − 1)·fokus (object-position = fokus)
+  = přesně obdélník z editoru; NE `transform: scale` (WebKit fotku s filtrem `.foto` po transformaci rozmaže). Server vykreslí rámeček
+  i náhled karty ve stejném stavu; uložený stav v `data-ulozeny-*` (skrytá pole WebKit po Zpět obnoví i s atributem value).
+  Výřez staré fotky se na novou nepřenáší (`vyrez_pro = nova`). Testy `podklady/_raw/qa/vyrez/test-vyrez.mjs` (porovnává pixely karty
+  na úvodu) a `test-opravy.mjs` (Zpět v Chromiu i WebKitu, Odebrat po výběru, úzký mobil, bez JS …); EXIF: `qa/vyrez/exif/`.
 - Data: `web/sql/schema.sql` + `SCHEMA.md` (měnit obojí), sady `web/sql/seed/NN-*.php`
   (dvojice stránka+klíč bloku se mezi sadami nesmí opakovat), export `web/sql/export-dat.php`.
 - Návody: `web/inc/PRUVODCE-FRONT.md`, `web/PRUVODCE-STRANKY.md`, `web/admin/PRUVODCE.md`.
@@ -159,6 +162,11 @@ kopie jsou napevno nad `web/data/integrace.sqlite`, originály agentů v `admin-
 - Databáze MySQL `f201572` je **sdílená s webem TK Olymp** – ČLTK má jen tabulky `cltk_` (29 tabulek).
 - Nahrávání: `python nastroje/nahrat.py` (zkušebně) / `--ostra` / `--ostra --uploads` /
   `--ostra --soubory index.php inc/data.php`. Skript zálohuje přepisované soubory do `deploy/zalohy/`.
+- **Opcache po nahrání (25. 10. 2026):** server měl po nasazení nový `index.php`, ale ještě starý zkompilovaný `inc/data.php`
+  → „Call to undefined function“ pro přihlášené (revalidate_freq je jen 3 s, soubor se nejspíš zkompiloval během nahrávání ve stejné
+  sekundě). Po každém nasazení hned ověřit úvod (`?co=uvod` přes `deploy/jednorazove/2026-10-16-pointeks-data.php`) a `data/chyby.log`;
+  při chybě spustit `deploy/jednorazove/2026-10-25-opcache.php` (token jako u pointeks-data, zneplatní jen vyjmenované soubory
+  webu ČLTK – seznam v něm upravit, celé opcache sdílí web TK Olymp).
 - Proxy Forpsi (aruba-proxy) **drží chvíli staré odpovědi** – po nasazení ověřovat s hlavičkou
   `Cache-Control: no-cache` a `?t=náhodné`. HTTPS vynucuje proxy sama, vlastní přesměrování
   v `web/.htaccess` je proto na testu vypnuté (jinak hrozí smyčka).

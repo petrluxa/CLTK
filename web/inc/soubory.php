@@ -66,14 +66,21 @@ function obrazek_nacti(string $cesta): array {
     if (!$im) return [null, 'Nepodporovaný formát (povolené jsou JPG, PNG, WEBP a GIF).'];
     if (!imageistruecolor($im)) imagepalettetotruecolor($im);
 
-    // otočení podle EXIF – fotky z telefonu jinak leží na boku
+    // otočení (a zrcadlení) podle EXIF – fotky z telefonu jinak leží na boku. Všech 8 hodnot stejně jako prohlížeč
+    // (editor výřezu ukazuje fotku natočenou prohlížečem – výřez musí sedět): 2 zrcadlit vodorovně, 3 o 180°,
+    // 4 zrcadlit svisle, 5 transpozice (o 90° doprava + zrcadlit), 6 o 90° doprava, 7 transverzála (o 90° doleva
+    // + zrcadlit), 8 o 90° doleva. imagerotate otáčí proti směru hodinových ručiček.
     if ($mime === 'image/jpeg' && function_exists('exif_read_data')) {
         $ex = @exif_read_data($cesta);
-        $rot = match ((int)($ex['Orientation'] ?? 1)) { 3 => 180, 6 => -90, 8 => 90, default => 0 };
+        [$rot, $zrcadlit] = match ((int)($ex['Orientation'] ?? 1)) {
+            2 => [0, IMG_FLIP_HORIZONTAL], 3 => [180, 0], 4 => [0, IMG_FLIP_VERTICAL], 5 => [-90, IMG_FLIP_HORIZONTAL],
+            6 => [-90, 0], 7 => [90, IMG_FLIP_HORIZONTAL], 8 => [90, 0], default => [0, 0],
+        };
         if ($rot !== 0) {
             $otoceny = imagerotate($im, $rot, 0);
             if ($otoceny) $im = $otoceny;
         }
+        if ($zrcadlit !== 0) imageflip($im, $zrcadlit);
     }
     return [$im, $mime];
 }
