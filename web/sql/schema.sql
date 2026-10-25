@@ -108,6 +108,7 @@ CREATE TABLE cltk_aktuality (
   popis      TEXT         NOT NULL DEFAULT '',
   foto       VARCHAR(255) NOT NULL DEFAULT '',
   fokus      VARCHAR(20)  NOT NULL DEFAULT '50% 50%',
+  vyrez      VARCHAR(20)  NOT NULL DEFAULT '',
   odkaz      VARCHAR(255) NOT NULL DEFAULT '',
   odkaz_text VARCHAR(80)  NOT NULL DEFAULT '',
   datum      DATE         NULL,

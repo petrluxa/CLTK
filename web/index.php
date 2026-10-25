@@ -152,11 +152,12 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
         <?php foreach ($aktuality as $a):
           $aOdkaz = bezpecny_odkaz((string)$a['odkaz']); ?>
         <li class="aktualita">
-          <?php /* Fotka v rámu 4 : 3. Když má fotka jiný tvar (na výšku, panorama), ukáže se CELÁ na paspartě –
-                   ořez do 4 : 3 ji jinak hodně „přiblížil“ (klub 21. 10. 2026). Blízké tvary (1,2–1,55) se dál vyplní. */
-          [$aW, $aH] = obrazek_rozmer((string)$a['foto']);
-          $aCela = $aW > 0 && $aH > 0 && ($aW / $aH < 1.2 || $aW / $aH > 1.55);
-          $aFoto = obr((string)$a['foto'], '', ['class' => 'foto', 'fokus' => $aCela ? '50% 50%' : $fokus((string)$a['fokus'], '50% 50%')]); ?>
+          <?php /* Fotka v rámu 4 : 3 – výřez si vybere správce v administraci (posun + přiblížení, nebo celá fotka na
+                   paspartě; Petr 25. 10. 2026). Bez nastaveného výřezu dřívější automatika: fotka jiného tvaru (na výšku,
+                   panorama) celá – ořez do 4 : 3 ji jinak hodně „přiblížil“ (klub 21. 10. 2026). aktualita_vyrez() v inc/data.php. */
+          $aVyrez = aktualita_vyrez($a);
+          $aCela = $aVyrez['cela'];
+          $aFoto = obr((string)$a['foto'], '', ['class' => 'foto', 'fokus' => $aVyrez['fokus'], 'style' => $aVyrez['styl'] !== '' ? $aVyrez['styl'] : null]); ?>
           <?php if ($aFoto !== ''): ?>
           <div class="aktualita__foto ramec ramec--linka<?= $aCela ? ' aktualita__foto--cela' : '' ?>"><div class="ramec__obraz"><?= $aFoto ?></div></div>
           <?php endif; ?>
