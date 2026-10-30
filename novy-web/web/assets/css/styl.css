@@ -525,6 +525,8 @@ html:not(.js) .ma-podmenu:hover > .podmenu, html:not(.js) .ma-podmenu:focus-with
 .paticka__pruh p { margin: 0; }
 .paticka__pruh a { color: rgba(251, 250, 246, .7); text-decoration: none; }
 .paticka__pruh a:hover { color: var(--paper); text-decoration: underline; text-underline-offset: .25em; }
+.paticka__autor a { color: var(--gold-soft); font: italic 400 1.14em/1 var(--serif); letter-spacing: .01em; }
+.paticka__autor a:hover { color: var(--paper); text-decoration-color: var(--gold-soft); }
 
 /* 10 ─ TLAČÍTKA A ODKAZY ──────────────────────────────────────────────────── */
 /* Plné tlačítko pro hlavní akci (Rezervovat kurt, Stát se členem, odeslání). Jinak .odkaz. */

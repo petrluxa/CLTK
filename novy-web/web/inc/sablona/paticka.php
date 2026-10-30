@@ -94,6 +94,8 @@ $ptOdkazVen = fn(string $u) => odkaz_je_externi($u) ? ' target="_blank" rel="noo
   <div class="paticka__pruh">
     <div class="wrap">
       <p>© <?= date('Y') ?> <?= typo(setting('paticka_pruh', $ptNazev . ' · IČO ' . setting('ico', '45243077'))) ?></p>
+      <?php /* podpis autora webu (Petr 30. 10. 2026) – decentně v pruhu, jméno jako podpis */ ?>
+      <p class="paticka__autor">Web vytvořil <a href="https://www.matchpulse.cz/pl/" target="_blank" rel="author noopener">Petr Luxa<span class="vh"> (v novém okně)</span></a></p>
       <p><a href="<?= e(url('admin/')) ?>" rel="nofollow">Správa webu</a></p>
     </div>
   </div>
