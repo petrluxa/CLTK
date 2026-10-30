@@ -521,12 +521,22 @@ html:not(.js) .ma-podmenu:hover > .podmenu, html:not(.js) .ma-podmenu:focus-with
 .prepinac-pristupnost[aria-pressed="true"] { border-color: var(--navy); }
 .prepinac-pristupnost[aria-pressed="true"]::before { background: radial-gradient(circle at 70% 50%, var(--paper) 0 .32rem, transparent .34rem) var(--navy); border-color: var(--navy); }
 .paticka__pruh { background: var(--navy-deep); color: rgba(251, 250, 246, .7); font-size: var(--t-male); }
-.paticka__pruh .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .6rem 2rem; padding-block: 1.3rem; }
+.paticka__pruh .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: .6rem 2rem; padding-block: 1.3rem; }
 .paticka__pruh p { margin: 0; }
 .paticka__pruh a { color: rgba(251, 250, 246, .7); text-decoration: none; }
 .paticka__pruh a:hover { color: var(--paper); text-decoration: underline; text-underline-offset: .25em; }
-.paticka__autor a { color: var(--gold-soft); font: italic 400 1.14em/1 var(--serif); letter-spacing: .01em; }
-.paticka__autor a:hover { color: var(--paper); text-decoration-color: var(--gold-soft); }
+/* Podpis autora webu – Petr Luxa. Jednotný na všech webech, zdroj: Documents/Code/podpis-pl */
+.pl-podpis{display:inline-flex;align-items:center;gap:.55em;color:inherit;text-decoration:none;white-space:nowrap;vertical-align:middle;line-height:1.2}
+.pl-podpis__logo{flex:none;width:1.55em;height:1.55em;overflow:visible}
+.pl-podpis strong{font-weight:600;text-decoration:underline;text-decoration-color:transparent;text-underline-offset:.22em;text-decoration-thickness:1px;transition:text-decoration-color .3s}
+.pl-podpis:hover strong,.pl-podpis:focus-visible strong{text-decoration-color:currentColor}
+.pl-podpis__mic{transform-box:fill-box;transform-origin:50% 100%}
+.pl-podpis:hover .pl-podpis__mic,.pl-podpis:focus-visible .pl-podpis__mic{animation:pl-podpis-skok .95s cubic-bezier(.33,0,.25,1)}
+@keyframes pl-podpis-skok{0%{transform:translateY(0)}30%{transform:translateY(-10px)}56%{transform:translateY(0)}74%{transform:translateY(-3px)}90%,100%{transform:translateY(0)}}
+@media (prefers-reduced-motion:reduce){.pl-podpis:hover .pl-podpis__mic,.pl-podpis:focus-visible .pl-podpis__mic{animation:none}}
+/* v pruhu se podtrhává jen jméno (pruh jinak podtrhne celý odkaz) */
+.paticka__pruh .pl-podpis:hover { text-decoration: none; }
+.paticka__autor { display: flex; }
 
 /* 10 ─ TLAČÍTKA A ODKAZY ──────────────────────────────────────────────────── */
 /* Plné tlačítko pro hlavní akci (Rezervovat kurt, Stát se členem, odeslání). Jinak .odkaz. */
