@@ -71,7 +71,9 @@ Běžící server se převádí migrací `web/sql/migrace/2026-10-02-dokumenty-a
   Skrytí platí pro celou `skupina` (spojená čtyřhra dvou hráčů klubu = dva záznamy, na webu jeden řádek).
 - **Úvod: tmavomodrý pás pod úvodem s 8 nejnovějšími výsledky (dvě řady po čtyřech, na mobilu 4) + pozvánka do aplikace
   Pointeks** (návrh C, Petr vybral 18. 10. 2026, dvě řady 21. 10.): `inc/sablona/uvod-vysledky.php` (`uvod_vysledky_html()`,
-  `uvod_vysledky_cerstve()` – starší než 30 dní = pás zmizí) + `assets/css/uvod-vysledky.css`. Světlá tabule „Další
+  `uvod_vysledky_cerstve()` – starší než 30 dní = pás zmizí) + `assets/css/uvod-vysledky.css`. Pás nesmí vykukovat v prvním okně
+  (Petr 6. 11. 2026, „aby to bylo čisté“): od 900 px má úvod `min-height` celého okna a obsah uprostřed, fotka se tím nemění;
+  test `podklady/_raw/qa/pas-cisty/` (`fold.mjs`, `hrana.mjs`). Světlá tabule „Další
   výsledky“ z úvodu je od 21. 10. zrušená (všechny výsledky na `vysledky.php`); blok index/vysledky se nepoužívá.
   U každého hráče klubu malý znak `pointeks_znak_html()` (ne u spoluhráče odjinud ani soupeřů); jména všech hráčů
   jedním písmem a velikostí (Jost, Petr: „stejný font“), hráč klubu tučně. Tabule výsledků nesmí působit jako „polední
