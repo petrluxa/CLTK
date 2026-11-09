@@ -7,8 +7,8 @@
    kreslí ve WebKitu číslice „starého stylu“), u jména každého hráče klubu malý znak klubu.
    HTML: inc/sablona/uvod-vysledky.php (uvod_vysledky_html('pod-uvodem', …)).
    Všechno je pod .uvc / .uvc-zapas / .uvc-zive; úvod jen přes .uvod:has(+ .uvc) – když pás je,
-   má úvod menší mezery nad fotkou a pod popiskem galerie, ať je horní zlatá linka pásu vidět
-   už v prvním okně notebooku (velikost fotky, výřezy, deska ani galerie se nemění). Bez pásu
+   vyplní úvod od 900 px celé první okno a pás začíná až pod ním (Petr 6. 11. 2026: první obrazovka
+   čistá, bez kousku modré; velikost fotky, výřezy, deska ani galerie se nemění). Bez pásu
    (žádné výsledky) pravidla nic nedělají.
    Rozvržení: od 1180 px tabule vedle sebe (méně výsledků = méně širších sloupců),
    700–1179 px dvě a dvě, pod 700 px pod sebou (všechny výsledky bez posouvání do stran).
@@ -16,19 +16,28 @@
    nejmenší písmo .62rem jako na výsledkové tabuli webu (vysledky.css).
    ========================================================================== */
 
-/* Úvod nad pásem: popisek galerie → zlatá linka pásu (jen když pás je). Od 900 px menší mezera
-   nad fotkou i pod popiskem, ať je horní zlatá linka pásu v prvním okně i na notebooku. */
+/* Úvod nad pásem (jen když pás je). Od 900 px menší mezera nad fotkou i pod popiskem, ať se úvod vejde
+   do nízkého okna notebooku, a výška celého okna bez hlavičky, pruhu správce a spodní lišty – pás tak
+   začíná až pod spodní hranou okna a obsah úvodu stojí uprostřed volné plochy (+ 2 px: při zvětšeném
+   zobrazení by zaokrouhlení mohlo nechat na hraně okna tenkou linku pásu).
+   Pod 900 px ne: fotka tam navazuje na hlavičku a mezera nad ní by vypadala jako chyba. */
 .uvod:has(+ .uvc) { padding-bottom: 2rem; }
 @media (min-width: 900px) {
   .uvod:has(+ .uvc) { padding-top: clamp(1rem, .1rem + 1.7vw, 2.75rem); padding-bottom: .9rem; }
   .uvod:has(+ .uvc) .galerie__pata { margin-top: .55rem; gap: .3rem; }
 }
+@media screen and (min-width: 900px) {
+  .uvod:has(+ .uvc) {
+    display: grid; align-content: center;
+    min-height: calc(100vh - var(--pruh-v) - var(--hlavicka-v) - var(--lista-v) + 2px);
+    min-height: calc(100svh - var(--pruh-v) - var(--hlavicka-v) - var(--lista-v) + 2px);
+  }
+}
 /* 900–1319 px: rejstřík snímků galerie a tlačítko „Zastavit“ se vedle sebe nevejdou – rejstřík by se
-   zalomil na dva řádky a popisek galerie o 36 px povyrostl, pás by v prvním okně (1280 × 720) nebyl vidět
-   vůbec (tlačítko je jen při samočinném střídání, s omezeným pohybem chybí). S pásem proto zůstane u
+   zalomil na dva řádky a popisek galerie o 36 px povyrostl a v nízkém okně by se úvod do prvního okna
+   nevešel (tlačítko je jen při samočinném střídání, s omezeným pohybem chybí). S pásem proto zůstane u
    tlačítka jen ikona pauzy (jako na mobilu) o kousek blíž k rejstříku (jeden řádek od 1180 px); slovo
-   Zastavit / Spustit slyší čtečky dál. Cíl pro myš i prst 28 × 28 px s ikonou uprostřed (jako na mobilu).
-   (V 1180–1239 px je pás i tak pod spodní lištou kompaktní hlavičky – v prvním okně je až od 1240 px.) */
+   Zastavit / Spustit slyší čtečky dál. Cíl pro myš i prst 28 × 28 px s ikonou uprostřed (jako na mobilu). */
 @media (min-width: 900px) and (max-width: 1319.98px) {
   .uvod:has(+ .uvc) .galerie__ovladani { gap: .75rem; }
   .uvod:has(+ .uvc) .galerie__pauza-text { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }

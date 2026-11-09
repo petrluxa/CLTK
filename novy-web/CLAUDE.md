@@ -71,7 +71,9 @@ Běžící server se převádí migrací `web/sql/migrace/2026-10-02-dokumenty-a
   Skrytí platí pro celou `skupina` (spojená čtyřhra dvou hráčů klubu = dva záznamy, na webu jeden řádek).
 - **Úvod: tmavomodrý pás pod úvodem s 8 nejnovějšími výsledky (dvě řady po čtyřech, na mobilu 4) + pozvánka do aplikace
   Pointeks** (návrh C, Petr vybral 18. 10. 2026, dvě řady 21. 10.): `inc/sablona/uvod-vysledky.php` (`uvod_vysledky_html()`,
-  `uvod_vysledky_cerstve()` – starší než 30 dní = pás zmizí) + `assets/css/uvod-vysledky.css`. Světlá tabule „Další
+  `uvod_vysledky_cerstve()` – starší než 30 dní = pás zmizí) + `assets/css/uvod-vysledky.css`. Pás nesmí vykukovat v prvním okně
+  (Petr 6. 11. 2026, „aby to bylo čisté“): od 900 px má úvod `min-height` celého okna a obsah uprostřed, fotka se tím nemění;
+  test `podklady/_raw/qa/pas-cisty/` (`fold.mjs`, `hrana.mjs`). Světlá tabule „Další
   výsledky“ z úvodu je od 21. 10. zrušená (všechny výsledky na `vysledky.php`); blok index/vysledky se nepoužívá.
   U každého hráče klubu malý znak `pointeks_znak_html()` (ne u spoluhráče odjinud ani soupeřů); jména všech hráčů
   jedním písmem a velikostí (Jost, Petr: „stejný font“), hráč klubu tučně. Tabule výsledků nesmí působit jako „polední
@@ -140,6 +142,24 @@ s omezeným pohybem (`RM=1`) musí být vidět všechen obsah. Po změně výcho
 `nastroje/novy-seed.sh` a `./_php/php.exe web/sql/export-dat.php --sql` (data.json jde na server s webem).
 Ověřit i stávající funkce, ne jen novou (admin e2e: `podklady/_raw/qa/integrace/e2e-uvod.mjs` s `UV_BASE=…`, `e2e-obsah.mjs` s `BASE=…` –
 kopie jsou napevno nad `web/data/integrace.sqlite`, originály agentů v `admin-uvod/`, `admin-obsah/`).
+
+## Vlastní hosting cltk.cz – stěhování od 9. 11. 2026
+
+- Forpsi multihosting `f0476670.multi` (přístupy `deploy/novy-hosting.txt`, mimo git). FTP jen **FTPS** (`ftpx.forpsi.com`),
+  web `/cltk.cz/www/` (= `/web/htdocs/www.cltk.cz/home/www`), nastavení `/cltk.cz/cltk-config.php` (zdroj
+  `deploy/cltk-config-cltkcz.php`; `config.php` ho hledá jako 2. místo `dirname(__DIR__, 2)`). MySQL 8 `a054um.forpsi.com`,
+  DB = uživatel `f203661` – vlastní, jen ČLTK. PHP 8.5.12, open_basedir žádné, server vidí skutečnou IP návštěvníka.
+- Nahrávání: `py nastroje/nahrat.py --ostra --cltkcz [--soubory …]` (stejné pojistky, cíl `/cltk.cz/www`),
+  nastavení `--ostra --cltkcz --config`. Bez `--cltkcz` dál starý test na tkolymppraha.cz/cltkv2.
+- Před přepnutím domény: web hosting odpovídá na IP **185.129.138.228** → `curl --resolve www.cltk.cz:80:185.129.138.228 …`
+  (jen http; přihlásit se do administrace nejde – cookie Secure). Jednorázové skripty přes FTPS do `/cltk.cz/www/`, data mimo web
+  do `/cltk.cz/`. HTTPS a cltk.cz → www dělá proxy Forpsi (jako u Tami), vlastní přesměrování v `.htaccess` netřeba.
+- 9. 11. 2026: databáze přenesená (30 tabulek `cltk_` ze sdílené DB TK Olymp, `deploy/jednorazove/2026-11-09-export-db.php` /
+  `-import-db.php`, počty sedí), kód nahraný, uploads ze starého serveru (546 souborů, 725 MB; 67 nahrál klub jen na server).
+  Režim přípravy zůstává zapnutý. Pointeks po spuštění: adresa `https://www.cltk.cz/pointeks/feed` (s www).
+- **Doména:** registrátor INTERNET CZ, držitel klub (SB:CLTK), DNS u bývalého provozovatele (ns.alpy.cz, ns.jirasko.*) s DNSSEC,
+  pošta Microsoft 365 – seznam záznamů, které se nesmí ztratit: `deploy/prenos/dns-zona-cltk.txt`. Při přesunu DNS na Forpsi
+  postup jako u Tami (Změna DNS serverů → DNS u FORPSI se zaškrtnutým Zapnout DNSSEC) a předem v zóně Forpsi všechny záznamy pošty.
 
 ## Nasazení na test – stav 8. 10. 2026
 

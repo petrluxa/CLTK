@@ -6,6 +6,9 @@ Použití (z kořene projektu):
     python nastroje/nahrat.py --ostra --uploads     # i obsah uploads/ (fotky, video)
     python nastroje/nahrat.py --ostra --soubory index.php inc/data.php
     python nastroje/nahrat.py --ostra --config      # nahraje deploy/cltk-config.php do kořene FTP účtu
+    … --cltkcz                                      # VLASTNÍ HOSTING cltk.cz (od 9. 11. 2026): FTPS, web do /cltk.cz/www/,
+                                                    # --config nahraje deploy/cltk-config-cltkcz.php do /cltk.cz/cltk-config.php;
+                                                    # přístupy z deploy/novy-hosting.txt
 
 Pojistky:
   * cíl je natvrdo /www/cltkv2/ – jinam skript nenahraje nic (kromě --config);
@@ -19,7 +22,7 @@ import ftplib, io, os, sys, time, fnmatch, posixpath
 
 KOREN = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 WEB = os.path.join(KOREN, 'web')
-CIL = '/www/cltkv2'
+CIL = '/cltk.cz/www' if '--cltkcz' in sys.argv else '/www/cltkv2'
 # instalace.php: po instalaci se ze serveru maže – plné nahrání ho nesmí poslat znovu (stalo se 4. a 5. 10. 2026)
 ZAKAZANO = ['inc/config.local.php', 'data/*', '*.sqlite', '*.sqlite-journal', '*.log', '*.md',
             'cltk-config.php', '*/_qa*', '_qa*', '*.bak', '.DS_Store', 'Thumbs.db', 'instalace.php']
@@ -27,6 +30,13 @@ POVOLENO_V_DATA = {'data/.htaccess'}
 
 
 def precti_pristupy():
+    if '--cltkcz' in sys.argv:                  # vlastní hosting cltk.cz: první host/user/pass v souboru = FTP
+        d = {}
+        with open(os.path.join(KOREN, 'deploy', 'novy-hosting.txt'), encoding='utf-8') as f:
+            for radek in f:
+                if ':' in radek and radek.split(':', 1)[0] in ('host', 'user', 'pass'):
+                    d.setdefault(radek.split(':', 1)[0], radek.split(':', 1)[1].strip())
+        return d
     d = {}
     with open(os.path.join(KOREN, 'deploy', 'ftp.txt'), encoding='utf-8') as f:
         for radek in f:
@@ -65,8 +75,10 @@ def soubory_webu(s_uploads, jen=None):
 
 class Ftp:
     def __init__(self, p):
-        self.f = ftplib.FTP(p['host'], timeout=60)
+        self.f = ftplib.FTP_TLS(p['host'], timeout=120) if '--cltkcz' in sys.argv else ftplib.FTP(p['host'], timeout=60)
         self.f.login(p['user'], p['pass'])
+        if '--cltkcz' in sys.argv:
+            self.f.prot_p()
         self.f.encoding = 'utf-8'
         self.slozky = set()
 
@@ -110,9 +122,12 @@ def main():
     zaloha = os.path.join(KOREN, 'deploy', 'zalohy', time.strftime('%Y%m%d-%H%M%S'))
 
     if '--config' in a:
-        cil, zdroj = '/cltk-config.php', os.path.join(KOREN, 'deploy', 'cltk-config.php')
+        if '--cltkcz' in a:
+            cil, zdroj = '/cltk.cz/cltk-config.php', os.path.join(KOREN, 'deploy', 'cltk-config-cltkcz.php')
+        else:
+            cil, zdroj = '/cltk-config.php', os.path.join(KOREN, 'deploy', 'cltk-config.php')
         assert posixpath.basename(cil) == 'cltk-config.php' and cil != '/config.php'
-        print(('NAHRÁVÁM' if ostra else 'zkušebně') + f'  deploy/cltk-config.php → {cil}')
+        print(('NAHRÁVÁM' if ostra else 'zkušebně') + f'  deploy/{os.path.basename(zdroj)} → {cil}')
         if ostra:
             ftp = Ftp(p)
             if ftp.existuje(cil):
