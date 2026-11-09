@@ -160,6 +160,10 @@ kopie jsou napevno nad `web/data/integrace.sqlite`, originály agentů v `admin-
 - **Doména:** registrátor INTERNET CZ, držitel klub (SB:CLTK), DNS u bývalého provozovatele (ns.alpy.cz, ns.jirasko.*) s DNSSEC,
   pošta Microsoft 365 – seznam záznamů, které se nesmí ztratit: `deploy/prenos/dns-zona-cltk.txt`. Při přesunu DNS na Forpsi
   postup jako u Tami (Změna DNS serverů → DNS u FORPSI se zaškrtnutým Zapnout DNSSEC) a předem v zóně Forpsi všechny záznamy pošty.
+- **9. 11. 2026 ~22:00 SPUŠTĚNO** – https://www.cltk.cz běží z nového hostingu, režim přípravy vypnutý, DB přenesená ve 21:35.
+  DNS u Forpsi (NSSET ns.forpsi.*), zóna doplněná o poštu Microsoft 365 podle `deploy/prenos/dns-zona-cltk.txt`, výchozí
+  `_dmarc` Forpsi smazaný. V editoru DNS Forpsi má MX prioritu ve vlastním políčku (Hodnota = jen název serveru).
+  Starý test tkolymppraha.cz/cltkv2 dál existuje – NEUPRAVOVAT tam obsah, nahrávat už jen s `--cltkcz`.
 
 ## Nasazení na test – stav 8. 10. 2026
 

@@ -94,7 +94,6 @@ $ptOdkazVen = fn(string $u) => odkaz_je_externi($u) ? ' target="_blank" rel="noo
   <div class="paticka__pruh">
     <div class="wrap">
       <p>© <?= date('Y') ?> <?= typo(setting('paticka_pruh', $ptNazev . ' · IČO ' . setting('ico', '45243077'))) ?></p>
-      <p><a href="<?= e(url('admin/')) ?>" rel="nofollow">Správa webu</a></p>
       <?php /* jednotný podpis autora na všech webech – zdroj Documents/Code/podpis-pl, vkládat beze změny */ ?>
       <p class="paticka__autor"><a class="pl-podpis" href="https://www.matchpulse.cz/pl/#weby" target="_blank" rel="noopener"><svg class="pl-podpis__logo" viewBox="0 0 64 64" width="20" height="20" aria-hidden="true" focusable="false"><rect width="64" height="64" rx="14" fill="#16181d"/><path fill="#f3f1ea" d="M6.58 51V12.91H22.46Q26.14 12.91 28.48 14.48Q30.81 16.05 31.92 18.88Q33.03 21.72 33.03 25.51Q33.03 29.41 31.84 32.36Q30.65 35.3 28.3 36.97Q25.94 38.63 22.38 38.63H16.34V51ZM16.34 30.83H20.11Q21.79 30.83 22.48 29.42Q23.18 28.01 23.18 25.77Q23.18 24.18 22.89 23.07Q22.6 21.96 21.91 21.38Q21.22 20.8 20.04 20.8H16.34ZM36.49 51V12.91H46.25V42.73H59.56V51Z"/><circle class="pl-podpis__mic" cx="52.5" cy="12.5" r="5.5" fill="#d9ef3f"/></svg><span>Design a vývoj <strong>Petr Luxa</strong></span></a></p>
     </div>
