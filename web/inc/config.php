@@ -7,9 +7,12 @@
    který existuje:
 
      1. <kořen FTP účtu>/cltk-config.php
-        (= dirname(__DIR__, 3) – na serveru leží nad složkou www/,
+        (= dirname(__DIR__, 3) – na testu (hosting TK Olymp, web v www/cltkv2/) leží nad složkou www/,
         vedle config.php webu TK Olymp, který se NIKDY neotvírá)
-     2. web/inc/config.local.php  (lokálně, mimo git)
+     2. <složka nad webem>/cltk-config.php
+        (= dirname(__DIR__, 2) – vlastní hosting cltk.cz od 9. 11. 2026: web v /cltk.cz/www/, nastavení
+        v /cltk.cz/cltk-config.php; o patro výš FTP nedosáhne)
+     3. web/inc/config.local.php  (lokálně, mimo git)
 
    Vzor souboru s přístupy:
 
@@ -34,7 +37,7 @@
    nenastavil).
    --------------------------------------------------------------- */
 
-foreach ([dirname(__DIR__, 3) . '/cltk-config.php', __DIR__ . '/config.local.php'] as $cltkConfigSoubor) {
+foreach ([dirname(__DIR__, 3) . '/cltk-config.php', dirname(__DIR__, 2) . '/cltk-config.php', __DIR__ . '/config.local.php'] as $cltkConfigSoubor) {
     if (is_file($cltkConfigSoubor)) {
         require $cltkConfigSoubor;
         break;                                   // jen první existující

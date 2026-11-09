@@ -29,7 +29,8 @@ AcceptPathInfo Off
   # --- příjem výsledků ze služby Pointeks: POST na pointeks/feed (i s lomítkem) ---
   # Vnitřní přepsání, ŽÁDNÉ přesměrování (Pointeks přesměrování nesleduje a bere je jako chybu).
   # Složka pointeks/ ani feed/ neexistuje, takže DirectorySlash nemá co přesměrovat (301).
-  # Na testu https://www.tkolymppraha.cz/cltkv2/pointeks/feed, po přestěhování https://cltk.cz/pointeks/feed.
+  # Na testu https://www.tkolymppraha.cz/cltkv2/pointeks/feed, na vlastním hostingu https://www.cltk.cz/pointeks/feed
+  # – VŽDY s www: proxy Forpsi přesměruje cltk.cz → www (301) a přesměrování Pointeks bere jako chybu.
   # Stejné pravidlo má lokální server v nastroje/router.php.
   RewriteRule ^pointeks/feed/?$ pointeks-feed.php [L]
 
