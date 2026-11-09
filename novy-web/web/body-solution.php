@@ -19,10 +19,11 @@ if (!function_exists('radky_seznam_typo')) {
 }
 if (!function_exists('stranka_dalsi_bloky')) {
     /** Bloky, které klub založí v modulu Stránky navíc (mimo klíče, které šablona čte sama) – každý jako sekce. */
-    function stranka_dalsi_bloky(string $stranka, array $zname): string {
+    function stranka_dalsi_bloky(string $stranka, array $zname, array $pevne = []): string {
         $h = '';
         foreach (bloky($stranka) as $b) {
             $klic = (string)$b['klic'];
+            if (isset($pevne[$klic])) { $h .= $pevne[$klic]($b); continue; }   // pevná sekce šablony na místě podle pořadí v administraci
             if (in_array($klic, $zname, true)) continue;
             $id = 'blok-' . preg_replace('/[^a-z0-9-]/', '', $klic);
             $foto = blok_foto($b, 'pomer-4x3');
@@ -73,12 +74,16 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
 
 <?= hlava_stranky($uvod, ['drobky' => [['Areál a služby', 'areal.php'], ['Body Solution']], 'nadpis' => 'Body Solution']) ?>
 
-<?php if (!blok_skryty($bKontakt)): /* skrytý blok „kontakt“ = celá sekce pryč, i s kartou služby (klub 21. 10. 2026) */ ?>
-<!-- I · Kontakt a objednání + služba v areálu -->
+<?php
+/* Sekce Kontakt a objednání + karta služby. Od 9. 11. 2026 stojí mezi ostatními bloky stránky podle pořadí
+   v administraci (Stránky → Body Solution, šipky) – Petr: „abych si mohl posouvat ty bloky“. */
+$kontaktSekce = function (array $bKontakt) use ($sluzba, $wellness): string {
+    ob_start(); ?>
+<!-- Kontakt a objednání + služba v areálu -->
 <section class="sekce sekce--linka" id="kontakt" aria-labelledby="kontakt-nadpis">
   <div class="wrap v-arealu">
     <div class="v-arealu__text">
-      <?= hlava_sekce($bKontakt, ['cislo' => 1, 'id' => 'kontakt-nadpis', 'nadpis' => 'Kontakt a objednání', 'stitek' => 'Kontakt']) ?>
+      <?= hlava_sekce($bKontakt, ['id' => 'kontakt-nadpis', 'nadpis' => 'Kontakt a objednání', 'stitek' => 'Kontakt']) ?>
       <?= trim(html_text((string)$bKontakt['text'])) !== '' ? blok_text($bKontakt) : '' ?>
       <?= blok_tlacitka($bKontakt) ?>
       <div class="odkazy-radek dalsi-odkazy">
@@ -89,8 +94,10 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
     <?php if ($sluzba): ?><div><?= sluzba_v_arealu_html($sluzba) ?></div><?php endif; ?>
   </div>
 </section>
-<?php endif; ?>
-
-<?= stranka_dalsi_bloky('body-solution', ['uvod', 'kontakt']) ?>
+<?php return (string)ob_get_clean();
+};
+/* skrytý blok „kontakt“ = celá sekce pryč, i s kartou služby (klub 21. 10. 2026) – bloky() vrací jen viditelné */
+?>
+<?= stranka_dalsi_bloky('body-solution', ['uvod', 'kontakt'], ['kontakt' => $kontaktSekce]) ?>
 
 <?php require __DIR__ . '/inc/sablona/paticka.php'; ?>
