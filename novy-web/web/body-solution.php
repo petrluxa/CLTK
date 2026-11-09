@@ -64,7 +64,7 @@ $sluzba   = $podleKotvy['fyzioterapie'] ?? null;
 $wellness = $podleKotvy['wellness'] ?? null;
 
 $sablona = [
-    'titulek' => html_text((string)$uvod['stitek']) ?: 'Body Solution',
+    'titulek' => html_text((string)$uvod['stitek']) ?: 'Body Solution Clinic',
     'popis'   => html_text((string)$uvod['perex']),
     'css'     => ['stranky-areal.css'],
     'trida'   => 'stranka-body-solution',
@@ -72,7 +72,7 @@ $sablona = [
 require __DIR__ . '/inc/sablona/hlavicka.php';
 ?>
 
-<?= hlava_stranky($uvod, ['drobky' => [['Areál a služby', 'areal.php'], ['Body Solution']], 'nadpis' => 'Body Solution']) ?>
+<?= hlava_stranky($uvod, ['drobky' => [['Areál a služby', 'areal.php'], ['Body Solution Clinic']], 'nadpis' => 'Body Solution Clinic']) ?>
 
 <?php
 /* Sekce Kontakt a objednání + karta služby. Od 9. 11. 2026 stojí mezi ostatními bloky stránky podle pořadí

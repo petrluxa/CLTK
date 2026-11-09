@@ -64,7 +64,7 @@ function nv_nazev(string $cesta): string {
     $mapa = ['/' => 'Úvodní stránka', '/index.php' => 'Úvodní stránka', '/klub.php' => 'Klub', '/clenstvi.php' => 'Členství',
              '/historie.php' => 'Historie', '/vedeni.php' => 'Vedení', '/ctc.php' => 'CTC', '/revue.php' => 'Revue',
              '/areal.php' => 'Areál a služby', '/cenik-kurtu.php' => 'Ceník kurtů', '/privatni-treneri.php' => 'Privátní trenéři',
-             '/body-solution.php' => 'Body Solution', '/sportovni-lekarstvi.php' => 'Sportovní lékařství',
+             '/body-solution.php' => 'Body Solution Clinic', '/sportovni-lekarstvi.php' => 'Sportovní lékařství',
              '/zavodni-tenis.php' => 'Závodní tenis', '/zavodni-tenis-treneri.php' => 'Závodní tenis – trenéři',
              '/tenisova-skola.php' => 'Tenisová škola', '/tenisova-skola-ceniky.php' => 'Tenisová škola – ceníky',
              '/tenisova-skola-rozvrhy.php' => 'Tenisová škola – rozvrhy', '/tenisova-skola-treneri.php' => 'Tenisová škola – trenéři',

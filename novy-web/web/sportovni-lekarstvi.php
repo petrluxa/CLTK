@@ -88,7 +88,7 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
       <?php endif; ?>
       <?= blok_tlacitka($bKontakt) ?>
       <div class="odkazy-radek dalsi-odkazy">
-        <?= tlacitko('body-solution.php', 'Body Solution', 'odkaz') ?>
+        <?= tlacitko('body-solution.php', 'Body Solution Clinic', 'odkaz') ?>
         <?= $wellness ? tlacitko('areal.php#' . $wellness['kotva'], (string)$wellness['nazev'], 'odkaz') : '' ?>
       </div>
     </div>
