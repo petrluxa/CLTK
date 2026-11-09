@@ -206,6 +206,7 @@ h1 em, h2 em, h3 em, .display em, .h1 em, .h2 em, .h3 em {
 .sekce { padding-block: var(--sekce); position: relative; }
 .sekce--tesna { padding-block: calc(var(--sekce) * .6); }
 .sekce--bez-horni { padding-top: 0; }
+.hlava-stranky + .sekce--bez-horni { padding-top: calc(var(--sekce) * .5); }   /* pod hlavičkou stránky (9. 11. 2026: hlavička je nižší, bez toho „moc blízko“) */
 .sekce--bez-dolni { padding-bottom: 0; }
 .sekce--papir2 { background: var(--paper-2); }
 .sekce--linka { border-top: 1px solid var(--line); }
@@ -213,7 +214,7 @@ h1 em, h2 em, h3 em, .display em, .h1 em, .h2 em, .h3 em {
    druhá sekce začne blíž, jako pokračování té první. S linkou nebo jiným pozadím zůstává plný rytmus. */
 .sekce:not(.sekce--papir2):not(.sekce--navy) + .sekce:not(.sekce--papir2):not(.sekce--navy):not(.sekce--linka),
 .sekce--papir2 + .sekce--papir2:not(.sekce--linka),
-.sekce--navy + .sekce--navy:not(.sekce--linka) { padding-top: calc(var(--sekce) * .35); }
+.sekce--navy + .sekce--navy:not(.sekce--linka) { padding-top: calc(var(--sekce) * .7); }
 .sekce--navy { background: var(--navy); color: var(--paper-na-navy); }
 .sekce--navy h1, .sekce--navy h2, .sekce--navy h3, .sekce--navy h4, .sekce--navy .display { color: var(--paper); }
 .sekce--navy h2 em, .sekce--navy h3 em, .sekce--navy .h2 em { color: var(--gold-soft); }
