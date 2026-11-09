@@ -126,15 +126,22 @@ function clen_druh_nazev(string $druh): string {
  */
 function clen_model(?array $cenik): array {
     $m = ['rok' => (int)date('Y'), 'hrajici' => [], 'rodinne' => [], 'nehrajici' => null, 'firemni' => null,
-          'typy' => [], 'skupiny' => [], 'lze_konfigurovat' => false];
+          'typy' => [], 'skupiny' => [], 'lze_konfigurovat' => false, 'max' => ['h' => 2, 'n' => 1, 'd' => 2], 'zv_nazvy' => []];
     if (!$cenik) return $m;
     $l = $cenik['list'];
     if (preg_match('/(19|20)\d{2}/', (string)$l['obdobi'] . ' ' . (string)$l['nazev'], $r)) $m['rok'] = (int)$r[0];
     foreach ($cenik['sekce'] as $s) {
         $skupina = [];
+        /* sekce hrajících jednotlivců: řádek, který podle názvu nepoznáme (nové zvýhodnění, „Junior“, „Čestný člen“ …),
+           se nabídne jako další volba pro jednoho hrajícího – klub 9. 11. 2026: přidané řádky se do tabulky nepropsaly */
+        $sn = clen_norm((string)$s['nazev']);
+        $sekceHrajicich = (str_contains($sn, 'hrající') && !str_contains($sn, 'nehrající')) || str_contains($sn, 'jednotliv');
         foreach ($s['radky'] as $r) {
             $nazev = trim((string)$r['nazev']);
             $k = clen_klasifikuj($nazev);
+            if ($k['druh'] === '' && $sekceHrajicich && $nazev !== '' && !str_contains($nazev, '+') && !str_starts_with(clen_norm($nazev), 'host')) {
+                $k = ['druh' => 'hrajici', 'klic' => 'r' . (int)$r['id']];
+            }
             if ($k['druh'] === '' || $nazev === '') continue;
             $cena = clen_kc((string)$r['cena']);
             $polozka = ['cena' => $cena, 'typ' => $nazev, 'id' => (int)$r['id']];
@@ -154,6 +161,18 @@ function clen_model(?array $cenik): array {
     }
     // konfigurátor jen s úplným základem ceníku (jinak by app.js počítal se starými výchozími cenami)
     $m['lze_konfigurovat'] = isset($m['hrajici']['dospely'], $m['hrajici']['mladez']);
+    /* kolik osob jde v tabulce zvolit = co ceník opravdu nabízí (dřív napevno 2 / 1 / 2) */
+    $m['max'] = ['h' => isset($m['hrajici']['dospely']) ? 1 : 0, 'n' => 0, 'd' => isset($m['hrajici']['mladez']) ? 1 : 0];
+    foreach (array_keys($m['rodinne']) as $kl) {
+        [$h, $n, $d] = array_map('intval', explode('-', (string)$kl));
+        $m['max'] = ['h' => max($m['max']['h'], $h), 'n' => max($m['max']['n'], $n), 'd' => max($m['max']['d'], $d)];
+    }
+    /* krátké názvy zvýhodnění (čip v tabulce); u nových řádků název před závorkou */
+    $znama = ['do30' => 'Do 30 let', 'senior' => 'Senior', 'mladez' => 'Mládež, student'];
+    foreach ($m['hrajici'] as $kl => $j) {
+        if ($kl === 'dospely') continue;
+        $m['zv_nazvy'][$kl] = $znama[$kl] ?? (trim((string)preg_replace('/\s*[(\/–].*$/u', '', (string)$j['typ'])) ?: (string)$j['typ']);
+    }
     return $m;
 }
 
@@ -172,9 +191,10 @@ function clen_spocitej(array $m, array $v): array {
         $f = $m['firemni'];
         return ['stav' => 'ok', 'cena' => $f['cena'], 'typ' => clen_druh_nazev('firemni') . ($f['podminka'] !== '' ? ' – ' . $f['podminka'] : ''), 'druh' => 'firemni', 'id' => $f['id']];
     }
-    $h = max(0, min(2, (int)($v['h'] ?? 1)));
-    $n = max(0, min(1, (int)($v['n'] ?? 0)));
-    $d = max(0, min(2, (int)($v['d'] ?? 0)));
+    $mx = $m['max'] ?? ['h' => 2, 'n' => 1, 'd' => 2];             // meze podle ceníku (clen_model)
+    $h = max(0, min($mx['h'], (int)($v['h'] ?? 1)));
+    $n = max(0, min($mx['n'], (int)($v['n'] ?? 0)));
+    $d = max(0, min($mx['d'], (int)($v['d'] ?? 0)));
     $zv = (string)($v['zv'] ?? '');
     if ($h + $n + $d === 0) return ['stav' => 'prazdne', 'zprava' => 'Zvolte alespoň jednu osobu.'];
     if ($h === 0 && $n > 0) return ['stav' => 'neplatne', 'zprava' => 'Nehrající členství lze sjednat jen v návaznosti na hrající členství.'];
@@ -344,9 +364,9 @@ if (trim((string)$uvod['foto']) === '') {
 /* Konfigurátor: výchozí volba, nebo co přišlo z konfigurátoru odeslaného bez JavaScriptu (GET) */
 $konfVstup = [
     'druh' => ($_GET['druh'] ?? '') === 'firemni' && $model['firemni'] ? 'firemni' : 'osobni',
-    'h' => isset($_GET['h']) && is_scalar($_GET['h']) ? max(0, min(2, (int)$_GET['h'])) : 1,
-    'n' => isset($_GET['n']) && is_scalar($_GET['n']) ? max(0, min(1, (int)$_GET['n'])) : 0,
-    'd' => isset($_GET['d']) && is_scalar($_GET['d']) ? max(0, min(2, (int)$_GET['d'])) : 0,
+    'h' => isset($_GET['h']) && is_scalar($_GET['h']) ? max(0, min($model['max']['h'], (int)$_GET['h'])) : 1,
+    'n' => isset($_GET['n']) && is_scalar($_GET['n']) ? max(0, min($model['max']['n'], (int)$_GET['n'])) : 0,
+    'd' => isset($_GET['d']) && is_scalar($_GET['d']) ? max(0, min($model['max']['d'], (int)$_GET['d'])) : 0,
     'zv' => isset($_GET['zv']) && is_string($_GET['zv']) && isset($model['hrajici'][$_GET['zv']]) && $_GET['zv'] !== 'dospely' ? $_GET['zv'] : '',
 ];
 if (!($konfVstup['h'] === 1 && $konfVstup['n'] === 0 && $konfVstup['d'] === 0)) $konfVstup['zv'] = '';
@@ -642,9 +662,10 @@ $clenskyList = static function (string $jmeno, string $druh, string $typ, string
             <div class="konfigurator__volby">
               <fieldset data-konf-osoby<?= $konfVstup['druh'] === 'firemni' ? ' disabled' : '' ?>>
                 <legend class="vh">Složení domácnosti</legend>
-                <?php foreach ([['h', 'Hrající dospělí', '0–2 osoby', 2, 'hrajícího dospělého'],
-                                ['n', 'Nehrající dospělý', 'jen spolu s&nbsp;hrajícím členstvím', 1, 'nehrajícího dospělého'],
-                                ['d', 'Děti', '4–18 let nebo studující', 2, 'dítě']] as [$k, $popis, $mala, $max, $koho]): ?>
+                <?php $mx = $model['max'];          /* počty podle ceníku – co klub přidá, jde hned zvolit */
+                foreach (array_filter([['h', 'Hrající dospělí', '0–' . $mx['h'] . '&nbsp;' . sklonuj($mx['h'], 'osoba', 'osoby', 'osob'), $mx['h'], 'hrajícího dospělého'],
+                                ['n', $mx['n'] > 1 ? 'Nehrající dospělí' : 'Nehrající dospělý', 'jen spolu s&nbsp;hrajícím členstvím', $mx['n'], 'nehrajícího dospělého'],
+                                ['d', 'Děti', '4–18 let nebo studující', $mx['d'], 'dítě']], fn($x) => $x[3] > 0) as [$k, $popis, $mala, $max, $koho]): ?>
                 <div class="krokovac" data-krokovac>
                   <label class="krokovac__popis" for="k-<?= $k ?>"><?= $popis ?><small><?= $mala ?></small></label>
                   <div class="krokovac__ovladani">
@@ -655,7 +676,7 @@ $clenskyList = static function (string $jmeno, string $druh, string $typ, string
                 </div>
                 <?php endforeach; ?>
               </fieldset>
-              <?php $zvVolby = array_filter(['do30' => 'Do 30&nbsp;let', 'senior' => 'Senior', 'mladez' => 'Mládež, student'], fn($k) => isset($model['hrajici'][$k]), ARRAY_FILTER_USE_KEY); ?>
+              <?php $zvVolby = array_map('typo', $model['zv_nazvy']);      /* všechny hrající řádky ceníku kromě základního */ ?>
               <?php if ($zvVolby): ?>
               <fieldset class="zvyhodneni" data-konf-zvyhodneni<?= !$jenJeden || $konfVstup['druh'] === 'firemni' ? ' disabled' : '' ?>>
                 <legend class="pole__label">Zvýhodnění <span class="tlumene">– jen pro jednoho hrajícího</span></legend>
