@@ -118,9 +118,9 @@ function hist_pramen(string $zdroj, string $jistota): string {
         $x = hist_pramen_cast($c, $jmena);
         if ($x !== '') $casti[] = $x;
     }
-    [$stitek, $trida] = hist_jistota_stitek($jistota);
+    /* štítek jistoty („ověřeno“ apod.) se od 9. 11. 2026 na webu neukazuje (Petr: „můžeme dát pryč to ověřeno?“) –
+       míra jistoty zůstává jen v administraci */
     $h = $casti ? '<span class="osa__pramen-text">Pramen · ' . implode(' · ', $casti) . '</span>' : '';
-    if ($stitek !== '') $h .= ($h !== '' ? ' ' : '') . '<span class="' . $trida . '">' . e($stitek) . '</span>';
     return $h === '' ? '' : '<p class="osa__pramen prelom">' . $h . '</p>';
 }
 
@@ -429,7 +429,7 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
           <?php if (trim((string)$o['roky']) !== ''): ?><p class="medailon-roky"><?= typo((string)$o['roky']) ?></p><?php endif; ?>
           <?php if (trim((string)$o['cin']) !== ''): ?><p class="medailon-cin"><?= html_inline((string)$o['cin']) ?></p><?php endif; ?>
           <?php if (trim((string)$o['pramen']) !== ''): ?><p class="m-pramen">Pramen · <?= typo((string)$o['pramen']) ?></p><?php endif; ?>
-          <?php if (trim((string)$o['jistota_text']) !== ''): ?><span class="jistota jistota--<?= e($jistota) ?>"><?= typo((string)$o['jistota_text']) ?></span><?php endif; ?>
+          <?php /* štítek jistoty („ověřeno“, „vazba podle klubu“) se od 9. 11. 2026 na webu nevypisuje – jen v administraci */ ?>
         </li>
         <?php endforeach; ?>
       </ol>
