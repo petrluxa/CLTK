@@ -72,6 +72,28 @@ function rezim_pruh(): string {
          . e($kdo) . '.' . $odkaz . '</div>';
 }
 
+/** Tmavomodrá lišta nad hlavičkou pro všechny návštěvníky (místo pruhu režimu přípravy) – Petr 9. 11. 2026:
+ *  „ta se nám tam líbí“ → kontakt a otevírací doba. Údaje z Textů a údajů (recepce, adresa) a z Areálu a služeb
+ *  (časy služby Recepce, jinak Pronájmu kurtů). Prázdný údaj se vynechá; na úzkém displeji jen telefon a doba. */
+function kontakt_pruh(): string {
+    $tel = trim(setting('recepce_telefon'));
+    $mail = trim(setting('recepce_email'));
+    $adresa = trim(setting('adresa_ulice'));
+    $mesto = trim((string)preg_replace('/^\d{3}\s?\d{2}\s+/u', '', setting('adresa_mesto')));     // „170 00 Praha 7“ → „Praha 7“
+    $casy = '';
+    foreach (['recepce', 'kurty'] as $kotva) {
+        $c = trim((string)val('SELECT casy FROM cltk_sluzby WHERE kotva = ? AND visible = 1', [$kotva]));
+        if ($c !== '') { $casy = $c; break; }
+    }
+    $casti = [];
+    if ($tel !== '') $casti[] = '<span><b>Recepce</b> <a href="' . e(tel_href($tel)) . '">' . str_replace(' ', '&nbsp;', e(tel_kratce($tel))) . '</a></span>';
+    if ($casy !== '') $casti[] = '<span>' . (preg_match('/^\d/u', $casy) ? 'denně ' : '') . typo($casy) . '</span>';
+    if ($adresa !== '') $casti[] = '<span class="kontakt-pruh__siroke">' . typo($adresa . ($mesto !== '' ? ', ' . $mesto : '')) . '</span>';
+    if ($mail !== '') $casti[] = '<span class="kontakt-pruh__siroke"><a href="mailto:' . e($mail) . '">' . e($mail) . '</a></span>';
+    if (!$casti) return '';
+    return '<div class="rezim-pruh kontakt-pruh"><p>' . implode('<i class="kontakt-pruh__oddel" aria-hidden="true"></i>', $casti) . '</p></div>';
+}
+
 /* ---------- formulář náhledového hesla ---------- */
 
 /** Token formuláře bez relace (návštěvník přípravné stránky nedostane žádnou cookie). */
