@@ -55,7 +55,7 @@ function menu_hlavni(): array {
         ]],
         ['Areál a služby', 'areal.php', 'l', [
             ['Ceník kurtů', 'cenik-kurtu.php'], ['Privátní trenéři', 'privatni-treneri.php'],
-            ['Body Solution', 'body-solution.php'], ['Sportovní lékařství', 'sportovni-lekarstvi.php'],
+            ['Body Solution Clinic', 'body-solution.php'], ['Sportovní lékařství', 'sportovni-lekarstvi.php'],
         ]],
         ['Závodní tenis', 'zavodni-tenis.php', 'l', [
             ['Trenérský tým', 'zavodni-tenis-treneri.php'], ['Výsledky', 'vysledky.php'],
