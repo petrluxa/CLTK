@@ -135,6 +135,9 @@ function hlava_stranky(array $b, array $volby = []): string {
        opakoval drobečkovou navigaci i nadpis). Štítek dál slouží jako titulek stránky a jako nadpis, když chybí. */
     $h .= '<h1 class="h1 hlava-stranky__nadpis">' . ($nadpisHtml !== '' ? $nadpisHtml : typo($stitek)) . '</h1>';
     if (trim((string)($b['perex'] ?? '')) !== '') $h .= '<div class="perex hlava-stranky__perex">' . paragraphs((string)$b['perex']) . '</div>';
+    /* Text úvodního bloku (editor) pod perexem – do 9. 11. 2026 se nevypisoval vůbec (Petr: „chci perex i text“) */
+    $textBloku = html_ocistit((string)($b['text'] ?? ''));
+    if ($textBloku !== '') $h .= '<div class="prose hlava-stranky__obsah">' . html_tabulky_obal($textBloku) . '</div>';
     if ((int)($b['doplni_klub'] ?? 0) === 1) $h .= '<p class="hlava-stranky__doplni">' . doplni_klub('obsah doplní klub') . '</p>';
     if (!empty($volby['navic'])) $h .= (string)$volby['navic'];
     $h .= blok_tlacitka($b);

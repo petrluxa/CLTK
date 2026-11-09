@@ -298,6 +298,13 @@ function stranky_znamy(string $stranka, string $klic): bool {
     if ($klic === 'uvod' && $stranka !== 'formulare') return isset(STRANKY[$stranka]);
     return isset(STRANKY_BLOKY[$stranka . '|' . $klic]);
 }
+/* Pevné bloky, které šablona stránky vypisuje mezi vlastními bloky podle pořadí (jdou posouvat šipkami).
+   Body Solution od 9. 11. 2026 (Petr: „abych si mohl posouvat ty bloky“). */
+const STRANKY_POSUVNE = ['body-solution|kontakt' => true];
+/** Jde blok posouvat šipkami? Vlastní a „předponové“ bloky ano, pevné jen ze STRANKY_POSUVNE. */
+function stranky_posuvny(string $stranka, string $klic): bool {
+    return !stranky_znamy($stranka, $klic) || isset(STRANKY_POSUVNE[$stranka . '|' . $klic]);
+}
 function stranky_popis(string $stranka, string $klic): string {
     if (isset(STRANKY_BLOKY[$stranka . '|' . $klic])) return STRANKY_BLOKY[$stranka . '|' . $klic];
     if ($klic === 'uvod' && $stranka !== 'formulare') return STRANKY_UVOD;
@@ -456,7 +463,12 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
             redirect($zpet . '#b' . $rid, 'Blok „' . $x['klic'] . '“ je teď na webu ' . ($novy ? 'vidět.' : 'skrytý – jeho část stránky (celá sekce, nebo jen jeho kus) se na webu neukáže.'));
         }
         if ($akce === 'nahoru' || $akce === 'dolu') {
-            admin_posun('cltk_bloky', $rid, $akce === 'nahoru' ? -1 : 1, 'stranka');
+            /* posun jen mezi posouvatelnými bloky stránky – pevný blok mezi nimi (např. hlavička) by výměnu „spolkl“ */
+            $posuvne = array_values(array_map('intval', array_column(array_filter(rows('SELECT id, klic FROM cltk_bloky WHERE stranka = ?', [(string)$x['stranka']]),
+                fn($r) => stranky_posuvny((string)$x['stranka'], (string)$r['klic'])), 'id')));
+            if ($posuvne && in_array($rid, $posuvne, true)) {
+                admin_posun('cltk_bloky', $rid, $akce === 'nahoru' ? -1 : 1, 'stranka', 'id IN (' . implode(',', array_fill(0, count($posuvne), '?')) . ')', $posuvne);
+            }
             redirect($zpet . '#b' . $rid, 'Pořadí bloků bylo změněno.');
         }
         if ($akce === 'smazat') {
@@ -540,7 +552,7 @@ if ($rezim === 'prehled'):
 <?php elseif ($rezim === 'stranka'):
     $radky = rows('SELECT * FROM cltk_bloky WHERE stranka = ? ORDER BY poradi, id', [$stranka]);
     /* šipky jen u bloků, které šablona vypisuje za sebou (vlastní a „předponové“), ne u pevných */
-    $posunovatelne = array_values(array_filter($radky, fn($r) => !stranky_znamy($stranka, (string)$r['klic'])));
+    $posunovatelne = array_values(array_filter($radky, fn($r) => stranky_posuvny($stranka, (string)$r['klic'])));
     $prvniPosun = $posunovatelne ? (int)$posunovatelne[0]['id'] : 0;
     $posledniPosun = $posunovatelne ? (int)$posunovatelne[count($posunovatelne) - 1]['id'] : 0;
     $idPodleKlice = array_column($radky, 'id', 'klic');
@@ -587,7 +599,7 @@ if ($rezim === 'prehled'):
           <td data-label="Foto"><?= $r['foto'] !== '' ? obsah_nahled_foto($r['foto'], 'thumb-sm') : '–' ?></td>
           <td data-label="Stav"><?= stav_badge($naWebu ? 1 : 0) ?> <?= (int)$r['doplni_klub'] ? badge('doplní klub', 'warn') : '' ?></td>
           <td data-label="Akce" class="right"><div class="akce-radku">
-            <?php if (!$znamy): ?><?= tlacitka_poradi($rid, $rid === $prvniPosun, $rid === $posledniPosun, ['stranka' => $stranka]) ?><?php endif; ?>
+            <?php if (stranky_posuvny($stranka, (string)$r['klic'])): ?><?= tlacitka_poradi($rid, $rid === $prvniPosun, $rid === $posledniPosun, ['stranka' => $stranka]) ?><?php endif; ?>
             <a class="btn btn-sm btn-primary" href="stranky.php?id=<?= $rid ?>">Upravit</a>
             <?php if ($lzeSkryt || !$naWebu): /* blok úvodní stránky skrytý dřív jde znovu zobrazit */ ?><?= tlacitko_prepnout($rid, $r['visible'], ['stranka' => $stranka]) ?><?php endif; ?>
             <?php if (!$znamy): ?><?= tlacitko_smazat($rid, 'Smazat blok „' . $r['klic'] . '“? Nejde to vrátit.', ['stranka' => $stranka]) ?><?php endif; ?>

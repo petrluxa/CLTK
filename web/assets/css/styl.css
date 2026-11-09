@@ -1050,6 +1050,7 @@ html.js-pohyb [data-reveal].in { opacity: 1; transform: none; }
 .hlava-stranky__text { min-width: 0; max-width: 52rem; }
 .hlava-stranky__nadpis { font-size: var(--t-h1); line-height: 1.02; }
 .hlava-stranky__perex { margin-top: var(--s-5); }
+.hlava-stranky__obsah { margin-top: var(--s-5); }
 .hlava-stranky .akce { margin-top: var(--s-6); }
 .hlava-stranky__doplni { margin-top: var(--s-5); }
 .hlava-stranky__foto { min-width: 0; }
