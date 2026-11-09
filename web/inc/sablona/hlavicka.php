@@ -18,7 +18,9 @@ $hlTel = setting('recepce_telefon');
 $hlNazev = setting('klub_nazev', 'I. Český Lawn-Tennis Klub Praha');
 $hlZkratka = setting('klub_zkratka', 'I. ČLTK Praha');
 $hlOznameni = aktivni_oznameni();
-$hlTridaHtml = rezim_je_zapnuty() ? 's-pruhem' : '';
+/* modrá lišta nahoře: v přípravě stav přípravy, jinak kontakt a otevírací doba (Petr 9. 11. 2026) – pevně nad hlavičkou */
+$hlPruh = rezim_je_zapnuty() ? rezim_pruh() : kontakt_pruh();
+$hlTridaHtml = $hlPruh !== '' ? (rezim_je_zapnuty() ? 's-pruhem' : 's-pruhem s-kontaktem') : '';
 $hlTridaBody = trim((string)($sablona['trida'] ?? ''));
 sablona_bezpecnostni_hlavicky();          // Content-Security-Policy – musí odejít před prvním výstupem
 
@@ -51,8 +53,8 @@ $hlPolozka = static function (array $m, int $i): string {
 <?php require __DIR__ . '/head.php'; ?>
 </head>
 <body<?= $hlTridaBody !== '' ? ' class="' . e($hlTridaBody) . '"' : '' ?>>
-<?= rezim_pruh() ?>
 <a class="preskocit" href="#obsah">Přeskočit na obsah</a>
+<?= $hlPruh ?>
 <header class="hlavicka" id="hlavicka">
   <div class="stuha" aria-hidden="true"><span class="stuha__zlato"></span><span class="stuha__navy"></span></div>
   <?php /* Horní lišta z návrhu 1: při rolování zajede a logo se zmenší (jen desktop). */ ?>

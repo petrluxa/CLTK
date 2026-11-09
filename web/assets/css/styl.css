@@ -358,6 +358,7 @@ html.s-pruhem { --pruh-v: 39px; }
 @media (max-width: 699.98px) { html.s-pruhem { --pruh-v: 78px; } }
 html.s-pruhem .rezim-pruh { position: fixed !important; top: 0; left: 0; right: 0; }
 /* bez JS (výška pruhu se nezměří) zůstane původní řešení: pruh v toku, hlavička lepí */
+@media (max-width: 699.98px) { html.s-kontaktem { --pruh-v: 38px; } }   /* kontaktní lišta má na mobilu jeden řádek */
 html.s-pruhem:not(.js) { --pruh-v: 0px; }
 html.s-pruhem:not(.js) .rezim-pruh { position: relative !important; }
 html.s-pruhem:not(.js) body { padding-top: 0; }
@@ -456,6 +457,18 @@ html:not(.js) .ma-podmenu:hover > .podmenu, html:not(.js) .ma-podmenu:focus-with
 }
 
 /* 8 ─ INFORMAČNÍ LIŠTA (pod menu, jen když je aktivní zpráva) ─────────────── */
+/* Kontaktní lišta nad hlavičkou (kontakt_pruh() v inc/rezim.php) – vzhled jako pruh režimu přípravy */
+.kontakt-pruh { position: relative; z-index: 1000; background: #0e1b30; color: #caac79; border-bottom: 1px solid var(--gold); padding: 9px var(--okraj); text-align: center; }
+.kontakt-pruh p { margin: 0; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: .2rem 1.1rem; font: 500 13px/1.5 var(--sans); letter-spacing: .06em; }
+.kontakt-pruh b { color: #fbfaf6; font-weight: 500; }
+.kontakt-pruh a { color: #fbfaf6; text-decoration: none; }
+.kontakt-pruh a:hover, .kontakt-pruh a:focus-visible { text-decoration: underline; text-underline-offset: 3px; }
+.kontakt-pruh :focus-visible { outline-color: var(--gold-soft); }
+.kontakt-pruh__oddel { flex: none; width: 4px; height: 4px; border: 1px solid #caac79; transform: rotate(45deg); }
+@media (max-width: 699.98px) {
+  .kontakt-pruh__siroke, .kontakt-pruh__siroke + .kontakt-pruh__oddel, .kontakt-pruh__oddel:has(+ .kontakt-pruh__siroke) { display: none; }
+  .kontakt-pruh p { font-size: 12px; letter-spacing: .04em; }
+}
 .lista-info { position: relative; z-index: 3; background: var(--lista); color: var(--paper); text-align: center; box-shadow: 0 12px 22px -18px rgba(14, 27, 48, .6); }
 .lista-info__okno { overflow: hidden; padding-block: .8rem; }
 .lista-info p { margin: 0; font: 500 .74rem/1.55 var(--sans); letter-spacing: .24em; text-transform: uppercase; text-wrap: balance; }
