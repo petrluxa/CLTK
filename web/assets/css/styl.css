@@ -61,7 +61,7 @@
   /* Rozestupy – násobky 4 px */
   --s-1: .25rem; --s-2: .5rem; --s-3: .75rem; --s-4: 1rem; --s-5: 1.5rem;
   --s-6: 2rem; --s-7: 3rem; --s-8: 4rem; --s-9: 6rem; --s-10: 8rem;
-  --sekce: clamp(4.5rem, 2.6rem + 6.4vw, 9.5rem);   /* svislý rytmus sekcí */
+  --sekce: clamp(3rem, 1.6rem + 3.4vw, 5.5rem);   /* svislý rytmus sekcí (9. 11. 2026 zmenšeno z max. 9,5rem – Petr: „hrozné mezery, velká díra“) */
   --okraj: clamp(1rem, .55rem + 2.7vw, 3.5rem);     /* boční okraj stránky (16 px na mobilu) */
   --mezera: clamp(1rem, .5rem + 1.6vw, 2rem);      /* mezera mřížky */
   --max: 82.5rem;        /* 1320 px obsah */
@@ -209,6 +209,11 @@ h1 em, h2 em, h3 em, .display em, .h1 em, .h2 em, .h3 em {
 .sekce--bez-dolni { padding-bottom: 0; }
 .sekce--papir2 { background: var(--paper-2); }
 .sekce--linka { border-top: 1px solid var(--line); }
+/* Dvě sekce stejného pozadí za sebou BEZ linky – odsazení by se sečetlo v jednu velkou díru (Petr 9. 11. 2026):
+   druhá sekce začne blíž, jako pokračování té první. S linkou nebo jiným pozadím zůstává plný rytmus. */
+.sekce:not(.sekce--papir2):not(.sekce--navy) + .sekce:not(.sekce--papir2):not(.sekce--navy):not(.sekce--linka),
+.sekce--papir2 + .sekce--papir2:not(.sekce--linka),
+.sekce--navy + .sekce--navy:not(.sekce--linka) { padding-top: calc(var(--sekce) * .35); }
 .sekce--navy { background: var(--navy); color: var(--paper-na-navy); }
 .sekce--navy h1, .sekce--navy h2, .sekce--navy h3, .sekce--navy h4, .sekce--navy .display { color: var(--paper); }
 .sekce--navy h2 em, .sekce--navy h3 em, .sekce--navy .h2 em { color: var(--gold-soft); }
@@ -1045,7 +1050,7 @@ html.js-pohyb [data-reveal].in { opacity: 1; transform: none; }
 /* 17 ─ KOMPONENTY PODSTRÁNEK ──────────────────────────────────────────────── */
 
 /* Hlava podstránky (hlava_stranky() v inc/sablona/komponenty.php) */
-.hlava-stranky { position: relative; padding-block: clamp(2.2rem, 1.2rem + 3.4vw, 5rem) clamp(3rem, 2rem + 4vw, 6.5rem); }
+.hlava-stranky { position: relative; padding-block: clamp(2rem, 1.2rem + 2.6vw, 4rem) clamp(2.5rem, 1.6rem + 2.8vw, 4.5rem); }
 .hlava-stranky__plocha { display: grid; gap: var(--s-7) var(--mezera); align-items: end; }
 .hlava-stranky__text { min-width: 0; max-width: 52rem; }
 .hlava-stranky__nadpis { font-size: var(--t-h1); line-height: 1.02; }
