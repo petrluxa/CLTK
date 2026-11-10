@@ -26,9 +26,27 @@ function current_user(): ?array {
     return relace_spravce();
 }
 
-/** Na stránky administrace pustí jen přihlášeného; ostatní pošle na login.php. */
+/* ---------- role ----------
+   admin    = správce webu: všechno včetně Přístupů (zakládá další účty)
+   redaktor = obsah webu; stránky z ADMIN_JEN_SPRAVCE nevidí ani neotevře. */
+const ADMIN_ROLE = ['admin' => 'Správce webu', 'redaktor' => 'Redaktor'];
+const ADMIN_JEN_SPRAVCE = ['uzivatele.php'];
+
+function je_spravce_webu(?array $u): bool {
+    return $u !== null && (string)($u['role'] ?? '') === 'admin';
+}
+
+function role_nazev(string $role): string {
+    return ADMIN_ROLE[$role] ?? $role;
+}
+
+/** Na stránky administrace pustí jen přihlášeného; ostatní pošle na login.php.
+ *  Redaktora nepustí na stránky jen pro správce (ani přímou adresou). */
 function require_login(): array {
     $u = current_user();
+    if ($u && !je_spravce_webu($u) && in_array(basename((string)($_SERVER['SCRIPT_NAME'] ?? '')), ADMIN_JEN_SPRAVCE, true)) {
+        redirect('index.php', 'Tahle část administrace je jen pro správce webu.', 'err');
+    }
     if (!$u) {
         $zpet = basename((string)($_SERVER['SCRIPT_NAME'] ?? ''));
         $q = (string)($_SERVER['QUERY_STRING'] ?? '');

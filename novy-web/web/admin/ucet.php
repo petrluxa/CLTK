@@ -58,7 +58,7 @@ admin_head('Účet', $user, ['sirka' => 'uzka']);
         <tbody>
           <tr><th style="width:240px">Přihlašovací e-mail</th><td><b><?= e($user['email']) ?></b></td></tr>
           <tr><th>Jméno v administraci</th><td><?= $user['jmeno'] !== '' ? e($user['jmeno']) : '<span class="hint">nevyplněno</span>' ?></td></tr>
-          <tr><th>Oprávnění</th><td><?= badge('Správce webu', 'navy') ?></td></tr>
+          <tr><th>Oprávnění</th><td><?= badge(role_nazev((string)$user['role']), je_spravce_webu($user) ? 'navy' : 'info') ?></td></tr>
           <tr><th>Poslední přihlášení</th><td><?= $posledni !== '' ? e($posledni) : '<span class="hint">první přihlášení</span>' ?></td></tr>
           <?php if ($zalozen !== ''): ?><tr><th>Účet založen</th><td><?= e($zalozen) ?></td></tr><?php endif; ?>
         </tbody>
