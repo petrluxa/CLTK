@@ -590,7 +590,6 @@ $clenskyList = static function (string $jmeno, string $druh, string $typ, string
         . '<p class="clensky-list__typ"><span data-list-druh>' . typo($druh) . '</span> · <span data-list-typ>' . typo($typ) . '</span></p>'
         . '<dl class="clensky-list__udaje"><div><dt>Rok přijetí</dt><dd>' . e((string)$model['rok']) . '</dd></div>'
         . '<div><dt>Příspěvek</dt><dd data-list-cena>' . $cena . '</dd></div></dl>'
-        . '<p class="clensky-list__podpis">Po rozhodnutí Výkonného výboru</p>'
         . '</article>';
 };
 ?>
