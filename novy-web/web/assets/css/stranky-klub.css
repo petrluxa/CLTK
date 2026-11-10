@@ -171,6 +171,8 @@
 .kronika .osa__foto { max-width: min(100%, 22rem); margin-top: 1.1rem; }
 .kronika .osa__foto picture { display: block; }
 .kronika .osa__foto .ramec__obraz img { display: block; width: 100%; height: auto; max-height: 26rem; object-fit: cover; }
+/* Fotky na výšku: výřez od hlavy, ne od středu (na telefonu se usekávaly hlavy) */
+.kronika .osa__foto .ramec__obraz img { object-position: 50% 8%; }
 @media (min-width: 900px) {
   .kronika .osa__bod--s-fotkou { display: grid; grid-template-columns: minmax(0, 1fr) minmax(9rem, 15rem); gap: 0 clamp(1.5rem, 1rem + 1.5vw, 2.5rem); align-items: start; }
   .kronika .osa__bod--s-fotkou .osa__foto { margin-top: .2rem; max-width: none; }
