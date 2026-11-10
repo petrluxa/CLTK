@@ -45,6 +45,7 @@ function admin_moduly(): array {
         ['partneri.php',    'Partneři',             []],
         ['dokumenty.php',   'Dokumenty',            []],
         ['nastaveni.php',   'Texty a údaje',        []],
+        ['uzivatele.php',   'Přístupy',             []],     // jen správce webu (ADMIN_JEN_SPRAVCE)
         ['ucet.php',        'Účet',                 []],
     ];
 }
@@ -120,7 +121,7 @@ function admin_head(string $title, ?array $user = null, array $o = []): void {
       <span><b>I. ČLTK Praha</b><small>Administrace</small></span>
     </a>
     <nav class="side-nav">
-      <?php foreach (admin_moduly() as $i => [$href, $label, $dalsi]):
+      <?php foreach (array_values(array_filter(admin_moduly(), fn($m) => je_spravce_webu($user) || !in_array($m[0], ADMIN_JEN_SPRAVCE, true))) as $i => [$href, $label, $dalsi]):
         $on = $cur === $href || in_array($cur, $dalsi, true); ?>
         <a href="<?= e($href) ?>"<?= $on ? ' class="on" aria-current="page"' : '' ?>>
           <i aria-hidden="true"><?= rimske($i + 1) ?></i><span><?= e($label) ?></span>
