@@ -234,6 +234,9 @@
 .cenik-clenstvi .radky { margin: 0; }
 .cenik-clenstvi .radek__nazev { font-size: 1.04rem; }
 .cenik-clenstvi .radek__hodnota { white-space: nowrap; }
+.clen-cenik__pozn { max-width: 46rem; margin-top: var(--s-5); color: var(--muted); }
+.clen-cenik__pozn p { margin: 0 0 .6rem; }
+.clen-cenik__pozn p:last-child { margin-bottom: 0; }
 .cenik-clenstvi__pozn { max-width: 46rem; margin-top: var(--s-5); color: var(--muted); }
 .cenik-clenstvi__pozn p { margin: 0 0 .6rem; }
 .cenik-clenstvi--otevreny { border-top: 1px solid var(--gold); }

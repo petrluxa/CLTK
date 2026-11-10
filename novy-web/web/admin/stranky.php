@@ -207,7 +207,7 @@ const STRANKY_BLOKY = [
     'dokumenty|pravidla' => 'Pravidla a provozní řády – nadpis a perex', 'dokumenty|klub' => 'Klub a spolek – nadpis a perex',
     'dokumenty|ceniky' => 'Ceníky – nadpis a perex', 'dokumenty|archiv' => 'Archiv klubových turnajů – nadpis a perex',
     'dokumenty|revue' => 'Jubilejní Revue a archiv Revue – nadpis a perex (navy pás dole)',
-    'clenstvi|konfigurator' => 'Spočítejte si členství – nadpis konfigurátoru', 'clenstvi|clensky-list' => 'Členský list (náhled vedle konfigurátoru)',
+    'clenstvi|konfigurator' => 'Spočítejte si členství – nadpis konfigurátoru; Text = poznámky pod konfigurátorem a Členským listem (kalendářní rok, nabídka na míru)', 'clenstvi|clensky-list' => 'Členský list (náhled vedle konfigurátoru)',
     'clenstvi|dekujeme' => 'Poděkování po odeslání přihlášky',
     'ctc|clenstvi' => 'Členství v CTC', 'ctc|foto' => 'Fotka stránky CTC', 'ctc|utkani' => 'Mezinárodní utkání – nadpis', 'ctc|souteze' => 'Soutěže – nadpis',
     'historie|linka' => 'Wimbledonská linka – co položka seznamu, to bod: tučně rok, za ním „jméno · výsledek“ (vítěz = plný bod)',
