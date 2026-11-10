@@ -17,6 +17,37 @@ const DO_STRANKA = 'dokumenty.php';
 const DO_KATEGORIE = DOKUMENTY_KATEGORIE;
 const DO_TEXT_MAX = 60000;                // bajtů – sloupec TEXT v MySQL pojme 65 535
 
+/** Kde na webu se viditelný dokument ukáže – podle kategorie, zaškrtnutí „V patičce“ a ručních odkazů
+ *  (ceník k vytištění, blok stránky s adresou dokument.php?d=…). [[popisek, soubor stránky], …] */
+function do_kde_na_webu(array $d): array {
+    if ((int)$d['visible'] !== 1) return [];
+    $k = (string)$d['kategorie'];
+    $kde = [['Dokumenty', 'dokumenty.php'], ['Kontakt', 'kontakt.php#dokumenty']];
+    $podle = ['klub' => [['Klub', 'klub.php'], ['Vedení', 'vedeni.php'], ['Členství', 'clenstvi.php']],
+              'clenstvi' => [['Členství', 'clenstvi.php']], 'provoz' => [['Areál a služby', 'areal.php#provoz']],
+              'cenik' => [['Ceník kurtů', 'cenik-kurtu.php']], 'skola' => [['Tenisová škola – ceníky', 'tenisova-skola-ceniky.php']]];
+    foreach ($podle[$k] ?? [] as $x) $kde[] = $x;
+    if ((int)$d['v_paticce'] === 1) $kde[] = ['patička každé stránky', ''];
+    $slug = trim((string)$d['slug']);
+    if ($slug !== '' && dokument_ma_text($d)) {
+        $vzor = '%dokument.php?d=' . $slug . '%';
+        try { if ((int)val('SELECT COUNT(*) FROM cltk_price_lists WHERE pdf_url LIKE ?', [$vzor]) > 0) $kde[] = ['Ceník (ceník k vytištění)', 'cenik-kurtu.php']; } catch (Throwable $e) {}
+        try {
+            foreach (rows('SELECT DISTINCT stranka FROM cltk_bloky WHERE visible = 1 AND (odkaz LIKE ? OR odkaz2 LIKE ? OR text LIKE ?)', [$vzor, $vzor, $vzor]) as $b) {
+                $st = (string)$b['stranka'];
+                $nazvy = ['index' => 'Úvodní stránka', 'klub' => 'Klub', 'clenstvi' => 'Členství', 'historie' => 'Historie', 'vedeni' => 'Vedení', 'ctc' => 'CTC',
+                    'revue' => 'Revue', 'areal' => 'Areál a služby', 'cenik-kurtu' => 'Ceník kurtů', 'privatni-treneri' => 'Privátní trenéři',
+                    'body-solution' => 'Body Solution Clinic', 'sportovni-lekarstvi' => 'Sportovní lékařství', 'zavodni-tenis' => 'Závodní tenis',
+                    'tenisova-skola' => 'Tenisová škola', 'tenisova-skola-ceniky' => 'Tenisová škola – ceníky', 'letni-kempy' => 'Letní kempy',
+                    'restaurace' => 'Restaurace', 'prague-open' => 'Prague Open', 'kontakt' => 'Kontakt'];
+                $kde[] = [($nazvy[$st] ?? $st) . ' (odkaz v textu)', $st . '.php'];
+            }
+        } catch (Throwable $e) {}
+    }
+    $videno = [];
+    return array_values(array_filter($kde, function ($x) use (&$videno) { $v = isset($videno[$x[1] ?: $x[0]]); $videno[$x[1] ?: $x[0]] = true; return !$v; }));
+}
+
 /** Odkaz na dokument: [hodnota pro DB, chyba]. */
 function do_odkaz(string $vstup): array {
     $u = trim($vstup);
@@ -339,14 +370,18 @@ echo $css;
   <?php else: ?>
     <div class="tbl-wrap tbl-karty">
       <table>
-        <thead><tr><th>Název</th><th>Kategorie</th><th>Na webu</th><th>Stav</th><th class="right">Akce</th></tr></thead>
+        <thead><tr><th>Název</th><th>Kategorie</th><th>Kde na webu</th><th>Adresa</th><th>Stav</th><th class="right">Akce</th></tr></thead>
         <tbody>
         <?php foreach ($klubove as $i => $d):
             $id = (int)$d['id']; $soubor = dokument_soubor_url($d); ?>
           <tr id="d<?= $id ?>"<?= (int)$d['visible'] === 1 ? '' : ' class="je-skryte"' ?>>
             <td data-label="Název" class="td-nazev"><b><?= e($d['nazev']) ?></b><?php if ((string)$d['popis'] !== ''): ?><small><?= e($d['popis']) ?></small><?php endif; ?></td>
             <td data-label="Kategorie" class="tlumene"><?= e(DO_KATEGORIE[$d['kategorie']] ?? $d['kategorie']) ?></td>
-            <td data-label="Na webu" class="tlumene uv-cesta">
+            <td data-label="Kde na webu" class="tlumene td-kde">
+              <?php $kde = do_kde_na_webu($d); if (!$kde): ?><?= badge('nikde – skrytý', 'off') ?>
+              <?php else: foreach ($kde as $n => [$popis, $soubor]): ?><?= $n ? '<br>' : '' ?><?= $soubor !== '' ? '<a href="' . e(url($soubor)) . '" target="_blank" rel="noopener">' . e($popis) . '</a>' : e($popis) ?><?php endforeach; endif; ?>
+            </td>
+            <td data-label="Adresa" class="tlumene uv-cesta">
               <?php if (dokument_ma_text($d)): ?>
                 <?= badge('Stránka', 'zlato') ?> <a href="<?= e(dokument_url($d)) ?>" target="_blank" rel="noopener">dokument.php?d=<?= e((string)$d['slug']) ?></a>
                 <?php if ((string)$d['soubor'] !== ''): ?><br><?= badge('dřívější PDF', 'warn') ?> <small>na webu se nenabízí – můžete ho odebrat</small><?php endif; ?>
