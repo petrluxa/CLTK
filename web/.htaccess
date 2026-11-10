@@ -34,6 +34,45 @@ AcceptPathInfo Off
   # Stejné pravidlo má lokální server v nastroje/router.php.
   RewriteRule ^pointeks/feed/?$ pointeks-feed.php [L]
 
+  # --- adresy STARÉHO webu cltk.cz (do 9. 11. 2026, /cs/… a /en/…) → nové stránky, trvale (301) ---
+  # Lidé je mají v záložkách a vyhledávače ve výsledcích. Cíle jsou plné adresy https://www. – server za proxy Forpsi vidí jen http a jinak by šlo o dva skoky.
+  # Pořadí: nejdřív konkrétní podstránky, nakonec cokoli dalšího pod /cs/ a /en/ → úvodní stránka.
+  RewriteRule ^cs/clanky(/.*)?$ https://www.cltk.cz/#aktuality [R=301,NE,L]
+  RewriteRule ^en/articles(/.*)?$ https://www.cltk.cz/#aktuality [R=301,NE,L]
+  RewriteRule ^(cs/kalendar|cs/klub/kalendar-udalosti)/?$ https://www.cltk.cz/#kalendar [R=301,NE,L]
+  RewriteRule ^(cs/o-nas/partneri|en/about-the-club/partners)/?$ https://www.cltk.cz/#partneri [R=301,NE,L]
+  RewriteRule ^(cs/cenik|cs/co-nabizime/tenisove-kurty|en/prices|en/tennis-courts-rental)/?$ https://www.cltk.cz/cenik-kurtu.php [R=301,L]
+  RewriteRule ^(cs/clenska-prihlaska|cs/klub/clenstvi-v-klubu|cs/podminky-clenstvi|en/membership[a-z.-]*|en/membership/membership-in-the-club|en/application-form)/?$ https://www.cltk.cz/clenstvi.php [R=301,L]
+  RewriteRule ^cs/co-nabizime/venkovni-bazen/?$ https://www.cltk.cz/areal.php#bazen [R=301,NE,L]
+  RewriteRule ^cs/co-nabizime/posilovna/?$ https://www.cltk.cz/areal.php#fitness [R=301,NE,L]
+  RewriteRule ^cs/co-nabizime/wellness-centrum/?$ https://www.cltk.cz/areal.php#wellness [R=301,NE,L]
+  RewriteRule ^cs/co-nabizime/tenis-shop/?$ https://www.cltk.cz/areal.php#tenis-shop [R=301,NE,L]
+  RewriteRule ^cs/co-nabizime/firemni-akce/?$ https://www.cltk.cz/areal.php#firemni-akce [R=301,NE,L]
+  RewriteRule ^cs/co-nabizime/beachvolejbalove-a-multifunkcni-hriste/?$ https://www.cltk.cz/areal.php#beach-volejbal [R=301,NE,L]
+  RewriteRule ^cs/co-nabizime/fyzioterapie-a-masaze/?$ https://www.cltk.cz/body-solution.php [R=301,L]
+  RewriteRule ^(cs/co-nabizime/vyuka-tenisu|en/tennis-lessons)/?$ https://www.cltk.cz/privatni-treneri.php [R=301,L]
+  RewriteRule ^(cs/o-nas/plan-arealu|en/about-the-club/area-plan|en/home/area-plan)/?$ https://www.cltk.cz/areal.php#plan [R=301,NE,L]
+  RewriteRule ^cs/o-nas/planovane-uzavirky/?$ https://www.cltk.cz/areal.php#provoz [R=301,NE,L]
+  RewriteRule ^(cs/co-nabizime|cs/o-nas/galerie|en/about-the-club/gallery)(/.*)?$ https://www.cltk.cz/areal.php [R=301,L]
+  RewriteRule ^cs/klub/ctc/?$ https://www.cltk.cz/ctc.php [R=301,L]
+  RewriteRule ^cs/klub/(klubovy-casopis-icltk-revue|klubovy-newsletter)(/.*)?$ https://www.cltk.cz/revue.php [R=301,L]
+  RewriteRule ^(cs/klub/vykonny-vyboru(/.*)?|cs/home/vybor\.php)$ https://www.cltk.cz/vedeni.php [R=301,L]
+  RewriteRule ^cs/klub/zaslouzili-clenove/?$ https://www.cltk.cz/historie.php [R=301,L]
+  RewriteRule ^cs/klub/klubove-turnaje-a-akce/?$ https://www.cltk.cz/akce.php [R=301,L]
+  RewriteRule ^(cs/klub|cs/klub/o-klubu|cs/o-nas|en/about-the-club|en/membership/about-the-club)/?$ https://www.cltk.cz/klub.php [R=301,L]
+  RewriteRule ^(cs/kontakty|cs/o-nas/kontakt|en/contacs|en/about-the-club/contacts)/?$ https://www.cltk.cz/kontakt.php [R=301,L]
+  RewriteRule ^(cs|en)/gdpr/?$ https://www.cltk.cz/dokument.php?d=osobni-udaje-clenu [R=301,L]
+  RewriteRule ^cs/tenisova-skolicka/cenik/?$ https://www.cltk.cz/tenisova-skola-ceniky.php [R=301,L]
+  RewriteRule ^cs/tenisova-skolicka/rozvrhy/?$ https://www.cltk.cz/tenisova-skola-rozvrhy.php [R=301,L]
+  RewriteRule ^cs/tenisova-skolicka/treneri/?$ https://www.cltk.cz/tenisova-skola-treneri.php [R=301,L]
+  RewriteRule ^cs/tenisova-skolicka/letni-kempy/?$ https://www.cltk.cz/letni-kempy.php [R=301,L]
+  RewriteRule ^cs/tenisova-skolicka(/.*)?$ https://www.cltk.cz/tenisova-skola.php [R=301,L]
+  RewriteRule ^cs/zavodni-tenis/treneri/?$ https://www.cltk.cz/zavodni-tenis-treneri.php [R=301,L]
+  RewriteRule ^cs/zavodni-tenis/prague-open[0-9-]*/?$ https://www.cltk.cz/prague-open.php [R=301,L]
+  RewriteRule ^cs/zavodni-tenis/druzstva-icltk-praha/?$ https://www.cltk.cz/vysledky.php [R=301,L]
+  RewriteRule ^cs/zavodni-tenis(/.*)?$ https://www.cltk.cz/zavodni-tenis.php [R=301,L]
+  RewriteRule ^(cs|en)(/.*)?$ https://www.cltk.cz/ [R=301,L]
+
   # --- neexistující adresa → 404.php (relativně, funguje v podsložce) ---
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
