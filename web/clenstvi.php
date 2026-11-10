@@ -713,6 +713,9 @@ $clenskyList = static function (string $jmeno, string $druh, string $typ, string
 <?php endif; ?>
       </div>
       <?php endif; ?>
+      <?php /* poznámky pod konfigurátorem a Členským listem – Text bloku „konfigurator“ (administrace → Stránky → Členství) */
+      $konfText = html_ocistit((string)$bKonf['text']);
+      if (trim(strip_tags($konfText)) !== ''): ?><div class="prose drobne clen-cenik__pozn"><?= html_tabulky_obal($konfText) ?></div><?php endif; ?>
 
       <?php
       $nahore = trim((string)$cenik['list']['poznamka_nahore']);
