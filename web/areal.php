@@ -36,7 +36,6 @@ $provozDoky = dokumenty('provoz');
 $cenikLeto  = cenik('kurty-leto');
 $cenikZima  = cenik('kurty-zima');
 
-
 /**
  * Uzávěrky z bloku areal/uzavirky: co položka seznamu, to uzávěrka
  * („<strong>16.–22. 8. 2026</strong> důvod“). Vrací položky se stavem podle
@@ -73,7 +72,6 @@ function areal_uzavirky(string $html): array {
     return $vysledek;
 }
 
-
 /* Uzávěrky: platné a nadcházející nahoře, proběhlé schované v rozbalovacím bloku */
 $uzavirky = areal_uzavirky((string)$bUzav['text']);
 $uzavAktualni = array_values(array_filter($uzavirky, fn($u) => $u['stav'] !== 'probehla'));
@@ -100,7 +98,7 @@ $textOdkazu = static function (string $odkaz) use ($nazvyStranek): string {
    letecky-leto / letecky-zima = jejich snímek, casy / uzavirky = sloupec sekce Provoz (oba = celá sekce), sluzby =
    sekce služeb i s rozcestníkem (názvy v Otevíracích dobách pak nevedou na kotvy, karta služby na plánu je bez
    „Podrobnosti“ a popis stránky bez výčtu služeb), prijezd = sekce příjezdu.
-   Hlavička stránky (blok plan – plán areálu s nadpisem stránky) ani úvod skrýt nejde (blok_lze_skryt). */
+   Plán areálu (blok plan) ani hlavička stránky (blok uvod) skrýt nejde (blok_lze_skryt). */
 $kurtyVidet   = !blok_skryty($bKurty);
 $casyVidet    = !blok_skryty($bCasy);
 $uzavVidet    = !blok_skryty($bUzav);
@@ -135,17 +133,61 @@ $sablona = [
 require __DIR__ . '/inc/sablona/hlavicka.php';
 ?>
 
-<!-- I · Plán areálu Léto / Zima ÚPLNĚ NAHOŘE místo hlavičky stránky – kdo klikne na Areál a služby, vidí
-     plán hned bez posouvání (Petr 16. 10. 2026: „musí být vidět hned“). Drobečky, h1 = nadpis bloku plan,
-     perex vedle; úvod stránky (blok uvod) je až pod plánem. -->
-<?php $planPerex = trim((string)$bPlan['perex']); ?>
+<!-- Hlavička stránky (blok uvod: nadpis, perex, tlačítka) – od 11. 11. 2026 zase úplně nahoře a pod ní hned přehled služeb
+     (do 16. 10. 2026 tu byla taky, 16. 10.–11. 11. byl nahoře plán areálu). -->
+<?= hlava_stranky($uvod, ['drobky' => [['Areál a služby']], 'nadpis' => 'Areál a služby']) ?>
+
+<?php if ($sluzby && $sluzbyVidet): ?>
+<nav class="<?= sekce_tridy('rozcestnik') ?>" aria-label="Služby v areálu">
+  <div class="wrap rozcestnik__vnitrek">
+    <p class="stitek"><?= typo(trim((string)$bSluzby['stitek']) ?: 'Služby v areálu') ?></p>
+    <?= pilulky_html(array_map(fn($s) => [(string)$s['nazev'], '#' . $s['kotva']], $sluzby)) ?>
+  </div>
+</nav>
+<?php elseif (!$sluzbyVidet): sekce_vynechana(); endif; ?>
+
+<?php if ($sluzbyVidet): ?>
+<!-- I · Služby – „Všechno na jednom ostrově“, hned pod hlavičkou (manažer klubu 11. 11. 2026: „základní představení toho,
+     co nabízíme; plánek je až další věc a pak potřebné informace“); kotvy = pilulky rozcestníku nad sekcí -->
+<section class="<?= sekce_tridy('sekce') ?>" id="sluzby" aria-labelledby="sluzby-nadpis">
+  <div class="wrap">
+    <?= hlava_sekce($bSluzby, ['cislo' => 1, 'id' => 'sluzby-nadpis', 'radek' => true, 'nadpis' => 'Služby v areálu']) ?>
+    <?php if ($sluzby): ?>
+    <ul class="sluzby-mrizka" role="list">
+      <?php foreach ($sluzby as $i => $s):
+        $foto = obr((string)$s['foto'], (string)$s['nazev'], ['class' => 'foto', 'fokus' => (string)$s['fokus']]);
+        $odkaz = bezpecny_odkaz((string)$s['odkaz']);
+        if (stranka_skryta((string)$s['odkaz'])) $odkaz = '';   // odkaz na stránku skrytou v administraci se vynechá ?>
+      <li class="sluzba" id="<?= e((string)$s['kotva']) ?>">
+        <?php if ($foto !== ''): ?>
+        <figure class="ramec ramec--linka sluzba__foto"><div class="ramec__obraz pomer-3x2"><?= $foto ?></div></figure>
+        <?php else: ?>
+        <div class="ramec ramec--linka sluzba__foto sluzba__foto--prazdne" aria-hidden="true"><div class="ramec__obraz pomer-3x2"><span class="sluzba__monogram"><?= e(mb_substr((string)$s['nazev'], 0, 1)) ?></span></div></div>
+        <?php endif; ?>
+        <p class="sluzba__znacka"><span class="sluzba__cislo"><?= e(rimske($i + 1)) ?></span></p>
+        <h3 class="sluzba__nazev"><?= typo((string)$s['nazev']) ?></h3>
+        <?php if (trim((string)$s['perex']) !== ''): ?><p class="sluzba__perex"><?= typo((string)$s['perex']) ?></p><?php endif; ?>
+        <?php if (trim((string)$s['text']) !== ''): ?><div class="sluzba__text"><?= paragraphs((string)$s['text']) ?></div><?php endif; ?>
+        <?= radky_seznam_typo((string)$s['fakta'], 'sluzba__fakta') ?>
+        <div class="sluzba__pata">
+          <p class="sluzba__casy"><span class="stitek">Časy</span><span><?= trim((string)$s['casy']) !== '' ? typo((string)$s['casy']) : doplni_klub() ?></span></p>
+          <?php if ($odkaz !== ''): ?><p><?= tlacitko($odkaz, $textOdkazu((string)$s['odkaz']), 'odkaz') ?></p><?php endif; ?>
+        </div>
+      </li>
+      <?php endforeach; ?>
+    </ul>
+    <?php else: ?>
+    <p><?= doplni_klub('služby doplní klub') ?></p>
+    <?php endif; ?>
+  </div>
+</section>
+<?php else: sekce_vynechana(); endif; ?>
+
+<!-- II · Plán areálu Léto / Zima – od 11. 11. 2026 pod přehledem služeb (16. 10.–11. 11. 2026 byl úplně nahoře místo hlavičky stránky,
+     Petr: „musí být vidět hned“; manažer klubu pak chtěl nahoru přehled služeb) -->
 <section class="<?= sekce_tridy('sekce sekce--papir2 areal-plan') ?>" id="plan" aria-labelledby="plan-nadpis">
   <div class="wrap">
-    <?= drobky([['Areál a služby']]) ?>
-    <header class="hlava areal-plan__hlava<?= $planPerex !== '' ? ' hlava--radek' : '' ?>">
-      <div><h1 class="h1 areal-plan__nadpis" id="plan-nadpis"><?= trim((string)$bPlan['nadpis']) !== '' ? html_inline((string)$bPlan['nadpis']) : 'Plán areálu' ?></h1></div>
-      <?php if ($planPerex !== ''): ?><div class="perex"><?= paragraphs($planPerex) ?></div><?php endif; ?>
-    </header>
+    <?= hlava_sekce($bPlan, ['cislo' => 2, 'id' => 'plan-nadpis', 'radek' => true, 'nadpis' => 'Plán areálu']) ?>
 
     <div class="mapa" data-mapa data-rezim="<?= e($sezona) ?>">
       <?php if ($maPlan): ?>
@@ -195,30 +237,13 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
 </dialog>
 <?php endif; ?>
 
-<!-- Úvod stránky (blok uvod: nadpis, perex, tlačítka) – pod plánem; do 16. 10. 2026 to byla hlavička stránky -->
-<section class="<?= sekce_tridy('sekce areal-uvod') ?>" aria-labelledby="areal-uvod-nadpis">
-  <div class="wrap">
-    <?= hlava_sekce($uvod, ['id' => 'areal-uvod-nadpis', 'radek' => true, 'nadpis' => 'Areál a služby']) ?>
-    <?= blok_tlacitka($uvod) ?>
-  </div>
-</section>
-
-<?php if ($sluzby && $sluzbyVidet): ?>
-<nav class="<?= sekce_tridy('rozcestnik') ?>" aria-label="Služby v areálu">
-  <div class="wrap rozcestnik__vnitrek">
-    <p class="stitek"><?= typo(trim((string)$bSluzby['stitek']) ?: 'Služby v areálu') ?></p>
-    <?= pilulky_html(array_map(fn($s) => [(string)$s['nazev'], '#' . $s['kotva']], $sluzby)) ?>
-  </div>
-</nav>
-<?php elseif (!$sluzbyVidet): sekce_vynechana(); endif; ?>
-
 <?php if ($casyVidet || $uzavVidet): ?>
-<!-- II · Otevírací doby a uzávěrky -->
+<!-- III · Otevírací doby a uzávěrky -->
 <section class="<?= sekce_tridy('sekce') ?>" id="provoz" aria-labelledby="<?= $casyVidet ? 'casy-nadpis' : 'uzavirky-nadpis' ?>">
   <div class="wrap provoz">
 <?php if ($casyVidet): ?>
     <div>
-      <?= hlava_sekce($bCasy, ['cislo' => 2, 'id' => 'casy-nadpis', 'tag' => 'h2', 'nadpis' => 'Otevírací doby']) ?>
+      <?= hlava_sekce($bCasy, ['cislo' => 3, 'id' => 'casy-nadpis', 'tag' => 'h2', 'nadpis' => 'Otevírací doby']) ?>
       <?php if ($sCasy): ?>
       <ul class="radky">
         <?php foreach ($sCasy as $s): ?>
@@ -265,41 +290,6 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
       <?php endif; ?>
     </div>
 <?php endif; ?>
-  </div>
-</section>
-<?php else: sekce_vynechana(); endif; ?>
-
-<?php if ($sluzbyVidet): ?>
-<!-- III · Služby (kotvy = štítky „Služby v areálu“ z úvodu) -->
-<section class="<?= sekce_tridy('sekce') ?>" id="sluzby" aria-labelledby="sluzby-nadpis">
-  <div class="wrap">
-    <?= hlava_sekce($bSluzby, ['cislo' => 3, 'id' => 'sluzby-nadpis', 'radek' => true, 'nadpis' => 'Služby v areálu']) ?>
-    <?php if ($sluzby): ?>
-    <ul class="sluzby-mrizka" role="list">
-      <?php foreach ($sluzby as $i => $s):
-        $foto = obr((string)$s['foto'], (string)$s['nazev'], ['class' => 'foto', 'fokus' => (string)$s['fokus']]);
-        $odkaz = bezpecny_odkaz((string)$s['odkaz']); ?>
-      <li class="sluzba" id="<?= e((string)$s['kotva']) ?>">
-        <?php if ($foto !== ''): ?>
-        <figure class="ramec ramec--linka sluzba__foto"><div class="ramec__obraz pomer-3x2"><?= $foto ?></div></figure>
-        <?php else: ?>
-        <div class="ramec ramec--linka sluzba__foto sluzba__foto--prazdne" aria-hidden="true"><div class="ramec__obraz pomer-3x2"><span class="sluzba__monogram"><?= e(mb_substr((string)$s['nazev'], 0, 1)) ?></span></div></div>
-        <?php endif; ?>
-        <p class="sluzba__znacka"><span class="sluzba__cislo"><?= e(rimske($i + 1)) ?></span></p>
-        <h3 class="sluzba__nazev"><?= typo((string)$s['nazev']) ?></h3>
-        <?php if (trim((string)$s['perex']) !== ''): ?><p class="sluzba__perex"><?= typo((string)$s['perex']) ?></p><?php endif; ?>
-        <?php if (trim((string)$s['text']) !== ''): ?><div class="sluzba__text"><?= paragraphs((string)$s['text']) ?></div><?php endif; ?>
-        <?= radky_seznam_typo((string)$s['fakta'], 'sluzba__fakta') ?>
-        <div class="sluzba__pata">
-          <p class="sluzba__casy"><span class="stitek">Časy</span><span><?= trim((string)$s['casy']) !== '' ? typo((string)$s['casy']) : doplni_klub() ?></span></p>
-          <?php if ($odkaz !== ''): ?><p><?= tlacitko($odkaz, $textOdkazu((string)$s['odkaz']), 'odkaz') ?></p><?php endif; ?>
-        </div>
-      </li>
-      <?php endforeach; ?>
-    </ul>
-    <?php else: ?>
-    <p><?= doplni_klub('služby doplní klub') ?></p>
-    <?php endif; ?>
   </div>
 </section>
 <?php else: sekce_vynechana(); endif; ?>

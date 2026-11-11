@@ -19,7 +19,7 @@ $hlNazev = setting('klub_nazev', 'I. Český Lawn-Tennis Klub Praha');
 $hlZkratka = setting('klub_zkratka', 'I. ČLTK Praha');
 $hlOznameni = aktivni_oznameni();
 /* modrá lišta nahoře: v přípravě stav přípravy, jinak kontakt a otevírací doba (Petr 9. 11. 2026) – pevně nad hlavičkou */
-$hlPruh = rezim_je_zapnuty() ? rezim_pruh() : kontakt_pruh();
+$hlPruh = rezim_je_zapnuty() ? rezim_pruh() : (stranka_skryta(here()) && rezim_je_spravce() ? skryta_pruh() : kontakt_pruh());
 $hlTridaHtml = $hlPruh !== '' ? (rezim_je_zapnuty() ? 's-pruhem' : 's-pruhem s-kontaktem') : '';
 $hlTridaBody = trim((string)($sablona['trida'] ?? ''));
 sablona_bezpecnostni_hlavicky();          // Content-Security-Policy – musí odejít před prvním výstupem
