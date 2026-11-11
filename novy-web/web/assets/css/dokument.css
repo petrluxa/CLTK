@@ -265,10 +265,3 @@
   .archiv-rocnik__rok { font-size: 1.5rem; }
 }
 
-/* Jubilejní Revue na navy */
-.dokumenty-revue__obalka { display: block; width: min(100%, 16rem); margin-inline: auto; text-decoration: none; transition: transform var(--pohyb); }
-.dokumenty-revue__obalka img { width: 100%; height: auto; box-shadow: 0 30px 60px -28px rgba(0, 0, 0, .7), 0 0 0 1px rgba(202, 172, 121, .35); }
-.dokumenty-revue__obalka:hover { transform: translateY(-4px) rotate(-.6deg); }
-.dokumenty-revue .hlava { margin-bottom: var(--s-6); }
-.dokumenty-revue .btn small { font-size: .92em; letter-spacing: .06em; text-transform: none; font-weight: 400; }
-@media (max-width: 899.98px) { .dokumenty-revue__obalka { width: min(70%, 14rem); margin-inline: 0; } }

@@ -47,13 +47,8 @@ $kalendar['ladeni'] = sablona_ladeni_dnes() !== '';    // ?dnes= jen lokálně �
 $kalVychozi = null;
 foreach ($kalendar['akce'] as $ka) if ($ka['id'] === $kalendar['vychozi_id']) $kalVychozi = $ka;
 
-/* Video členství (Texty a údaje → Úvodní strana) */
-$video720  = setting('video_720');
-$video1080 = setting('video_1080');
-$videoPoster = setting('video_poster');
-$maVideo = ($video720 !== '' && is_file(UPLOAD_DIR . '/' . $video720)) || ($video1080 !== '' && is_file(UPLOAD_DIR . '/' . $video1080));
-$posterUrl = '';
-if ($videoPoster !== '') $posterUrl = upload_url(webp_vedle($videoPoster) ?: $videoPoster);
+/* Video členství (Texty a údaje → Úvodní strana) – komponenta video_klubu(), stejné video je i na stránce Členství */
+$videoHtml = video_klubu();
 
 /* Fokus fotky (object-position) jen v bezpečném tvaru „44% 28%“ */
 $fokus = static fn(?string $f, string $vychozi = '50% 40%') => preg_match('/^\d{1,3}(\.\d+)?%\s+\d{1,3}(\.\d+)?%$/', trim((string)$f)) ? trim((string)$f) : $vychozi;
@@ -212,22 +207,8 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
       <?= tlacitko(trim((string)$bClenstvi['odkaz']) ?: 'clenstvi.php', trim((string)$bClenstvi['odkaz_text']) ?: 'Stát se členem') ?>
     </div>
     <div class="wrap">
-      <?php if ($maVideo): ?>
-      <figure class="video ramec ramec--linka" data-video>
-        <div class="ramec__obraz">
-          <?php /* Zdroje mají jen data-src: video.js je doplní, až se video bude opravdu přehrávat
-                   (Safari jinak stahuje i s preload="none"). Bez JavaScriptu přehrávač v <noscript>. */
-          $videoZdroje = [];
-          if ($video1080 !== '' && is_file(UPLOAD_DIR . '/' . $video1080)) $videoZdroje[] = [upload_url($video1080), '(min-width: 1100px)'];
-          if ($video720 !== '' && is_file(UPLOAD_DIR . '/' . $video720)) $videoZdroje[] = [upload_url($video720), ''];
-          $videoPoster = $posterUrl !== '' ? ' poster="' . e($posterUrl) . '"' : ''; ?>
-          <video class="video__prehravac" muted loop playsinline preload="none"<?= $videoPoster ?> aria-label="Promo video I. ČLTK Praha – areál klubu na Štvanici, bez zvuku">
-            <?php foreach ($videoZdroje as [$vUrl, $vMedia]): ?><source data-src="<?= e($vUrl) ?>" type="video/mp4"<?= $vMedia !== '' ? ' media="' . e($vMedia) . '"' : '' ?>><?php endforeach; ?>
-          </video>
-          <noscript><video class="video__nojs" muted loop playsinline controls preload="none"<?= $videoPoster ?> aria-label="Promo video I. ČLTK Praha, bez zvuku"><?php foreach ($videoZdroje as [$vUrl, $vMedia]): ?><source src="<?= e($vUrl) ?>" type="video/mp4"<?= $vMedia !== '' ? ' media="' . e($vMedia) . '"' : '' ?>><?php endforeach; ?></video></noscript>
-          <button class="video__tlacitko" type="button" aria-pressed="false"><span class="video__ikona" aria-hidden="true"></span><span class="video__text">Přehrát video</span></button>
-        </div>
-      </figure>
+      <?php if ($videoHtml !== ''): ?>
+      <?= $videoHtml ?>
       <?php else: ?>
       <?= blok_foto($bClenstvi, 'pomer-16x9') ?>
       <?php endif; ?>

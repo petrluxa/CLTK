@@ -6,9 +6,9 @@
      II  Klub a spolek (klub + clenstvi)
      III Ceníky (cenik + skola)
      IV  Archiv klubových turnajů – PDF po turnajích a ročnících (rok, název, strany, velikost)
-     V   Jubilejní Revue 1893–2023 a odkaz na archiv Revue a newsletterů
+     (Jubilejní Revue je od 11. 11. 2026 na stránce Historie – manažer klubu)
    Obsah: modul Dokumenty, texty z bloků stránky „dokumenty“ (modul Stránky; chybějící blok
-   = výchozí nadpis, žádné „doplní klub“), obálka a PDF jubilejní Revue z modulu Revue. */
+   = výchozí nadpis, žádné „doplní klub“). */
 require __DIR__ . '/inc/rezim.php';
 require_once __DIR__ . '/inc/sablona/komponenty.php';
 track_visit();
@@ -24,7 +24,7 @@ function dok_blok(string $klic): array {
 $uvod = dok_blok('uvod');
 if (empty($uvod['existuje'])) {
     $uvod = array_merge($uvod, ['stitek' => 'Dokumenty', 'nadpis' => 'Dokumenty <em>klubu</em>.',
-        'perex' => 'Stanovy, pravidla hraní a provozní řády areálu přímo na webu – každý dokument si můžete i vytisknout. Níže je archiv klubových turnajů a jubilejní Revue.']);
+        'perex' => 'Stanovy, pravidla hraní a provozní řády areálu přímo na webu – každý dokument si můžete i vytisknout. Níže je archiv klubových turnajů.']);
 }
 
 /* skupiny dokumentů: klíč bloku => [kategorie, kotva, výchozí nadpis, výchozí perex] */
@@ -55,24 +55,12 @@ $archivPocet = 0;
 $archivRoky = [];
 foreach ($archiv as $t) foreach ($t['roky'] as $rok => $docs) { $archivPocet += count($docs); if ($rok > 0) $archivRoky[] = $rok; }
 
-/* jubilejní Revue (cislo 0) a archiv Revue */
-$revue = revue_cisla();
-$jubilejni = null;
-foreach ($revue as $c) { if ((int)$c['cislo'] === 0 && (string)$c['pdf'] !== '') { $jubilejni = $c; break; } }
-$bRevue = dok_blok('revue');
-if (empty($bRevue['existuje'])) {
-    $bRevue['nadpis'] = 'Kompletní historie v jubilejní <em>Revue</em>';
-    $bRevue['perex'] = 'Speciální číslo I.ČLTK Revue ke 130. výročí klubu – dějiny klubu od roku 1893, prezidenti, legendy Štvanice.';
-}
-
-/* skrytý blok archiv / revue = jeho sekce zmizí i s pilulkou (klub 21. 10. 2026) */
+/* skrytý blok archiv = jeho sekce zmizí i s pilulkou (klub 21. 10. 2026) */
 $maArchiv = $archiv && !blok_skryty($bArchiv);
-$maRevue  = $revue && !blok_skryty($bRevue);
 
 $kotvy = [];
 foreach ($sekce as $s) $kotvy[] = [trim(html_text((string)$s['blok']['nadpis'])), '#' . $s['kotva']];
 if ($maArchiv) $kotvy[] = ['Archiv turnajů', '#archiv-turnaju'];
-if ($maRevue) $kotvy[] = ['I.ČLTK Revue', '#revue'];
 
 $cislo = 0;
 $sablona = [
@@ -124,28 +112,6 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
         </ol>
       </section>
       <?php endforeach; ?>
-    </div>
-  </div>
-</section>
-<?php endif; ?>
-
-<?php if ($maRevue): ?>
-<!-- Jubilejní Revue 1893–2023 a archiv Revue -->
-<section class="sekce sekce--navy dokumenty-revue" id="revue" aria-labelledby="revue-nadpis">
-  <div class="wrap mrizka mrizka--stred">
-    <?php if ($jubilejni): $obalka = obr((string)$jubilejni['obalka'], 'Obálka jubilejní I.ČLTK Revue ' . $jubilejni['oznaceni']); ?>
-    <div class="sl-4">
-      <a class="dokumenty-revue__obalka" href="<?= e((string)$jubilejni['pdf']) ?>" type="application/pdf"><?= $obalka !== '' ? $obalka : '<span>' . e((string)$jubilejni['oznaceni']) . '</span>' ?><span class="vh">Jubilejní I.ČLTK Revue <?= e((string)$jubilejni['oznaceni']) ?> (PDF)</span></a>
-    </div>
-    <?php endif; ?>
-    <div class="<?= $jubilejni ? 'sl-7 od-6' : 'sl-8' ?>">
-      <?= hlava_sekce($bRevue, ['cislo' => ++$cislo, 'id' => 'revue-nadpis', 'stitek' => 'I.ČLTK Revue']) ?>
-      <div class="akce">
-        <?php if ($jubilejni): ?>
-        <a class="btn btn--svetla" href="<?= e((string)$jubilejni['pdf']) ?>" type="application/pdf">Číst jubilejní Revue<?= trim((string)$jubilejni['pdf_mb']) !== '' ? ' <small>(PDF, ' . e(str_replace('.', ',', (string)$jubilejni['pdf_mb'])) . '&nbsp;MB)</small>' : '' ?> <?= sipka() ?></a>
-        <?php endif; ?>
-        <?= tlacitko('revue.php#kiosek', 'Všechna čísla Revue a newslettery', 'odkaz') ?>
-      </div>
     </div>
   </div>
 </section>

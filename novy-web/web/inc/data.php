@@ -50,8 +50,9 @@ function rezervace_url(): string {
 function menu_hlavni(): array {
     $definice = [
         ['Klub', 'klub.php', 'l', [
-            ['Členství', 'clenstvi.php'], ['Historie', 'historie.php'], ['Vedení', 'vedeni.php'],
-            ['CTC', 'ctc.php'], ['Revue', 'revue.php'],
+            // Kalendář akcí = sekce úvodní stránky (manažer 11. 11. 2026: „v menu Klub chybí kalendář, je hluboko na homepage“)
+            ['Členství', 'clenstvi.php'], ['Kalendář akcí', 'index.php#kalendar'], ['Historie', 'historie.php'],
+            ['Vedení', 'vedeni.php'], ['CTC', 'ctc.php'], ['Revue', 'revue.php'],
         ]],
         ['Areál a služby', 'areal.php', 'l', [
             ['Ceník kurtů', 'cenik-kurtu.php'], ['Privátní trenéři', 'privatni-treneri.php'],
@@ -77,7 +78,9 @@ function menu_hlavni(): array {
         $soubory = array_values(array_diff(array_merge([$soubor], array_column($pod, 1), $navic[$soubor] ?? []), $vlastniPolozka));
         $podmenu = [];
         foreach ($pod as [$pn, $ps]) {
-            $podmenu[] = ['nazev' => $pn, 'url' => url($ps), 'soubor' => $ps, 'aktivni' => $tady === $ps];
+            // „index.php#kalendar“ → odkaz „/#kalendar“ (kotva na úvodní stránce)
+            $url = str_starts_with($ps, 'index.php#') ? url('') . substr($ps, 9) : url($ps);
+            $podmenu[] = ['nazev' => $pn, 'url' => $url, 'soubor' => $ps, 'aktivni' => $tady === $ps];
         }
         $menu[] = [
             'nazev' => $nazev, 'url' => url($soubor), 'soubor' => $soubor, 'soubory' => $soubory,

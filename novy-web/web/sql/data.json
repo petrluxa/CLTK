@@ -1,6 +1,6 @@
 {
     "verze": 1,
-    "vytvoreno": "2026-10-08 22:17:17",
+    "vytvoreno": "2026-11-11 20:48:13",
     "tabulky": {
         "cltk_akce": [
             {
@@ -325,11 +325,11 @@
                 "fokus": "50% 55%",
                 "odkaz": "",
                 "odkaz_text": "",
-                "datum": "2026-10-04",
                 "visible": 1,
                 "poradi": 0,
                 "created_at": "2026-10-04 12:38:30",
-                "updated_at": "2026-10-04 12:38:30"
+                "updated_at": "2026-10-04 12:38:30",
+                "datum": "2026-10-04"
             },
             {
                 "id": 2,
@@ -339,11 +339,11 @@
                 "fokus": "50% 45%",
                 "odkaz": "",
                 "odkaz_text": "",
-                "datum": "2026-10-04",
                 "visible": 1,
                 "poradi": 1,
                 "created_at": "2026-10-04 12:38:30",
-                "updated_at": "2026-10-04 12:38:30"
+                "updated_at": "2026-10-04 12:38:30",
+                "datum": "2026-10-04"
             },
             {
                 "id": 3,
@@ -353,11 +353,11 @@
                 "fokus": "50% 50%",
                 "odkaz": "",
                 "odkaz_text": "",
-                "datum": "2026-10-04",
                 "visible": 1,
                 "poradi": 2,
                 "created_at": "2026-10-04 12:38:30",
-                "updated_at": "2026-10-04 12:38:30"
+                "updated_at": "2026-10-04 12:38:30",
+                "datum": "2026-10-04"
             }
         ],
         "cltk_bloky": [
@@ -891,7 +891,7 @@
                 "doplni_klub": 0,
                 "visible": 1,
                 "poradi": 11,
-                "updated_at": "2026-10-04 12:38:37"
+                "updated_at": "2026-10-08 14:18:10"
             },
             {
                 "id": 29,
@@ -1062,7 +1062,7 @@
                 "doplni_klub": 0,
                 "visible": 1,
                 "poradi": 4,
-                "updated_at": "2026-10-04 12:38:37"
+                "updated_at": "2026-10-08 22:17:44"
             },
             {
                 "id": 38,
@@ -1632,7 +1632,7 @@
                 "doplni_klub": 0,
                 "visible": 1,
                 "poradi": 2,
-                "updated_at": "2026-10-04 12:38:38"
+                "updated_at": "2026-10-18 12:02:02"
             },
             {
                 "id": 68,
@@ -1784,7 +1784,7 @@
                 "doplni_klub": 0,
                 "visible": 1,
                 "poradi": 2,
-                "updated_at": "2026-10-04 12:38:38"
+                "updated_at": "2026-10-08 14:18:10"
             },
             {
                 "id": 76,
@@ -1936,7 +1936,7 @@
                 "doplni_klub": 0,
                 "visible": 1,
                 "poradi": 1,
-                "updated_at": "2026-10-04 12:38:38"
+                "updated_at": "2026-10-08 14:18:10"
             },
             {
                 "id": 84,
@@ -1974,7 +1974,7 @@
                 "doplni_klub": 0,
                 "visible": 1,
                 "poradi": 3,
-                "updated_at": "2026-10-04 12:38:38"
+                "updated_at": "2026-10-08 14:18:10"
             },
             {
                 "id": 86,
@@ -1993,7 +1993,7 @@
                 "doplni_klub": 0,
                 "visible": 1,
                 "poradi": 4,
-                "updated_at": "2026-10-04 12:38:38"
+                "updated_at": "2026-10-08 14:18:10"
             },
             {
                 "id": 87,
@@ -2012,7 +2012,7 @@
                 "doplni_klub": 0,
                 "visible": 1,
                 "poradi": 5,
-                "updated_at": "2026-10-04 12:38:38"
+                "updated_at": "2026-10-08 14:18:10"
             },
             {
                 "id": 88,
@@ -2031,7 +2031,7 @@
                 "doplni_klub": 0,
                 "visible": 1,
                 "poradi": 6,
-                "updated_at": "2026-10-04 12:38:38"
+                "updated_at": "2026-10-08 14:18:10"
             },
             {
                 "id": 89,
@@ -2069,7 +2069,7 @@
                 "doplni_klub": 0,
                 "visible": 1,
                 "poradi": 8,
-                "updated_at": "2026-10-04 12:38:38"
+                "updated_at": "2026-10-08 14:18:10"
             },
             {
                 "id": 91,
@@ -2088,7 +2088,7 @@
                 "doplni_klub": 0,
                 "visible": 1,
                 "poradi": 9,
-                "updated_at": "2026-10-04 12:38:38"
+                "updated_at": "2026-10-08 14:18:10"
             },
             {
                 "id": 92,
@@ -2799,7 +2799,7 @@
                 "klic": "uvod",
                 "stitek": "Dokumenty",
                 "nadpis": "Dokumenty <em>klubu</em>.",
-                "perex": "Stanovy, pravidla hraní a provozní řády areálu přímo na webu – každý dokument si můžete i vytisknout. Níže je archiv klubových turnajů a jubilejní Revue.",
+                "perex": "Stanovy, pravidla hraní a provozní řády areálu přímo na webu – každý dokument si můžete i vytisknout. Níže je archiv klubových turnajů.",
                 "text": "",
                 "foto": "",
                 "foto_popisek": "",
@@ -2890,7 +2890,7 @@
             },
             {
                 "id": 134,
-                "stranka": "dokumenty",
+                "stranka": "historie",
                 "klic": "revue",
                 "stitek": "I.ČLTK Revue",
                 "nadpis": "Kompletní historie v jubilejní <em>Revue</em>",
@@ -2904,7 +2904,7 @@
                 "odkaz2_text": "",
                 "doplni_klub": 0,
                 "visible": 1,
-                "poradi": 5,
+                "poradi": 13,
                 "updated_at": "2026-10-04 12:38:39"
             }
         ],
