@@ -197,6 +197,7 @@ const STRANKY_BLOKY = [
     'areal|uzavirky' => 'Plánované uzávěrky – co položka seznamu, to uzávěrka: tučně datum („16.–22. 8. 2026“), za ním důvod',
     'areal|sluzby' => 'Všechno na jednom ostrově – nadpis přehledu služeb', 'areal|letecky-leto' => 'Letecký snímek u plánu – léto',
     'areal|letecky-zima' => 'Letecký snímek u plánu – zima',
+    'areal|plan-karta' => 'Karta pod plánem areálu (i na úvodní stránce): nadpis = řádek pod počtem kurtů, perex = sloupec Léto, text = sloupec Zima. Prázdné pole = web text spočítá sám (léto z plánu, zima ze zimního ceníku)',
     'cenik-kurtu|ceniky' => 'Ceny za hodinu i za sezónu – nadpis ceníků léto / zima', 'cenik-kurtu|kalkulacka' => 'Kalkulačka ceny hodiny',
     'cenik-kurtu|doplnkove' => 'Doplňkové služby – nadpis', 'cenik-kurtu|rezervace' => 'Rezervace online – text a tlačítko',
     'body-solution|kontakt' => 'Kontakt a objednání', 'sportovni-lekarstvi|kontakt' => 'Kontakt a objednání',

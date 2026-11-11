@@ -9,7 +9,8 @@
      – služby (název, perex, časy) z modulu Areál a služby podle kotvy.
    Data: <script type="application/json" id="mapa-data">
      {ceniky: {leto, zima, dnes, ladeni}, sluzby: [{kotva, nazev, perex, casy}],
-      rezervace, cenik_url, sluzby_url, podrobnosti?}</script>
+      rezervace, cenik_url, sluzby_url, karta: {pod?, leto?, zima?}, podrobnosti?}</script>
+     (karta = texty výchozí karty pod plánem z bloku areal|plan-karta; chybějící klíč = text se spočítá)
      (sluzby_url = kam vede „Podrobnosti“ u služby, '' = kotva na téže stránce;
       podrobnosti: false = služby se na stránce nevypisují – skrytý blok areal|sluzby – karta bez odkazu)
    Bez JavaScriptu zůstane obrázek plánu (.mapa__zaloha) a odkaz na PDF.
@@ -183,6 +184,7 @@
     var sluzby = (data.sluzby || []).filter(function (s) { return SLUZBY[s.kotva]; });
     var rezervace = String(data.rezervace || ''), cenikUrl = String(data.cenik_url || ''), sluzbyUrl = String(data.sluzby_url || '');
     var podrobnosti = data.podrobnosti !== false;
+    var kartaTexty = data.karta || {};          // texty výchozí karty z bloku areal|plan-karta (HTML ze serveru), jinak se počítají
     var uid = 'mapa-' + Math.random().toString(36).slice(2, 7);
 
     var zaloha = box.querySelector('.mapa__zaloha');
@@ -287,9 +289,9 @@
       karta.innerHTML =
         '<div class="mapa__karta-hlava"><span class="mapa__karta-cislo" aria-hidden="true">' + (z ? kryte : KURTY.length) + '</span><div>' +
         '<p class="mapa__karta-nazev">' + (z ? 'Zima: ' + kryte + NB + mnozne(kryte, 'krytý kurt', 'kryté kurty', 'krytých kurtů') : 'Léto: ' + KURTY.length + NB + 'kurtů na ostrově') + '</p>' +
-        '<p class="mapa__karta-pod">Ťukněte na kurt nebo službu na plánu.</p></div></div>' +
-        sloupec('Léto', '<p>' + typo(leto) + '</p>', !z) +
-        (maZimu ? sloupec('Zima', '<p>' + zima + '</p>', z) : '') +
+        '<p class="mapa__karta-pod">' + (kartaTexty.pod || 'Ťukněte na kurt nebo službu na plánu.') + '</p></div></div>' +
+        sloupec('Léto', kartaTexty.leto || '<p>' + typo(leto) + '</p>', !z) +
+        (maZimu ? sloupec('Zima', kartaTexty.zima || '<p>' + zima + '</p>', z) : '') +
         '<div class="mapa__karta-akce">' + tlacitkoRezervace() + (cenikUrl ? '<a class="odkaz" href="' + esc(cenikUrl) + '">Ceník a&nbsp;kalkulačka <span class="sipka" aria-hidden="true"></span></a>' : '') + '</div>';
     }
 

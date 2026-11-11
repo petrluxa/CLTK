@@ -884,6 +884,22 @@ function mapa_data(?array $cenikLeto = null, ?array $cenikZima = null, ?array $s
         'rezervace'  => rezervace_url(),
         'cenik_url'  => url('cenik-kurtu.php'),
         'sluzby_url' => $sluzbyUrl,
+        'karta'      => mapa_karta_texty(),
     ] + ($podrobnosti ? [] : ['podrobnosti' => false]);
+}
+
+/** Texty výchozí karty pod plánem (když není vybraný kurt ani služba) z bloku areal|plan-karta – od 11. 11. 2026,
+ *  manažer: „mohu toto nějak upravit sám?“. Nadpis = řádek pod počtem kurtů, perex = sloupec Léto, text = sloupec Zima.
+ *  Prázdné pole (nebo skrytý blok) = mapa.js text spočítá jako dřív (léto z kresby plánu, zima ze zimního ceníku).
+ *  Vrací jen vyplněné klíče: pod, leto, zima (HTML). */
+function mapa_karta_texty(): array {
+    $b = blok('areal', 'plan-karta');
+    if (empty($b['existuje'])) return [];
+    $k = [];
+    if (trim((string)$b['nadpis']) !== '') $k['pod'] = typo((string)$b['nadpis']);
+    if (trim((string)$b['perex']) !== '') $k['leto'] = paragraphs((string)$b['perex']);
+    $zima = html_ocistit((string)$b['text']);
+    if (trim(strip_tags($zima)) !== '') $k['zima'] = $zima;
+    return $k;
 }
 
