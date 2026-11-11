@@ -642,6 +642,27 @@ button.odkaz { background-color: transparent; }
 .pomer-3x2 { aspect-ratio: 3 / 2; } .pomer-4x3 { aspect-ratio: 4 / 3; } .pomer-4x5 { aspect-ratio: 4 / 5; }
 .pomer-2x3 { aspect-ratio: 2 / 3; } .pomer-16x9 { aspect-ratio: 16 / 9; } .pomer-1x1 { aspect-ratio: 1; }
 .pomer-3x4 { aspect-ratio: 3 / 4; } .pomer-21x9 { aspect-ratio: 21 / 9; } .pomer-15x16 { aspect-ratio: 15 / 16; }
+/* Klubové video bez zvuku (komponenta video_klubu(), video.js) – úvodní stránka a Členství */
+.video .ramec__obraz { aspect-ratio: 16 / 9; background: var(--navy-deep); }
+.video video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: var(--foto-filtr); }
+html:not(.js) .video__prehravac { display: none; }
+.video__tlacitko {
+  position: absolute; left: 50%; top: 50%; z-index: 4; display: inline-flex; align-items: center; gap: .9rem;
+  transform: translate(-50%, -50%); min-height: 3.6rem; padding: .7rem 1.6rem .7rem .8rem;
+  border: 1px solid rgba(251, 250, 246, .7); border-radius: 999px; background: rgba(14, 27, 48, .55);
+  -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
+  font: 500 .74rem/1 var(--sans); letter-spacing: .2em; text-transform: uppercase; color: var(--paper);
+  transition: background-color var(--pohyb-rychly), opacity var(--pohyb-rychly);
+}
+.video__tlacitko:hover { background: rgba(14, 27, 48, .8); }
+.video__ikona { position: relative; width: 2.2rem; height: 2.2rem; border-radius: 50%; border: 1px solid var(--gold-soft); }
+.video__ikona::before { content: ''; position: absolute; left: 54%; top: 50%; transform: translate(-50%, -50%); border-style: solid; border-width: 6px 0 6px 10px; border-color: transparent transparent transparent var(--paper); }
+/* při přehrávání se tlačítko přesune do rohu a ukazuje pauzu */
+.video.je-prehrava .video__tlacitko { left: auto; top: auto; right: clamp(14px, 1.6vw, 22px); bottom: clamp(14px, 1.6vw, 22px); transform: none; min-height: 44px; padding: .35rem 1rem .35rem .45rem; gap: .6rem; font-size: .64rem; background: rgba(14, 27, 48, .45); }
+.video.je-prehrava .video__ikona { width: 1.8rem; height: 1.8rem; }
+.video.je-prehrava .video__ikona::before { left: 50%; width: 8px; height: 10px; border: 0; border-left: 2px solid var(--paper); border-right: 2px solid var(--paper); }
+html:not(.js) .video__tlacitko { display: none; }
+.video__popisek { justify-content: flex-start; }
 .popisek { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .2rem 1.2rem; margin-top: .8rem; font-size: var(--t-drobne); line-height: 1.5; color: var(--muted); }
 .popisek b, .popisek strong { font-weight: 500; color: var(--ink-2); }
 .popisek em, .popisek .kurziva { font-family: var(--serif); font-size: 1.08rem; color: var(--ink-2); }

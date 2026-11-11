@@ -105,7 +105,9 @@ $podstranky = [];
 foreach (menu_hlavni() as $m) {
     if ($m['soubor'] !== 'klub.php') continue;
     foreach ($m['podmenu'] as $p) {
-        $b = klub_blok(basename($p['soubor'], '.php'), 'uvod');
+        // „index.php#kalendar“ = sekce úvodní stránky → její blok (index|kalendar), jinak hlavička podstránky
+        [$soubor, $kotva] = array_pad(explode('#', (string)$p['soubor'], 2), 2, '');
+        $b = klub_blok(basename($soubor, '.php'), $kotva !== '' ? $kotva : 'uvod');
         $podstranky[] = ['nazev' => $p['nazev'], 'url' => $p['url'], 'nadpis' => (string)$b['nadpis'], 'perex' => (string)$b['perex']];
     }
 }

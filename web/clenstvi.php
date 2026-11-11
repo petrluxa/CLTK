@@ -342,6 +342,7 @@ $bDruhy     = klub_blok('clenstvi', 'druhy');
 $bPrihlaska = klub_blok('clenstvi', 'prihlaska');
 $bDekujeme  = klub_blok('clenstvi', 'dekujeme');
 $bSouhlas   = klub_blok('formulare', 'souhlas');
+$bVideo     = klub_blok('clenstvi', 'video');       // klubové video pod hlavičkou (manažer 11. 11. 2026); skrytý blok = bez videa
 
 $cenik = cenik('clenstvi');
 $model = clen_model($cenik);
@@ -548,6 +549,8 @@ $moznostiTypu[] = ['jine', 'Jiná kombinace – cenu potvrdí kancelář', ['dat
 $vCeneVidet     = ($vCene || $zima) && !blok_skryty($bVCene);
 $cenikVidet     = $cenik && !blok_skryty($bKonf);
 $listVidet      = !blok_skryty($bList);
+$videoHtml      = video_klubu();
+$videoVidet     = $videoHtml !== '' && !blok_skryty($bVideo);
 $postupVidet    = ($postup || $druhy) && !blok_skryty($bPostup);
 $prihlaskaVidet = !blok_skryty($bPrihlaska) || $odeslano || ($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST';
 $prihlaskaHlava = $odeslano ? !blok_skryty($bDekujeme) : !blok_skryty($bPrihlaska);   // nadpis sekce přihlášky
@@ -571,7 +574,7 @@ $sablona = [
     'titulek' => 'Členství',
     'popis'   => html_text((string)$uvod['perex']),
     'css'     => ['stranky-klub.css'],
-    'js'      => ['clenstvi.js'],
+    'js'      => ['clenstvi.js', 'video.js'],
     'obrazek' => (string)$uvod['foto'],
     'trida'   => 'stranka-clenstvi',
     'noindex' => $odeslano || ($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST',
@@ -599,6 +602,16 @@ $clenskyList = static function (string $jmeno, string $druh, string $typ, string
     'nadpis' => 'Členství',
     'navic'  => '<nav class="kotvy" aria-label="Části stránky">' . pilulky_html($kotvy) . '</nav>',
 ]) ?>
+
+<?php if ($videoVidet): ?>
+  <!-- Klubové video – totéž co na úvodní stránce (blok clenstvi|video: perex = popisek pod videem, skrytý = bez videa) -->
+  <section class="<?= sekce_tridy('sekce sekce--bez-horni clen-video') ?>" aria-label="Klubové video">
+    <div class="wrap">
+      <?= $videoHtml ?>
+      <?php if (trim((string)$bVideo['perex']) !== ''): ?><p class="popisek video__popisek"><span><?= typo((string)$bVideo['perex']) ?></span></p><?php endif; ?>
+    </div>
+  </section>
+<?php elseif (blok_skryty($bVideo)): sekce_vynechana(); endif; ?>
 
 <?php if ($vCeneVidet): ?>
   <!-- I · V ceně členství (V4 sekce 6) a výhody členů v zimě -->

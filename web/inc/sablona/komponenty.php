@@ -94,6 +94,27 @@ function json_skript(string $id, $data): string {
     return '<script type="application/json" id="' . e($id) . '">' . json_do_stranky($data) . '</script>';
 }
 
+/** Klubové video bez zvuku (Texty a údaje → Úvodní strana: video_720, video_1080, video_poster) – figure [data-video]
+ *  pro video.js; '' = žádný soubor není nahraný. Na úvodní stránce v sekci Členství, od 11. 11. 2026 i na stránce Členství.
+ *  Zdroje mají jen data-src: video.js je doplní, až se video bude opravdu přehrávat (Safari jinak stahuje i s preload="none").
+ *  Bez JavaScriptu přehrávač v <noscript>. */
+function video_klubu(): string {
+    $zdroje = [];
+    foreach ([['video_1080', '(min-width: 1100px)'], ['video_720', '']] as [$klic, $media]) {
+        $rel = trim(setting($klic));
+        if ($rel !== '' && is_file(UPLOAD_DIR . '/' . $rel)) $zdroje[] = [upload_url($rel), $media];
+    }
+    if (!$zdroje) return '';
+    $poster = trim(setting('video_poster'));
+    $posterAttr = $poster !== '' ? ' poster="' . e(upload_url(webp_vedle($poster) ?: $poster)) . '"' : '';
+    $sources = static fn(string $attr) => implode('', array_map(fn($z) => '<source ' . $attr . '="' . e($z[0]) . '" type="video/mp4"' . ($z[1] !== '' ? ' media="' . e($z[1]) . '"' : '') . '>', $zdroje));
+    return '<figure class="video ramec ramec--linka" data-video><div class="ramec__obraz">'
+        . '<video class="video__prehravac" muted loop playsinline preload="none"' . $posterAttr . ' aria-label="Promo video I. ČLTK Praha – areál klubu na Štvanici, bez zvuku">' . $sources('data-src') . '</video>'
+        . '<noscript><video class="video__nojs" muted loop playsinline controls preload="none"' . $posterAttr . ' aria-label="Promo video I. ČLTK Praha, bez zvuku">' . $sources('src') . '</video></noscript>'
+        . '<button class="video__tlacitko" type="button" aria-pressed="false"><span class="video__ikona" aria-hidden="true"></span><span class="video__text">Přehrát video</span></button>'
+        . '</div></figure>';
+}
+
 /** Obrázek z uploads/ s WebP: obr($r['foto'], 'Popis', ['class' => 'foto', 'fokus' => $r['fokus']]). */
 function obr(?string $rel, string $alt = '', array $attr = []): string {
     if (trim((string)$rel) === '' || !is_file(UPLOAD_DIR . '/' . ltrim((string)$rel, '/'))) return '';
