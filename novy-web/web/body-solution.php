@@ -61,7 +61,6 @@ $bKontakt = blok('body-solution', 'kontakt');
 $podleKotvy = [];
 foreach (sluzby() as $s) $podleKotvy[(string)$s['kotva']] = $s;
 $sluzba   = $podleKotvy['fyzioterapie'] ?? null;
-$wellness = $podleKotvy['wellness'] ?? null;
 
 $sablona = [
     'titulek' => html_text((string)$uvod['stitek']) ?: 'Body Solution Clinic',
@@ -77,7 +76,7 @@ require __DIR__ . '/inc/sablona/hlavicka.php';
 <?php
 /* Sekce Kontakt a objednání + karta služby. Od 9. 11. 2026 stojí mezi ostatními bloky stránky podle pořadí
    v administraci (Stránky → Body Solution, šipky) – Petr: „abych si mohl posouvat ty bloky“. */
-$kontaktSekce = function (array $bKontakt) use ($sluzba, $wellness): string {
+$kontaktSekce = function (array $bKontakt) use ($sluzba): string {
     ob_start(); ?>
 <!-- Kontakt a objednání + služba v areálu -->
 <section class="sekce sekce--linka" id="kontakt" aria-labelledby="kontakt-nadpis">
@@ -86,10 +85,7 @@ $kontaktSekce = function (array $bKontakt) use ($sluzba, $wellness): string {
       <?= hlava_sekce($bKontakt, ['id' => 'kontakt-nadpis', 'nadpis' => 'Kontakt a objednání', 'stitek' => 'Kontakt']) ?>
       <?= trim(html_text((string)$bKontakt['text'])) !== '' ? blok_text($bKontakt) : '' ?>
       <?= blok_tlacitka($bKontakt) ?>
-      <div class="odkazy-radek dalsi-odkazy">
-        <?= tlacitko('sportovni-lekarstvi.php', 'Sportovní lékařství', 'odkaz') ?>
-        <?= $wellness ? tlacitko('areal.php#' . $wellness['kotva'], (string)$wellness['nazev'], 'odkaz') : '' ?>
-      </div>
+      <?php /* odkazy na Sportovní lékařství a wellness tu do 11. 11. 2026 byly – manažer klubu: „odkazy na další subjekty v klubu bych vynechal“ */ ?>
     </div>
     <?php if ($sluzba): ?><div><?= sluzba_v_arealu_html($sluzba) ?></div><?php endif; ?>
   </div>

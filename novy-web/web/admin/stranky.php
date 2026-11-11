@@ -185,8 +185,8 @@ const STRANKY_BLOKY = [
     'historie|deska-zasluzili' => 'Záložka desky Zasloužilí členové', 'historie|deska-prezidenti' => 'Záložka desky Prezidenti',
     'historie|osobnosti' => 'Osobnosti klubu – nadpis',
     'vedeni|dokumenty' => 'Stanovy a dokumenty', 'ctc|rodokmen' => 'Rodokmen stoletých klubů', 'revue|newslettery' => 'Newslettery – nadpis',
-    'areal|kurty' => 'Kurty v létě a v zimě', 'areal|plan' => 'Plán areálu – úplně nahoře stránky: nadpis je nadpis stránky, perex popis plánu (fotka + odkaz na plán k vytištění)',
-    'areal|uvod' => 'Úvod stránky – na webu až pod plánem areálu (plán je nahoře, aby byl vidět hned)', 'areal|prijezd' => 'Jak se k nám dostanete',
+    'areal|kurty' => 'Kurty v létě a v zimě', 'areal|plan' => 'Plán areálu – sekce pod přehledem služeb (od 11. 11. 2026): nadpis, perex, fotka plánu a odkaz na plán k vytištění',
+    'areal|uvod' => 'Hlavička stránky – nadpis, perex a tlačítka úplně nahoře; pod ní přehled služeb a pak plán areálu (od 11. 11. 2026)', 'areal|prijezd' => 'Jak se k nám dostanete',
     'cenik-kurtu|pravidla' => 'Pravidla rezervací',
     'zavodni-tenis|pyramida' => 'Od školy po extraligu', 'zavodni-tenis|cisla' => 'Sezóna v číslech', 'zavodni-tenis|extraliga' => 'Extraliga smíšených družstev',
     'tenisova-skola|kontakt' => 'Kontakt na vedoucího trenéra', 'tenisova-skola-rozvrhy|rozvrhy' => 'Rozvrhy tréninků – nadpis a perex nad mřížkou, text pod ní (informace pro rodiče, kontaktní trenéři kurtů). Hodiny rozvrhu jsou v modulu Tenisová škola → Rozvrhy',
@@ -452,6 +452,19 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
         ]);
         redirect('stranky.php?id=' . $noveId, 'Blok „' . $klicS . '“ je založený – vyplňte ho a uložte. Na webu se ukáže, až ho šablona stránky začne číst.');
     } else {
+        /* Skrýt / zobrazit celou stránku (manažer klubu 11. 11. 2026: „potřebuji zatím skrýt Sportovní lékařství“) –
+           seznam v nastavení stranky_skryte; web ji vyřadí z menu a návštěvníkovi vrátí 404 (inc/rezim.php, inc/data.php) */
+        if ($akce === 'stranka-skryt' || $akce === 'stranka-zobrazit') {
+            $klic = vstup('klic_stranky', 60);
+            if (!isset(STRANKY[$klic]) || stranky_url($klic) === '') redirect('stranky.php', 'Stránka nebyla nalezena.', 'err');
+            if ($akce === 'stranka-skryt' && !stranka_lze_skryt($klic)) redirect('stranky.php', 'Stránku „' . STRANKY[$klic][0] . '“ skrýt nejde – je to hlavní stránka menu, nebo ji web potřebuje.', 'warn');
+            $skryte = array_values(array_diff(stranky_skryte(), [$klic]));
+            if ($akce === 'stranka-skryt') $skryte[] = $klic;
+            setting_set('stranky_skryte', json_ulozit($skryte), ['label' => 'Skryté stránky (needitovat)', 'grp' => 'system', 'typ' => 'text']);
+            redirect('stranky.php', $akce === 'stranka-skryt'
+                ? 'Stránka „' . STRANKY[$klic][0] . '“ je skrytá: zmizela z menu a návštěvníkům se neukáže. Vy ji jako správce vidíte dál.'
+                : 'Stránka „' . STRANKY[$klic][0] . '“ je zase na webu.');
+        }
         $rid = (int)vstup_int('id');
         $x = $rid ? row('SELECT * FROM cltk_bloky WHERE id = ?', [$rid]) : null;
         if (!$x) redirect('stranky.php', 'Blok nebyl nalezen – možná byl mezitím smazán.', 'err');
@@ -537,10 +550,16 @@ if ($rezim === 'prehled'):
               <?= (int)$s['doplnit'] ? badge('doplní klub · ' . (int)$s['doplnit'], 'warn') : '' ?>
               <?= (int)$s['skryte'] ? badge('skryté · ' . (int)$s['skryte'], 'off') : '' ?>
               <?= !(int)$s['doplnit'] && !(int)$s['skryte'] && (int)$s['n'] ? badge('Hotovo', 'ok') : '' ?>
+              <?= $u !== '' && stranka_skryta((string)$k) ? badge('Stránka skrytá', 'err') : '' ?>
             </td>
             <td data-label="Akce" class="right"><div class="akce-radku">
               <a class="btn btn-sm btn-primary" href="stranky.php?stranka=<?= e(rawurlencode((string)$k)) ?>">Upravit texty</a>
               <?php if ($u !== ''): ?><a class="btn btn-sm btn-ghost" href="<?= e($u) ?>" target="_blank" rel="noopener">Na webu <span aria-hidden="true">↗</span></a><?php endif; ?>
+              <?php if ($u !== '' && stranka_lze_skryt((string)$k)): ?>
+                <?= stranka_skryta((string)$k)
+                    ? tlacitko_akce('stranka-zobrazit', 0, 'Zobrazit stránku', 'btn-ghost', ['klic_stranky' => $k], '', 'Vrátit stránku na web')
+                    : tlacitko_akce('stranka-skryt', 0, 'Skrýt stránku', 'btn-ghost', ['klic_stranky' => $k], 'Skrýt stránku „' . $n . '“? Zmizí z menu a návštěvníkům se neukáže (vy ji jako správce uvidíte dál). Kdykoli ji zase zobrazíte.', 'Skrýt stránku z webu') ?>
+              <?php endif; ?>
             </div></td>
           </tr>
         <?php endforeach; ?>

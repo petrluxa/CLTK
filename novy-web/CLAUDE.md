@@ -48,6 +48,11 @@ Běžící server se převádí migrací `web/sql/migrace/2026-10-02-dokumenty-a
 - Admin `web/admin/` (`inc/layout.php` – pořadí modulů `admin_moduly()`, `inc/ui.php` – pole a tlačítka).
   Modul Stránky: známé bloky v `STRANKY_BLOKY` (nejdou smazat/přejmenovat), bloky podle předpony v `STRANKY_PREDPONY`.
   **Skrytý blok = jeho část stránky zmizí** (klub 21. 10. 2026): šablona `if (!blok_skryty($b))` kolem celé sekce (blok = její hlava) nebo jen jeho kusu, pilulky/kotvy na zmizelou sekci pryč (`blok_bez_kotev()`), linka mezi sekcemi stejného pozadí `sekce_tridy()`/`sekce_vynechana()`, `if`/`endif` od začátku řádku (výstup se jinak nezmění); chybějící blok dál = výchozí obsah; skrýt nejde `uvod`, `areal|plan`, `formulare|souhlas`, úvod (`blok_lze_skryt()`; první tři web ukáže i s `visible = 0` z dřívějška – `blok_na_webu()`, podle ní i stav v modulu Stránky); i odkazy z JS (plán areálu: `mapa_data(…, $podrobnosti)`) a popis / fotka stránky pro sdílení jen z viditelných částí; testy `podklady/_raw/qa/skryte-opravy/` (`test-skryte.mjs`, `test-skryti.mjs` – skupiny a švy).
+- **Skrytá celá stránka** (manažer klubu 11. 11. 2026): administrace Stránky → tlačítko „Skrýt stránku“ / „Zobrazit stránku“ (jen podstránky,
+  `STRANKY_NESKRYVATELNE` v inc/data.php), seznam klíčů v nastavení `stranky_skryte` (JSON). `stranka_skryta()` vyřadí stránku z menu, patičky
+  a rozcestníků a z odkazů služeb na Areálu; návštěvník dostane 404 (gate na konci `inc/rezim.php`), správce ji vidí s pruhem `skryta_pruh()`.
+- **Areál a služby – pořadí od 11. 11. 2026** (manažer klubu): hlavička (blok uvod) → pilulky služeb → Služby „Všechno na jednom ostrově“ →
+  Plán areálu → Otevírací doby → Příjezd. (16. 10.–11. 11. byl nahoře plán místo hlavičky – Petr „musí být vidět hned“.)
 - **Aktuality – výřez fotky** (Petr 25. 10. 2026): v administraci si správce výřez vybere sám – `pole_vyrez()` + `admin/assets/vyrez.js`
   (rámeček 4 : 3 přes fotku, rohy / posuvník / klávesy, živý náhled karty, „Celá fotka na paspartě“); uložené jako `fokus` („x% y%“)
   + `cltk_aktuality.vyrez` (`1`–`3` přiblížení | `cela` | `''` = dřívější automatika), migrace `2026-10-25-aktuality-vyrez.php`.

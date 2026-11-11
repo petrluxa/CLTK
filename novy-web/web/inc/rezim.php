@@ -94,6 +94,12 @@ function kontakt_pruh(): string {
     return '<div class="rezim-pruh kontakt-pruh"><p>' . implode('<i class="kontakt-pruh__oddel" aria-hidden="true"></i>', $casti) . '</p></div>';
 }
 
+/** Pruh nahoře pro správce na stránce skryté v administraci (Stránky → Skrýt stránku) – návštěvník dostane 404. */
+function skryta_pruh(): string {
+    return '<div class="rezim-pruh kontakt-pruh" role="status"><p><span><b>Skrytá stránka</b> – návštěvníkům se neukáže, vidíte ji jen jako správce.</span>'
+         . '<i class="kontakt-pruh__oddel" aria-hidden="true"></i><span><a href="' . e(url('admin/stranky.php')) . '">Stránky v administraci</a></span></p></div>';
+}
+
 /* ---------- formulář náhledového hesla ---------- */
 
 /** Token formuláře bez relace (návštěvník přípravné stránky nedostane žádnou cookie). */
@@ -272,4 +278,11 @@ if (PHP_SAPI !== 'cli' && !defined('CLTK_BEZ_REZIMU') && rezim_je_zapnuty()) {
     if (!rezim_smi_videt_web()) {
         rezim_zobrazit_pripravu(rezim_zpracuj_heslo());
     }
+}
+
+/* Stránka skrytá v administraci (Stránky → Skrýt stránku, od 11. 11. 2026): návštěvník dostane 404 (stránka
+   zmizela i z menu), přihlášený správce ji vidí dál – šablona mu nahoře ukáže skryta_pruh(). */
+if (PHP_SAPI !== 'cli' && !defined('CLTK_BEZ_REZIMU') && stranka_skryta(here()) && !rezim_je_spravce()) {
+    require_once __DIR__ . '/sablona/komponenty.php';
+    stranka_nenalezena();
 }

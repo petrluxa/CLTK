@@ -40,6 +40,29 @@ function rezervace_url(): string {
     return bezpecny_odkaz(setting('rezervace_url', 'https://www.rogeronline.cz/v2/index.php?klub=181'));
 }
 
+/* ---------- skryté stránky ----------
+   Správce může v administraci (Stránky → Skrýt stránku) skrýt celou stránku – od 11. 11. 2026 (manažer klubu: „potřebuji
+   zatím skrýt Sportovní lékařství“). Seznam klíčů stránek je v nastavení stranky_skryte (JSON). Skrytá stránka zmizí
+   z menu, patičky a rozcestníků, odkazy na ni z Areálu se vynechají a návštěvník dostane 404 (inc/rezim.php);
+   přihlášený správce ji vidí dál s pruhem nahoře. Hlavní stránky menu, úvod, kontakt, dokumenty a stránky,
+   které web potřebuje (akce, dokument, formuláře, 404), skrýt nejdou. */
+const STRANKY_NESKRYVATELNE = ['index', 'klub', 'areal', 'zavodni-tenis', 'tenisova-skola', 'kontakt', 'dokumenty', 'dokument', 'akce', 'formulare', '404'];
+
+/** Klíče skrytých stránek („sportovni-lekarstvi“). */
+function stranky_skryte(): array {
+    $v = json_decode(setting('stranky_skryte'), true);
+    return is_array($v) ? array_values(array_filter($v, 'is_string')) : [];
+}
+/** Je stránka skrytá? Bere soubor („sportovni-lekarstvi.php“), klíč i adresu s kotvou; cizí adresy nikdy. */
+function stranka_skryta(string $soubor): bool {
+    if ($soubor === '' || preg_match('~^(https?:|mailto:|tel:|#)~i', $soubor)) return false;
+    $k = basename((string)preg_replace('~[?#].*$~', '', $soubor), '.php');
+    return $k !== '' && in_array($k, stranky_skryte(), true);
+}
+function stranka_lze_skryt(string $klic): bool {
+    return !in_array($klic, STRANKY_NESKRYVATELNE, true);
+}
+
 /**
  * Hlavní menu podle ZADANI §3. Každá položka:
  *   nazev, url, soubor (hlavní stránka), soubory (všechny stránky větve – pro zvýraznění),
@@ -75,6 +98,7 @@ function menu_hlavni(): array {
     $tady = here();
     $menu = [];
     foreach ($definice as [$nazev, $soubor, $strana, $pod]) {
+        $pod = array_values(array_filter($pod, fn($x) => !stranka_skryta($x[1])));      // skrytá stránka v menu není
         $soubory = array_values(array_diff(array_merge([$soubor], array_column($pod, 1), $navic[$soubor] ?? []), $vlastniPolozka));
         $podmenu = [];
         foreach ($pod as [$pn, $ps]) {
@@ -90,6 +114,7 @@ function menu_hlavni(): array {
     }
     $revue = ['url' => url('revue.php'), 'externi' => false];
     foreach ([['Revue', $revue, 'revue.php'], ['Restaurace', odkaz_restaurace(), 'restaurace.php'], ['Prague Open', odkaz_prague_open(), 'prague-open.php']] as [$nazev, $o, $soubor]) {
+        if (!$o['externi'] && stranka_skryta($soubor)) continue;
         $menu[] = [
             'nazev' => $nazev, 'url' => $o['url'], 'soubor' => $o['externi'] ? '' : $soubor, 'soubory' => [$soubor],
             'strana' => 'p', 'externi' => $o['externi'], 'aktivni' => !$o['externi'] && $tady === $soubor,
@@ -106,7 +131,8 @@ function menu_paticka(): array {
         ['Tenisová škola', 'tenisova-skola.php'], ['Letní kempy', 'letni-kempy.php'],
         ['Privátní trenéři', 'privatni-treneri.php'], ['Historie', 'historie.php'],
     ];
-    return array_map(fn($p) => ['nazev' => $p[0], 'url' => url($p[1]), 'soubor' => $p[1]], $polozky);
+    $polozky = array_filter($polozky, fn($p) => !stranka_skryta($p[1]));
+    return array_values(array_map(fn($p) => ['nazev' => $p[0], 'url' => url($p[1]), 'soubor' => $p[1]], $polozky));
 }
 
 /** Kontakty do patičky – jen Recepce a kancelář (Eva Štefková), vše z Textů a údajů. */
